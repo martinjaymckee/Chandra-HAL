@@ -1,0 +1,169 @@
+system mks # Define the Meters/Kilogram/Second system of units
+tolerance 1e-6 # Default Factor tolerence is 1ppm
+
+#
+# Conversion Factors
+#
+let mi_conv = 1609.34
+let yd_conv = 0.9114
+let ft_conv = 0.3048
+let in_conv = 0.0254
+
+let rev_conv = 0.31831
+let deg_conv = 0.01745329
+let grad_conv = 0.01570796
+
+#
+# Units of Mass
+#
+#   SI
+Mass *g = 1e-3
+#   Imperial
+Mass slug = 6854.0096
+
+#
+# Units of Force
+#
+#   SI
+Mass *N = 1 # Newton
+Mass *gf = 9.80665e-3 # Grams-Force
+#   Imperial
+Mass lb = 0.22482 # Pound
+Mass pdl = 7.23066 # Poundal
+
+#
+# Units of Length
+#
+#   SI
+Length *m = 1
+#   Imperial
+
+Length mi = mi_conv
+Length yd = yd_conv
+Length ft = ft_conv
+Length in = in_conv
+
+#
+# Units of Area
+#
+#   SI
+Area *m2 = 1**2
+#   Imperial
+Area mi2 = mi_conv**2
+Area yd2 = yd_conv**2
+Area ft2 = ft_conv**2
+Area in2 = in_conv**2
+
+#
+# Units of Volume
+#
+#   SI
+Area *m3 = 1**3
+#   Imperial
+Area mi3 = mi_conv**3
+Area yd3 = yd_conv**3
+Area ft3 = ft_conv**3
+Area in3 = in_conv**3
+
+#
+# Units of Time -- TODO: THESE SHOULD CONVERT TO/FROM <CHRONO> DURATIONS
+#
+Time *s = 1
+Time min = 60
+Time hr = 3600
+Time day = 86400
+
+#
+# Units of Velocity
+#
+#   SI
+Velocity *m_per_s = 1
+Velocity kmph = 0.36
+#   Imperial
+Velocity mph = 0.4470389 # The factor here will parse without the leading zero
+Velocity kt = 0.5144
+Velocity mi_per_s = mi_conv
+Velocity yd_per_s = yd_conv
+Velocity fps = ft_conv
+Velocity in_per_s = in_conv
+
+#
+# Units of Acceleration
+#
+#   SI
+Acceleration *m_per_s2 = 1
+#   Imperial
+Acceleration mi_per_s2 = mi_conv
+Acceleration yd_per_s2 = yd_conv
+Acceleration ft_per_s2 = ft_conv
+Acceleration in_per_s2 = in_conv
+#   Other
+Acceleration *gees = 9.80665
+
+#
+# Units of Jerk
+#
+#   SI
+Jerk *m_per_s3 = 1
+#   Imperial
+Jerk mi_per_s3 = mi_conv
+Jerk yd_per_s3 = yd_conv
+Jerk ft_per_s3 = ft_conv
+Jerk in_per_s3 = in_conv
+#   Other
+Jerk *gees_per_s = 9.80665
+
+#
+# Units of Angle
+#
+PlaneAngle rad = 1
+PlaneAngle rev = rev_conv
+PlaneAngle deg = deg_conv
+PlaneAngle grad = grad_conv # This is the grads unit
+
+#
+# Units of Angular Velocity
+#
+AngularVelocity rad_per_s = 1
+AngularVelocity rev_per_s = rev_conv
+AngularVelocity deg_per_s = deg_conv
+AngularVelocity grad_per_s = grad_conv
+AngularVelocity rpm = 5.305167e-3
+
+#
+# Units of Angular Acceleration
+#
+AngularAcceleration rad_per_s2 = 1
+AngularAcceleration rev_per_s2 = rev_conv
+AngularAcceleration deg_per_s2 = deg_conv
+AngularAcceleration grad_per_s2 = grad_conv
+
+#
+# Units of Temperature
+#
+#   SI
+Temperature *C = 1 (+0) # Celsius
+Temperature *K = 1 (-273.15) # Kelvin
+#   Imperial
+Temperature *F = .5555555 (+32) # Farenheit
+Temperature *R = .5555555 (491.67) # Rankine
+
+#
+# Units of Magnetic Flux (Density)
+#
+#   SI
+MagneticFlux *T = 1 # Tesla
+MagneticFlux *G = 1e-4 # Gauss
+
+#
+# Units of Pressure
+#
+#   SI
+Pressure *Pa = 1 # Pascal
+Pressure *bar = 1e5 # Bar
+#   Imperial
+Pressure psi = 6894.76 # Pounds per Square Inch
+#   Other
+Pressure atm = 101325 # Atmospheres
+Pressure torr = 133.322 # Torr
+
