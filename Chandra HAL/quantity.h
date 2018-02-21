@@ -88,6 +88,11 @@ class Quantity
         //
         // Arithmetic Operations
         //
+        //  Negation
+        auto operator - () const {
+            return Quantity<value_t, Units>(-val_);
+        }
+
         //  Addition
         template<typename V, typename U>
         auto operator += (const Quantity<V, U>& _val) {

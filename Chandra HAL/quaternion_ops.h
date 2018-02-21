@@ -94,13 +94,15 @@ Quaternion<T1> operator / (const Quaternion<T1>& _q, const T2& _r) {
 
 //  Derivitive
 template<typename V1, typename V2>
-constexpr auto deriv(const Quaternion<V1>& _q, const Matrix<V2, 3, 1>& _w_dot) {
+// TODO: CHANGE TO TAKE AN ANGULAR VELOCITY QUANTITY
+constexpr Quaternion<V1> deriv(const Quaternion<V1>& _q, const Matrix<V2, 3, 1>& _w_dot)
+{
     constexpr V1 half(0.5);
     Quaternion<V1> dq;
     dq.w = -half * (_w_dot(0)*_q.x + _w_dot(1)*_q.y + _w_dot(2)*_q.z);
-    dq.x = half * (_w_dot(0)*_q.x + _w_dot(1)*_q.y + _w_dot(2)*_q.z);
-    dq.y = half * (_w_dot(1)*_q.x + _w_dot(2)*_q.y + _w_dot(0)*_q.z);
-    dq.z = half * (_w_dot(2)*_q.x + _w_dot(0)*_q.y + _w_dot(1)*_q.z);
+    dq.x = half * (_w_dot(0)*_q.w + _w_dot(1)*_q.z - _w_dot(2)*_q.y);
+    dq.y = half * (_w_dot(1)*_q.w + _w_dot(2)*_q.x - _w_dot(0)*_q.z);
+    dq.z = half * (_w_dot(2)*_q.w + _w_dot(0)*_q.y - _w_dot(1)*_q.x);
     return dq;
 }
 

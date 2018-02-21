@@ -13,6 +13,34 @@ namespace chandra
 namespace math
 {
 
+// TODO: CONVERT THIS TO USE ANGLE QUANTITIES
+template<typename Value>
+class TaitBryan
+{
+    public:
+        using value_t = Value;
+        using angle_t = units::mks::Q_rad<value_t>;
+
+        TaitBryan() : roll(0), pitch(0), yaw(0) {}
+        TaitBryan(
+                const angle_t& _roll,
+                const angle_t& _pitch = angle_t(0),
+                const angle_t& _yaw = angle_t(0) )
+            : roll(_roll), pitch(_pitch), yaw(_yaw) {}
+
+        angle_t roll;
+        angle_t pitch;
+        angle_t yaw;
+};
+
+template<typename Stream, typename Value>
+Stream& operator << (Stream& _stream, TaitBryan<Value> _tb) {
+    _stream << "TaitBryan( roll = " << _tb.roll;
+    _stream << ", pitch = " << _tb.pitch;
+    _stream << ", yaw = " << _tb.yaw << " )";
+    return _stream;
+}
+
 // TODO: CONVERT BETWEEN DIFFERENT ROTATION FORMATS
 //  -- ROTATION MATRIX
 //  -- EULER ANGLE
@@ -23,28 +51,209 @@ namespace math
 //
 // Rotation Representation Conversions
 //
-//  To Rotation Matrix
+//  To Direction Cosine Matrix - dcm(...)
+//      -> From Quaternion
 template<typename V>
-auto rotMat(const Quaternion<V>& _q){
-    Matrix<V, 3, 3> r;
+constexpr auto dcm(const Quaternion<V>& _q){
+    const auto w2 = _q.w*_q.w;
+    const auto x2 = _q.x*_q.x;
+    const auto y2 = _q.y*_q.y;
+    const auto z2 = _q.z*_q.z;
+    const auto wx = _q.w*_q.x;
+    const auto wy = _q.w*_q.y;
+    const auto wz = _q.w*_q.z;
+    const auto xy = _q.x*_q.y;
+    const auto xz = _q.x*_q.z;
+    const auto yz = _q.y*_q.z;
 
-    return r;
+    Matrix<V, 3, 3> M;
+    M(0, 0) = w2+x2-y2-z2;
+    M(0, 1) = 2*(xy-wz);
+    M(0, 2) = 2*(wy+xz);
+
+    M(1, 0) = 2*(xy+wz);
+    M(1, 1) = w2-x2+y2-z2;
+    M(1, 2) = 2*(yz-wx);
+
+    M(2, 0) = 2*(xz-wy);
+    M(2, 1) = 2*(wx+yz);
+    M(2, 2) = w2-x2-y2+z2;
+    return M;
 }
 
-template<typename V1, typename V2, typename V3>
-auto rotMat(
-        const units::Q_rad<V> _yaw,
-        const units::Q_rad<V2> _pitch,
-        const units::Q_rad<V3> _roll
-){
-    Matrix<V, 3, 3> r;
+//      -> From Tait-Bryan Angles
+template<typename V>
+constexpr auto dcm(const TaitBryan<V>& _tb) {
+    using value_t = V;
+    const value_t sr = sin(_tb.roll.value());
+    const value_t cr = cos(_tb.roll.value());
+    const value_t sp = sin(_tb.pitch.value());
+    const value_t cp = cos(_tb.pitch.value());
+    const value_t sy = sin(_tb.yaw.value());
+    const value_t cy = cos(_tb.yaw.value());
 
-    return r;
+    Matrix<value_t, 3, 3> M;
+    M(0, 0) = cp*cr;
+    M(0, 1) = cr*sp*sy - sr*cy;
+    M(0, 2) = sr*sy + cr*sp*cy;
+
+    M(1, 0) = sr*cp;
+    M(1, 1) = cr*cy + sr*sp*sy;
+    M(1, 2) = sr*sp*cy - cr*sy;
+
+    M(2, 0) = -sp;
+    M(2, 1) = cp*sy;
+    M(2, 2) = cr*cp;
+    return M;
 }
 
-//  To Quaternion
+//      -> Tait-Bryan (Independent Angles)
+template <typename V1, typename V2, typename V3>
+constexpr auto dcm(
+        units::mks::Q_rad<V1> _roll,
+        units::mks::Q_rad<V2> _pitch,
+        units::mks::Q_rad<V3> _yaw)
+{
+    return dcm(TaitBryan<V1>(_roll, _pitch, _yaw));
+}
 
-//  To Euler Angles / Other Sets???
+//  To Quaternion - quat(...)
+//      -> From Tait-Bryan Angles
+template<typename V>
+constexpr auto quat(const TaitBryan<V>& _tb) {
+    using value_t = V;
+    const value_t half_roll = _tb.roll.value() / 2.0;
+    const value_t half_pitch = _tb.pitch.value() / 2.0;
+    const value_t half_yaw = _tb.yaw.value() / 2.0;
+    const value_t sr = sin(half_roll);
+    const value_t cr = cos(half_roll);
+    const value_t sp = sin(half_pitch);
+    const value_t cp = cos(half_pitch);
+    const value_t sy = sin(half_yaw);
+    const value_t cy = cos(half_yaw);
+    const auto w = (cy*cp*cr) + (sy*sp*sr);
+    const auto x = (sy*cp*cr) - (cy*sp*sr);
+    const auto y = (cy*sp*cr) + (sy*cp*sr);
+    const auto z = (cy*cp*sr) - (sy*sp*cr);
+    return Quaternion<V>(w, x, y, z);
+}
+
+//      -> Tait-Bryan (Independent Angles)
+template <typename V1, typename V2, typename V3>
+constexpr auto quat(
+        units::mks::Q_rad<V1> _roll,
+        units::mks::Q_rad<V2> _pitch,
+        units::mks::Q_rad<V3> _yaw)
+{
+    return quat(TaitBryan<V1>(_roll, _pitch, _yaw));
+}
+
+//      -> Direction Cosine Matrix
+template <typename V>
+constexpr auto quat(const Matrix<V, 3, 3>& _M) {
+// Implementation based upon that found in,
+//      "Converting a Rotation Matrix to a Quaternion"
+//      By: Mike Day, Insominac Games
+    constexpr V one(1);
+    V w = 0;
+    V x = 0;
+    V y = 0;
+    V z = 0;
+    V t = 0;
+
+    if(_M(2, 2) < 0) {
+        if(_M(0, 0) > _M(1, 1)) {
+            t = one + _M(0, 0) - _M(1, 1) - _M(2, 2);
+            w = _M(1, 2) - _M(2, 1);
+            x = t;
+            y = _M(0, 1) + _M(1, 0);
+            z = _M(2, 0) + _M(0, 2);
+        } else {
+            t = one - _M(0, 0) + _M(1, 1) - _M(2, 2);
+            w = _M(0, 2) - _M(2, 0);
+            x = _M(1, 0) + _M(0, 1);
+            y = t;
+            z = _M(2, 1) + _M(1, 2);
+        }
+    } else {
+        if(_M(0, 0) < -_M(1, 1)) {
+            t = one - _M(0, 0) - _M(1, 1) + _M(2, 2);
+            w = _M(1, 0) - _M(0, 1);
+            x = _M(0, 2) + _M(2, 0);
+            y = _M(2, 1) + _M(1, 2);
+            z = t;
+        } else {
+            t = one + _M(0, 0) + _M(1, 1) + _M(2, 2);
+            w = t;
+            x = _M(2, 1) - _M(1, 2);
+            y = _M(0, 2) - _M(2, 0);
+            z = _M(1, 0) - _M(0, 1);
+        }
+    }
+    const auto s = 0.5 / sqrt(t);
+    return Quaternion<V>(s*w, s*x, s*y, s*z);
+}
+
+//  To Tait Bryan
+//      -> Independent Angles
+template <typename V1, typename V2, typename V3>
+ constexpr auto taitbryan(
+        units::mks::Q_rad<V1> _roll,
+        units::mks::Q_rad<V2> _pitch,
+        units::mks::Q_rad<V3> _yaw)
+{
+    return TaitBryan<V1>{_roll, _pitch, _yaw};
+}
+
+ //     -> Quaternion
+template <typename V>
+constexpr auto taitbryan(const Quaternion<V>& _q) {
+    using value_t = V;
+    using angle_t = typename TaitBryan<value_t>::angle_t;
+    constexpr value_t half_pi(3.141592635/2.0);
+    const auto pitch_val = asin(2 * (_q.w*_q.y - _q.x*_q.z)); // TODO: CHECK WHY THIS DOESN'T WORK WITH THE NEGATIVE ON PITCH
+    const auto w2 = _q.w*_q.w;
+    const auto x2 = _q.x*_q.x;
+    const auto y2 = _q.y*_q.y;
+    const auto z2 = _q.z*_q.z;
+    TaitBryan<value_t> tb;
+
+    if(pitch_val == half_pi or pitch_val == -half_pi) {
+        tb.roll = angle_t(0);
+        if(pitch_val == half_pi) {
+            tb.yaw = angle_t(-2 * atan2(_q.w, _q.x));
+        } else { // pitch = -pi/2 rad
+            tb.yaw = angle_t(2 * atan2(_q.x, _q.w));
+        }
+    } else {
+        tb.roll = angle_t(atan2(2*(_q.w*_q.z + _q.x*_q.y), w2+x2-y2-z2));
+        tb.yaw = angle_t(atan2(2*(_q.w*_q.x + _q.y*_q.z), w2-x2-y2+z2));
+    }
+    tb.pitch = angle_t(pitch_val);
+
+    return tb;
+}
+
+//      -> Direction Cosine Matrix
+template<typename V>
+constexpr auto taitbryan(const Matrix<V, 3, 3>& _M) {
+    using value_t = V;
+    using angle_t = typename TaitBryan<value_t>::angle_t;
+    constexpr value_t half_pi(3.141592635/2.0);
+    TaitBryan<value_t> tb;
+    const auto pitch_val = asin(_M(2, 0));
+
+    if(pitch_val == half_pi or pitch_val == -half_pi) {
+        tb.roll = angle_t(0);
+        tb.yaw = angle_t( ((pitch_val == half_pi) ? 1 : -1) * atan2(_M(0, 1), _M(0, 2)) );
+    } else {
+        tb.roll = angle_t(atan2(_M(2, 1), _M(2, 2)));
+        tb.yaw = angle_t(atan2(_M(1, 0), _M(0, 0)));
+    }
+    tb.pitch = angle_t(pitch_val);
+
+    return tb;
+}
 
 //  To Angle-Axis
 
@@ -55,16 +264,21 @@ auto rotMat(
 
 //  Angle Between
 template<typename V1, typename V2, size_t N>
-auto angleBetween(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
+constexpr auto angleBetween(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
     const auto alpha = acos(dot(_v1, _v2)/(sqrt(norm(_v1)*norm(_v2))));
-    return chandra::units::Quantity<V1, chandra::units::mks::rad>(alpha);
+    return chandra::units::mks::Q_rad<V1>(alpha);
 }
 
 //
-// Quaternion Operations
-//  TODO: MODIFY TO USE THE NEW MATRIX CLASS
-//  TODO: THIS NEEDS TO BE TESTED....
+// Rotations
 //
+// By Direction Cosine Matrix
+template<typename V1, typename V2>
+constexpr auto rotate(const Matrix<V1, 3, 1>& _v, const Matrix<V2, 3, 3>& _M) {
+    return _M * _v;
+}
+
+//  By Quaternion
 template<typename V1, typename V2>
 constexpr auto rotate(const Matrix<V1, 3, 1>& _v, const Quaternion<V2>& _q) {
     Matrix<V1, 3, 1> v;
@@ -92,7 +306,7 @@ constexpr auto rotate(const Matrix<V1, 3, 1>& _v, const Quaternion<V2>& _q) {
 
 // TODO: THIS NEEDS TO RETURN AN ANGLE QUANTITY
 template<typename V1, typename V2>
-auto angleBetween(const Quaternion<V1>& _q1, const Quaternion<V2>& _q2) {
+constexpr auto angleBetween(const Quaternion<V1>& _q1, const Quaternion<V2>& _q2) {
     constexpr V1 pi(3.14159);
 
     const auto N = (_q1.w*_q2.w) + (_q1.x*_q2.x) + (_q1.y*_q2.y) + (_q1.z*_q2.z);

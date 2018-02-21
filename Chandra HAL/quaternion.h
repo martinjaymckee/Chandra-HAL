@@ -120,6 +120,15 @@ class Quaternion
         template<typename V>
         constexpr Quaternion(const Quaternion<V>& _q) : w(_q.w), x(_q.x), y(_q.y), z(_q.z) {}
 
+        //  Assignment
+        template<typename V>
+        ref_t& operator = (const Quaternion<V>& _q) {
+            w = _q.w;
+            x = _q.x;
+            y = _q.y;
+            z = _q.z;
+        }
+
         //
         // Arithmetic Operations
         //
@@ -216,7 +225,6 @@ class Quaternion
         value_t y;
         value_t z;
 };
-
 
 } /*namespace math*/
 } /*namespace chandra*/

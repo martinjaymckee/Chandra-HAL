@@ -275,6 +275,20 @@ class Matrix
             return *this;
         }
 
+        //
+        // Matrix Operations
+        //
+        //  Transpose
+        constexpr auto T() const {
+            Matrix<value_t, Columns, Rows> M;
+            for(index_t row = 0; row < Rows; ++row){
+                for(index_t column = 0; column < Columns; ++column){
+                    M.data_[column][row] = data_[row][column];
+                }
+            }
+            return M;
+        }
+
     private:
         static constexpr index_t idx(const index_t& row, const index_t& column) {
             return (row*Columns) + column;

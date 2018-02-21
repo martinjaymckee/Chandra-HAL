@@ -235,6 +235,17 @@ Stream& operator << (Stream& _stream, const Matrix<Value, N, M>& _val) {
     return _stream;
 }
 
+template<typename Stream, typename Value, size_t N>
+Stream& operator << (Stream& _stream, const Matrix<Value, 1, N>& _val) {
+    _stream << "[ ";
+    for(size_t column = 0; column < N; ++column){
+        _stream << _val(column);
+        if(column != (N-1)) _stream << ", ";
+    }
+    _stream << " ]";
+    return _stream;
+}
+
 //
 // Vector Operations
 //
