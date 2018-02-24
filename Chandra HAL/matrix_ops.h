@@ -153,6 +153,21 @@ constexpr auto inverse(const Matrix<V, N, N>& _m) {
     return internal::Inverter<V, N>::calc(_m);
 }
 
+// Element-Wise Multiplication
+template<typename V1, typename V2, size_t M, size_t N>
+constexpr auto emul(const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
+    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+    using index_t = typename return_t::index_t;
+
+    return_t r;
+    for(index_t row = 0; row < M; ++row) {
+        for(index_t column = 0; column < N; ++column) {
+            r(row, column) = a(row, column) * b(row, column);
+        }
+    }
+    return r;
+}
+
 // Matrix Multiplication
 template<typename V1, typename V2, size_t M, size_t N1, size_t N2, size_t O>
 constexpr auto operator * (const Matrix<V1, M, N1>& a, const Matrix<V2, N2, O>& b) {
@@ -190,6 +205,22 @@ constexpr auto operator * (const Matrix<V, M, N>& A, const Scalar& s) {
     return r;
 }
 
+
+// Element-Wise Multiplication
+template<typename V1, typename V2, size_t M, size_t N>
+constexpr auto ediv(const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
+    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+    using index_t = typename return_t::index_t;
+
+    return_t r;
+    for(index_t row = 0; row < M; ++row) {
+        for(index_t column = 0; column < N; ++column) {
+            r(row, column) = a(row, column) / b(row, column);
+        }
+    }
+    return r;
+}
+
 // Scalar Division
 template<typename Scalar, typename V, size_t M, size_t N>
 constexpr auto operator / (const Matrix<V, M, N>& A, const Scalar& s) {
@@ -209,9 +240,29 @@ constexpr auto operator + (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
     return result;
 }
 
+// Scalar Addition
+template<typename V1, typename V2, size_t M, size_t N>
+constexpr auto operator + (const Matrix<V1, M, N>& a, const V2& b) {
+    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+
+    return_t result(a);
+    result += b;
+    return result;
+}
+
 // Matrix Subtraction
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto operator - (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
+    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+
+    return_t result(a);
+    result -= b;
+    return result;
+}
+
+// Scalar Subtraction
+template<typename V1, typename V2, size_t M, size_t N>
+constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b) {
     using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
 
     return_t result(a);

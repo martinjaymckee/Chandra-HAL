@@ -225,6 +225,11 @@ auto as(const Quantity<Value, BaseUnits>& _val) {
     return Quantity<Value, Units>{units::convert<Units, BaseUnits>(_val.value())};
 }
 
+template<typename Units, typename Value>
+auto as(const Value& _val) {
+    return Quantity<Value, Units>{_val};
+}
+
 } /*namespace units*/
 } /*namespace chandra*/
 #endif /*CHANDRA_QUANTITY_H*/

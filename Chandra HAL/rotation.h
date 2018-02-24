@@ -12,8 +12,12 @@ namespace chandra
 {
 namespace math
 {
+//
+// Unless otherwise specified, the implementations in this file are taken from the paper,
+//  "Representing Attitude: Euler Angles, Unit Quaternions, and Rotation Vectors", written by
+//  James Diebel.
+//
 
-// TODO: CONVERT THIS TO USE ANGLE QUANTITIES
 template<typename Value>
 class TaitBryan
 {
@@ -68,15 +72,15 @@ constexpr auto dcm(const Quaternion<V>& _q){
 
     Matrix<V, 3, 3> M;
     M(0, 0) = w2+x2-y2-z2;
-    M(0, 1) = 2*(xy-wz);
-    M(0, 2) = 2*(wy+xz);
+    M(0, 1) = 2*(xy+wz);
+    M(0, 2) = 2*(xz-wy);
 
-    M(1, 0) = 2*(xy+wz);
+    M(1, 0) = 2*(xy-wz);
     M(1, 1) = w2-x2+y2-z2;
-    M(1, 2) = 2*(yz-wx);
+    M(1, 2) = 2*(yz+wx);
 
-    M(2, 0) = 2*(xz-wy);
-    M(2, 1) = 2*(wx+yz);
+    M(2, 0) = 2*(xz+wy);
+    M(2, 1) = 2*(yz-wx);
     M(2, 2) = w2-x2-y2+z2;
     return M;
 }
@@ -93,17 +97,17 @@ constexpr auto dcm(const TaitBryan<V>& _tb) {
     const value_t cy = cos(_tb.yaw.value());
 
     Matrix<value_t, 3, 3> M;
-    M(0, 0) = cp*cr;
-    M(0, 1) = cr*sp*sy - sr*cy;
-    M(0, 2) = sr*sy + cr*sp*cy;
+    M(0, 0) = cp*cy;
+    M(0, 1) = cp*sy;
+    M(0, 2) = -sp;
 
-    M(1, 0) = sr*cp;
-    M(1, 1) = cr*cy + sr*sp*sy;
-    M(1, 2) = sr*sp*cy - cr*sy;
+    M(1, 0) = sr*sp*cy - cr*sy;
+    M(1, 1) = sr*sp*sy + cr*cy;
+    M(1, 2) = cp*sr;
 
-    M(2, 0) = -sp;
-    M(2, 1) = cp*sy;
-    M(2, 2) = cr*cp;
+    M(2, 0) = cr*sp*cy + sr*sy;
+    M(2, 1) = cr*sp*sy - sr*cy;
+    M(2, 2) = cp*cr;
     return M;
 }
 
@@ -131,10 +135,10 @@ constexpr auto quat(const TaitBryan<V>& _tb) {
     const value_t cp = cos(half_pitch);
     const value_t sy = sin(half_yaw);
     const value_t cy = cos(half_yaw);
-    const auto w = (cy*cp*cr) + (sy*sp*sr);
-    const auto x = (sy*cp*cr) - (cy*sp*sr);
-    const auto y = (cy*sp*cr) + (sy*cp*sr);
-    const auto z = (cy*cp*sr) - (sy*sp*cr);
+    const auto w = cr*cp*cy + sr*sp*sy;
+    const auto x = sr*cp*cy - cr*sp*sy;
+    const auto y = cr*sp*cy + sr*cp*sy;
+    const auto z = cr*cp*sy - sr*sp*cy;
     return Quaternion<V>(w, x, y, z);
 }
 
@@ -170,24 +174,24 @@ constexpr auto quat(const Matrix<V, 3, 3>& _M) {
             z = _M(2, 0) + _M(0, 2);
         } else {
             t = one - _M(0, 0) + _M(1, 1) - _M(2, 2);
-            w = _M(0, 2) - _M(2, 0);
-            x = _M(1, 0) + _M(0, 1);
+            w = _M(2, 0) - _M(0, 2);
+            x = _M(0, 1) + _M(1, 0);
             y = t;
-            z = _M(2, 1) + _M(1, 2);
+            z = _M(1, 2) + _M(2, 1);
         }
     } else {
         if(_M(0, 0) < -_M(1, 1)) {
             t = one - _M(0, 0) - _M(1, 1) + _M(2, 2);
-            w = _M(1, 0) - _M(0, 1);
-            x = _M(0, 2) + _M(2, 0);
-            y = _M(2, 1) + _M(1, 2);
+            w = _M(0, 1) - _M(1, 0);
+            x = _M(2, 0) + _M(0, 2);
+            y = _M(1, 2) + _M(2, 1);
             z = t;
         } else {
             t = one + _M(0, 0) + _M(1, 1) + _M(2, 2);
             w = t;
-            x = _M(2, 1) - _M(1, 2);
-            y = _M(0, 2) - _M(2, 0);
-            z = _M(1, 0) - _M(0, 1);
+            x = _M(1, 2) - _M(2, 1);
+            y = _M(2, 0) - _M(0, 2);
+            z = _M(0, 1) - _M(1, 0);
         }
     }
     const auto s = 0.5 / sqrt(t);
@@ -210,7 +214,17 @@ template <typename V>
 constexpr auto taitbryan(const Quaternion<V>& _q) {
     using value_t = V;
     using angle_t = typename TaitBryan<value_t>::angle_t;
-    constexpr value_t half_pi(3.141592635/2.0);
+    const auto w2 = _q.w*_q.w;
+    const auto x2 = _q.x*_q.x;
+    const auto y2 = _q.y*_q.y;
+    const auto z2 = _q.z*_q.z;
+    TaitBryan<value_t> tb;
+    tb.roll = angle_t(atan2(2*(_q.y*_q.z + _q.w*_q.x), w2-x2-y2+z2));
+    tb.pitch = angle_t(-asin(2*(_q.x*_q.z - _q.w*_q.y)));
+    tb.yaw = angle_t(atan2(2*(_q.x*_q.y + _q.w*_q.z), w2+x2-y2-z2));
+    return tb;
+/*    constexpr value_t half_pi(3.141592635/2.0);
+
     const auto pitch_val = asin(2 * (_q.w*_q.y - _q.x*_q.z)); // TODO: CHECK WHY THIS DOESN'T WORK WITH THE NEGATIVE ON PITCH
     const auto w2 = _q.w*_q.w;
     const auto x2 = _q.x*_q.x;
@@ -232,6 +246,7 @@ constexpr auto taitbryan(const Quaternion<V>& _q) {
     tb.pitch = angle_t(pitch_val);
 
     return tb;
+*/
 }
 
 //      -> Direction Cosine Matrix
@@ -239,18 +254,11 @@ template<typename V>
 constexpr auto taitbryan(const Matrix<V, 3, 3>& _M) {
     using value_t = V;
     using angle_t = typename TaitBryan<value_t>::angle_t;
-    constexpr value_t half_pi(3.141592635/2.0);
     TaitBryan<value_t> tb;
-    const auto pitch_val = asin(_M(2, 0));
 
-    if(pitch_val == half_pi or pitch_val == -half_pi) {
-        tb.roll = angle_t(0);
-        tb.yaw = angle_t( ((pitch_val == half_pi) ? 1 : -1) * atan2(_M(0, 1), _M(0, 2)) );
-    } else {
-        tb.roll = angle_t(atan2(_M(2, 1), _M(2, 2)));
-        tb.yaw = angle_t(atan2(_M(1, 0), _M(0, 0)));
-    }
-    tb.pitch = angle_t(pitch_val);
+    tb.roll = angle_t(atan2(_M(1, 2), _M(2, 2)));
+    tb.pitch = angle_t(-asin(_M(0, 2)));
+    tb.yaw = angle_t(atan2(_M(0, 1), _M(0, 0)));
 
     return tb;
 }

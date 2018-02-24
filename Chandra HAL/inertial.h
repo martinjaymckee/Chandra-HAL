@@ -16,11 +16,12 @@ namespace drivers
 template<typename Derived, typename Value, size_t N>
 class Inertial
 {
-    protected:
+    public:
         using scalar_t = Value;
         using value_t = chandra::math::Matrix<Value, N, 1>;
         using transform_t = chandra::math::Matrix<Value, N, N>;
 
+    protected:
         template<typename BaseUnits>
         class Proxy
         {
@@ -33,7 +34,9 @@ class Inertial
 
                 template<typename V, typename U>
                 auto offset(const units::Quantity<V, U>& _v) {
-                    o = chandra::units::convert<BaseUnits, U>(chandra::math::solve(A_, _v.value()));
+                    const auto new_o = chandra::units::convert<BaseUnits, U>(chandra::math::solve(A_, _v.value()));
+                    o = new_o;
+                    cout << "New offset = " << o << "\n";
                     return _v;
                 }
 
@@ -44,6 +47,12 @@ class Inertial
                 // Access Gain
                 transform_t gain(const transform_t& _G) {
                     G = _G;
+                    calcA();
+                    return G;
+                }
+
+                transform_t gain(const scalar_t& _g) {
+                    G = _g * transform_t::Eye();
                     calcA();
                     return G;
                 }
