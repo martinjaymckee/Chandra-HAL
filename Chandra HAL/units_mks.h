@@ -1,6 +1,6 @@
 
-#ifndef CHANDRA_UNITS_H
-#define CHANDRA_UNITS_H
+#ifndef CHANDRA_MKS_UNITS_H
+#define CHANDRA_MKS_UNITS_H
 
 #include <ratio>
 
@@ -31,11 +31,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Eg = units::Quantity<Value, Eg>;
-    namespace literals {
-    Q_Eg<long double> operator "" _Eg (long double _v) {
-        return Q_Eg<long double>(_v); }
-    Q_Eg<long double> operator "" _Eg (unsigned long long int _v) {
-        return Q_Eg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Eg<long double> operator "" _Eg_ (long double _v) {
+            return Q_Eg<long double>(_v); }
+        static inline Q_Eg<long double> operator "" _Eg_ (unsigned long long int _v) {
+            return Q_Eg<long double>(_v); }
     }
 
 
@@ -57,11 +58,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pg = units::Quantity<Value, Pg>;
-    namespace literals {
-    Q_Pg<long double> operator "" _Pg (long double _v) {
-        return Q_Pg<long double>(_v); }
-    Q_Pg<long double> operator "" _Pg (unsigned long long int _v) {
-        return Q_Pg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pg<long double> operator "" _Pg_ (long double _v) {
+            return Q_Pg<long double>(_v); }
+        static inline Q_Pg<long double> operator "" _Pg_ (unsigned long long int _v) {
+            return Q_Pg<long double>(_v); }
     }
 
 
@@ -83,11 +85,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tg = units::Quantity<Value, Tg>;
-    namespace literals {
-    Q_Tg<long double> operator "" _Tg (long double _v) {
-        return Q_Tg<long double>(_v); }
-    Q_Tg<long double> operator "" _Tg (unsigned long long int _v) {
-        return Q_Tg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tg<long double> operator "" _Tg_ (long double _v) {
+            return Q_Tg<long double>(_v); }
+        static inline Q_Tg<long double> operator "" _Tg_ (unsigned long long int _v) {
+            return Q_Tg<long double>(_v); }
     }
 
 
@@ -109,11 +112,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gg = units::Quantity<Value, Gg>;
-    namespace literals {
-    Q_Gg<long double> operator "" _Gg (long double _v) {
-        return Q_Gg<long double>(_v); }
-    Q_Gg<long double> operator "" _Gg (unsigned long long int _v) {
-        return Q_Gg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gg<long double> operator "" _Gg_ (long double _v) {
+            return Q_Gg<long double>(_v); }
+        static inline Q_Gg<long double> operator "" _Gg_ (unsigned long long int _v) {
+            return Q_Gg<long double>(_v); }
     }
 
 
@@ -135,11 +139,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mg = units::Quantity<Value, Mg>;
-    namespace literals {
-    Q_Mg<long double> operator "" _Mg (long double _v) {
-        return Q_Mg<long double>(_v); }
-    Q_Mg<long double> operator "" _Mg (unsigned long long int _v) {
-        return Q_Mg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mg<long double> operator "" _Mg_ (long double _v) {
+            return Q_Mg<long double>(_v); }
+        static inline Q_Mg<long double> operator "" _Mg_ (unsigned long long int _v) {
+            return Q_Mg<long double>(_v); }
     }
 
 
@@ -161,11 +166,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kg = units::Quantity<Value, kg>;
-    namespace literals {
-    Q_kg<long double> operator "" _kg (long double _v) {
-        return Q_kg<long double>(_v); }
-    Q_kg<long double> operator "" _kg (unsigned long long int _v) {
-        return Q_kg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kg<long double> operator "" _kg_ (long double _v) {
+            return Q_kg<long double>(_v); }
+        static inline Q_kg<long double> operator "" _kg_ (unsigned long long int _v) {
+            return Q_kg<long double>(_v); }
     }
 
 
@@ -187,11 +193,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hg = units::Quantity<Value, hg>;
-    namespace literals {
-    Q_hg<long double> operator "" _hg (long double _v) {
-        return Q_hg<long double>(_v); }
-    Q_hg<long double> operator "" _hg (unsigned long long int _v) {
-        return Q_hg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hg<long double> operator "" _hg_ (long double _v) {
+            return Q_hg<long double>(_v); }
+        static inline Q_hg<long double> operator "" _hg_ (unsigned long long int _v) {
+            return Q_hg<long double>(_v); }
     }
 
 
@@ -213,11 +220,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dag = units::Quantity<Value, dag>;
-    namespace literals {
-    Q_dag<long double> operator "" _dag (long double _v) {
-        return Q_dag<long double>(_v); }
-    Q_dag<long double> operator "" _dag (unsigned long long int _v) {
-        return Q_dag<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dag<long double> operator "" _dag_ (long double _v) {
+            return Q_dag<long double>(_v); }
+        static inline Q_dag<long double> operator "" _dag_ (unsigned long long int _v) {
+            return Q_dag<long double>(_v); }
     }
 
 
@@ -239,11 +247,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_g = units::Quantity<Value, g>;
-    namespace literals {
-    Q_g<long double> operator "" _g (long double _v) {
-        return Q_g<long double>(_v); }
-    Q_g<long double> operator "" _g (unsigned long long int _v) {
-        return Q_g<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_g<long double> operator "" _g_ (long double _v) {
+            return Q_g<long double>(_v); }
+        static inline Q_g<long double> operator "" _g_ (unsigned long long int _v) {
+            return Q_g<long double>(_v); }
     }
 
 
@@ -265,11 +274,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dg = units::Quantity<Value, dg>;
-    namespace literals {
-    Q_dg<long double> operator "" _dg (long double _v) {
-        return Q_dg<long double>(_v); }
-    Q_dg<long double> operator "" _dg (unsigned long long int _v) {
-        return Q_dg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dg<long double> operator "" _dg_ (long double _v) {
+            return Q_dg<long double>(_v); }
+        static inline Q_dg<long double> operator "" _dg_ (unsigned long long int _v) {
+            return Q_dg<long double>(_v); }
     }
 
 
@@ -291,11 +301,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cg = units::Quantity<Value, cg>;
-    namespace literals {
-    Q_cg<long double> operator "" _cg (long double _v) {
-        return Q_cg<long double>(_v); }
-    Q_cg<long double> operator "" _cg (unsigned long long int _v) {
-        return Q_cg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cg<long double> operator "" _cg_ (long double _v) {
+            return Q_cg<long double>(_v); }
+        static inline Q_cg<long double> operator "" _cg_ (unsigned long long int _v) {
+            return Q_cg<long double>(_v); }
     }
 
 
@@ -317,11 +328,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_slug = units::Quantity<Value, slug>;
-    namespace literals {
-    Q_slug<long double> operator "" _slug (long double _v) {
-        return Q_slug<long double>(_v); }
-    Q_slug<long double> operator "" _slug (unsigned long long int _v) {
-        return Q_slug<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_slug<long double> operator "" _slug_ (long double _v) {
+            return Q_slug<long double>(_v); }
+        static inline Q_slug<long double> operator "" _slug_ (unsigned long long int _v) {
+            return Q_slug<long double>(_v); }
     }
 
 
@@ -343,11 +355,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EN = units::Quantity<Value, EN>;
-    namespace literals {
-    Q_EN<long double> operator "" _EN (long double _v) {
-        return Q_EN<long double>(_v); }
-    Q_EN<long double> operator "" _EN (unsigned long long int _v) {
-        return Q_EN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EN<long double> operator "" _EN_ (long double _v) {
+            return Q_EN<long double>(_v); }
+        static inline Q_EN<long double> operator "" _EN_ (unsigned long long int _v) {
+            return Q_EN<long double>(_v); }
     }
 
 
@@ -369,11 +382,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PN = units::Quantity<Value, PN>;
-    namespace literals {
-    Q_PN<long double> operator "" _PN (long double _v) {
-        return Q_PN<long double>(_v); }
-    Q_PN<long double> operator "" _PN (unsigned long long int _v) {
-        return Q_PN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PN<long double> operator "" _PN_ (long double _v) {
+            return Q_PN<long double>(_v); }
+        static inline Q_PN<long double> operator "" _PN_ (unsigned long long int _v) {
+            return Q_PN<long double>(_v); }
     }
 
 
@@ -395,11 +409,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TN = units::Quantity<Value, TN>;
-    namespace literals {
-    Q_TN<long double> operator "" _TN (long double _v) {
-        return Q_TN<long double>(_v); }
-    Q_TN<long double> operator "" _TN (unsigned long long int _v) {
-        return Q_TN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TN<long double> operator "" _TN_ (long double _v) {
+            return Q_TN<long double>(_v); }
+        static inline Q_TN<long double> operator "" _TN_ (unsigned long long int _v) {
+            return Q_TN<long double>(_v); }
     }
 
 
@@ -421,11 +436,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GN = units::Quantity<Value, GN>;
-    namespace literals {
-    Q_GN<long double> operator "" _GN (long double _v) {
-        return Q_GN<long double>(_v); }
-    Q_GN<long double> operator "" _GN (unsigned long long int _v) {
-        return Q_GN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GN<long double> operator "" _GN_ (long double _v) {
+            return Q_GN<long double>(_v); }
+        static inline Q_GN<long double> operator "" _GN_ (unsigned long long int _v) {
+            return Q_GN<long double>(_v); }
     }
 
 
@@ -447,11 +463,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MN = units::Quantity<Value, MN>;
-    namespace literals {
-    Q_MN<long double> operator "" _MN (long double _v) {
-        return Q_MN<long double>(_v); }
-    Q_MN<long double> operator "" _MN (unsigned long long int _v) {
-        return Q_MN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MN<long double> operator "" _MN_ (long double _v) {
+            return Q_MN<long double>(_v); }
+        static inline Q_MN<long double> operator "" _MN_ (unsigned long long int _v) {
+            return Q_MN<long double>(_v); }
     }
 
 
@@ -473,11 +490,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kN = units::Quantity<Value, kN>;
-    namespace literals {
-    Q_kN<long double> operator "" _kN (long double _v) {
-        return Q_kN<long double>(_v); }
-    Q_kN<long double> operator "" _kN (unsigned long long int _v) {
-        return Q_kN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kN<long double> operator "" _kN_ (long double _v) {
+            return Q_kN<long double>(_v); }
+        static inline Q_kN<long double> operator "" _kN_ (unsigned long long int _v) {
+            return Q_kN<long double>(_v); }
     }
 
 
@@ -499,11 +517,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hN = units::Quantity<Value, hN>;
-    namespace literals {
-    Q_hN<long double> operator "" _hN (long double _v) {
-        return Q_hN<long double>(_v); }
-    Q_hN<long double> operator "" _hN (unsigned long long int _v) {
-        return Q_hN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hN<long double> operator "" _hN_ (long double _v) {
+            return Q_hN<long double>(_v); }
+        static inline Q_hN<long double> operator "" _hN_ (unsigned long long int _v) {
+            return Q_hN<long double>(_v); }
     }
 
 
@@ -525,11 +544,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daN = units::Quantity<Value, daN>;
-    namespace literals {
-    Q_daN<long double> operator "" _daN (long double _v) {
-        return Q_daN<long double>(_v); }
-    Q_daN<long double> operator "" _daN (unsigned long long int _v) {
-        return Q_daN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daN<long double> operator "" _daN_ (long double _v) {
+            return Q_daN<long double>(_v); }
+        static inline Q_daN<long double> operator "" _daN_ (unsigned long long int _v) {
+            return Q_daN<long double>(_v); }
     }
 
 
@@ -551,11 +571,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_N = units::Quantity<Value, N>;
-    namespace literals {
-    Q_N<long double> operator "" _N (long double _v) {
-        return Q_N<long double>(_v); }
-    Q_N<long double> operator "" _N (unsigned long long int _v) {
-        return Q_N<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_N<long double> operator "" _N_ (long double _v) {
+            return Q_N<long double>(_v); }
+        static inline Q_N<long double> operator "" _N_ (unsigned long long int _v) {
+            return Q_N<long double>(_v); }
     }
 
 
@@ -577,11 +598,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dN = units::Quantity<Value, dN>;
-    namespace literals {
-    Q_dN<long double> operator "" _dN (long double _v) {
-        return Q_dN<long double>(_v); }
-    Q_dN<long double> operator "" _dN (unsigned long long int _v) {
-        return Q_dN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dN<long double> operator "" _dN_ (long double _v) {
+            return Q_dN<long double>(_v); }
+        static inline Q_dN<long double> operator "" _dN_ (unsigned long long int _v) {
+            return Q_dN<long double>(_v); }
     }
 
 
@@ -603,11 +625,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cN = units::Quantity<Value, cN>;
-    namespace literals {
-    Q_cN<long double> operator "" _cN (long double _v) {
-        return Q_cN<long double>(_v); }
-    Q_cN<long double> operator "" _cN (unsigned long long int _v) {
-        return Q_cN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cN<long double> operator "" _cN_ (long double _v) {
+            return Q_cN<long double>(_v); }
+        static inline Q_cN<long double> operator "" _cN_ (unsigned long long int _v) {
+            return Q_cN<long double>(_v); }
     }
 
 
@@ -629,11 +652,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mN = units::Quantity<Value, mN>;
-    namespace literals {
-    Q_mN<long double> operator "" _mN (long double _v) {
-        return Q_mN<long double>(_v); }
-    Q_mN<long double> operator "" _mN (unsigned long long int _v) {
-        return Q_mN<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mN<long double> operator "" _mN_ (long double _v) {
+            return Q_mN<long double>(_v); }
+        static inline Q_mN<long double> operator "" _mN_ (unsigned long long int _v) {
+            return Q_mN<long double>(_v); }
     }
 
 
@@ -655,11 +679,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Egf = units::Quantity<Value, Egf>;
-    namespace literals {
-    Q_Egf<long double> operator "" _Egf (long double _v) {
-        return Q_Egf<long double>(_v); }
-    Q_Egf<long double> operator "" _Egf (unsigned long long int _v) {
-        return Q_Egf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Egf<long double> operator "" _Egf_ (long double _v) {
+            return Q_Egf<long double>(_v); }
+        static inline Q_Egf<long double> operator "" _Egf_ (unsigned long long int _v) {
+            return Q_Egf<long double>(_v); }
     }
 
 
@@ -681,11 +706,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pgf = units::Quantity<Value, Pgf>;
-    namespace literals {
-    Q_Pgf<long double> operator "" _Pgf (long double _v) {
-        return Q_Pgf<long double>(_v); }
-    Q_Pgf<long double> operator "" _Pgf (unsigned long long int _v) {
-        return Q_Pgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pgf<long double> operator "" _Pgf_ (long double _v) {
+            return Q_Pgf<long double>(_v); }
+        static inline Q_Pgf<long double> operator "" _Pgf_ (unsigned long long int _v) {
+            return Q_Pgf<long double>(_v); }
     }
 
 
@@ -707,11 +733,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tgf = units::Quantity<Value, Tgf>;
-    namespace literals {
-    Q_Tgf<long double> operator "" _Tgf (long double _v) {
-        return Q_Tgf<long double>(_v); }
-    Q_Tgf<long double> operator "" _Tgf (unsigned long long int _v) {
-        return Q_Tgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tgf<long double> operator "" _Tgf_ (long double _v) {
+            return Q_Tgf<long double>(_v); }
+        static inline Q_Tgf<long double> operator "" _Tgf_ (unsigned long long int _v) {
+            return Q_Tgf<long double>(_v); }
     }
 
 
@@ -733,11 +760,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ggf = units::Quantity<Value, Ggf>;
-    namespace literals {
-    Q_Ggf<long double> operator "" _Ggf (long double _v) {
-        return Q_Ggf<long double>(_v); }
-    Q_Ggf<long double> operator "" _Ggf (unsigned long long int _v) {
-        return Q_Ggf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ggf<long double> operator "" _Ggf_ (long double _v) {
+            return Q_Ggf<long double>(_v); }
+        static inline Q_Ggf<long double> operator "" _Ggf_ (unsigned long long int _v) {
+            return Q_Ggf<long double>(_v); }
     }
 
 
@@ -759,11 +787,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mgf = units::Quantity<Value, Mgf>;
-    namespace literals {
-    Q_Mgf<long double> operator "" _Mgf (long double _v) {
-        return Q_Mgf<long double>(_v); }
-    Q_Mgf<long double> operator "" _Mgf (unsigned long long int _v) {
-        return Q_Mgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mgf<long double> operator "" _Mgf_ (long double _v) {
+            return Q_Mgf<long double>(_v); }
+        static inline Q_Mgf<long double> operator "" _Mgf_ (unsigned long long int _v) {
+            return Q_Mgf<long double>(_v); }
     }
 
 
@@ -785,11 +814,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kgf = units::Quantity<Value, kgf>;
-    namespace literals {
-    Q_kgf<long double> operator "" _kgf (long double _v) {
-        return Q_kgf<long double>(_v); }
-    Q_kgf<long double> operator "" _kgf (unsigned long long int _v) {
-        return Q_kgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kgf<long double> operator "" _kgf_ (long double _v) {
+            return Q_kgf<long double>(_v); }
+        static inline Q_kgf<long double> operator "" _kgf_ (unsigned long long int _v) {
+            return Q_kgf<long double>(_v); }
     }
 
 
@@ -811,11 +841,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hgf = units::Quantity<Value, hgf>;
-    namespace literals {
-    Q_hgf<long double> operator "" _hgf (long double _v) {
-        return Q_hgf<long double>(_v); }
-    Q_hgf<long double> operator "" _hgf (unsigned long long int _v) {
-        return Q_hgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hgf<long double> operator "" _hgf_ (long double _v) {
+            return Q_hgf<long double>(_v); }
+        static inline Q_hgf<long double> operator "" _hgf_ (unsigned long long int _v) {
+            return Q_hgf<long double>(_v); }
     }
 
 
@@ -837,11 +868,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dagf = units::Quantity<Value, dagf>;
-    namespace literals {
-    Q_dagf<long double> operator "" _dagf (long double _v) {
-        return Q_dagf<long double>(_v); }
-    Q_dagf<long double> operator "" _dagf (unsigned long long int _v) {
-        return Q_dagf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dagf<long double> operator "" _dagf_ (long double _v) {
+            return Q_dagf<long double>(_v); }
+        static inline Q_dagf<long double> operator "" _dagf_ (unsigned long long int _v) {
+            return Q_dagf<long double>(_v); }
     }
 
 
@@ -863,11 +895,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_gf = units::Quantity<Value, gf>;
-    namespace literals {
-    Q_gf<long double> operator "" _gf (long double _v) {
-        return Q_gf<long double>(_v); }
-    Q_gf<long double> operator "" _gf (unsigned long long int _v) {
-        return Q_gf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_gf<long double> operator "" _gf_ (long double _v) {
+            return Q_gf<long double>(_v); }
+        static inline Q_gf<long double> operator "" _gf_ (unsigned long long int _v) {
+            return Q_gf<long double>(_v); }
     }
 
 
@@ -889,11 +922,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dgf = units::Quantity<Value, dgf>;
-    namespace literals {
-    Q_dgf<long double> operator "" _dgf (long double _v) {
-        return Q_dgf<long double>(_v); }
-    Q_dgf<long double> operator "" _dgf (unsigned long long int _v) {
-        return Q_dgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dgf<long double> operator "" _dgf_ (long double _v) {
+            return Q_dgf<long double>(_v); }
+        static inline Q_dgf<long double> operator "" _dgf_ (unsigned long long int _v) {
+            return Q_dgf<long double>(_v); }
     }
 
 
@@ -915,11 +949,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cgf = units::Quantity<Value, cgf>;
-    namespace literals {
-    Q_cgf<long double> operator "" _cgf (long double _v) {
-        return Q_cgf<long double>(_v); }
-    Q_cgf<long double> operator "" _cgf (unsigned long long int _v) {
-        return Q_cgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cgf<long double> operator "" _cgf_ (long double _v) {
+            return Q_cgf<long double>(_v); }
+        static inline Q_cgf<long double> operator "" _cgf_ (unsigned long long int _v) {
+            return Q_cgf<long double>(_v); }
     }
 
 
@@ -941,11 +976,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mgf = units::Quantity<Value, mgf>;
-    namespace literals {
-    Q_mgf<long double> operator "" _mgf (long double _v) {
-        return Q_mgf<long double>(_v); }
-    Q_mgf<long double> operator "" _mgf (unsigned long long int _v) {
-        return Q_mgf<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mgf<long double> operator "" _mgf_ (long double _v) {
+            return Q_mgf<long double>(_v); }
+        static inline Q_mgf<long double> operator "" _mgf_ (unsigned long long int _v) {
+            return Q_mgf<long double>(_v); }
     }
 
 
@@ -967,11 +1003,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_lb = units::Quantity<Value, lb>;
-    namespace literals {
-    Q_lb<long double> operator "" _lb (long double _v) {
-        return Q_lb<long double>(_v); }
-    Q_lb<long double> operator "" _lb (unsigned long long int _v) {
-        return Q_lb<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_lb<long double> operator "" _lb_ (long double _v) {
+            return Q_lb<long double>(_v); }
+        static inline Q_lb<long double> operator "" _lb_ (unsigned long long int _v) {
+            return Q_lb<long double>(_v); }
     }
 
 
@@ -993,11 +1030,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_pdl = units::Quantity<Value, pdl>;
-    namespace literals {
-    Q_pdl<long double> operator "" _pdl (long double _v) {
-        return Q_pdl<long double>(_v); }
-    Q_pdl<long double> operator "" _pdl (unsigned long long int _v) {
-        return Q_pdl<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_pdl<long double> operator "" _pdl_ (long double _v) {
+            return Q_pdl<long double>(_v); }
+        static inline Q_pdl<long double> operator "" _pdl_ (unsigned long long int _v) {
+            return Q_pdl<long double>(_v); }
     }
 
 
@@ -1019,11 +1057,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Em = units::Quantity<Value, Em>;
-    namespace literals {
-    Q_Em<long double> operator "" _Em (long double _v) {
-        return Q_Em<long double>(_v); }
-    Q_Em<long double> operator "" _Em (unsigned long long int _v) {
-        return Q_Em<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Em<long double> operator "" _Em_ (long double _v) {
+            return Q_Em<long double>(_v); }
+        static inline Q_Em<long double> operator "" _Em_ (unsigned long long int _v) {
+            return Q_Em<long double>(_v); }
     }
 
 
@@ -1045,11 +1084,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pm = units::Quantity<Value, Pm>;
-    namespace literals {
-    Q_Pm<long double> operator "" _Pm (long double _v) {
-        return Q_Pm<long double>(_v); }
-    Q_Pm<long double> operator "" _Pm (unsigned long long int _v) {
-        return Q_Pm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pm<long double> operator "" _Pm_ (long double _v) {
+            return Q_Pm<long double>(_v); }
+        static inline Q_Pm<long double> operator "" _Pm_ (unsigned long long int _v) {
+            return Q_Pm<long double>(_v); }
     }
 
 
@@ -1071,11 +1111,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tm = units::Quantity<Value, Tm>;
-    namespace literals {
-    Q_Tm<long double> operator "" _Tm (long double _v) {
-        return Q_Tm<long double>(_v); }
-    Q_Tm<long double> operator "" _Tm (unsigned long long int _v) {
-        return Q_Tm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tm<long double> operator "" _Tm_ (long double _v) {
+            return Q_Tm<long double>(_v); }
+        static inline Q_Tm<long double> operator "" _Tm_ (unsigned long long int _v) {
+            return Q_Tm<long double>(_v); }
     }
 
 
@@ -1097,11 +1138,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gm = units::Quantity<Value, Gm>;
-    namespace literals {
-    Q_Gm<long double> operator "" _Gm (long double _v) {
-        return Q_Gm<long double>(_v); }
-    Q_Gm<long double> operator "" _Gm (unsigned long long int _v) {
-        return Q_Gm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gm<long double> operator "" _Gm_ (long double _v) {
+            return Q_Gm<long double>(_v); }
+        static inline Q_Gm<long double> operator "" _Gm_ (unsigned long long int _v) {
+            return Q_Gm<long double>(_v); }
     }
 
 
@@ -1123,11 +1165,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm = units::Quantity<Value, Mm>;
-    namespace literals {
-    Q_Mm<long double> operator "" _Mm (long double _v) {
-        return Q_Mm<long double>(_v); }
-    Q_Mm<long double> operator "" _Mm (unsigned long long int _v) {
-        return Q_Mm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm<long double> operator "" _Mm_ (long double _v) {
+            return Q_Mm<long double>(_v); }
+        static inline Q_Mm<long double> operator "" _Mm_ (unsigned long long int _v) {
+            return Q_Mm<long double>(_v); }
     }
 
 
@@ -1149,11 +1192,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km = units::Quantity<Value, km>;
-    namespace literals {
-    Q_km<long double> operator "" _km (long double _v) {
-        return Q_km<long double>(_v); }
-    Q_km<long double> operator "" _km (unsigned long long int _v) {
-        return Q_km<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km<long double> operator "" _km_ (long double _v) {
+            return Q_km<long double>(_v); }
+        static inline Q_km<long double> operator "" _km_ (unsigned long long int _v) {
+            return Q_km<long double>(_v); }
     }
 
 
@@ -1175,11 +1219,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm = units::Quantity<Value, hm>;
-    namespace literals {
-    Q_hm<long double> operator "" _hm (long double _v) {
-        return Q_hm<long double>(_v); }
-    Q_hm<long double> operator "" _hm (unsigned long long int _v) {
-        return Q_hm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm<long double> operator "" _hm_ (long double _v) {
+            return Q_hm<long double>(_v); }
+        static inline Q_hm<long double> operator "" _hm_ (unsigned long long int _v) {
+            return Q_hm<long double>(_v); }
     }
 
 
@@ -1201,11 +1246,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam = units::Quantity<Value, dam>;
-    namespace literals {
-    Q_dam<long double> operator "" _dam (long double _v) {
-        return Q_dam<long double>(_v); }
-    Q_dam<long double> operator "" _dam (unsigned long long int _v) {
-        return Q_dam<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam<long double> operator "" _dam_ (long double _v) {
+            return Q_dam<long double>(_v); }
+        static inline Q_dam<long double> operator "" _dam_ (unsigned long long int _v) {
+            return Q_dam<long double>(_v); }
     }
 
 
@@ -1227,11 +1273,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m = units::Quantity<Value, m>;
-    namespace literals {
-    Q_m<long double> operator "" _m (long double _v) {
-        return Q_m<long double>(_v); }
-    Q_m<long double> operator "" _m (unsigned long long int _v) {
-        return Q_m<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m<long double> operator "" _m_ (long double _v) {
+            return Q_m<long double>(_v); }
+        static inline Q_m<long double> operator "" _m_ (unsigned long long int _v) {
+            return Q_m<long double>(_v); }
     }
 
 
@@ -1253,11 +1300,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm = units::Quantity<Value, dm>;
-    namespace literals {
-    Q_dm<long double> operator "" _dm (long double _v) {
-        return Q_dm<long double>(_v); }
-    Q_dm<long double> operator "" _dm (unsigned long long int _v) {
-        return Q_dm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm<long double> operator "" _dm_ (long double _v) {
+            return Q_dm<long double>(_v); }
+        static inline Q_dm<long double> operator "" _dm_ (unsigned long long int _v) {
+            return Q_dm<long double>(_v); }
     }
 
 
@@ -1279,11 +1327,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm = units::Quantity<Value, cm>;
-    namespace literals {
-    Q_cm<long double> operator "" _cm (long double _v) {
-        return Q_cm<long double>(_v); }
-    Q_cm<long double> operator "" _cm (unsigned long long int _v) {
-        return Q_cm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm<long double> operator "" _cm_ (long double _v) {
+            return Q_cm<long double>(_v); }
+        static inline Q_cm<long double> operator "" _cm_ (unsigned long long int _v) {
+            return Q_cm<long double>(_v); }
     }
 
 
@@ -1305,11 +1354,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mm = units::Quantity<Value, mm>;
-    namespace literals {
-    Q_mm<long double> operator "" _mm (long double _v) {
-        return Q_mm<long double>(_v); }
-    Q_mm<long double> operator "" _mm (unsigned long long int _v) {
-        return Q_mm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mm<long double> operator "" _mm_ (long double _v) {
+            return Q_mm<long double>(_v); }
+        static inline Q_mm<long double> operator "" _mm_ (unsigned long long int _v) {
+            return Q_mm<long double>(_v); }
     }
 
 
@@ -1331,11 +1381,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi = units::Quantity<Value, mi>;
-    namespace literals {
-    Q_mi<long double> operator "" _mi (long double _v) {
-        return Q_mi<long double>(_v); }
-    Q_mi<long double> operator "" _mi (unsigned long long int _v) {
-        return Q_mi<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi<long double> operator "" _mi_ (long double _v) {
+            return Q_mi<long double>(_v); }
+        static inline Q_mi<long double> operator "" _mi_ (unsigned long long int _v) {
+            return Q_mi<long double>(_v); }
     }
 
 
@@ -1357,11 +1408,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd = units::Quantity<Value, yd>;
-    namespace literals {
-    Q_yd<long double> operator "" _yd (long double _v) {
-        return Q_yd<long double>(_v); }
-    Q_yd<long double> operator "" _yd (unsigned long long int _v) {
-        return Q_yd<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd<long double> operator "" _yd_ (long double _v) {
+            return Q_yd<long double>(_v); }
+        static inline Q_yd<long double> operator "" _yd_ (unsigned long long int _v) {
+            return Q_yd<long double>(_v); }
     }
 
 
@@ -1383,11 +1435,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ft = units::Quantity<Value, ft>;
-    namespace literals {
-    Q_ft<long double> operator "" _ft (long double _v) {
-        return Q_ft<long double>(_v); }
-    Q_ft<long double> operator "" _ft (unsigned long long int _v) {
-        return Q_ft<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ft<long double> operator "" _ft_ (long double _v) {
+            return Q_ft<long double>(_v); }
+        static inline Q_ft<long double> operator "" _ft_ (unsigned long long int _v) {
+            return Q_ft<long double>(_v); }
     }
 
 
@@ -1409,11 +1462,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in = units::Quantity<Value, in>;
-    namespace literals {
-    Q_in<long double> operator "" _in (long double _v) {
-        return Q_in<long double>(_v); }
-    Q_in<long double> operator "" _in (unsigned long long int _v) {
-        return Q_in<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in<long double> operator "" _in_ (long double _v) {
+            return Q_in<long double>(_v); }
+        static inline Q_in<long double> operator "" _in_ (unsigned long long int _v) {
+            return Q_in<long double>(_v); }
     }
 
 
@@ -1435,11 +1489,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gm2 = units::Quantity<Value, Gm2>;
-    namespace literals {
-    Q_Gm2<long double> operator "" _Gm2 (long double _v) {
-        return Q_Gm2<long double>(_v); }
-    Q_Gm2<long double> operator "" _Gm2 (unsigned long long int _v) {
-        return Q_Gm2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gm2<long double> operator "" _Gm2_ (long double _v) {
+            return Q_Gm2<long double>(_v); }
+        static inline Q_Gm2<long double> operator "" _Gm2_ (unsigned long long int _v) {
+            return Q_Gm2<long double>(_v); }
     }
 
 
@@ -1461,11 +1516,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm2 = units::Quantity<Value, Mm2>;
-    namespace literals {
-    Q_Mm2<long double> operator "" _Mm2 (long double _v) {
-        return Q_Mm2<long double>(_v); }
-    Q_Mm2<long double> operator "" _Mm2 (unsigned long long int _v) {
-        return Q_Mm2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm2<long double> operator "" _Mm2_ (long double _v) {
+            return Q_Mm2<long double>(_v); }
+        static inline Q_Mm2<long double> operator "" _Mm2_ (unsigned long long int _v) {
+            return Q_Mm2<long double>(_v); }
     }
 
 
@@ -1487,11 +1543,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km2 = units::Quantity<Value, km2>;
-    namespace literals {
-    Q_km2<long double> operator "" _km2 (long double _v) {
-        return Q_km2<long double>(_v); }
-    Q_km2<long double> operator "" _km2 (unsigned long long int _v) {
-        return Q_km2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km2<long double> operator "" _km2_ (long double _v) {
+            return Q_km2<long double>(_v); }
+        static inline Q_km2<long double> operator "" _km2_ (unsigned long long int _v) {
+            return Q_km2<long double>(_v); }
     }
 
 
@@ -1513,11 +1570,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm2 = units::Quantity<Value, hm2>;
-    namespace literals {
-    Q_hm2<long double> operator "" _hm2 (long double _v) {
-        return Q_hm2<long double>(_v); }
-    Q_hm2<long double> operator "" _hm2 (unsigned long long int _v) {
-        return Q_hm2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm2<long double> operator "" _hm2_ (long double _v) {
+            return Q_hm2<long double>(_v); }
+        static inline Q_hm2<long double> operator "" _hm2_ (unsigned long long int _v) {
+            return Q_hm2<long double>(_v); }
     }
 
 
@@ -1539,11 +1597,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam2 = units::Quantity<Value, dam2>;
-    namespace literals {
-    Q_dam2<long double> operator "" _dam2 (long double _v) {
-        return Q_dam2<long double>(_v); }
-    Q_dam2<long double> operator "" _dam2 (unsigned long long int _v) {
-        return Q_dam2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam2<long double> operator "" _dam2_ (long double _v) {
+            return Q_dam2<long double>(_v); }
+        static inline Q_dam2<long double> operator "" _dam2_ (unsigned long long int _v) {
+            return Q_dam2<long double>(_v); }
     }
 
 
@@ -1565,11 +1624,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m2 = units::Quantity<Value, m2>;
-    namespace literals {
-    Q_m2<long double> operator "" _m2 (long double _v) {
-        return Q_m2<long double>(_v); }
-    Q_m2<long double> operator "" _m2 (unsigned long long int _v) {
-        return Q_m2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m2<long double> operator "" _m2_ (long double _v) {
+            return Q_m2<long double>(_v); }
+        static inline Q_m2<long double> operator "" _m2_ (unsigned long long int _v) {
+            return Q_m2<long double>(_v); }
     }
 
 
@@ -1591,11 +1651,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm2 = units::Quantity<Value, dm2>;
-    namespace literals {
-    Q_dm2<long double> operator "" _dm2 (long double _v) {
-        return Q_dm2<long double>(_v); }
-    Q_dm2<long double> operator "" _dm2 (unsigned long long int _v) {
-        return Q_dm2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm2<long double> operator "" _dm2_ (long double _v) {
+            return Q_dm2<long double>(_v); }
+        static inline Q_dm2<long double> operator "" _dm2_ (unsigned long long int _v) {
+            return Q_dm2<long double>(_v); }
     }
 
 
@@ -1617,11 +1678,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm2 = units::Quantity<Value, cm2>;
-    namespace literals {
-    Q_cm2<long double> operator "" _cm2 (long double _v) {
-        return Q_cm2<long double>(_v); }
-    Q_cm2<long double> operator "" _cm2 (unsigned long long int _v) {
-        return Q_cm2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm2<long double> operator "" _cm2_ (long double _v) {
+            return Q_cm2<long double>(_v); }
+        static inline Q_cm2<long double> operator "" _cm2_ (unsigned long long int _v) {
+            return Q_cm2<long double>(_v); }
     }
 
 
@@ -1643,11 +1705,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi2 = units::Quantity<Value, mi2>;
-    namespace literals {
-    Q_mi2<long double> operator "" _mi2 (long double _v) {
-        return Q_mi2<long double>(_v); }
-    Q_mi2<long double> operator "" _mi2 (unsigned long long int _v) {
-        return Q_mi2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi2<long double> operator "" _mi2_ (long double _v) {
+            return Q_mi2<long double>(_v); }
+        static inline Q_mi2<long double> operator "" _mi2_ (unsigned long long int _v) {
+            return Q_mi2<long double>(_v); }
     }
 
 
@@ -1669,11 +1732,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd2 = units::Quantity<Value, yd2>;
-    namespace literals {
-    Q_yd2<long double> operator "" _yd2 (long double _v) {
-        return Q_yd2<long double>(_v); }
-    Q_yd2<long double> operator "" _yd2 (unsigned long long int _v) {
-        return Q_yd2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd2<long double> operator "" _yd2_ (long double _v) {
+            return Q_yd2<long double>(_v); }
+        static inline Q_yd2<long double> operator "" _yd2_ (unsigned long long int _v) {
+            return Q_yd2<long double>(_v); }
     }
 
 
@@ -1695,11 +1759,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ft2 = units::Quantity<Value, ft2>;
-    namespace literals {
-    Q_ft2<long double> operator "" _ft2 (long double _v) {
-        return Q_ft2<long double>(_v); }
-    Q_ft2<long double> operator "" _ft2 (unsigned long long int _v) {
-        return Q_ft2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ft2<long double> operator "" _ft2_ (long double _v) {
+            return Q_ft2<long double>(_v); }
+        static inline Q_ft2<long double> operator "" _ft2_ (unsigned long long int _v) {
+            return Q_ft2<long double>(_v); }
     }
 
 
@@ -1721,11 +1786,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in2 = units::Quantity<Value, in2>;
-    namespace literals {
-    Q_in2<long double> operator "" _in2 (long double _v) {
-        return Q_in2<long double>(_v); }
-    Q_in2<long double> operator "" _in2 (unsigned long long int _v) {
-        return Q_in2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in2<long double> operator "" _in2_ (long double _v) {
+            return Q_in2<long double>(_v); }
+        static inline Q_in2<long double> operator "" _in2_ (unsigned long long int _v) {
+            return Q_in2<long double>(_v); }
     }
 
 
@@ -1747,11 +1813,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm3 = units::Quantity<Value, Mm3>;
-    namespace literals {
-    Q_Mm3<long double> operator "" _Mm3 (long double _v) {
-        return Q_Mm3<long double>(_v); }
-    Q_Mm3<long double> operator "" _Mm3 (unsigned long long int _v) {
-        return Q_Mm3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm3<long double> operator "" _Mm3_ (long double _v) {
+            return Q_Mm3<long double>(_v); }
+        static inline Q_Mm3<long double> operator "" _Mm3_ (unsigned long long int _v) {
+            return Q_Mm3<long double>(_v); }
     }
 
 
@@ -1773,11 +1840,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km3 = units::Quantity<Value, km3>;
-    namespace literals {
-    Q_km3<long double> operator "" _km3 (long double _v) {
-        return Q_km3<long double>(_v); }
-    Q_km3<long double> operator "" _km3 (unsigned long long int _v) {
-        return Q_km3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km3<long double> operator "" _km3_ (long double _v) {
+            return Q_km3<long double>(_v); }
+        static inline Q_km3<long double> operator "" _km3_ (unsigned long long int _v) {
+            return Q_km3<long double>(_v); }
     }
 
 
@@ -1799,11 +1867,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm3 = units::Quantity<Value, hm3>;
-    namespace literals {
-    Q_hm3<long double> operator "" _hm3 (long double _v) {
-        return Q_hm3<long double>(_v); }
-    Q_hm3<long double> operator "" _hm3 (unsigned long long int _v) {
-        return Q_hm3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm3<long double> operator "" _hm3_ (long double _v) {
+            return Q_hm3<long double>(_v); }
+        static inline Q_hm3<long double> operator "" _hm3_ (unsigned long long int _v) {
+            return Q_hm3<long double>(_v); }
     }
 
 
@@ -1825,11 +1894,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam3 = units::Quantity<Value, dam3>;
-    namespace literals {
-    Q_dam3<long double> operator "" _dam3 (long double _v) {
-        return Q_dam3<long double>(_v); }
-    Q_dam3<long double> operator "" _dam3 (unsigned long long int _v) {
-        return Q_dam3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam3<long double> operator "" _dam3_ (long double _v) {
+            return Q_dam3<long double>(_v); }
+        static inline Q_dam3<long double> operator "" _dam3_ (unsigned long long int _v) {
+            return Q_dam3<long double>(_v); }
     }
 
 
@@ -1851,11 +1921,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m3 = units::Quantity<Value, m3>;
-    namespace literals {
-    Q_m3<long double> operator "" _m3 (long double _v) {
-        return Q_m3<long double>(_v); }
-    Q_m3<long double> operator "" _m3 (unsigned long long int _v) {
-        return Q_m3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m3<long double> operator "" _m3_ (long double _v) {
+            return Q_m3<long double>(_v); }
+        static inline Q_m3<long double> operator "" _m3_ (unsigned long long int _v) {
+            return Q_m3<long double>(_v); }
     }
 
 
@@ -1877,11 +1948,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm3 = units::Quantity<Value, dm3>;
-    namespace literals {
-    Q_dm3<long double> operator "" _dm3 (long double _v) {
-        return Q_dm3<long double>(_v); }
-    Q_dm3<long double> operator "" _dm3 (unsigned long long int _v) {
-        return Q_dm3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm3<long double> operator "" _dm3_ (long double _v) {
+            return Q_dm3<long double>(_v); }
+        static inline Q_dm3<long double> operator "" _dm3_ (unsigned long long int _v) {
+            return Q_dm3<long double>(_v); }
     }
 
 
@@ -1903,11 +1975,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm3 = units::Quantity<Value, cm3>;
-    namespace literals {
-    Q_cm3<long double> operator "" _cm3 (long double _v) {
-        return Q_cm3<long double>(_v); }
-    Q_cm3<long double> operator "" _cm3 (unsigned long long int _v) {
-        return Q_cm3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm3<long double> operator "" _cm3_ (long double _v) {
+            return Q_cm3<long double>(_v); }
+        static inline Q_cm3<long double> operator "" _cm3_ (unsigned long long int _v) {
+            return Q_cm3<long double>(_v); }
     }
 
 
@@ -1929,11 +2002,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi3 = units::Quantity<Value, mi3>;
-    namespace literals {
-    Q_mi3<long double> operator "" _mi3 (long double _v) {
-        return Q_mi3<long double>(_v); }
-    Q_mi3<long double> operator "" _mi3 (unsigned long long int _v) {
-        return Q_mi3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi3<long double> operator "" _mi3_ (long double _v) {
+            return Q_mi3<long double>(_v); }
+        static inline Q_mi3<long double> operator "" _mi3_ (unsigned long long int _v) {
+            return Q_mi3<long double>(_v); }
     }
 
 
@@ -1955,11 +2029,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd3 = units::Quantity<Value, yd3>;
-    namespace literals {
-    Q_yd3<long double> operator "" _yd3 (long double _v) {
-        return Q_yd3<long double>(_v); }
-    Q_yd3<long double> operator "" _yd3 (unsigned long long int _v) {
-        return Q_yd3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd3<long double> operator "" _yd3_ (long double _v) {
+            return Q_yd3<long double>(_v); }
+        static inline Q_yd3<long double> operator "" _yd3_ (unsigned long long int _v) {
+            return Q_yd3<long double>(_v); }
     }
 
 
@@ -1981,11 +2056,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ft3 = units::Quantity<Value, ft3>;
-    namespace literals {
-    Q_ft3<long double> operator "" _ft3 (long double _v) {
-        return Q_ft3<long double>(_v); }
-    Q_ft3<long double> operator "" _ft3 (unsigned long long int _v) {
-        return Q_ft3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ft3<long double> operator "" _ft3_ (long double _v) {
+            return Q_ft3<long double>(_v); }
+        static inline Q_ft3<long double> operator "" _ft3_ (unsigned long long int _v) {
+            return Q_ft3<long double>(_v); }
     }
 
 
@@ -2007,11 +2083,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in3 = units::Quantity<Value, in3>;
-    namespace literals {
-    Q_in3<long double> operator "" _in3 (long double _v) {
-        return Q_in3<long double>(_v); }
-    Q_in3<long double> operator "" _in3 (unsigned long long int _v) {
-        return Q_in3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in3<long double> operator "" _in3_ (long double _v) {
+            return Q_in3<long double>(_v); }
+        static inline Q_in3<long double> operator "" _in3_ (unsigned long long int _v) {
+            return Q_in3<long double>(_v); }
     }
 
 
@@ -2033,11 +2110,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Es = units::Quantity<Value, Es>;
-    namespace literals {
-    Q_Es<long double> operator "" _Es (long double _v) {
-        return Q_Es<long double>(_v); }
-    Q_Es<long double> operator "" _Es (unsigned long long int _v) {
-        return Q_Es<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Es<long double> operator "" _Es_ (long double _v) {
+            return Q_Es<long double>(_v); }
+        static inline Q_Es<long double> operator "" _Es_ (unsigned long long int _v) {
+            return Q_Es<long double>(_v); }
     }
 
 
@@ -2059,11 +2137,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ps = units::Quantity<Value, Ps>;
-    namespace literals {
-    Q_Ps<long double> operator "" _Ps (long double _v) {
-        return Q_Ps<long double>(_v); }
-    Q_Ps<long double> operator "" _Ps (unsigned long long int _v) {
-        return Q_Ps<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ps<long double> operator "" _Ps_ (long double _v) {
+            return Q_Ps<long double>(_v); }
+        static inline Q_Ps<long double> operator "" _Ps_ (unsigned long long int _v) {
+            return Q_Ps<long double>(_v); }
     }
 
 
@@ -2085,11 +2164,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ts = units::Quantity<Value, Ts>;
-    namespace literals {
-    Q_Ts<long double> operator "" _Ts (long double _v) {
-        return Q_Ts<long double>(_v); }
-    Q_Ts<long double> operator "" _Ts (unsigned long long int _v) {
-        return Q_Ts<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ts<long double> operator "" _Ts_ (long double _v) {
+            return Q_Ts<long double>(_v); }
+        static inline Q_Ts<long double> operator "" _Ts_ (unsigned long long int _v) {
+            return Q_Ts<long double>(_v); }
     }
 
 
@@ -2111,11 +2191,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gs = units::Quantity<Value, Gs>;
-    namespace literals {
-    Q_Gs<long double> operator "" _Gs (long double _v) {
-        return Q_Gs<long double>(_v); }
-    Q_Gs<long double> operator "" _Gs (unsigned long long int _v) {
-        return Q_Gs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gs<long double> operator "" _Gs_ (long double _v) {
+            return Q_Gs<long double>(_v); }
+        static inline Q_Gs<long double> operator "" _Gs_ (unsigned long long int _v) {
+            return Q_Gs<long double>(_v); }
     }
 
 
@@ -2137,11 +2218,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ms = units::Quantity<Value, Ms>;
-    namespace literals {
-    Q_Ms<long double> operator "" _Ms (long double _v) {
-        return Q_Ms<long double>(_v); }
-    Q_Ms<long double> operator "" _Ms (unsigned long long int _v) {
-        return Q_Ms<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ms<long double> operator "" _Ms_ (long double _v) {
+            return Q_Ms<long double>(_v); }
+        static inline Q_Ms<long double> operator "" _Ms_ (unsigned long long int _v) {
+            return Q_Ms<long double>(_v); }
     }
 
 
@@ -2163,11 +2245,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ks = units::Quantity<Value, ks>;
-    namespace literals {
-    Q_ks<long double> operator "" _ks (long double _v) {
-        return Q_ks<long double>(_v); }
-    Q_ks<long double> operator "" _ks (unsigned long long int _v) {
-        return Q_ks<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ks<long double> operator "" _ks_ (long double _v) {
+            return Q_ks<long double>(_v); }
+        static inline Q_ks<long double> operator "" _ks_ (unsigned long long int _v) {
+            return Q_ks<long double>(_v); }
     }
 
 
@@ -2189,11 +2272,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hs = units::Quantity<Value, hs>;
-    namespace literals {
-    Q_hs<long double> operator "" _hs (long double _v) {
-        return Q_hs<long double>(_v); }
-    Q_hs<long double> operator "" _hs (unsigned long long int _v) {
-        return Q_hs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hs<long double> operator "" _hs_ (long double _v) {
+            return Q_hs<long double>(_v); }
+        static inline Q_hs<long double> operator "" _hs_ (unsigned long long int _v) {
+            return Q_hs<long double>(_v); }
     }
 
 
@@ -2215,11 +2299,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_das = units::Quantity<Value, das>;
-    namespace literals {
-    Q_das<long double> operator "" _das (long double _v) {
-        return Q_das<long double>(_v); }
-    Q_das<long double> operator "" _das (unsigned long long int _v) {
-        return Q_das<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_das<long double> operator "" _das_ (long double _v) {
+            return Q_das<long double>(_v); }
+        static inline Q_das<long double> operator "" _das_ (unsigned long long int _v) {
+            return Q_das<long double>(_v); }
     }
 
 
@@ -2241,11 +2326,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_s = units::Quantity<Value, s>;
-    namespace literals {
-    Q_s<long double> operator "" _s (long double _v) {
-        return Q_s<long double>(_v); }
-    Q_s<long double> operator "" _s (unsigned long long int _v) {
-        return Q_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_s<long double> operator "" _s_ (long double _v) {
+            return Q_s<long double>(_v); }
+        static inline Q_s<long double> operator "" _s_ (unsigned long long int _v) {
+            return Q_s<long double>(_v); }
     }
 
 
@@ -2267,11 +2353,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ds = units::Quantity<Value, ds>;
-    namespace literals {
-    Q_ds<long double> operator "" _ds (long double _v) {
-        return Q_ds<long double>(_v); }
-    Q_ds<long double> operator "" _ds (unsigned long long int _v) {
-        return Q_ds<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ds<long double> operator "" _ds_ (long double _v) {
+            return Q_ds<long double>(_v); }
+        static inline Q_ds<long double> operator "" _ds_ (unsigned long long int _v) {
+            return Q_ds<long double>(_v); }
     }
 
 
@@ -2293,11 +2380,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cs = units::Quantity<Value, cs>;
-    namespace literals {
-    Q_cs<long double> operator "" _cs (long double _v) {
-        return Q_cs<long double>(_v); }
-    Q_cs<long double> operator "" _cs (unsigned long long int _v) {
-        return Q_cs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cs<long double> operator "" _cs_ (long double _v) {
+            return Q_cs<long double>(_v); }
+        static inline Q_cs<long double> operator "" _cs_ (unsigned long long int _v) {
+            return Q_cs<long double>(_v); }
     }
 
 
@@ -2319,11 +2407,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ms = units::Quantity<Value, ms>;
-    namespace literals {
-    Q_ms<long double> operator "" _ms (long double _v) {
-        return Q_ms<long double>(_v); }
-    Q_ms<long double> operator "" _ms (unsigned long long int _v) {
-        return Q_ms<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ms<long double> operator "" _ms_ (long double _v) {
+            return Q_ms<long double>(_v); }
+        static inline Q_ms<long double> operator "" _ms_ (unsigned long long int _v) {
+            return Q_ms<long double>(_v); }
     }
 
 
@@ -2345,11 +2434,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_min = units::Quantity<Value, min>;
-    namespace literals {
-    Q_min<long double> operator "" _min (long double _v) {
-        return Q_min<long double>(_v); }
-    Q_min<long double> operator "" _min (unsigned long long int _v) {
-        return Q_min<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_min<long double> operator "" _min_ (long double _v) {
+            return Q_min<long double>(_v); }
+        static inline Q_min<long double> operator "" _min_ (unsigned long long int _v) {
+            return Q_min<long double>(_v); }
     }
 
 
@@ -2371,11 +2461,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hr = units::Quantity<Value, hr>;
-    namespace literals {
-    Q_hr<long double> operator "" _hr (long double _v) {
-        return Q_hr<long double>(_v); }
-    Q_hr<long double> operator "" _hr (unsigned long long int _v) {
-        return Q_hr<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hr<long double> operator "" _hr_ (long double _v) {
+            return Q_hr<long double>(_v); }
+        static inline Q_hr<long double> operator "" _hr_ (unsigned long long int _v) {
+            return Q_hr<long double>(_v); }
     }
 
 
@@ -2397,11 +2488,336 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_day = units::Quantity<Value, day>;
-    namespace literals {
-    Q_day<long double> operator "" _day (long double _v) {
-        return Q_day<long double>(_v); }
-    Q_day<long double> operator "" _day (unsigned long long int _v) {
-        return Q_day<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_day<long double> operator "" _day_ (long double _v) {
+            return Q_day<long double>(_v); }
+        static inline Q_day<long double> operator "" _day_ (unsigned long long int _v) {
+            return Q_day<long double>(_v); }
+    }
+
+
+
+//
+// Unit "EHz"
+//
+    struct EHz
+    {
+        using factor_t = std::ratio<1000000000000000000, 1>; // 1e+18
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = EHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "EHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_EHz = units::Quantity<Value, EHz>;
+    namespace literals
+    {
+        static inline Q_EHz<long double> operator "" _EHz_ (long double _v) {
+            return Q_EHz<long double>(_v); }
+        static inline Q_EHz<long double> operator "" _EHz_ (unsigned long long int _v) {
+            return Q_EHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "PHz"
+//
+    struct PHz
+    {
+        using factor_t = std::ratio<1000000000000000, 1>; // 1e+15
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = PHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "PHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_PHz = units::Quantity<Value, PHz>;
+    namespace literals
+    {
+        static inline Q_PHz<long double> operator "" _PHz_ (long double _v) {
+            return Q_PHz<long double>(_v); }
+        static inline Q_PHz<long double> operator "" _PHz_ (unsigned long long int _v) {
+            return Q_PHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "THz"
+//
+    struct THz
+    {
+        using factor_t = std::ratio<1000000000000, 1>; // 1e+12
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = THz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "THz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_THz = units::Quantity<Value, THz>;
+    namespace literals
+    {
+        static inline Q_THz<long double> operator "" _THz_ (long double _v) {
+            return Q_THz<long double>(_v); }
+        static inline Q_THz<long double> operator "" _THz_ (unsigned long long int _v) {
+            return Q_THz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "GHz"
+//
+    struct GHz
+    {
+        using factor_t = std::ratio<1000000000, 1>; // 1e+09
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = GHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "GHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_GHz = units::Quantity<Value, GHz>;
+    namespace literals
+    {
+        static inline Q_GHz<long double> operator "" _GHz_ (long double _v) {
+            return Q_GHz<long double>(_v); }
+        static inline Q_GHz<long double> operator "" _GHz_ (unsigned long long int _v) {
+            return Q_GHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "MHz"
+//
+    struct MHz
+    {
+        using factor_t = std::ratio<1000000, 1>; // 1e+06
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = MHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "MHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_MHz = units::Quantity<Value, MHz>;
+    namespace literals
+    {
+        static inline Q_MHz<long double> operator "" _MHz_ (long double _v) {
+            return Q_MHz<long double>(_v); }
+        static inline Q_MHz<long double> operator "" _MHz_ (unsigned long long int _v) {
+            return Q_MHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "kHz"
+//
+    struct kHz
+    {
+        using factor_t = std::ratio<1000, 1>; // 1000
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = kHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "kHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_kHz = units::Quantity<Value, kHz>;
+    namespace literals
+    {
+        static inline Q_kHz<long double> operator "" _kHz_ (long double _v) {
+            return Q_kHz<long double>(_v); }
+        static inline Q_kHz<long double> operator "" _kHz_ (unsigned long long int _v) {
+            return Q_kHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "hHz"
+//
+    struct hHz
+    {
+        using factor_t = std::ratio<100, 1>; // 100
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = hHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "hHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_hHz = units::Quantity<Value, hHz>;
+    namespace literals
+    {
+        static inline Q_hHz<long double> operator "" _hHz_ (long double _v) {
+            return Q_hHz<long double>(_v); }
+        static inline Q_hHz<long double> operator "" _hHz_ (unsigned long long int _v) {
+            return Q_hHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "daHz"
+//
+    struct daHz
+    {
+        using factor_t = std::ratio<10, 1>; // 10
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = daHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "daHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_daHz = units::Quantity<Value, daHz>;
+    namespace literals
+    {
+        static inline Q_daHz<long double> operator "" _daHz_ (long double _v) {
+            return Q_daHz<long double>(_v); }
+        static inline Q_daHz<long double> operator "" _daHz_ (unsigned long long int _v) {
+            return Q_daHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Hz"
+//
+    struct Hz
+    {
+        using factor_t = std::ratio<1, 1>; // 1
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Hz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Hz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Hz = units::Quantity<Value, Hz>;
+    namespace literals
+    {
+        static inline Q_Hz<long double> operator "" _Hz_ (long double _v) {
+            return Q_Hz<long double>(_v); }
+        static inline Q_Hz<long double> operator "" _Hz_ (unsigned long long int _v) {
+            return Q_Hz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dHz"
+//
+    struct dHz
+    {
+        using factor_t = std::ratio<1, 10>; // 0.1
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dHz = units::Quantity<Value, dHz>;
+    namespace literals
+    {
+        static inline Q_dHz<long double> operator "" _dHz_ (long double _v) {
+            return Q_dHz<long double>(_v); }
+        static inline Q_dHz<long double> operator "" _dHz_ (unsigned long long int _v) {
+            return Q_dHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "cHz"
+//
+    struct cHz
+    {
+        using factor_t = std::ratio<1, 100>; // 0.01
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = cHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "cHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_cHz = units::Quantity<Value, cHz>;
+    namespace literals
+    {
+        static inline Q_cHz<long double> operator "" _cHz_ (long double _v) {
+            return Q_cHz<long double>(_v); }
+        static inline Q_cHz<long double> operator "" _cHz_ (unsigned long long int _v) {
+            return Q_cHz<long double>(_v); }
+    }
+
+
+
+//
+// Unit "mHz"
+//
+    struct mHz
+    {
+        using factor_t = std::ratio<1, 1000>; // 0.001
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mHz = units::Quantity<Value, mHz>;
+    namespace literals
+    {
+        static inline Q_mHz<long double> operator "" _mHz_ (long double _v) {
+            return Q_mHz<long double>(_v); }
+        static inline Q_mHz<long double> operator "" _mHz_ (unsigned long long int _v) {
+            return Q_mHz<long double>(_v); }
     }
 
 
@@ -2423,11 +2839,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Em_per_s = units::Quantity<Value, Em_per_s>;
-    namespace literals {
-    Q_Em_per_s<long double> operator "" _Em_per_s (long double _v) {
-        return Q_Em_per_s<long double>(_v); }
-    Q_Em_per_s<long double> operator "" _Em_per_s (unsigned long long int _v) {
-        return Q_Em_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Em_per_s<long double> operator "" _Em_per_s_ (long double _v) {
+            return Q_Em_per_s<long double>(_v); }
+        static inline Q_Em_per_s<long double> operator "" _Em_per_s_ (unsigned long long int _v) {
+            return Q_Em_per_s<long double>(_v); }
     }
 
 
@@ -2449,11 +2866,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pm_per_s = units::Quantity<Value, Pm_per_s>;
-    namespace literals {
-    Q_Pm_per_s<long double> operator "" _Pm_per_s (long double _v) {
-        return Q_Pm_per_s<long double>(_v); }
-    Q_Pm_per_s<long double> operator "" _Pm_per_s (unsigned long long int _v) {
-        return Q_Pm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pm_per_s<long double> operator "" _Pm_per_s_ (long double _v) {
+            return Q_Pm_per_s<long double>(_v); }
+        static inline Q_Pm_per_s<long double> operator "" _Pm_per_s_ (unsigned long long int _v) {
+            return Q_Pm_per_s<long double>(_v); }
     }
 
 
@@ -2475,11 +2893,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tm_per_s = units::Quantity<Value, Tm_per_s>;
-    namespace literals {
-    Q_Tm_per_s<long double> operator "" _Tm_per_s (long double _v) {
-        return Q_Tm_per_s<long double>(_v); }
-    Q_Tm_per_s<long double> operator "" _Tm_per_s (unsigned long long int _v) {
-        return Q_Tm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tm_per_s<long double> operator "" _Tm_per_s_ (long double _v) {
+            return Q_Tm_per_s<long double>(_v); }
+        static inline Q_Tm_per_s<long double> operator "" _Tm_per_s_ (unsigned long long int _v) {
+            return Q_Tm_per_s<long double>(_v); }
     }
 
 
@@ -2501,11 +2920,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gm_per_s = units::Quantity<Value, Gm_per_s>;
-    namespace literals {
-    Q_Gm_per_s<long double> operator "" _Gm_per_s (long double _v) {
-        return Q_Gm_per_s<long double>(_v); }
-    Q_Gm_per_s<long double> operator "" _Gm_per_s (unsigned long long int _v) {
-        return Q_Gm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gm_per_s<long double> operator "" _Gm_per_s_ (long double _v) {
+            return Q_Gm_per_s<long double>(_v); }
+        static inline Q_Gm_per_s<long double> operator "" _Gm_per_s_ (unsigned long long int _v) {
+            return Q_Gm_per_s<long double>(_v); }
     }
 
 
@@ -2527,11 +2947,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm_per_s = units::Quantity<Value, Mm_per_s>;
-    namespace literals {
-    Q_Mm_per_s<long double> operator "" _Mm_per_s (long double _v) {
-        return Q_Mm_per_s<long double>(_v); }
-    Q_Mm_per_s<long double> operator "" _Mm_per_s (unsigned long long int _v) {
-        return Q_Mm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm_per_s<long double> operator "" _Mm_per_s_ (long double _v) {
+            return Q_Mm_per_s<long double>(_v); }
+        static inline Q_Mm_per_s<long double> operator "" _Mm_per_s_ (unsigned long long int _v) {
+            return Q_Mm_per_s<long double>(_v); }
     }
 
 
@@ -2553,11 +2974,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km_per_s = units::Quantity<Value, km_per_s>;
-    namespace literals {
-    Q_km_per_s<long double> operator "" _km_per_s (long double _v) {
-        return Q_km_per_s<long double>(_v); }
-    Q_km_per_s<long double> operator "" _km_per_s (unsigned long long int _v) {
-        return Q_km_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km_per_s<long double> operator "" _km_per_s_ (long double _v) {
+            return Q_km_per_s<long double>(_v); }
+        static inline Q_km_per_s<long double> operator "" _km_per_s_ (unsigned long long int _v) {
+            return Q_km_per_s<long double>(_v); }
     }
 
 
@@ -2579,11 +3001,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm_per_s = units::Quantity<Value, hm_per_s>;
-    namespace literals {
-    Q_hm_per_s<long double> operator "" _hm_per_s (long double _v) {
-        return Q_hm_per_s<long double>(_v); }
-    Q_hm_per_s<long double> operator "" _hm_per_s (unsigned long long int _v) {
-        return Q_hm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm_per_s<long double> operator "" _hm_per_s_ (long double _v) {
+            return Q_hm_per_s<long double>(_v); }
+        static inline Q_hm_per_s<long double> operator "" _hm_per_s_ (unsigned long long int _v) {
+            return Q_hm_per_s<long double>(_v); }
     }
 
 
@@ -2605,11 +3028,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam_per_s = units::Quantity<Value, dam_per_s>;
-    namespace literals {
-    Q_dam_per_s<long double> operator "" _dam_per_s (long double _v) {
-        return Q_dam_per_s<long double>(_v); }
-    Q_dam_per_s<long double> operator "" _dam_per_s (unsigned long long int _v) {
-        return Q_dam_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam_per_s<long double> operator "" _dam_per_s_ (long double _v) {
+            return Q_dam_per_s<long double>(_v); }
+        static inline Q_dam_per_s<long double> operator "" _dam_per_s_ (unsigned long long int _v) {
+            return Q_dam_per_s<long double>(_v); }
     }
 
 
@@ -2631,11 +3055,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m_per_s = units::Quantity<Value, m_per_s>;
-    namespace literals {
-    Q_m_per_s<long double> operator "" _m_per_s (long double _v) {
-        return Q_m_per_s<long double>(_v); }
-    Q_m_per_s<long double> operator "" _m_per_s (unsigned long long int _v) {
-        return Q_m_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m_per_s<long double> operator "" _m_per_s_ (long double _v) {
+            return Q_m_per_s<long double>(_v); }
+        static inline Q_m_per_s<long double> operator "" _m_per_s_ (unsigned long long int _v) {
+            return Q_m_per_s<long double>(_v); }
     }
 
 
@@ -2657,11 +3082,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm_per_s = units::Quantity<Value, dm_per_s>;
-    namespace literals {
-    Q_dm_per_s<long double> operator "" _dm_per_s (long double _v) {
-        return Q_dm_per_s<long double>(_v); }
-    Q_dm_per_s<long double> operator "" _dm_per_s (unsigned long long int _v) {
-        return Q_dm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm_per_s<long double> operator "" _dm_per_s_ (long double _v) {
+            return Q_dm_per_s<long double>(_v); }
+        static inline Q_dm_per_s<long double> operator "" _dm_per_s_ (unsigned long long int _v) {
+            return Q_dm_per_s<long double>(_v); }
     }
 
 
@@ -2683,11 +3109,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm_per_s = units::Quantity<Value, cm_per_s>;
-    namespace literals {
-    Q_cm_per_s<long double> operator "" _cm_per_s (long double _v) {
-        return Q_cm_per_s<long double>(_v); }
-    Q_cm_per_s<long double> operator "" _cm_per_s (unsigned long long int _v) {
-        return Q_cm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm_per_s<long double> operator "" _cm_per_s_ (long double _v) {
+            return Q_cm_per_s<long double>(_v); }
+        static inline Q_cm_per_s<long double> operator "" _cm_per_s_ (unsigned long long int _v) {
+            return Q_cm_per_s<long double>(_v); }
     }
 
 
@@ -2709,11 +3136,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mm_per_s = units::Quantity<Value, mm_per_s>;
-    namespace literals {
-    Q_mm_per_s<long double> operator "" _mm_per_s (long double _v) {
-        return Q_mm_per_s<long double>(_v); }
-    Q_mm_per_s<long double> operator "" _mm_per_s (unsigned long long int _v) {
-        return Q_mm_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mm_per_s<long double> operator "" _mm_per_s_ (long double _v) {
+            return Q_mm_per_s<long double>(_v); }
+        static inline Q_mm_per_s<long double> operator "" _mm_per_s_ (unsigned long long int _v) {
+            return Q_mm_per_s<long double>(_v); }
     }
 
 
@@ -2735,11 +3163,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kmph = units::Quantity<Value, kmph>;
-    namespace literals {
-    Q_kmph<long double> operator "" _kmph (long double _v) {
-        return Q_kmph<long double>(_v); }
-    Q_kmph<long double> operator "" _kmph (unsigned long long int _v) {
-        return Q_kmph<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kmph<long double> operator "" _kmph_ (long double _v) {
+            return Q_kmph<long double>(_v); }
+        static inline Q_kmph<long double> operator "" _kmph_ (unsigned long long int _v) {
+            return Q_kmph<long double>(_v); }
     }
 
 
@@ -2761,11 +3190,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mph = units::Quantity<Value, mph>;
-    namespace literals {
-    Q_mph<long double> operator "" _mph (long double _v) {
-        return Q_mph<long double>(_v); }
-    Q_mph<long double> operator "" _mph (unsigned long long int _v) {
-        return Q_mph<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mph<long double> operator "" _mph_ (long double _v) {
+            return Q_mph<long double>(_v); }
+        static inline Q_mph<long double> operator "" _mph_ (unsigned long long int _v) {
+            return Q_mph<long double>(_v); }
     }
 
 
@@ -2787,11 +3217,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kt = units::Quantity<Value, kt>;
-    namespace literals {
-    Q_kt<long double> operator "" _kt (long double _v) {
-        return Q_kt<long double>(_v); }
-    Q_kt<long double> operator "" _kt (unsigned long long int _v) {
-        return Q_kt<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kt<long double> operator "" _kt_ (long double _v) {
+            return Q_kt<long double>(_v); }
+        static inline Q_kt<long double> operator "" _kt_ (unsigned long long int _v) {
+            return Q_kt<long double>(_v); }
     }
 
 
@@ -2813,11 +3244,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi_per_s = units::Quantity<Value, mi_per_s>;
-    namespace literals {
-    Q_mi_per_s<long double> operator "" _mi_per_s (long double _v) {
-        return Q_mi_per_s<long double>(_v); }
-    Q_mi_per_s<long double> operator "" _mi_per_s (unsigned long long int _v) {
-        return Q_mi_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi_per_s<long double> operator "" _mi_per_s_ (long double _v) {
+            return Q_mi_per_s<long double>(_v); }
+        static inline Q_mi_per_s<long double> operator "" _mi_per_s_ (unsigned long long int _v) {
+            return Q_mi_per_s<long double>(_v); }
     }
 
 
@@ -2839,11 +3271,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd_per_s = units::Quantity<Value, yd_per_s>;
-    namespace literals {
-    Q_yd_per_s<long double> operator "" _yd_per_s (long double _v) {
-        return Q_yd_per_s<long double>(_v); }
-    Q_yd_per_s<long double> operator "" _yd_per_s (unsigned long long int _v) {
-        return Q_yd_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd_per_s<long double> operator "" _yd_per_s_ (long double _v) {
+            return Q_yd_per_s<long double>(_v); }
+        static inline Q_yd_per_s<long double> operator "" _yd_per_s_ (unsigned long long int _v) {
+            return Q_yd_per_s<long double>(_v); }
     }
 
 
@@ -2865,11 +3298,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_fps = units::Quantity<Value, fps>;
-    namespace literals {
-    Q_fps<long double> operator "" _fps (long double _v) {
-        return Q_fps<long double>(_v); }
-    Q_fps<long double> operator "" _fps (unsigned long long int _v) {
-        return Q_fps<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_fps<long double> operator "" _fps_ (long double _v) {
+            return Q_fps<long double>(_v); }
+        static inline Q_fps<long double> operator "" _fps_ (unsigned long long int _v) {
+            return Q_fps<long double>(_v); }
     }
 
 
@@ -2891,11 +3325,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in_per_s = units::Quantity<Value, in_per_s>;
-    namespace literals {
-    Q_in_per_s<long double> operator "" _in_per_s (long double _v) {
-        return Q_in_per_s<long double>(_v); }
-    Q_in_per_s<long double> operator "" _in_per_s (unsigned long long int _v) {
-        return Q_in_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in_per_s<long double> operator "" _in_per_s_ (long double _v) {
+            return Q_in_per_s<long double>(_v); }
+        static inline Q_in_per_s<long double> operator "" _in_per_s_ (unsigned long long int _v) {
+            return Q_in_per_s<long double>(_v); }
     }
 
 
@@ -2917,11 +3352,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Em_per_s2 = units::Quantity<Value, Em_per_s2>;
-    namespace literals {
-    Q_Em_per_s2<long double> operator "" _Em_per_s2 (long double _v) {
-        return Q_Em_per_s2<long double>(_v); }
-    Q_Em_per_s2<long double> operator "" _Em_per_s2 (unsigned long long int _v) {
-        return Q_Em_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Em_per_s2<long double> operator "" _Em_per_s2_ (long double _v) {
+            return Q_Em_per_s2<long double>(_v); }
+        static inline Q_Em_per_s2<long double> operator "" _Em_per_s2_ (unsigned long long int _v) {
+            return Q_Em_per_s2<long double>(_v); }
     }
 
 
@@ -2943,11 +3379,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pm_per_s2 = units::Quantity<Value, Pm_per_s2>;
-    namespace literals {
-    Q_Pm_per_s2<long double> operator "" _Pm_per_s2 (long double _v) {
-        return Q_Pm_per_s2<long double>(_v); }
-    Q_Pm_per_s2<long double> operator "" _Pm_per_s2 (unsigned long long int _v) {
-        return Q_Pm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pm_per_s2<long double> operator "" _Pm_per_s2_ (long double _v) {
+            return Q_Pm_per_s2<long double>(_v); }
+        static inline Q_Pm_per_s2<long double> operator "" _Pm_per_s2_ (unsigned long long int _v) {
+            return Q_Pm_per_s2<long double>(_v); }
     }
 
 
@@ -2969,11 +3406,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tm_per_s2 = units::Quantity<Value, Tm_per_s2>;
-    namespace literals {
-    Q_Tm_per_s2<long double> operator "" _Tm_per_s2 (long double _v) {
-        return Q_Tm_per_s2<long double>(_v); }
-    Q_Tm_per_s2<long double> operator "" _Tm_per_s2 (unsigned long long int _v) {
-        return Q_Tm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tm_per_s2<long double> operator "" _Tm_per_s2_ (long double _v) {
+            return Q_Tm_per_s2<long double>(_v); }
+        static inline Q_Tm_per_s2<long double> operator "" _Tm_per_s2_ (unsigned long long int _v) {
+            return Q_Tm_per_s2<long double>(_v); }
     }
 
 
@@ -2995,11 +3433,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gm_per_s2 = units::Quantity<Value, Gm_per_s2>;
-    namespace literals {
-    Q_Gm_per_s2<long double> operator "" _Gm_per_s2 (long double _v) {
-        return Q_Gm_per_s2<long double>(_v); }
-    Q_Gm_per_s2<long double> operator "" _Gm_per_s2 (unsigned long long int _v) {
-        return Q_Gm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gm_per_s2<long double> operator "" _Gm_per_s2_ (long double _v) {
+            return Q_Gm_per_s2<long double>(_v); }
+        static inline Q_Gm_per_s2<long double> operator "" _Gm_per_s2_ (unsigned long long int _v) {
+            return Q_Gm_per_s2<long double>(_v); }
     }
 
 
@@ -3021,11 +3460,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm_per_s2 = units::Quantity<Value, Mm_per_s2>;
-    namespace literals {
-    Q_Mm_per_s2<long double> operator "" _Mm_per_s2 (long double _v) {
-        return Q_Mm_per_s2<long double>(_v); }
-    Q_Mm_per_s2<long double> operator "" _Mm_per_s2 (unsigned long long int _v) {
-        return Q_Mm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm_per_s2<long double> operator "" _Mm_per_s2_ (long double _v) {
+            return Q_Mm_per_s2<long double>(_v); }
+        static inline Q_Mm_per_s2<long double> operator "" _Mm_per_s2_ (unsigned long long int _v) {
+            return Q_Mm_per_s2<long double>(_v); }
     }
 
 
@@ -3047,11 +3487,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km_per_s2 = units::Quantity<Value, km_per_s2>;
-    namespace literals {
-    Q_km_per_s2<long double> operator "" _km_per_s2 (long double _v) {
-        return Q_km_per_s2<long double>(_v); }
-    Q_km_per_s2<long double> operator "" _km_per_s2 (unsigned long long int _v) {
-        return Q_km_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km_per_s2<long double> operator "" _km_per_s2_ (long double _v) {
+            return Q_km_per_s2<long double>(_v); }
+        static inline Q_km_per_s2<long double> operator "" _km_per_s2_ (unsigned long long int _v) {
+            return Q_km_per_s2<long double>(_v); }
     }
 
 
@@ -3073,11 +3514,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm_per_s2 = units::Quantity<Value, hm_per_s2>;
-    namespace literals {
-    Q_hm_per_s2<long double> operator "" _hm_per_s2 (long double _v) {
-        return Q_hm_per_s2<long double>(_v); }
-    Q_hm_per_s2<long double> operator "" _hm_per_s2 (unsigned long long int _v) {
-        return Q_hm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm_per_s2<long double> operator "" _hm_per_s2_ (long double _v) {
+            return Q_hm_per_s2<long double>(_v); }
+        static inline Q_hm_per_s2<long double> operator "" _hm_per_s2_ (unsigned long long int _v) {
+            return Q_hm_per_s2<long double>(_v); }
     }
 
 
@@ -3099,11 +3541,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam_per_s2 = units::Quantity<Value, dam_per_s2>;
-    namespace literals {
-    Q_dam_per_s2<long double> operator "" _dam_per_s2 (long double _v) {
-        return Q_dam_per_s2<long double>(_v); }
-    Q_dam_per_s2<long double> operator "" _dam_per_s2 (unsigned long long int _v) {
-        return Q_dam_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam_per_s2<long double> operator "" _dam_per_s2_ (long double _v) {
+            return Q_dam_per_s2<long double>(_v); }
+        static inline Q_dam_per_s2<long double> operator "" _dam_per_s2_ (unsigned long long int _v) {
+            return Q_dam_per_s2<long double>(_v); }
     }
 
 
@@ -3125,11 +3568,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m_per_s2 = units::Quantity<Value, m_per_s2>;
-    namespace literals {
-    Q_m_per_s2<long double> operator "" _m_per_s2 (long double _v) {
-        return Q_m_per_s2<long double>(_v); }
-    Q_m_per_s2<long double> operator "" _m_per_s2 (unsigned long long int _v) {
-        return Q_m_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m_per_s2<long double> operator "" _m_per_s2_ (long double _v) {
+            return Q_m_per_s2<long double>(_v); }
+        static inline Q_m_per_s2<long double> operator "" _m_per_s2_ (unsigned long long int _v) {
+            return Q_m_per_s2<long double>(_v); }
     }
 
 
@@ -3151,11 +3595,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm_per_s2 = units::Quantity<Value, dm_per_s2>;
-    namespace literals {
-    Q_dm_per_s2<long double> operator "" _dm_per_s2 (long double _v) {
-        return Q_dm_per_s2<long double>(_v); }
-    Q_dm_per_s2<long double> operator "" _dm_per_s2 (unsigned long long int _v) {
-        return Q_dm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm_per_s2<long double> operator "" _dm_per_s2_ (long double _v) {
+            return Q_dm_per_s2<long double>(_v); }
+        static inline Q_dm_per_s2<long double> operator "" _dm_per_s2_ (unsigned long long int _v) {
+            return Q_dm_per_s2<long double>(_v); }
     }
 
 
@@ -3177,11 +3622,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm_per_s2 = units::Quantity<Value, cm_per_s2>;
-    namespace literals {
-    Q_cm_per_s2<long double> operator "" _cm_per_s2 (long double _v) {
-        return Q_cm_per_s2<long double>(_v); }
-    Q_cm_per_s2<long double> operator "" _cm_per_s2 (unsigned long long int _v) {
-        return Q_cm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm_per_s2<long double> operator "" _cm_per_s2_ (long double _v) {
+            return Q_cm_per_s2<long double>(_v); }
+        static inline Q_cm_per_s2<long double> operator "" _cm_per_s2_ (unsigned long long int _v) {
+            return Q_cm_per_s2<long double>(_v); }
     }
 
 
@@ -3203,11 +3649,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mm_per_s2 = units::Quantity<Value, mm_per_s2>;
-    namespace literals {
-    Q_mm_per_s2<long double> operator "" _mm_per_s2 (long double _v) {
-        return Q_mm_per_s2<long double>(_v); }
-    Q_mm_per_s2<long double> operator "" _mm_per_s2 (unsigned long long int _v) {
-        return Q_mm_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mm_per_s2<long double> operator "" _mm_per_s2_ (long double _v) {
+            return Q_mm_per_s2<long double>(_v); }
+        static inline Q_mm_per_s2<long double> operator "" _mm_per_s2_ (unsigned long long int _v) {
+            return Q_mm_per_s2<long double>(_v); }
     }
 
 
@@ -3229,11 +3676,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi_per_s2 = units::Quantity<Value, mi_per_s2>;
-    namespace literals {
-    Q_mi_per_s2<long double> operator "" _mi_per_s2 (long double _v) {
-        return Q_mi_per_s2<long double>(_v); }
-    Q_mi_per_s2<long double> operator "" _mi_per_s2 (unsigned long long int _v) {
-        return Q_mi_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi_per_s2<long double> operator "" _mi_per_s2_ (long double _v) {
+            return Q_mi_per_s2<long double>(_v); }
+        static inline Q_mi_per_s2<long double> operator "" _mi_per_s2_ (unsigned long long int _v) {
+            return Q_mi_per_s2<long double>(_v); }
     }
 
 
@@ -3255,11 +3703,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd_per_s2 = units::Quantity<Value, yd_per_s2>;
-    namespace literals {
-    Q_yd_per_s2<long double> operator "" _yd_per_s2 (long double _v) {
-        return Q_yd_per_s2<long double>(_v); }
-    Q_yd_per_s2<long double> operator "" _yd_per_s2 (unsigned long long int _v) {
-        return Q_yd_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd_per_s2<long double> operator "" _yd_per_s2_ (long double _v) {
+            return Q_yd_per_s2<long double>(_v); }
+        static inline Q_yd_per_s2<long double> operator "" _yd_per_s2_ (unsigned long long int _v) {
+            return Q_yd_per_s2<long double>(_v); }
     }
 
 
@@ -3281,11 +3730,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ft_per_s2 = units::Quantity<Value, ft_per_s2>;
-    namespace literals {
-    Q_ft_per_s2<long double> operator "" _ft_per_s2 (long double _v) {
-        return Q_ft_per_s2<long double>(_v); }
-    Q_ft_per_s2<long double> operator "" _ft_per_s2 (unsigned long long int _v) {
-        return Q_ft_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ft_per_s2<long double> operator "" _ft_per_s2_ (long double _v) {
+            return Q_ft_per_s2<long double>(_v); }
+        static inline Q_ft_per_s2<long double> operator "" _ft_per_s2_ (unsigned long long int _v) {
+            return Q_ft_per_s2<long double>(_v); }
     }
 
 
@@ -3307,11 +3757,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in_per_s2 = units::Quantity<Value, in_per_s2>;
-    namespace literals {
-    Q_in_per_s2<long double> operator "" _in_per_s2 (long double _v) {
-        return Q_in_per_s2<long double>(_v); }
-    Q_in_per_s2<long double> operator "" _in_per_s2 (unsigned long long int _v) {
-        return Q_in_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in_per_s2<long double> operator "" _in_per_s2_ (long double _v) {
+            return Q_in_per_s2<long double>(_v); }
+        static inline Q_in_per_s2<long double> operator "" _in_per_s2_ (unsigned long long int _v) {
+            return Q_in_per_s2<long double>(_v); }
     }
 
 
@@ -3333,11 +3784,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pgees = units::Quantity<Value, Pgees>;
-    namespace literals {
-    Q_Pgees<long double> operator "" _Pgees (long double _v) {
-        return Q_Pgees<long double>(_v); }
-    Q_Pgees<long double> operator "" _Pgees (unsigned long long int _v) {
-        return Q_Pgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pgees<long double> operator "" _Pgees_ (long double _v) {
+            return Q_Pgees<long double>(_v); }
+        static inline Q_Pgees<long double> operator "" _Pgees_ (unsigned long long int _v) {
+            return Q_Pgees<long double>(_v); }
     }
 
 
@@ -3359,11 +3811,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tgees = units::Quantity<Value, Tgees>;
-    namespace literals {
-    Q_Tgees<long double> operator "" _Tgees (long double _v) {
-        return Q_Tgees<long double>(_v); }
-    Q_Tgees<long double> operator "" _Tgees (unsigned long long int _v) {
-        return Q_Tgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tgees<long double> operator "" _Tgees_ (long double _v) {
+            return Q_Tgees<long double>(_v); }
+        static inline Q_Tgees<long double> operator "" _Tgees_ (unsigned long long int _v) {
+            return Q_Tgees<long double>(_v); }
     }
 
 
@@ -3385,11 +3838,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ggees = units::Quantity<Value, Ggees>;
-    namespace literals {
-    Q_Ggees<long double> operator "" _Ggees (long double _v) {
-        return Q_Ggees<long double>(_v); }
-    Q_Ggees<long double> operator "" _Ggees (unsigned long long int _v) {
-        return Q_Ggees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ggees<long double> operator "" _Ggees_ (long double _v) {
+            return Q_Ggees<long double>(_v); }
+        static inline Q_Ggees<long double> operator "" _Ggees_ (unsigned long long int _v) {
+            return Q_Ggees<long double>(_v); }
     }
 
 
@@ -3411,11 +3865,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mgees = units::Quantity<Value, Mgees>;
-    namespace literals {
-    Q_Mgees<long double> operator "" _Mgees (long double _v) {
-        return Q_Mgees<long double>(_v); }
-    Q_Mgees<long double> operator "" _Mgees (unsigned long long int _v) {
-        return Q_Mgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mgees<long double> operator "" _Mgees_ (long double _v) {
+            return Q_Mgees<long double>(_v); }
+        static inline Q_Mgees<long double> operator "" _Mgees_ (unsigned long long int _v) {
+            return Q_Mgees<long double>(_v); }
     }
 
 
@@ -3437,11 +3892,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kgees = units::Quantity<Value, kgees>;
-    namespace literals {
-    Q_kgees<long double> operator "" _kgees (long double _v) {
-        return Q_kgees<long double>(_v); }
-    Q_kgees<long double> operator "" _kgees (unsigned long long int _v) {
-        return Q_kgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kgees<long double> operator "" _kgees_ (long double _v) {
+            return Q_kgees<long double>(_v); }
+        static inline Q_kgees<long double> operator "" _kgees_ (unsigned long long int _v) {
+            return Q_kgees<long double>(_v); }
     }
 
 
@@ -3463,11 +3919,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hgees = units::Quantity<Value, hgees>;
-    namespace literals {
-    Q_hgees<long double> operator "" _hgees (long double _v) {
-        return Q_hgees<long double>(_v); }
-    Q_hgees<long double> operator "" _hgees (unsigned long long int _v) {
-        return Q_hgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hgees<long double> operator "" _hgees_ (long double _v) {
+            return Q_hgees<long double>(_v); }
+        static inline Q_hgees<long double> operator "" _hgees_ (unsigned long long int _v) {
+            return Q_hgees<long double>(_v); }
     }
 
 
@@ -3489,11 +3946,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dagees = units::Quantity<Value, dagees>;
-    namespace literals {
-    Q_dagees<long double> operator "" _dagees (long double _v) {
-        return Q_dagees<long double>(_v); }
-    Q_dagees<long double> operator "" _dagees (unsigned long long int _v) {
-        return Q_dagees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dagees<long double> operator "" _dagees_ (long double _v) {
+            return Q_dagees<long double>(_v); }
+        static inline Q_dagees<long double> operator "" _dagees_ (unsigned long long int _v) {
+            return Q_dagees<long double>(_v); }
     }
 
 
@@ -3515,11 +3973,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_gees = units::Quantity<Value, gees>;
-    namespace literals {
-    Q_gees<long double> operator "" _gees (long double _v) {
-        return Q_gees<long double>(_v); }
-    Q_gees<long double> operator "" _gees (unsigned long long int _v) {
-        return Q_gees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_gees<long double> operator "" _gees_ (long double _v) {
+            return Q_gees<long double>(_v); }
+        static inline Q_gees<long double> operator "" _gees_ (unsigned long long int _v) {
+            return Q_gees<long double>(_v); }
     }
 
 
@@ -3541,11 +4000,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dgees = units::Quantity<Value, dgees>;
-    namespace literals {
-    Q_dgees<long double> operator "" _dgees (long double _v) {
-        return Q_dgees<long double>(_v); }
-    Q_dgees<long double> operator "" _dgees (unsigned long long int _v) {
-        return Q_dgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dgees<long double> operator "" _dgees_ (long double _v) {
+            return Q_dgees<long double>(_v); }
+        static inline Q_dgees<long double> operator "" _dgees_ (unsigned long long int _v) {
+            return Q_dgees<long double>(_v); }
     }
 
 
@@ -3567,11 +4027,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cgees = units::Quantity<Value, cgees>;
-    namespace literals {
-    Q_cgees<long double> operator "" _cgees (long double _v) {
-        return Q_cgees<long double>(_v); }
-    Q_cgees<long double> operator "" _cgees (unsigned long long int _v) {
-        return Q_cgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cgees<long double> operator "" _cgees_ (long double _v) {
+            return Q_cgees<long double>(_v); }
+        static inline Q_cgees<long double> operator "" _cgees_ (unsigned long long int _v) {
+            return Q_cgees<long double>(_v); }
     }
 
 
@@ -3593,11 +4054,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mgees = units::Quantity<Value, mgees>;
-    namespace literals {
-    Q_mgees<long double> operator "" _mgees (long double _v) {
-        return Q_mgees<long double>(_v); }
-    Q_mgees<long double> operator "" _mgees (unsigned long long int _v) {
-        return Q_mgees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mgees<long double> operator "" _mgees_ (long double _v) {
+            return Q_mgees<long double>(_v); }
+        static inline Q_mgees<long double> operator "" _mgees_ (unsigned long long int _v) {
+            return Q_mgees<long double>(_v); }
     }
 
 
@@ -3619,11 +4081,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ugees = units::Quantity<Value, ugees>;
-    namespace literals {
-    Q_ugees<long double> operator "" _ugees (long double _v) {
-        return Q_ugees<long double>(_v); }
-    Q_ugees<long double> operator "" _ugees (unsigned long long int _v) {
-        return Q_ugees<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ugees<long double> operator "" _ugees_ (long double _v) {
+            return Q_ugees<long double>(_v); }
+        static inline Q_ugees<long double> operator "" _ugees_ (unsigned long long int _v) {
+            return Q_ugees<long double>(_v); }
     }
 
 
@@ -3645,11 +4108,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Em_per_s3 = units::Quantity<Value, Em_per_s3>;
-    namespace literals {
-    Q_Em_per_s3<long double> operator "" _Em_per_s3 (long double _v) {
-        return Q_Em_per_s3<long double>(_v); }
-    Q_Em_per_s3<long double> operator "" _Em_per_s3 (unsigned long long int _v) {
-        return Q_Em_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Em_per_s3<long double> operator "" _Em_per_s3_ (long double _v) {
+            return Q_Em_per_s3<long double>(_v); }
+        static inline Q_Em_per_s3<long double> operator "" _Em_per_s3_ (unsigned long long int _v) {
+            return Q_Em_per_s3<long double>(_v); }
     }
 
 
@@ -3671,11 +4135,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pm_per_s3 = units::Quantity<Value, Pm_per_s3>;
-    namespace literals {
-    Q_Pm_per_s3<long double> operator "" _Pm_per_s3 (long double _v) {
-        return Q_Pm_per_s3<long double>(_v); }
-    Q_Pm_per_s3<long double> operator "" _Pm_per_s3 (unsigned long long int _v) {
-        return Q_Pm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pm_per_s3<long double> operator "" _Pm_per_s3_ (long double _v) {
+            return Q_Pm_per_s3<long double>(_v); }
+        static inline Q_Pm_per_s3<long double> operator "" _Pm_per_s3_ (unsigned long long int _v) {
+            return Q_Pm_per_s3<long double>(_v); }
     }
 
 
@@ -3697,11 +4162,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tm_per_s3 = units::Quantity<Value, Tm_per_s3>;
-    namespace literals {
-    Q_Tm_per_s3<long double> operator "" _Tm_per_s3 (long double _v) {
-        return Q_Tm_per_s3<long double>(_v); }
-    Q_Tm_per_s3<long double> operator "" _Tm_per_s3 (unsigned long long int _v) {
-        return Q_Tm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tm_per_s3<long double> operator "" _Tm_per_s3_ (long double _v) {
+            return Q_Tm_per_s3<long double>(_v); }
+        static inline Q_Tm_per_s3<long double> operator "" _Tm_per_s3_ (unsigned long long int _v) {
+            return Q_Tm_per_s3<long double>(_v); }
     }
 
 
@@ -3723,11 +4189,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gm_per_s3 = units::Quantity<Value, Gm_per_s3>;
-    namespace literals {
-    Q_Gm_per_s3<long double> operator "" _Gm_per_s3 (long double _v) {
-        return Q_Gm_per_s3<long double>(_v); }
-    Q_Gm_per_s3<long double> operator "" _Gm_per_s3 (unsigned long long int _v) {
-        return Q_Gm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gm_per_s3<long double> operator "" _Gm_per_s3_ (long double _v) {
+            return Q_Gm_per_s3<long double>(_v); }
+        static inline Q_Gm_per_s3<long double> operator "" _Gm_per_s3_ (unsigned long long int _v) {
+            return Q_Gm_per_s3<long double>(_v); }
     }
 
 
@@ -3749,11 +4216,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mm_per_s3 = units::Quantity<Value, Mm_per_s3>;
-    namespace literals {
-    Q_Mm_per_s3<long double> operator "" _Mm_per_s3 (long double _v) {
-        return Q_Mm_per_s3<long double>(_v); }
-    Q_Mm_per_s3<long double> operator "" _Mm_per_s3 (unsigned long long int _v) {
-        return Q_Mm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mm_per_s3<long double> operator "" _Mm_per_s3_ (long double _v) {
+            return Q_Mm_per_s3<long double>(_v); }
+        static inline Q_Mm_per_s3<long double> operator "" _Mm_per_s3_ (unsigned long long int _v) {
+            return Q_Mm_per_s3<long double>(_v); }
     }
 
 
@@ -3775,11 +4243,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_km_per_s3 = units::Quantity<Value, km_per_s3>;
-    namespace literals {
-    Q_km_per_s3<long double> operator "" _km_per_s3 (long double _v) {
-        return Q_km_per_s3<long double>(_v); }
-    Q_km_per_s3<long double> operator "" _km_per_s3 (unsigned long long int _v) {
-        return Q_km_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_km_per_s3<long double> operator "" _km_per_s3_ (long double _v) {
+            return Q_km_per_s3<long double>(_v); }
+        static inline Q_km_per_s3<long double> operator "" _km_per_s3_ (unsigned long long int _v) {
+            return Q_km_per_s3<long double>(_v); }
     }
 
 
@@ -3801,11 +4270,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hm_per_s3 = units::Quantity<Value, hm_per_s3>;
-    namespace literals {
-    Q_hm_per_s3<long double> operator "" _hm_per_s3 (long double _v) {
-        return Q_hm_per_s3<long double>(_v); }
-    Q_hm_per_s3<long double> operator "" _hm_per_s3 (unsigned long long int _v) {
-        return Q_hm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hm_per_s3<long double> operator "" _hm_per_s3_ (long double _v) {
+            return Q_hm_per_s3<long double>(_v); }
+        static inline Q_hm_per_s3<long double> operator "" _hm_per_s3_ (unsigned long long int _v) {
+            return Q_hm_per_s3<long double>(_v); }
     }
 
 
@@ -3827,11 +4297,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dam_per_s3 = units::Quantity<Value, dam_per_s3>;
-    namespace literals {
-    Q_dam_per_s3<long double> operator "" _dam_per_s3 (long double _v) {
-        return Q_dam_per_s3<long double>(_v); }
-    Q_dam_per_s3<long double> operator "" _dam_per_s3 (unsigned long long int _v) {
-        return Q_dam_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dam_per_s3<long double> operator "" _dam_per_s3_ (long double _v) {
+            return Q_dam_per_s3<long double>(_v); }
+        static inline Q_dam_per_s3<long double> operator "" _dam_per_s3_ (unsigned long long int _v) {
+            return Q_dam_per_s3<long double>(_v); }
     }
 
 
@@ -3853,11 +4324,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_m_per_s3 = units::Quantity<Value, m_per_s3>;
-    namespace literals {
-    Q_m_per_s3<long double> operator "" _m_per_s3 (long double _v) {
-        return Q_m_per_s3<long double>(_v); }
-    Q_m_per_s3<long double> operator "" _m_per_s3 (unsigned long long int _v) {
-        return Q_m_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_m_per_s3<long double> operator "" _m_per_s3_ (long double _v) {
+            return Q_m_per_s3<long double>(_v); }
+        static inline Q_m_per_s3<long double> operator "" _m_per_s3_ (unsigned long long int _v) {
+            return Q_m_per_s3<long double>(_v); }
     }
 
 
@@ -3879,11 +4351,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dm_per_s3 = units::Quantity<Value, dm_per_s3>;
-    namespace literals {
-    Q_dm_per_s3<long double> operator "" _dm_per_s3 (long double _v) {
-        return Q_dm_per_s3<long double>(_v); }
-    Q_dm_per_s3<long double> operator "" _dm_per_s3 (unsigned long long int _v) {
-        return Q_dm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dm_per_s3<long double> operator "" _dm_per_s3_ (long double _v) {
+            return Q_dm_per_s3<long double>(_v); }
+        static inline Q_dm_per_s3<long double> operator "" _dm_per_s3_ (unsigned long long int _v) {
+            return Q_dm_per_s3<long double>(_v); }
     }
 
 
@@ -3905,11 +4378,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cm_per_s3 = units::Quantity<Value, cm_per_s3>;
-    namespace literals {
-    Q_cm_per_s3<long double> operator "" _cm_per_s3 (long double _v) {
-        return Q_cm_per_s3<long double>(_v); }
-    Q_cm_per_s3<long double> operator "" _cm_per_s3 (unsigned long long int _v) {
-        return Q_cm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cm_per_s3<long double> operator "" _cm_per_s3_ (long double _v) {
+            return Q_cm_per_s3<long double>(_v); }
+        static inline Q_cm_per_s3<long double> operator "" _cm_per_s3_ (unsigned long long int _v) {
+            return Q_cm_per_s3<long double>(_v); }
     }
 
 
@@ -3931,11 +4405,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mm_per_s3 = units::Quantity<Value, mm_per_s3>;
-    namespace literals {
-    Q_mm_per_s3<long double> operator "" _mm_per_s3 (long double _v) {
-        return Q_mm_per_s3<long double>(_v); }
-    Q_mm_per_s3<long double> operator "" _mm_per_s3 (unsigned long long int _v) {
-        return Q_mm_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mm_per_s3<long double> operator "" _mm_per_s3_ (long double _v) {
+            return Q_mm_per_s3<long double>(_v); }
+        static inline Q_mm_per_s3<long double> operator "" _mm_per_s3_ (unsigned long long int _v) {
+            return Q_mm_per_s3<long double>(_v); }
     }
 
 
@@ -3957,11 +4432,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mi_per_s3 = units::Quantity<Value, mi_per_s3>;
-    namespace literals {
-    Q_mi_per_s3<long double> operator "" _mi_per_s3 (long double _v) {
-        return Q_mi_per_s3<long double>(_v); }
-    Q_mi_per_s3<long double> operator "" _mi_per_s3 (unsigned long long int _v) {
-        return Q_mi_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mi_per_s3<long double> operator "" _mi_per_s3_ (long double _v) {
+            return Q_mi_per_s3<long double>(_v); }
+        static inline Q_mi_per_s3<long double> operator "" _mi_per_s3_ (unsigned long long int _v) {
+            return Q_mi_per_s3<long double>(_v); }
     }
 
 
@@ -3983,11 +4459,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_yd_per_s3 = units::Quantity<Value, yd_per_s3>;
-    namespace literals {
-    Q_yd_per_s3<long double> operator "" _yd_per_s3 (long double _v) {
-        return Q_yd_per_s3<long double>(_v); }
-    Q_yd_per_s3<long double> operator "" _yd_per_s3 (unsigned long long int _v) {
-        return Q_yd_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_yd_per_s3<long double> operator "" _yd_per_s3_ (long double _v) {
+            return Q_yd_per_s3<long double>(_v); }
+        static inline Q_yd_per_s3<long double> operator "" _yd_per_s3_ (unsigned long long int _v) {
+            return Q_yd_per_s3<long double>(_v); }
     }
 
 
@@ -4009,11 +4486,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ft_per_s3 = units::Quantity<Value, ft_per_s3>;
-    namespace literals {
-    Q_ft_per_s3<long double> operator "" _ft_per_s3 (long double _v) {
-        return Q_ft_per_s3<long double>(_v); }
-    Q_ft_per_s3<long double> operator "" _ft_per_s3 (unsigned long long int _v) {
-        return Q_ft_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ft_per_s3<long double> operator "" _ft_per_s3_ (long double _v) {
+            return Q_ft_per_s3<long double>(_v); }
+        static inline Q_ft_per_s3<long double> operator "" _ft_per_s3_ (unsigned long long int _v) {
+            return Q_ft_per_s3<long double>(_v); }
     }
 
 
@@ -4035,11 +4513,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_in_per_s3 = units::Quantity<Value, in_per_s3>;
-    namespace literals {
-    Q_in_per_s3<long double> operator "" _in_per_s3 (long double _v) {
-        return Q_in_per_s3<long double>(_v); }
-    Q_in_per_s3<long double> operator "" _in_per_s3 (unsigned long long int _v) {
-        return Q_in_per_s3<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_in_per_s3<long double> operator "" _in_per_s3_ (long double _v) {
+            return Q_in_per_s3<long double>(_v); }
+        static inline Q_in_per_s3<long double> operator "" _in_per_s3_ (unsigned long long int _v) {
+            return Q_in_per_s3<long double>(_v); }
     }
 
 
@@ -4061,11 +4540,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pgees_per_s = units::Quantity<Value, Pgees_per_s>;
-    namespace literals {
-    Q_Pgees_per_s<long double> operator "" _Pgees_per_s (long double _v) {
-        return Q_Pgees_per_s<long double>(_v); }
-    Q_Pgees_per_s<long double> operator "" _Pgees_per_s (unsigned long long int _v) {
-        return Q_Pgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pgees_per_s<long double> operator "" _Pgees_per_s_ (long double _v) {
+            return Q_Pgees_per_s<long double>(_v); }
+        static inline Q_Pgees_per_s<long double> operator "" _Pgees_per_s_ (unsigned long long int _v) {
+            return Q_Pgees_per_s<long double>(_v); }
     }
 
 
@@ -4087,11 +4567,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tgees_per_s = units::Quantity<Value, Tgees_per_s>;
-    namespace literals {
-    Q_Tgees_per_s<long double> operator "" _Tgees_per_s (long double _v) {
-        return Q_Tgees_per_s<long double>(_v); }
-    Q_Tgees_per_s<long double> operator "" _Tgees_per_s (unsigned long long int _v) {
-        return Q_Tgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tgees_per_s<long double> operator "" _Tgees_per_s_ (long double _v) {
+            return Q_Tgees_per_s<long double>(_v); }
+        static inline Q_Tgees_per_s<long double> operator "" _Tgees_per_s_ (unsigned long long int _v) {
+            return Q_Tgees_per_s<long double>(_v); }
     }
 
 
@@ -4113,11 +4594,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Ggees_per_s = units::Quantity<Value, Ggees_per_s>;
-    namespace literals {
-    Q_Ggees_per_s<long double> operator "" _Ggees_per_s (long double _v) {
-        return Q_Ggees_per_s<long double>(_v); }
-    Q_Ggees_per_s<long double> operator "" _Ggees_per_s (unsigned long long int _v) {
-        return Q_Ggees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Ggees_per_s<long double> operator "" _Ggees_per_s_ (long double _v) {
+            return Q_Ggees_per_s<long double>(_v); }
+        static inline Q_Ggees_per_s<long double> operator "" _Ggees_per_s_ (unsigned long long int _v) {
+            return Q_Ggees_per_s<long double>(_v); }
     }
 
 
@@ -4139,11 +4621,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mgees_per_s = units::Quantity<Value, Mgees_per_s>;
-    namespace literals {
-    Q_Mgees_per_s<long double> operator "" _Mgees_per_s (long double _v) {
-        return Q_Mgees_per_s<long double>(_v); }
-    Q_Mgees_per_s<long double> operator "" _Mgees_per_s (unsigned long long int _v) {
-        return Q_Mgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mgees_per_s<long double> operator "" _Mgees_per_s_ (long double _v) {
+            return Q_Mgees_per_s<long double>(_v); }
+        static inline Q_Mgees_per_s<long double> operator "" _Mgees_per_s_ (unsigned long long int _v) {
+            return Q_Mgees_per_s<long double>(_v); }
     }
 
 
@@ -4165,11 +4648,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kgees_per_s = units::Quantity<Value, kgees_per_s>;
-    namespace literals {
-    Q_kgees_per_s<long double> operator "" _kgees_per_s (long double _v) {
-        return Q_kgees_per_s<long double>(_v); }
-    Q_kgees_per_s<long double> operator "" _kgees_per_s (unsigned long long int _v) {
-        return Q_kgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kgees_per_s<long double> operator "" _kgees_per_s_ (long double _v) {
+            return Q_kgees_per_s<long double>(_v); }
+        static inline Q_kgees_per_s<long double> operator "" _kgees_per_s_ (unsigned long long int _v) {
+            return Q_kgees_per_s<long double>(_v); }
     }
 
 
@@ -4191,11 +4675,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hgees_per_s = units::Quantity<Value, hgees_per_s>;
-    namespace literals {
-    Q_hgees_per_s<long double> operator "" _hgees_per_s (long double _v) {
-        return Q_hgees_per_s<long double>(_v); }
-    Q_hgees_per_s<long double> operator "" _hgees_per_s (unsigned long long int _v) {
-        return Q_hgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hgees_per_s<long double> operator "" _hgees_per_s_ (long double _v) {
+            return Q_hgees_per_s<long double>(_v); }
+        static inline Q_hgees_per_s<long double> operator "" _hgees_per_s_ (unsigned long long int _v) {
+            return Q_hgees_per_s<long double>(_v); }
     }
 
 
@@ -4217,11 +4702,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dagees_per_s = units::Quantity<Value, dagees_per_s>;
-    namespace literals {
-    Q_dagees_per_s<long double> operator "" _dagees_per_s (long double _v) {
-        return Q_dagees_per_s<long double>(_v); }
-    Q_dagees_per_s<long double> operator "" _dagees_per_s (unsigned long long int _v) {
-        return Q_dagees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dagees_per_s<long double> operator "" _dagees_per_s_ (long double _v) {
+            return Q_dagees_per_s<long double>(_v); }
+        static inline Q_dagees_per_s<long double> operator "" _dagees_per_s_ (unsigned long long int _v) {
+            return Q_dagees_per_s<long double>(_v); }
     }
 
 
@@ -4243,11 +4729,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_gees_per_s = units::Quantity<Value, gees_per_s>;
-    namespace literals {
-    Q_gees_per_s<long double> operator "" _gees_per_s (long double _v) {
-        return Q_gees_per_s<long double>(_v); }
-    Q_gees_per_s<long double> operator "" _gees_per_s (unsigned long long int _v) {
-        return Q_gees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_gees_per_s<long double> operator "" _gees_per_s_ (long double _v) {
+            return Q_gees_per_s<long double>(_v); }
+        static inline Q_gees_per_s<long double> operator "" _gees_per_s_ (unsigned long long int _v) {
+            return Q_gees_per_s<long double>(_v); }
     }
 
 
@@ -4269,11 +4756,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dgees_per_s = units::Quantity<Value, dgees_per_s>;
-    namespace literals {
-    Q_dgees_per_s<long double> operator "" _dgees_per_s (long double _v) {
-        return Q_dgees_per_s<long double>(_v); }
-    Q_dgees_per_s<long double> operator "" _dgees_per_s (unsigned long long int _v) {
-        return Q_dgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dgees_per_s<long double> operator "" _dgees_per_s_ (long double _v) {
+            return Q_dgees_per_s<long double>(_v); }
+        static inline Q_dgees_per_s<long double> operator "" _dgees_per_s_ (unsigned long long int _v) {
+            return Q_dgees_per_s<long double>(_v); }
     }
 
 
@@ -4295,11 +4783,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cgees_per_s = units::Quantity<Value, cgees_per_s>;
-    namespace literals {
-    Q_cgees_per_s<long double> operator "" _cgees_per_s (long double _v) {
-        return Q_cgees_per_s<long double>(_v); }
-    Q_cgees_per_s<long double> operator "" _cgees_per_s (unsigned long long int _v) {
-        return Q_cgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cgees_per_s<long double> operator "" _cgees_per_s_ (long double _v) {
+            return Q_cgees_per_s<long double>(_v); }
+        static inline Q_cgees_per_s<long double> operator "" _cgees_per_s_ (unsigned long long int _v) {
+            return Q_cgees_per_s<long double>(_v); }
     }
 
 
@@ -4321,11 +4810,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mgees_per_s = units::Quantity<Value, mgees_per_s>;
-    namespace literals {
-    Q_mgees_per_s<long double> operator "" _mgees_per_s (long double _v) {
-        return Q_mgees_per_s<long double>(_v); }
-    Q_mgees_per_s<long double> operator "" _mgees_per_s (unsigned long long int _v) {
-        return Q_mgees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mgees_per_s<long double> operator "" _mgees_per_s_ (long double _v) {
+            return Q_mgees_per_s<long double>(_v); }
+        static inline Q_mgees_per_s<long double> operator "" _mgees_per_s_ (unsigned long long int _v) {
+            return Q_mgees_per_s<long double>(_v); }
     }
 
 
@@ -4347,11 +4837,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ugees_per_s = units::Quantity<Value, ugees_per_s>;
-    namespace literals {
-    Q_ugees_per_s<long double> operator "" _ugees_per_s (long double _v) {
-        return Q_ugees_per_s<long double>(_v); }
-    Q_ugees_per_s<long double> operator "" _ugees_per_s (unsigned long long int _v) {
-        return Q_ugees_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ugees_per_s<long double> operator "" _ugees_per_s_ (long double _v) {
+            return Q_ugees_per_s<long double>(_v); }
+        static inline Q_ugees_per_s<long double> operator "" _ugees_per_s_ (unsigned long long int _v) {
+            return Q_ugees_per_s<long double>(_v); }
     }
 
 
@@ -4373,11 +4864,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rad = units::Quantity<Value, rad>;
-    namespace literals {
-    Q_rad<long double> operator "" _rad (long double _v) {
-        return Q_rad<long double>(_v); }
-    Q_rad<long double> operator "" _rad (unsigned long long int _v) {
-        return Q_rad<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rad<long double> operator "" _rad_ (long double _v) {
+            return Q_rad<long double>(_v); }
+        static inline Q_rad<long double> operator "" _rad_ (unsigned long long int _v) {
+            return Q_rad<long double>(_v); }
     }
 
 
@@ -4399,11 +4891,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rev = units::Quantity<Value, rev>;
-    namespace literals {
-    Q_rev<long double> operator "" _rev (long double _v) {
-        return Q_rev<long double>(_v); }
-    Q_rev<long double> operator "" _rev (unsigned long long int _v) {
-        return Q_rev<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rev<long double> operator "" _rev_ (long double _v) {
+            return Q_rev<long double>(_v); }
+        static inline Q_rev<long double> operator "" _rev_ (unsigned long long int _v) {
+            return Q_rev<long double>(_v); }
     }
 
 
@@ -4425,11 +4918,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_deg = units::Quantity<Value, deg>;
-    namespace literals {
-    Q_deg<long double> operator "" _deg (long double _v) {
-        return Q_deg<long double>(_v); }
-    Q_deg<long double> operator "" _deg (unsigned long long int _v) {
-        return Q_deg<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_deg<long double> operator "" _deg_ (long double _v) {
+            return Q_deg<long double>(_v); }
+        static inline Q_deg<long double> operator "" _deg_ (unsigned long long int _v) {
+            return Q_deg<long double>(_v); }
     }
 
 
@@ -4451,11 +4945,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_grad = units::Quantity<Value, grad>;
-    namespace literals {
-    Q_grad<long double> operator "" _grad (long double _v) {
-        return Q_grad<long double>(_v); }
-    Q_grad<long double> operator "" _grad (unsigned long long int _v) {
-        return Q_grad<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_grad<long double> operator "" _grad_ (long double _v) {
+            return Q_grad<long double>(_v); }
+        static inline Q_grad<long double> operator "" _grad_ (unsigned long long int _v) {
+            return Q_grad<long double>(_v); }
     }
 
 
@@ -4477,11 +4972,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rad_per_s = units::Quantity<Value, rad_per_s>;
-    namespace literals {
-    Q_rad_per_s<long double> operator "" _rad_per_s (long double _v) {
-        return Q_rad_per_s<long double>(_v); }
-    Q_rad_per_s<long double> operator "" _rad_per_s (unsigned long long int _v) {
-        return Q_rad_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rad_per_s<long double> operator "" _rad_per_s_ (long double _v) {
+            return Q_rad_per_s<long double>(_v); }
+        static inline Q_rad_per_s<long double> operator "" _rad_per_s_ (unsigned long long int _v) {
+            return Q_rad_per_s<long double>(_v); }
     }
 
 
@@ -4503,11 +4999,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rev_per_s = units::Quantity<Value, rev_per_s>;
-    namespace literals {
-    Q_rev_per_s<long double> operator "" _rev_per_s (long double _v) {
-        return Q_rev_per_s<long double>(_v); }
-    Q_rev_per_s<long double> operator "" _rev_per_s (unsigned long long int _v) {
-        return Q_rev_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rev_per_s<long double> operator "" _rev_per_s_ (long double _v) {
+            return Q_rev_per_s<long double>(_v); }
+        static inline Q_rev_per_s<long double> operator "" _rev_per_s_ (unsigned long long int _v) {
+            return Q_rev_per_s<long double>(_v); }
     }
 
 
@@ -4529,11 +5026,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_deg_per_s = units::Quantity<Value, deg_per_s>;
-    namespace literals {
-    Q_deg_per_s<long double> operator "" _deg_per_s (long double _v) {
-        return Q_deg_per_s<long double>(_v); }
-    Q_deg_per_s<long double> operator "" _deg_per_s (unsigned long long int _v) {
-        return Q_deg_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_deg_per_s<long double> operator "" _deg_per_s_ (long double _v) {
+            return Q_deg_per_s<long double>(_v); }
+        static inline Q_deg_per_s<long double> operator "" _deg_per_s_ (unsigned long long int _v) {
+            return Q_deg_per_s<long double>(_v); }
     }
 
 
@@ -4555,11 +5053,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_grad_per_s = units::Quantity<Value, grad_per_s>;
-    namespace literals {
-    Q_grad_per_s<long double> operator "" _grad_per_s (long double _v) {
-        return Q_grad_per_s<long double>(_v); }
-    Q_grad_per_s<long double> operator "" _grad_per_s (unsigned long long int _v) {
-        return Q_grad_per_s<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_grad_per_s<long double> operator "" _grad_per_s_ (long double _v) {
+            return Q_grad_per_s<long double>(_v); }
+        static inline Q_grad_per_s<long double> operator "" _grad_per_s_ (unsigned long long int _v) {
+            return Q_grad_per_s<long double>(_v); }
     }
 
 
@@ -4581,11 +5080,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rpm = units::Quantity<Value, rpm>;
-    namespace literals {
-    Q_rpm<long double> operator "" _rpm (long double _v) {
-        return Q_rpm<long double>(_v); }
-    Q_rpm<long double> operator "" _rpm (unsigned long long int _v) {
-        return Q_rpm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rpm<long double> operator "" _rpm_ (long double _v) {
+            return Q_rpm<long double>(_v); }
+        static inline Q_rpm<long double> operator "" _rpm_ (unsigned long long int _v) {
+            return Q_rpm<long double>(_v); }
     }
 
 
@@ -4607,11 +5107,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rad_per_s2 = units::Quantity<Value, rad_per_s2>;
-    namespace literals {
-    Q_rad_per_s2<long double> operator "" _rad_per_s2 (long double _v) {
-        return Q_rad_per_s2<long double>(_v); }
-    Q_rad_per_s2<long double> operator "" _rad_per_s2 (unsigned long long int _v) {
-        return Q_rad_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rad_per_s2<long double> operator "" _rad_per_s2_ (long double _v) {
+            return Q_rad_per_s2<long double>(_v); }
+        static inline Q_rad_per_s2<long double> operator "" _rad_per_s2_ (unsigned long long int _v) {
+            return Q_rad_per_s2<long double>(_v); }
     }
 
 
@@ -4633,11 +5134,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_rev_per_s2 = units::Quantity<Value, rev_per_s2>;
-    namespace literals {
-    Q_rev_per_s2<long double> operator "" _rev_per_s2 (long double _v) {
-        return Q_rev_per_s2<long double>(_v); }
-    Q_rev_per_s2<long double> operator "" _rev_per_s2 (unsigned long long int _v) {
-        return Q_rev_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_rev_per_s2<long double> operator "" _rev_per_s2_ (long double _v) {
+            return Q_rev_per_s2<long double>(_v); }
+        static inline Q_rev_per_s2<long double> operator "" _rev_per_s2_ (unsigned long long int _v) {
+            return Q_rev_per_s2<long double>(_v); }
     }
 
 
@@ -4659,11 +5161,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_deg_per_s2 = units::Quantity<Value, deg_per_s2>;
-    namespace literals {
-    Q_deg_per_s2<long double> operator "" _deg_per_s2 (long double _v) {
-        return Q_deg_per_s2<long double>(_v); }
-    Q_deg_per_s2<long double> operator "" _deg_per_s2 (unsigned long long int _v) {
-        return Q_deg_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_deg_per_s2<long double> operator "" _deg_per_s2_ (long double _v) {
+            return Q_deg_per_s2<long double>(_v); }
+        static inline Q_deg_per_s2<long double> operator "" _deg_per_s2_ (unsigned long long int _v) {
+            return Q_deg_per_s2<long double>(_v); }
     }
 
 
@@ -4685,11 +5188,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_grad_per_s2 = units::Quantity<Value, grad_per_s2>;
-    namespace literals {
-    Q_grad_per_s2<long double> operator "" _grad_per_s2 (long double _v) {
-        return Q_grad_per_s2<long double>(_v); }
-    Q_grad_per_s2<long double> operator "" _grad_per_s2 (unsigned long long int _v) {
-        return Q_grad_per_s2<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_grad_per_s2<long double> operator "" _grad_per_s2_ (long double _v) {
+            return Q_grad_per_s2<long double>(_v); }
+        static inline Q_grad_per_s2<long double> operator "" _grad_per_s2_ (unsigned long long int _v) {
+            return Q_grad_per_s2<long double>(_v); }
     }
 
 
@@ -4711,11 +5215,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EC = units::Quantity<Value, EC>;
-    namespace literals {
-    Q_EC<long double> operator "" _EC (long double _v) {
-        return Q_EC<long double>(_v); }
-    Q_EC<long double> operator "" _EC (unsigned long long int _v) {
-        return Q_EC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EC<long double> operator "" _EC_ (long double _v) {
+            return Q_EC<long double>(_v); }
+        static inline Q_EC<long double> operator "" _EC_ (unsigned long long int _v) {
+            return Q_EC<long double>(_v); }
     }
 
 
@@ -4737,11 +5242,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EC_abs = units::Quantity<Value, EC_abs>;
-    namespace literals {
-    Q_EC_abs<long double> operator "" _EC_abs (long double _v) {
-        return Q_EC_abs<long double>(_v); }
-    Q_EC_abs<long double> operator "" _EC_abs (unsigned long long int _v) {
-        return Q_EC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EC_abs<long double> operator "" _EC_abs_ (long double _v) {
+            return Q_EC_abs<long double>(_v); }
+        static inline Q_EC_abs<long double> operator "" _EC_abs_ (unsigned long long int _v) {
+            return Q_EC_abs<long double>(_v); }
     }
 
 
@@ -4763,11 +5269,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PC = units::Quantity<Value, PC>;
-    namespace literals {
-    Q_PC<long double> operator "" _PC (long double _v) {
-        return Q_PC<long double>(_v); }
-    Q_PC<long double> operator "" _PC (unsigned long long int _v) {
-        return Q_PC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PC<long double> operator "" _PC_ (long double _v) {
+            return Q_PC<long double>(_v); }
+        static inline Q_PC<long double> operator "" _PC_ (unsigned long long int _v) {
+            return Q_PC<long double>(_v); }
     }
 
 
@@ -4789,11 +5296,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PC_abs = units::Quantity<Value, PC_abs>;
-    namespace literals {
-    Q_PC_abs<long double> operator "" _PC_abs (long double _v) {
-        return Q_PC_abs<long double>(_v); }
-    Q_PC_abs<long double> operator "" _PC_abs (unsigned long long int _v) {
-        return Q_PC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PC_abs<long double> operator "" _PC_abs_ (long double _v) {
+            return Q_PC_abs<long double>(_v); }
+        static inline Q_PC_abs<long double> operator "" _PC_abs_ (unsigned long long int _v) {
+            return Q_PC_abs<long double>(_v); }
     }
 
 
@@ -4815,11 +5323,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TC = units::Quantity<Value, TC>;
-    namespace literals {
-    Q_TC<long double> operator "" _TC (long double _v) {
-        return Q_TC<long double>(_v); }
-    Q_TC<long double> operator "" _TC (unsigned long long int _v) {
-        return Q_TC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TC<long double> operator "" _TC_ (long double _v) {
+            return Q_TC<long double>(_v); }
+        static inline Q_TC<long double> operator "" _TC_ (unsigned long long int _v) {
+            return Q_TC<long double>(_v); }
     }
 
 
@@ -4841,11 +5350,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TC_abs = units::Quantity<Value, TC_abs>;
-    namespace literals {
-    Q_TC_abs<long double> operator "" _TC_abs (long double _v) {
-        return Q_TC_abs<long double>(_v); }
-    Q_TC_abs<long double> operator "" _TC_abs (unsigned long long int _v) {
-        return Q_TC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TC_abs<long double> operator "" _TC_abs_ (long double _v) {
+            return Q_TC_abs<long double>(_v); }
+        static inline Q_TC_abs<long double> operator "" _TC_abs_ (unsigned long long int _v) {
+            return Q_TC_abs<long double>(_v); }
     }
 
 
@@ -4867,11 +5377,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GC = units::Quantity<Value, GC>;
-    namespace literals {
-    Q_GC<long double> operator "" _GC (long double _v) {
-        return Q_GC<long double>(_v); }
-    Q_GC<long double> operator "" _GC (unsigned long long int _v) {
-        return Q_GC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GC<long double> operator "" _GC_ (long double _v) {
+            return Q_GC<long double>(_v); }
+        static inline Q_GC<long double> operator "" _GC_ (unsigned long long int _v) {
+            return Q_GC<long double>(_v); }
     }
 
 
@@ -4893,11 +5404,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GC_abs = units::Quantity<Value, GC_abs>;
-    namespace literals {
-    Q_GC_abs<long double> operator "" _GC_abs (long double _v) {
-        return Q_GC_abs<long double>(_v); }
-    Q_GC_abs<long double> operator "" _GC_abs (unsigned long long int _v) {
-        return Q_GC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GC_abs<long double> operator "" _GC_abs_ (long double _v) {
+            return Q_GC_abs<long double>(_v); }
+        static inline Q_GC_abs<long double> operator "" _GC_abs_ (unsigned long long int _v) {
+            return Q_GC_abs<long double>(_v); }
     }
 
 
@@ -4919,11 +5431,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MC = units::Quantity<Value, MC>;
-    namespace literals {
-    Q_MC<long double> operator "" _MC (long double _v) {
-        return Q_MC<long double>(_v); }
-    Q_MC<long double> operator "" _MC (unsigned long long int _v) {
-        return Q_MC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MC<long double> operator "" _MC_ (long double _v) {
+            return Q_MC<long double>(_v); }
+        static inline Q_MC<long double> operator "" _MC_ (unsigned long long int _v) {
+            return Q_MC<long double>(_v); }
     }
 
 
@@ -4945,11 +5458,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MC_abs = units::Quantity<Value, MC_abs>;
-    namespace literals {
-    Q_MC_abs<long double> operator "" _MC_abs (long double _v) {
-        return Q_MC_abs<long double>(_v); }
-    Q_MC_abs<long double> operator "" _MC_abs (unsigned long long int _v) {
-        return Q_MC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MC_abs<long double> operator "" _MC_abs_ (long double _v) {
+            return Q_MC_abs<long double>(_v); }
+        static inline Q_MC_abs<long double> operator "" _MC_abs_ (unsigned long long int _v) {
+            return Q_MC_abs<long double>(_v); }
     }
 
 
@@ -4971,11 +5485,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kC = units::Quantity<Value, kC>;
-    namespace literals {
-    Q_kC<long double> operator "" _kC (long double _v) {
-        return Q_kC<long double>(_v); }
-    Q_kC<long double> operator "" _kC (unsigned long long int _v) {
-        return Q_kC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kC<long double> operator "" _kC_ (long double _v) {
+            return Q_kC<long double>(_v); }
+        static inline Q_kC<long double> operator "" _kC_ (unsigned long long int _v) {
+            return Q_kC<long double>(_v); }
     }
 
 
@@ -4997,11 +5512,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kC_abs = units::Quantity<Value, kC_abs>;
-    namespace literals {
-    Q_kC_abs<long double> operator "" _kC_abs (long double _v) {
-        return Q_kC_abs<long double>(_v); }
-    Q_kC_abs<long double> operator "" _kC_abs (unsigned long long int _v) {
-        return Q_kC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kC_abs<long double> operator "" _kC_abs_ (long double _v) {
+            return Q_kC_abs<long double>(_v); }
+        static inline Q_kC_abs<long double> operator "" _kC_abs_ (unsigned long long int _v) {
+            return Q_kC_abs<long double>(_v); }
     }
 
 
@@ -5023,11 +5539,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hC = units::Quantity<Value, hC>;
-    namespace literals {
-    Q_hC<long double> operator "" _hC (long double _v) {
-        return Q_hC<long double>(_v); }
-    Q_hC<long double> operator "" _hC (unsigned long long int _v) {
-        return Q_hC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hC<long double> operator "" _hC_ (long double _v) {
+            return Q_hC<long double>(_v); }
+        static inline Q_hC<long double> operator "" _hC_ (unsigned long long int _v) {
+            return Q_hC<long double>(_v); }
     }
 
 
@@ -5049,11 +5566,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hC_abs = units::Quantity<Value, hC_abs>;
-    namespace literals {
-    Q_hC_abs<long double> operator "" _hC_abs (long double _v) {
-        return Q_hC_abs<long double>(_v); }
-    Q_hC_abs<long double> operator "" _hC_abs (unsigned long long int _v) {
-        return Q_hC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hC_abs<long double> operator "" _hC_abs_ (long double _v) {
+            return Q_hC_abs<long double>(_v); }
+        static inline Q_hC_abs<long double> operator "" _hC_abs_ (unsigned long long int _v) {
+            return Q_hC_abs<long double>(_v); }
     }
 
 
@@ -5075,11 +5593,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daC = units::Quantity<Value, daC>;
-    namespace literals {
-    Q_daC<long double> operator "" _daC (long double _v) {
-        return Q_daC<long double>(_v); }
-    Q_daC<long double> operator "" _daC (unsigned long long int _v) {
-        return Q_daC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daC<long double> operator "" _daC_ (long double _v) {
+            return Q_daC<long double>(_v); }
+        static inline Q_daC<long double> operator "" _daC_ (unsigned long long int _v) {
+            return Q_daC<long double>(_v); }
     }
 
 
@@ -5101,11 +5620,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daC_abs = units::Quantity<Value, daC_abs>;
-    namespace literals {
-    Q_daC_abs<long double> operator "" _daC_abs (long double _v) {
-        return Q_daC_abs<long double>(_v); }
-    Q_daC_abs<long double> operator "" _daC_abs (unsigned long long int _v) {
-        return Q_daC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daC_abs<long double> operator "" _daC_abs_ (long double _v) {
+            return Q_daC_abs<long double>(_v); }
+        static inline Q_daC_abs<long double> operator "" _daC_abs_ (unsigned long long int _v) {
+            return Q_daC_abs<long double>(_v); }
     }
 
 
@@ -5127,11 +5647,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_C = units::Quantity<Value, C>;
-    namespace literals {
-    Q_C<long double> operator "" _C (long double _v) {
-        return Q_C<long double>(_v); }
-    Q_C<long double> operator "" _C (unsigned long long int _v) {
-        return Q_C<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_C<long double> operator "" _C_ (long double _v) {
+            return Q_C<long double>(_v); }
+        static inline Q_C<long double> operator "" _C_ (unsigned long long int _v) {
+            return Q_C<long double>(_v); }
     }
 
 
@@ -5153,11 +5674,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_C_abs = units::Quantity<Value, C_abs>;
-    namespace literals {
-    Q_C_abs<long double> operator "" _C_abs (long double _v) {
-        return Q_C_abs<long double>(_v); }
-    Q_C_abs<long double> operator "" _C_abs (unsigned long long int _v) {
-        return Q_C_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_C_abs<long double> operator "" _C_abs_ (long double _v) {
+            return Q_C_abs<long double>(_v); }
+        static inline Q_C_abs<long double> operator "" _C_abs_ (unsigned long long int _v) {
+            return Q_C_abs<long double>(_v); }
     }
 
 
@@ -5179,11 +5701,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dC = units::Quantity<Value, dC>;
-    namespace literals {
-    Q_dC<long double> operator "" _dC (long double _v) {
-        return Q_dC<long double>(_v); }
-    Q_dC<long double> operator "" _dC (unsigned long long int _v) {
-        return Q_dC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dC<long double> operator "" _dC_ (long double _v) {
+            return Q_dC<long double>(_v); }
+        static inline Q_dC<long double> operator "" _dC_ (unsigned long long int _v) {
+            return Q_dC<long double>(_v); }
     }
 
 
@@ -5205,11 +5728,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dC_abs = units::Quantity<Value, dC_abs>;
-    namespace literals {
-    Q_dC_abs<long double> operator "" _dC_abs (long double _v) {
-        return Q_dC_abs<long double>(_v); }
-    Q_dC_abs<long double> operator "" _dC_abs (unsigned long long int _v) {
-        return Q_dC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dC_abs<long double> operator "" _dC_abs_ (long double _v) {
+            return Q_dC_abs<long double>(_v); }
+        static inline Q_dC_abs<long double> operator "" _dC_abs_ (unsigned long long int _v) {
+            return Q_dC_abs<long double>(_v); }
     }
 
 
@@ -5231,11 +5755,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cC = units::Quantity<Value, cC>;
-    namespace literals {
-    Q_cC<long double> operator "" _cC (long double _v) {
-        return Q_cC<long double>(_v); }
-    Q_cC<long double> operator "" _cC (unsigned long long int _v) {
-        return Q_cC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cC<long double> operator "" _cC_ (long double _v) {
+            return Q_cC<long double>(_v); }
+        static inline Q_cC<long double> operator "" _cC_ (unsigned long long int _v) {
+            return Q_cC<long double>(_v); }
     }
 
 
@@ -5257,11 +5782,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cC_abs = units::Quantity<Value, cC_abs>;
-    namespace literals {
-    Q_cC_abs<long double> operator "" _cC_abs (long double _v) {
-        return Q_cC_abs<long double>(_v); }
-    Q_cC_abs<long double> operator "" _cC_abs (unsigned long long int _v) {
-        return Q_cC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cC_abs<long double> operator "" _cC_abs_ (long double _v) {
+            return Q_cC_abs<long double>(_v); }
+        static inline Q_cC_abs<long double> operator "" _cC_abs_ (unsigned long long int _v) {
+            return Q_cC_abs<long double>(_v); }
     }
 
 
@@ -5283,11 +5809,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mC = units::Quantity<Value, mC>;
-    namespace literals {
-    Q_mC<long double> operator "" _mC (long double _v) {
-        return Q_mC<long double>(_v); }
-    Q_mC<long double> operator "" _mC (unsigned long long int _v) {
-        return Q_mC<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mC<long double> operator "" _mC_ (long double _v) {
+            return Q_mC<long double>(_v); }
+        static inline Q_mC<long double> operator "" _mC_ (unsigned long long int _v) {
+            return Q_mC<long double>(_v); }
     }
 
 
@@ -5309,11 +5836,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mC_abs = units::Quantity<Value, mC_abs>;
-    namespace literals {
-    Q_mC_abs<long double> operator "" _mC_abs (long double _v) {
-        return Q_mC_abs<long double>(_v); }
-    Q_mC_abs<long double> operator "" _mC_abs (unsigned long long int _v) {
-        return Q_mC_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mC_abs<long double> operator "" _mC_abs_ (long double _v) {
+            return Q_mC_abs<long double>(_v); }
+        static inline Q_mC_abs<long double> operator "" _mC_abs_ (unsigned long long int _v) {
+            return Q_mC_abs<long double>(_v); }
     }
 
 
@@ -5335,11 +5863,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EK = units::Quantity<Value, EK>;
-    namespace literals {
-    Q_EK<long double> operator "" _EK (long double _v) {
-        return Q_EK<long double>(_v); }
-    Q_EK<long double> operator "" _EK (unsigned long long int _v) {
-        return Q_EK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EK<long double> operator "" _EK_ (long double _v) {
+            return Q_EK<long double>(_v); }
+        static inline Q_EK<long double> operator "" _EK_ (unsigned long long int _v) {
+            return Q_EK<long double>(_v); }
     }
 
 
@@ -5361,11 +5890,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EK_abs = units::Quantity<Value, EK_abs>;
-    namespace literals {
-    Q_EK_abs<long double> operator "" _EK_abs (long double _v) {
-        return Q_EK_abs<long double>(_v); }
-    Q_EK_abs<long double> operator "" _EK_abs (unsigned long long int _v) {
-        return Q_EK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EK_abs<long double> operator "" _EK_abs_ (long double _v) {
+            return Q_EK_abs<long double>(_v); }
+        static inline Q_EK_abs<long double> operator "" _EK_abs_ (unsigned long long int _v) {
+            return Q_EK_abs<long double>(_v); }
     }
 
 
@@ -5387,11 +5917,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PK = units::Quantity<Value, PK>;
-    namespace literals {
-    Q_PK<long double> operator "" _PK (long double _v) {
-        return Q_PK<long double>(_v); }
-    Q_PK<long double> operator "" _PK (unsigned long long int _v) {
-        return Q_PK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PK<long double> operator "" _PK_ (long double _v) {
+            return Q_PK<long double>(_v); }
+        static inline Q_PK<long double> operator "" _PK_ (unsigned long long int _v) {
+            return Q_PK<long double>(_v); }
     }
 
 
@@ -5413,11 +5944,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PK_abs = units::Quantity<Value, PK_abs>;
-    namespace literals {
-    Q_PK_abs<long double> operator "" _PK_abs (long double _v) {
-        return Q_PK_abs<long double>(_v); }
-    Q_PK_abs<long double> operator "" _PK_abs (unsigned long long int _v) {
-        return Q_PK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PK_abs<long double> operator "" _PK_abs_ (long double _v) {
+            return Q_PK_abs<long double>(_v); }
+        static inline Q_PK_abs<long double> operator "" _PK_abs_ (unsigned long long int _v) {
+            return Q_PK_abs<long double>(_v); }
     }
 
 
@@ -5439,11 +5971,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TK = units::Quantity<Value, TK>;
-    namespace literals {
-    Q_TK<long double> operator "" _TK (long double _v) {
-        return Q_TK<long double>(_v); }
-    Q_TK<long double> operator "" _TK (unsigned long long int _v) {
-        return Q_TK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TK<long double> operator "" _TK_ (long double _v) {
+            return Q_TK<long double>(_v); }
+        static inline Q_TK<long double> operator "" _TK_ (unsigned long long int _v) {
+            return Q_TK<long double>(_v); }
     }
 
 
@@ -5465,11 +5998,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TK_abs = units::Quantity<Value, TK_abs>;
-    namespace literals {
-    Q_TK_abs<long double> operator "" _TK_abs (long double _v) {
-        return Q_TK_abs<long double>(_v); }
-    Q_TK_abs<long double> operator "" _TK_abs (unsigned long long int _v) {
-        return Q_TK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TK_abs<long double> operator "" _TK_abs_ (long double _v) {
+            return Q_TK_abs<long double>(_v); }
+        static inline Q_TK_abs<long double> operator "" _TK_abs_ (unsigned long long int _v) {
+            return Q_TK_abs<long double>(_v); }
     }
 
 
@@ -5491,11 +6025,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GK = units::Quantity<Value, GK>;
-    namespace literals {
-    Q_GK<long double> operator "" _GK (long double _v) {
-        return Q_GK<long double>(_v); }
-    Q_GK<long double> operator "" _GK (unsigned long long int _v) {
-        return Q_GK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GK<long double> operator "" _GK_ (long double _v) {
+            return Q_GK<long double>(_v); }
+        static inline Q_GK<long double> operator "" _GK_ (unsigned long long int _v) {
+            return Q_GK<long double>(_v); }
     }
 
 
@@ -5517,11 +6052,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GK_abs = units::Quantity<Value, GK_abs>;
-    namespace literals {
-    Q_GK_abs<long double> operator "" _GK_abs (long double _v) {
-        return Q_GK_abs<long double>(_v); }
-    Q_GK_abs<long double> operator "" _GK_abs (unsigned long long int _v) {
-        return Q_GK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GK_abs<long double> operator "" _GK_abs_ (long double _v) {
+            return Q_GK_abs<long double>(_v); }
+        static inline Q_GK_abs<long double> operator "" _GK_abs_ (unsigned long long int _v) {
+            return Q_GK_abs<long double>(_v); }
     }
 
 
@@ -5543,11 +6079,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MK = units::Quantity<Value, MK>;
-    namespace literals {
-    Q_MK<long double> operator "" _MK (long double _v) {
-        return Q_MK<long double>(_v); }
-    Q_MK<long double> operator "" _MK (unsigned long long int _v) {
-        return Q_MK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MK<long double> operator "" _MK_ (long double _v) {
+            return Q_MK<long double>(_v); }
+        static inline Q_MK<long double> operator "" _MK_ (unsigned long long int _v) {
+            return Q_MK<long double>(_v); }
     }
 
 
@@ -5569,11 +6106,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MK_abs = units::Quantity<Value, MK_abs>;
-    namespace literals {
-    Q_MK_abs<long double> operator "" _MK_abs (long double _v) {
-        return Q_MK_abs<long double>(_v); }
-    Q_MK_abs<long double> operator "" _MK_abs (unsigned long long int _v) {
-        return Q_MK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MK_abs<long double> operator "" _MK_abs_ (long double _v) {
+            return Q_MK_abs<long double>(_v); }
+        static inline Q_MK_abs<long double> operator "" _MK_abs_ (unsigned long long int _v) {
+            return Q_MK_abs<long double>(_v); }
     }
 
 
@@ -5595,11 +6133,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kK = units::Quantity<Value, kK>;
-    namespace literals {
-    Q_kK<long double> operator "" _kK (long double _v) {
-        return Q_kK<long double>(_v); }
-    Q_kK<long double> operator "" _kK (unsigned long long int _v) {
-        return Q_kK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kK<long double> operator "" _kK_ (long double _v) {
+            return Q_kK<long double>(_v); }
+        static inline Q_kK<long double> operator "" _kK_ (unsigned long long int _v) {
+            return Q_kK<long double>(_v); }
     }
 
 
@@ -5621,11 +6160,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kK_abs = units::Quantity<Value, kK_abs>;
-    namespace literals {
-    Q_kK_abs<long double> operator "" _kK_abs (long double _v) {
-        return Q_kK_abs<long double>(_v); }
-    Q_kK_abs<long double> operator "" _kK_abs (unsigned long long int _v) {
-        return Q_kK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kK_abs<long double> operator "" _kK_abs_ (long double _v) {
+            return Q_kK_abs<long double>(_v); }
+        static inline Q_kK_abs<long double> operator "" _kK_abs_ (unsigned long long int _v) {
+            return Q_kK_abs<long double>(_v); }
     }
 
 
@@ -5647,11 +6187,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hK = units::Quantity<Value, hK>;
-    namespace literals {
-    Q_hK<long double> operator "" _hK (long double _v) {
-        return Q_hK<long double>(_v); }
-    Q_hK<long double> operator "" _hK (unsigned long long int _v) {
-        return Q_hK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hK<long double> operator "" _hK_ (long double _v) {
+            return Q_hK<long double>(_v); }
+        static inline Q_hK<long double> operator "" _hK_ (unsigned long long int _v) {
+            return Q_hK<long double>(_v); }
     }
 
 
@@ -5673,11 +6214,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hK_abs = units::Quantity<Value, hK_abs>;
-    namespace literals {
-    Q_hK_abs<long double> operator "" _hK_abs (long double _v) {
-        return Q_hK_abs<long double>(_v); }
-    Q_hK_abs<long double> operator "" _hK_abs (unsigned long long int _v) {
-        return Q_hK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hK_abs<long double> operator "" _hK_abs_ (long double _v) {
+            return Q_hK_abs<long double>(_v); }
+        static inline Q_hK_abs<long double> operator "" _hK_abs_ (unsigned long long int _v) {
+            return Q_hK_abs<long double>(_v); }
     }
 
 
@@ -5699,11 +6241,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daK = units::Quantity<Value, daK>;
-    namespace literals {
-    Q_daK<long double> operator "" _daK (long double _v) {
-        return Q_daK<long double>(_v); }
-    Q_daK<long double> operator "" _daK (unsigned long long int _v) {
-        return Q_daK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daK<long double> operator "" _daK_ (long double _v) {
+            return Q_daK<long double>(_v); }
+        static inline Q_daK<long double> operator "" _daK_ (unsigned long long int _v) {
+            return Q_daK<long double>(_v); }
     }
 
 
@@ -5725,11 +6268,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daK_abs = units::Quantity<Value, daK_abs>;
-    namespace literals {
-    Q_daK_abs<long double> operator "" _daK_abs (long double _v) {
-        return Q_daK_abs<long double>(_v); }
-    Q_daK_abs<long double> operator "" _daK_abs (unsigned long long int _v) {
-        return Q_daK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daK_abs<long double> operator "" _daK_abs_ (long double _v) {
+            return Q_daK_abs<long double>(_v); }
+        static inline Q_daK_abs<long double> operator "" _daK_abs_ (unsigned long long int _v) {
+            return Q_daK_abs<long double>(_v); }
     }
 
 
@@ -5751,11 +6295,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_K = units::Quantity<Value, K>;
-    namespace literals {
-    Q_K<long double> operator "" _K (long double _v) {
-        return Q_K<long double>(_v); }
-    Q_K<long double> operator "" _K (unsigned long long int _v) {
-        return Q_K<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_K<long double> operator "" _K_ (long double _v) {
+            return Q_K<long double>(_v); }
+        static inline Q_K<long double> operator "" _K_ (unsigned long long int _v) {
+            return Q_K<long double>(_v); }
     }
 
 
@@ -5777,11 +6322,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_K_abs = units::Quantity<Value, K_abs>;
-    namespace literals {
-    Q_K_abs<long double> operator "" _K_abs (long double _v) {
-        return Q_K_abs<long double>(_v); }
-    Q_K_abs<long double> operator "" _K_abs (unsigned long long int _v) {
-        return Q_K_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_K_abs<long double> operator "" _K_abs_ (long double _v) {
+            return Q_K_abs<long double>(_v); }
+        static inline Q_K_abs<long double> operator "" _K_abs_ (unsigned long long int _v) {
+            return Q_K_abs<long double>(_v); }
     }
 
 
@@ -5803,11 +6349,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dK = units::Quantity<Value, dK>;
-    namespace literals {
-    Q_dK<long double> operator "" _dK (long double _v) {
-        return Q_dK<long double>(_v); }
-    Q_dK<long double> operator "" _dK (unsigned long long int _v) {
-        return Q_dK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dK<long double> operator "" _dK_ (long double _v) {
+            return Q_dK<long double>(_v); }
+        static inline Q_dK<long double> operator "" _dK_ (unsigned long long int _v) {
+            return Q_dK<long double>(_v); }
     }
 
 
@@ -5829,11 +6376,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dK_abs = units::Quantity<Value, dK_abs>;
-    namespace literals {
-    Q_dK_abs<long double> operator "" _dK_abs (long double _v) {
-        return Q_dK_abs<long double>(_v); }
-    Q_dK_abs<long double> operator "" _dK_abs (unsigned long long int _v) {
-        return Q_dK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dK_abs<long double> operator "" _dK_abs_ (long double _v) {
+            return Q_dK_abs<long double>(_v); }
+        static inline Q_dK_abs<long double> operator "" _dK_abs_ (unsigned long long int _v) {
+            return Q_dK_abs<long double>(_v); }
     }
 
 
@@ -5855,11 +6403,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cK = units::Quantity<Value, cK>;
-    namespace literals {
-    Q_cK<long double> operator "" _cK (long double _v) {
-        return Q_cK<long double>(_v); }
-    Q_cK<long double> operator "" _cK (unsigned long long int _v) {
-        return Q_cK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cK<long double> operator "" _cK_ (long double _v) {
+            return Q_cK<long double>(_v); }
+        static inline Q_cK<long double> operator "" _cK_ (unsigned long long int _v) {
+            return Q_cK<long double>(_v); }
     }
 
 
@@ -5881,11 +6430,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cK_abs = units::Quantity<Value, cK_abs>;
-    namespace literals {
-    Q_cK_abs<long double> operator "" _cK_abs (long double _v) {
-        return Q_cK_abs<long double>(_v); }
-    Q_cK_abs<long double> operator "" _cK_abs (unsigned long long int _v) {
-        return Q_cK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cK_abs<long double> operator "" _cK_abs_ (long double _v) {
+            return Q_cK_abs<long double>(_v); }
+        static inline Q_cK_abs<long double> operator "" _cK_abs_ (unsigned long long int _v) {
+            return Q_cK_abs<long double>(_v); }
     }
 
 
@@ -5907,11 +6457,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mK = units::Quantity<Value, mK>;
-    namespace literals {
-    Q_mK<long double> operator "" _mK (long double _v) {
-        return Q_mK<long double>(_v); }
-    Q_mK<long double> operator "" _mK (unsigned long long int _v) {
-        return Q_mK<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mK<long double> operator "" _mK_ (long double _v) {
+            return Q_mK<long double>(_v); }
+        static inline Q_mK<long double> operator "" _mK_ (unsigned long long int _v) {
+            return Q_mK<long double>(_v); }
     }
 
 
@@ -5933,11 +6484,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mK_abs = units::Quantity<Value, mK_abs>;
-    namespace literals {
-    Q_mK_abs<long double> operator "" _mK_abs (long double _v) {
-        return Q_mK_abs<long double>(_v); }
-    Q_mK_abs<long double> operator "" _mK_abs (unsigned long long int _v) {
-        return Q_mK_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mK_abs<long double> operator "" _mK_abs_ (long double _v) {
+            return Q_mK_abs<long double>(_v); }
+        static inline Q_mK_abs<long double> operator "" _mK_abs_ (unsigned long long int _v) {
+            return Q_mK_abs<long double>(_v); }
     }
 
 
@@ -5959,11 +6511,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EF = units::Quantity<Value, EF>;
-    namespace literals {
-    Q_EF<long double> operator "" _EF (long double _v) {
-        return Q_EF<long double>(_v); }
-    Q_EF<long double> operator "" _EF (unsigned long long int _v) {
-        return Q_EF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EF<long double> operator "" _EF_ (long double _v) {
+            return Q_EF<long double>(_v); }
+        static inline Q_EF<long double> operator "" _EF_ (unsigned long long int _v) {
+            return Q_EF<long double>(_v); }
     }
 
 
@@ -5985,11 +6538,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EF_abs = units::Quantity<Value, EF_abs>;
-    namespace literals {
-    Q_EF_abs<long double> operator "" _EF_abs (long double _v) {
-        return Q_EF_abs<long double>(_v); }
-    Q_EF_abs<long double> operator "" _EF_abs (unsigned long long int _v) {
-        return Q_EF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EF_abs<long double> operator "" _EF_abs_ (long double _v) {
+            return Q_EF_abs<long double>(_v); }
+        static inline Q_EF_abs<long double> operator "" _EF_abs_ (unsigned long long int _v) {
+            return Q_EF_abs<long double>(_v); }
     }
 
 
@@ -6011,11 +6565,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PF = units::Quantity<Value, PF>;
-    namespace literals {
-    Q_PF<long double> operator "" _PF (long double _v) {
-        return Q_PF<long double>(_v); }
-    Q_PF<long double> operator "" _PF (unsigned long long int _v) {
-        return Q_PF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PF<long double> operator "" _PF_ (long double _v) {
+            return Q_PF<long double>(_v); }
+        static inline Q_PF<long double> operator "" _PF_ (unsigned long long int _v) {
+            return Q_PF<long double>(_v); }
     }
 
 
@@ -6037,11 +6592,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PF_abs = units::Quantity<Value, PF_abs>;
-    namespace literals {
-    Q_PF_abs<long double> operator "" _PF_abs (long double _v) {
-        return Q_PF_abs<long double>(_v); }
-    Q_PF_abs<long double> operator "" _PF_abs (unsigned long long int _v) {
-        return Q_PF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PF_abs<long double> operator "" _PF_abs_ (long double _v) {
+            return Q_PF_abs<long double>(_v); }
+        static inline Q_PF_abs<long double> operator "" _PF_abs_ (unsigned long long int _v) {
+            return Q_PF_abs<long double>(_v); }
     }
 
 
@@ -6063,11 +6619,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TF = units::Quantity<Value, TF>;
-    namespace literals {
-    Q_TF<long double> operator "" _TF (long double _v) {
-        return Q_TF<long double>(_v); }
-    Q_TF<long double> operator "" _TF (unsigned long long int _v) {
-        return Q_TF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TF<long double> operator "" _TF_ (long double _v) {
+            return Q_TF<long double>(_v); }
+        static inline Q_TF<long double> operator "" _TF_ (unsigned long long int _v) {
+            return Q_TF<long double>(_v); }
     }
 
 
@@ -6089,11 +6646,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TF_abs = units::Quantity<Value, TF_abs>;
-    namespace literals {
-    Q_TF_abs<long double> operator "" _TF_abs (long double _v) {
-        return Q_TF_abs<long double>(_v); }
-    Q_TF_abs<long double> operator "" _TF_abs (unsigned long long int _v) {
-        return Q_TF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TF_abs<long double> operator "" _TF_abs_ (long double _v) {
+            return Q_TF_abs<long double>(_v); }
+        static inline Q_TF_abs<long double> operator "" _TF_abs_ (unsigned long long int _v) {
+            return Q_TF_abs<long double>(_v); }
     }
 
 
@@ -6115,11 +6673,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GF = units::Quantity<Value, GF>;
-    namespace literals {
-    Q_GF<long double> operator "" _GF (long double _v) {
-        return Q_GF<long double>(_v); }
-    Q_GF<long double> operator "" _GF (unsigned long long int _v) {
-        return Q_GF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GF<long double> operator "" _GF_ (long double _v) {
+            return Q_GF<long double>(_v); }
+        static inline Q_GF<long double> operator "" _GF_ (unsigned long long int _v) {
+            return Q_GF<long double>(_v); }
     }
 
 
@@ -6141,11 +6700,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GF_abs = units::Quantity<Value, GF_abs>;
-    namespace literals {
-    Q_GF_abs<long double> operator "" _GF_abs (long double _v) {
-        return Q_GF_abs<long double>(_v); }
-    Q_GF_abs<long double> operator "" _GF_abs (unsigned long long int _v) {
-        return Q_GF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GF_abs<long double> operator "" _GF_abs_ (long double _v) {
+            return Q_GF_abs<long double>(_v); }
+        static inline Q_GF_abs<long double> operator "" _GF_abs_ (unsigned long long int _v) {
+            return Q_GF_abs<long double>(_v); }
     }
 
 
@@ -6167,11 +6727,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MF = units::Quantity<Value, MF>;
-    namespace literals {
-    Q_MF<long double> operator "" _MF (long double _v) {
-        return Q_MF<long double>(_v); }
-    Q_MF<long double> operator "" _MF (unsigned long long int _v) {
-        return Q_MF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MF<long double> operator "" _MF_ (long double _v) {
+            return Q_MF<long double>(_v); }
+        static inline Q_MF<long double> operator "" _MF_ (unsigned long long int _v) {
+            return Q_MF<long double>(_v); }
     }
 
 
@@ -6193,11 +6754,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MF_abs = units::Quantity<Value, MF_abs>;
-    namespace literals {
-    Q_MF_abs<long double> operator "" _MF_abs (long double _v) {
-        return Q_MF_abs<long double>(_v); }
-    Q_MF_abs<long double> operator "" _MF_abs (unsigned long long int _v) {
-        return Q_MF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MF_abs<long double> operator "" _MF_abs_ (long double _v) {
+            return Q_MF_abs<long double>(_v); }
+        static inline Q_MF_abs<long double> operator "" _MF_abs_ (unsigned long long int _v) {
+            return Q_MF_abs<long double>(_v); }
     }
 
 
@@ -6219,11 +6781,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kF = units::Quantity<Value, kF>;
-    namespace literals {
-    Q_kF<long double> operator "" _kF (long double _v) {
-        return Q_kF<long double>(_v); }
-    Q_kF<long double> operator "" _kF (unsigned long long int _v) {
-        return Q_kF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kF<long double> operator "" _kF_ (long double _v) {
+            return Q_kF<long double>(_v); }
+        static inline Q_kF<long double> operator "" _kF_ (unsigned long long int _v) {
+            return Q_kF<long double>(_v); }
     }
 
 
@@ -6245,11 +6808,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kF_abs = units::Quantity<Value, kF_abs>;
-    namespace literals {
-    Q_kF_abs<long double> operator "" _kF_abs (long double _v) {
-        return Q_kF_abs<long double>(_v); }
-    Q_kF_abs<long double> operator "" _kF_abs (unsigned long long int _v) {
-        return Q_kF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kF_abs<long double> operator "" _kF_abs_ (long double _v) {
+            return Q_kF_abs<long double>(_v); }
+        static inline Q_kF_abs<long double> operator "" _kF_abs_ (unsigned long long int _v) {
+            return Q_kF_abs<long double>(_v); }
     }
 
 
@@ -6271,11 +6835,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hF = units::Quantity<Value, hF>;
-    namespace literals {
-    Q_hF<long double> operator "" _hF (long double _v) {
-        return Q_hF<long double>(_v); }
-    Q_hF<long double> operator "" _hF (unsigned long long int _v) {
-        return Q_hF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hF<long double> operator "" _hF_ (long double _v) {
+            return Q_hF<long double>(_v); }
+        static inline Q_hF<long double> operator "" _hF_ (unsigned long long int _v) {
+            return Q_hF<long double>(_v); }
     }
 
 
@@ -6297,11 +6862,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hF_abs = units::Quantity<Value, hF_abs>;
-    namespace literals {
-    Q_hF_abs<long double> operator "" _hF_abs (long double _v) {
-        return Q_hF_abs<long double>(_v); }
-    Q_hF_abs<long double> operator "" _hF_abs (unsigned long long int _v) {
-        return Q_hF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hF_abs<long double> operator "" _hF_abs_ (long double _v) {
+            return Q_hF_abs<long double>(_v); }
+        static inline Q_hF_abs<long double> operator "" _hF_abs_ (unsigned long long int _v) {
+            return Q_hF_abs<long double>(_v); }
     }
 
 
@@ -6323,11 +6889,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daF = units::Quantity<Value, daF>;
-    namespace literals {
-    Q_daF<long double> operator "" _daF (long double _v) {
-        return Q_daF<long double>(_v); }
-    Q_daF<long double> operator "" _daF (unsigned long long int _v) {
-        return Q_daF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daF<long double> operator "" _daF_ (long double _v) {
+            return Q_daF<long double>(_v); }
+        static inline Q_daF<long double> operator "" _daF_ (unsigned long long int _v) {
+            return Q_daF<long double>(_v); }
     }
 
 
@@ -6349,11 +6916,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daF_abs = units::Quantity<Value, daF_abs>;
-    namespace literals {
-    Q_daF_abs<long double> operator "" _daF_abs (long double _v) {
-        return Q_daF_abs<long double>(_v); }
-    Q_daF_abs<long double> operator "" _daF_abs (unsigned long long int _v) {
-        return Q_daF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daF_abs<long double> operator "" _daF_abs_ (long double _v) {
+            return Q_daF_abs<long double>(_v); }
+        static inline Q_daF_abs<long double> operator "" _daF_abs_ (unsigned long long int _v) {
+            return Q_daF_abs<long double>(_v); }
     }
 
 
@@ -6375,11 +6943,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_F = units::Quantity<Value, F>;
-    namespace literals {
-    Q_F<long double> operator "" _F (long double _v) {
-        return Q_F<long double>(_v); }
-    Q_F<long double> operator "" _F (unsigned long long int _v) {
-        return Q_F<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_F<long double> operator "" _F_ (long double _v) {
+            return Q_F<long double>(_v); }
+        static inline Q_F<long double> operator "" _F_ (unsigned long long int _v) {
+            return Q_F<long double>(_v); }
     }
 
 
@@ -6401,11 +6970,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_F_abs = units::Quantity<Value, F_abs>;
-    namespace literals {
-    Q_F_abs<long double> operator "" _F_abs (long double _v) {
-        return Q_F_abs<long double>(_v); }
-    Q_F_abs<long double> operator "" _F_abs (unsigned long long int _v) {
-        return Q_F_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_F_abs<long double> operator "" _F_abs_ (long double _v) {
+            return Q_F_abs<long double>(_v); }
+        static inline Q_F_abs<long double> operator "" _F_abs_ (unsigned long long int _v) {
+            return Q_F_abs<long double>(_v); }
     }
 
 
@@ -6427,11 +6997,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dF = units::Quantity<Value, dF>;
-    namespace literals {
-    Q_dF<long double> operator "" _dF (long double _v) {
-        return Q_dF<long double>(_v); }
-    Q_dF<long double> operator "" _dF (unsigned long long int _v) {
-        return Q_dF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dF<long double> operator "" _dF_ (long double _v) {
+            return Q_dF<long double>(_v); }
+        static inline Q_dF<long double> operator "" _dF_ (unsigned long long int _v) {
+            return Q_dF<long double>(_v); }
     }
 
 
@@ -6453,11 +7024,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dF_abs = units::Quantity<Value, dF_abs>;
-    namespace literals {
-    Q_dF_abs<long double> operator "" _dF_abs (long double _v) {
-        return Q_dF_abs<long double>(_v); }
-    Q_dF_abs<long double> operator "" _dF_abs (unsigned long long int _v) {
-        return Q_dF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dF_abs<long double> operator "" _dF_abs_ (long double _v) {
+            return Q_dF_abs<long double>(_v); }
+        static inline Q_dF_abs<long double> operator "" _dF_abs_ (unsigned long long int _v) {
+            return Q_dF_abs<long double>(_v); }
     }
 
 
@@ -6479,11 +7051,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cF = units::Quantity<Value, cF>;
-    namespace literals {
-    Q_cF<long double> operator "" _cF (long double _v) {
-        return Q_cF<long double>(_v); }
-    Q_cF<long double> operator "" _cF (unsigned long long int _v) {
-        return Q_cF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cF<long double> operator "" _cF_ (long double _v) {
+            return Q_cF<long double>(_v); }
+        static inline Q_cF<long double> operator "" _cF_ (unsigned long long int _v) {
+            return Q_cF<long double>(_v); }
     }
 
 
@@ -6505,11 +7078,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cF_abs = units::Quantity<Value, cF_abs>;
-    namespace literals {
-    Q_cF_abs<long double> operator "" _cF_abs (long double _v) {
-        return Q_cF_abs<long double>(_v); }
-    Q_cF_abs<long double> operator "" _cF_abs (unsigned long long int _v) {
-        return Q_cF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cF_abs<long double> operator "" _cF_abs_ (long double _v) {
+            return Q_cF_abs<long double>(_v); }
+        static inline Q_cF_abs<long double> operator "" _cF_abs_ (unsigned long long int _v) {
+            return Q_cF_abs<long double>(_v); }
     }
 
 
@@ -6531,11 +7105,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mF = units::Quantity<Value, mF>;
-    namespace literals {
-    Q_mF<long double> operator "" _mF (long double _v) {
-        return Q_mF<long double>(_v); }
-    Q_mF<long double> operator "" _mF (unsigned long long int _v) {
-        return Q_mF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mF<long double> operator "" _mF_ (long double _v) {
+            return Q_mF<long double>(_v); }
+        static inline Q_mF<long double> operator "" _mF_ (unsigned long long int _v) {
+            return Q_mF<long double>(_v); }
     }
 
 
@@ -6557,11 +7132,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mF_abs = units::Quantity<Value, mF_abs>;
-    namespace literals {
-    Q_mF_abs<long double> operator "" _mF_abs (long double _v) {
-        return Q_mF_abs<long double>(_v); }
-    Q_mF_abs<long double> operator "" _mF_abs (unsigned long long int _v) {
-        return Q_mF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mF_abs<long double> operator "" _mF_abs_ (long double _v) {
+            return Q_mF_abs<long double>(_v); }
+        static inline Q_mF_abs<long double> operator "" _mF_abs_ (unsigned long long int _v) {
+            return Q_mF_abs<long double>(_v); }
     }
 
 
@@ -6583,11 +7159,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_uF = units::Quantity<Value, uF>;
-    namespace literals {
-    Q_uF<long double> operator "" _uF (long double _v) {
-        return Q_uF<long double>(_v); }
-    Q_uF<long double> operator "" _uF (unsigned long long int _v) {
-        return Q_uF<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_uF<long double> operator "" _uF_ (long double _v) {
+            return Q_uF<long double>(_v); }
+        static inline Q_uF<long double> operator "" _uF_ (unsigned long long int _v) {
+            return Q_uF<long double>(_v); }
     }
 
 
@@ -6609,11 +7186,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_uF_abs = units::Quantity<Value, uF_abs>;
-    namespace literals {
-    Q_uF_abs<long double> operator "" _uF_abs (long double _v) {
-        return Q_uF_abs<long double>(_v); }
-    Q_uF_abs<long double> operator "" _uF_abs (unsigned long long int _v) {
-        return Q_uF_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_uF_abs<long double> operator "" _uF_abs_ (long double _v) {
+            return Q_uF_abs<long double>(_v); }
+        static inline Q_uF_abs<long double> operator "" _uF_abs_ (unsigned long long int _v) {
+            return Q_uF_abs<long double>(_v); }
     }
 
 
@@ -6635,11 +7213,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ER = units::Quantity<Value, ER>;
-    namespace literals {
-    Q_ER<long double> operator "" _ER (long double _v) {
-        return Q_ER<long double>(_v); }
-    Q_ER<long double> operator "" _ER (unsigned long long int _v) {
-        return Q_ER<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ER<long double> operator "" _ER_ (long double _v) {
+            return Q_ER<long double>(_v); }
+        static inline Q_ER<long double> operator "" _ER_ (unsigned long long int _v) {
+            return Q_ER<long double>(_v); }
     }
 
 
@@ -6661,11 +7240,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ER_abs = units::Quantity<Value, ER_abs>;
-    namespace literals {
-    Q_ER_abs<long double> operator "" _ER_abs (long double _v) {
-        return Q_ER_abs<long double>(_v); }
-    Q_ER_abs<long double> operator "" _ER_abs (unsigned long long int _v) {
-        return Q_ER_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ER_abs<long double> operator "" _ER_abs_ (long double _v) {
+            return Q_ER_abs<long double>(_v); }
+        static inline Q_ER_abs<long double> operator "" _ER_abs_ (unsigned long long int _v) {
+            return Q_ER_abs<long double>(_v); }
     }
 
 
@@ -6687,11 +7267,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PR = units::Quantity<Value, PR>;
-    namespace literals {
-    Q_PR<long double> operator "" _PR (long double _v) {
-        return Q_PR<long double>(_v); }
-    Q_PR<long double> operator "" _PR (unsigned long long int _v) {
-        return Q_PR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PR<long double> operator "" _PR_ (long double _v) {
+            return Q_PR<long double>(_v); }
+        static inline Q_PR<long double> operator "" _PR_ (unsigned long long int _v) {
+            return Q_PR<long double>(_v); }
     }
 
 
@@ -6713,11 +7294,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PR_abs = units::Quantity<Value, PR_abs>;
-    namespace literals {
-    Q_PR_abs<long double> operator "" _PR_abs (long double _v) {
-        return Q_PR_abs<long double>(_v); }
-    Q_PR_abs<long double> operator "" _PR_abs (unsigned long long int _v) {
-        return Q_PR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PR_abs<long double> operator "" _PR_abs_ (long double _v) {
+            return Q_PR_abs<long double>(_v); }
+        static inline Q_PR_abs<long double> operator "" _PR_abs_ (unsigned long long int _v) {
+            return Q_PR_abs<long double>(_v); }
     }
 
 
@@ -6739,11 +7321,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TR = units::Quantity<Value, TR>;
-    namespace literals {
-    Q_TR<long double> operator "" _TR (long double _v) {
-        return Q_TR<long double>(_v); }
-    Q_TR<long double> operator "" _TR (unsigned long long int _v) {
-        return Q_TR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TR<long double> operator "" _TR_ (long double _v) {
+            return Q_TR<long double>(_v); }
+        static inline Q_TR<long double> operator "" _TR_ (unsigned long long int _v) {
+            return Q_TR<long double>(_v); }
     }
 
 
@@ -6765,11 +7348,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TR_abs = units::Quantity<Value, TR_abs>;
-    namespace literals {
-    Q_TR_abs<long double> operator "" _TR_abs (long double _v) {
-        return Q_TR_abs<long double>(_v); }
-    Q_TR_abs<long double> operator "" _TR_abs (unsigned long long int _v) {
-        return Q_TR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TR_abs<long double> operator "" _TR_abs_ (long double _v) {
+            return Q_TR_abs<long double>(_v); }
+        static inline Q_TR_abs<long double> operator "" _TR_abs_ (unsigned long long int _v) {
+            return Q_TR_abs<long double>(_v); }
     }
 
 
@@ -6791,11 +7375,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GR = units::Quantity<Value, GR>;
-    namespace literals {
-    Q_GR<long double> operator "" _GR (long double _v) {
-        return Q_GR<long double>(_v); }
-    Q_GR<long double> operator "" _GR (unsigned long long int _v) {
-        return Q_GR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GR<long double> operator "" _GR_ (long double _v) {
+            return Q_GR<long double>(_v); }
+        static inline Q_GR<long double> operator "" _GR_ (unsigned long long int _v) {
+            return Q_GR<long double>(_v); }
     }
 
 
@@ -6817,11 +7402,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GR_abs = units::Quantity<Value, GR_abs>;
-    namespace literals {
-    Q_GR_abs<long double> operator "" _GR_abs (long double _v) {
-        return Q_GR_abs<long double>(_v); }
-    Q_GR_abs<long double> operator "" _GR_abs (unsigned long long int _v) {
-        return Q_GR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GR_abs<long double> operator "" _GR_abs_ (long double _v) {
+            return Q_GR_abs<long double>(_v); }
+        static inline Q_GR_abs<long double> operator "" _GR_abs_ (unsigned long long int _v) {
+            return Q_GR_abs<long double>(_v); }
     }
 
 
@@ -6843,11 +7429,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MR = units::Quantity<Value, MR>;
-    namespace literals {
-    Q_MR<long double> operator "" _MR (long double _v) {
-        return Q_MR<long double>(_v); }
-    Q_MR<long double> operator "" _MR (unsigned long long int _v) {
-        return Q_MR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MR<long double> operator "" _MR_ (long double _v) {
+            return Q_MR<long double>(_v); }
+        static inline Q_MR<long double> operator "" _MR_ (unsigned long long int _v) {
+            return Q_MR<long double>(_v); }
     }
 
 
@@ -6869,11 +7456,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MR_abs = units::Quantity<Value, MR_abs>;
-    namespace literals {
-    Q_MR_abs<long double> operator "" _MR_abs (long double _v) {
-        return Q_MR_abs<long double>(_v); }
-    Q_MR_abs<long double> operator "" _MR_abs (unsigned long long int _v) {
-        return Q_MR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MR_abs<long double> operator "" _MR_abs_ (long double _v) {
+            return Q_MR_abs<long double>(_v); }
+        static inline Q_MR_abs<long double> operator "" _MR_abs_ (unsigned long long int _v) {
+            return Q_MR_abs<long double>(_v); }
     }
 
 
@@ -6895,11 +7483,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kR = units::Quantity<Value, kR>;
-    namespace literals {
-    Q_kR<long double> operator "" _kR (long double _v) {
-        return Q_kR<long double>(_v); }
-    Q_kR<long double> operator "" _kR (unsigned long long int _v) {
-        return Q_kR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kR<long double> operator "" _kR_ (long double _v) {
+            return Q_kR<long double>(_v); }
+        static inline Q_kR<long double> operator "" _kR_ (unsigned long long int _v) {
+            return Q_kR<long double>(_v); }
     }
 
 
@@ -6921,11 +7510,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kR_abs = units::Quantity<Value, kR_abs>;
-    namespace literals {
-    Q_kR_abs<long double> operator "" _kR_abs (long double _v) {
-        return Q_kR_abs<long double>(_v); }
-    Q_kR_abs<long double> operator "" _kR_abs (unsigned long long int _v) {
-        return Q_kR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kR_abs<long double> operator "" _kR_abs_ (long double _v) {
+            return Q_kR_abs<long double>(_v); }
+        static inline Q_kR_abs<long double> operator "" _kR_abs_ (unsigned long long int _v) {
+            return Q_kR_abs<long double>(_v); }
     }
 
 
@@ -6947,11 +7537,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hR = units::Quantity<Value, hR>;
-    namespace literals {
-    Q_hR<long double> operator "" _hR (long double _v) {
-        return Q_hR<long double>(_v); }
-    Q_hR<long double> operator "" _hR (unsigned long long int _v) {
-        return Q_hR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hR<long double> operator "" _hR_ (long double _v) {
+            return Q_hR<long double>(_v); }
+        static inline Q_hR<long double> operator "" _hR_ (unsigned long long int _v) {
+            return Q_hR<long double>(_v); }
     }
 
 
@@ -6973,11 +7564,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hR_abs = units::Quantity<Value, hR_abs>;
-    namespace literals {
-    Q_hR_abs<long double> operator "" _hR_abs (long double _v) {
-        return Q_hR_abs<long double>(_v); }
-    Q_hR_abs<long double> operator "" _hR_abs (unsigned long long int _v) {
-        return Q_hR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hR_abs<long double> operator "" _hR_abs_ (long double _v) {
+            return Q_hR_abs<long double>(_v); }
+        static inline Q_hR_abs<long double> operator "" _hR_abs_ (unsigned long long int _v) {
+            return Q_hR_abs<long double>(_v); }
     }
 
 
@@ -6999,11 +7591,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daR = units::Quantity<Value, daR>;
-    namespace literals {
-    Q_daR<long double> operator "" _daR (long double _v) {
-        return Q_daR<long double>(_v); }
-    Q_daR<long double> operator "" _daR (unsigned long long int _v) {
-        return Q_daR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daR<long double> operator "" _daR_ (long double _v) {
+            return Q_daR<long double>(_v); }
+        static inline Q_daR<long double> operator "" _daR_ (unsigned long long int _v) {
+            return Q_daR<long double>(_v); }
     }
 
 
@@ -7025,11 +7618,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daR_abs = units::Quantity<Value, daR_abs>;
-    namespace literals {
-    Q_daR_abs<long double> operator "" _daR_abs (long double _v) {
-        return Q_daR_abs<long double>(_v); }
-    Q_daR_abs<long double> operator "" _daR_abs (unsigned long long int _v) {
-        return Q_daR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daR_abs<long double> operator "" _daR_abs_ (long double _v) {
+            return Q_daR_abs<long double>(_v); }
+        static inline Q_daR_abs<long double> operator "" _daR_abs_ (unsigned long long int _v) {
+            return Q_daR_abs<long double>(_v); }
     }
 
 
@@ -7051,11 +7645,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_R = units::Quantity<Value, R>;
-    namespace literals {
-    Q_R<long double> operator "" _R (long double _v) {
-        return Q_R<long double>(_v); }
-    Q_R<long double> operator "" _R (unsigned long long int _v) {
-        return Q_R<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_R<long double> operator "" _R_ (long double _v) {
+            return Q_R<long double>(_v); }
+        static inline Q_R<long double> operator "" _R_ (unsigned long long int _v) {
+            return Q_R<long double>(_v); }
     }
 
 
@@ -7077,11 +7672,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_R_abs = units::Quantity<Value, R_abs>;
-    namespace literals {
-    Q_R_abs<long double> operator "" _R_abs (long double _v) {
-        return Q_R_abs<long double>(_v); }
-    Q_R_abs<long double> operator "" _R_abs (unsigned long long int _v) {
-        return Q_R_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_R_abs<long double> operator "" _R_abs_ (long double _v) {
+            return Q_R_abs<long double>(_v); }
+        static inline Q_R_abs<long double> operator "" _R_abs_ (unsigned long long int _v) {
+            return Q_R_abs<long double>(_v); }
     }
 
 
@@ -7103,11 +7699,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dR = units::Quantity<Value, dR>;
-    namespace literals {
-    Q_dR<long double> operator "" _dR (long double _v) {
-        return Q_dR<long double>(_v); }
-    Q_dR<long double> operator "" _dR (unsigned long long int _v) {
-        return Q_dR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dR<long double> operator "" _dR_ (long double _v) {
+            return Q_dR<long double>(_v); }
+        static inline Q_dR<long double> operator "" _dR_ (unsigned long long int _v) {
+            return Q_dR<long double>(_v); }
     }
 
 
@@ -7129,11 +7726,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dR_abs = units::Quantity<Value, dR_abs>;
-    namespace literals {
-    Q_dR_abs<long double> operator "" _dR_abs (long double _v) {
-        return Q_dR_abs<long double>(_v); }
-    Q_dR_abs<long double> operator "" _dR_abs (unsigned long long int _v) {
-        return Q_dR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dR_abs<long double> operator "" _dR_abs_ (long double _v) {
+            return Q_dR_abs<long double>(_v); }
+        static inline Q_dR_abs<long double> operator "" _dR_abs_ (unsigned long long int _v) {
+            return Q_dR_abs<long double>(_v); }
     }
 
 
@@ -7155,11 +7753,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cR = units::Quantity<Value, cR>;
-    namespace literals {
-    Q_cR<long double> operator "" _cR (long double _v) {
-        return Q_cR<long double>(_v); }
-    Q_cR<long double> operator "" _cR (unsigned long long int _v) {
-        return Q_cR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cR<long double> operator "" _cR_ (long double _v) {
+            return Q_cR<long double>(_v); }
+        static inline Q_cR<long double> operator "" _cR_ (unsigned long long int _v) {
+            return Q_cR<long double>(_v); }
     }
 
 
@@ -7181,11 +7780,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cR_abs = units::Quantity<Value, cR_abs>;
-    namespace literals {
-    Q_cR_abs<long double> operator "" _cR_abs (long double _v) {
-        return Q_cR_abs<long double>(_v); }
-    Q_cR_abs<long double> operator "" _cR_abs (unsigned long long int _v) {
-        return Q_cR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cR_abs<long double> operator "" _cR_abs_ (long double _v) {
+            return Q_cR_abs<long double>(_v); }
+        static inline Q_cR_abs<long double> operator "" _cR_abs_ (unsigned long long int _v) {
+            return Q_cR_abs<long double>(_v); }
     }
 
 
@@ -7207,11 +7807,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mR = units::Quantity<Value, mR>;
-    namespace literals {
-    Q_mR<long double> operator "" _mR (long double _v) {
-        return Q_mR<long double>(_v); }
-    Q_mR<long double> operator "" _mR (unsigned long long int _v) {
-        return Q_mR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mR<long double> operator "" _mR_ (long double _v) {
+            return Q_mR<long double>(_v); }
+        static inline Q_mR<long double> operator "" _mR_ (unsigned long long int _v) {
+            return Q_mR<long double>(_v); }
     }
 
 
@@ -7233,11 +7834,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mR_abs = units::Quantity<Value, mR_abs>;
-    namespace literals {
-    Q_mR_abs<long double> operator "" _mR_abs (long double _v) {
-        return Q_mR_abs<long double>(_v); }
-    Q_mR_abs<long double> operator "" _mR_abs (unsigned long long int _v) {
-        return Q_mR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mR_abs<long double> operator "" _mR_abs_ (long double _v) {
+            return Q_mR_abs<long double>(_v); }
+        static inline Q_mR_abs<long double> operator "" _mR_abs_ (unsigned long long int _v) {
+            return Q_mR_abs<long double>(_v); }
     }
 
 
@@ -7259,11 +7861,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_uR = units::Quantity<Value, uR>;
-    namespace literals {
-    Q_uR<long double> operator "" _uR (long double _v) {
-        return Q_uR<long double>(_v); }
-    Q_uR<long double> operator "" _uR (unsigned long long int _v) {
-        return Q_uR<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_uR<long double> operator "" _uR_ (long double _v) {
+            return Q_uR<long double>(_v); }
+        static inline Q_uR<long double> operator "" _uR_ (unsigned long long int _v) {
+            return Q_uR<long double>(_v); }
     }
 
 
@@ -7285,11 +7888,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_uR_abs = units::Quantity<Value, uR_abs>;
-    namespace literals {
-    Q_uR_abs<long double> operator "" _uR_abs (long double _v) {
-        return Q_uR_abs<long double>(_v); }
-    Q_uR_abs<long double> operator "" _uR_abs (unsigned long long int _v) {
-        return Q_uR_abs<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_uR_abs<long double> operator "" _uR_abs_ (long double _v) {
+            return Q_uR_abs<long double>(_v); }
+        static inline Q_uR_abs<long double> operator "" _uR_abs_ (unsigned long long int _v) {
+            return Q_uR_abs<long double>(_v); }
     }
 
 
@@ -7311,11 +7915,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ET = units::Quantity<Value, ET>;
-    namespace literals {
-    Q_ET<long double> operator "" _ET (long double _v) {
-        return Q_ET<long double>(_v); }
-    Q_ET<long double> operator "" _ET (unsigned long long int _v) {
-        return Q_ET<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ET<long double> operator "" _ET_ (long double _v) {
+            return Q_ET<long double>(_v); }
+        static inline Q_ET<long double> operator "" _ET_ (unsigned long long int _v) {
+            return Q_ET<long double>(_v); }
     }
 
 
@@ -7337,11 +7942,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PT = units::Quantity<Value, PT>;
-    namespace literals {
-    Q_PT<long double> operator "" _PT (long double _v) {
-        return Q_PT<long double>(_v); }
-    Q_PT<long double> operator "" _PT (unsigned long long int _v) {
-        return Q_PT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PT<long double> operator "" _PT_ (long double _v) {
+            return Q_PT<long double>(_v); }
+        static inline Q_PT<long double> operator "" _PT_ (unsigned long long int _v) {
+            return Q_PT<long double>(_v); }
     }
 
 
@@ -7363,11 +7969,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TT = units::Quantity<Value, TT>;
-    namespace literals {
-    Q_TT<long double> operator "" _TT (long double _v) {
-        return Q_TT<long double>(_v); }
-    Q_TT<long double> operator "" _TT (unsigned long long int _v) {
-        return Q_TT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TT<long double> operator "" _TT_ (long double _v) {
+            return Q_TT<long double>(_v); }
+        static inline Q_TT<long double> operator "" _TT_ (unsigned long long int _v) {
+            return Q_TT<long double>(_v); }
     }
 
 
@@ -7389,11 +7996,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GT = units::Quantity<Value, GT>;
-    namespace literals {
-    Q_GT<long double> operator "" _GT (long double _v) {
-        return Q_GT<long double>(_v); }
-    Q_GT<long double> operator "" _GT (unsigned long long int _v) {
-        return Q_GT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GT<long double> operator "" _GT_ (long double _v) {
+            return Q_GT<long double>(_v); }
+        static inline Q_GT<long double> operator "" _GT_ (unsigned long long int _v) {
+            return Q_GT<long double>(_v); }
     }
 
 
@@ -7415,11 +8023,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MT = units::Quantity<Value, MT>;
-    namespace literals {
-    Q_MT<long double> operator "" _MT (long double _v) {
-        return Q_MT<long double>(_v); }
-    Q_MT<long double> operator "" _MT (unsigned long long int _v) {
-        return Q_MT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MT<long double> operator "" _MT_ (long double _v) {
+            return Q_MT<long double>(_v); }
+        static inline Q_MT<long double> operator "" _MT_ (unsigned long long int _v) {
+            return Q_MT<long double>(_v); }
     }
 
 
@@ -7441,11 +8050,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kT = units::Quantity<Value, kT>;
-    namespace literals {
-    Q_kT<long double> operator "" _kT (long double _v) {
-        return Q_kT<long double>(_v); }
-    Q_kT<long double> operator "" _kT (unsigned long long int _v) {
-        return Q_kT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kT<long double> operator "" _kT_ (long double _v) {
+            return Q_kT<long double>(_v); }
+        static inline Q_kT<long double> operator "" _kT_ (unsigned long long int _v) {
+            return Q_kT<long double>(_v); }
     }
 
 
@@ -7467,11 +8077,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hT = units::Quantity<Value, hT>;
-    namespace literals {
-    Q_hT<long double> operator "" _hT (long double _v) {
-        return Q_hT<long double>(_v); }
-    Q_hT<long double> operator "" _hT (unsigned long long int _v) {
-        return Q_hT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hT<long double> operator "" _hT_ (long double _v) {
+            return Q_hT<long double>(_v); }
+        static inline Q_hT<long double> operator "" _hT_ (unsigned long long int _v) {
+            return Q_hT<long double>(_v); }
     }
 
 
@@ -7493,11 +8104,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daT = units::Quantity<Value, daT>;
-    namespace literals {
-    Q_daT<long double> operator "" _daT (long double _v) {
-        return Q_daT<long double>(_v); }
-    Q_daT<long double> operator "" _daT (unsigned long long int _v) {
-        return Q_daT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daT<long double> operator "" _daT_ (long double _v) {
+            return Q_daT<long double>(_v); }
+        static inline Q_daT<long double> operator "" _daT_ (unsigned long long int _v) {
+            return Q_daT<long double>(_v); }
     }
 
 
@@ -7519,11 +8131,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_T = units::Quantity<Value, T>;
-    namespace literals {
-    Q_T<long double> operator "" _T (long double _v) {
-        return Q_T<long double>(_v); }
-    Q_T<long double> operator "" _T (unsigned long long int _v) {
-        return Q_T<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_T<long double> operator "" _T_ (long double _v) {
+            return Q_T<long double>(_v); }
+        static inline Q_T<long double> operator "" _T_ (unsigned long long int _v) {
+            return Q_T<long double>(_v); }
     }
 
 
@@ -7545,11 +8158,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dT = units::Quantity<Value, dT>;
-    namespace literals {
-    Q_dT<long double> operator "" _dT (long double _v) {
-        return Q_dT<long double>(_v); }
-    Q_dT<long double> operator "" _dT (unsigned long long int _v) {
-        return Q_dT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dT<long double> operator "" _dT_ (long double _v) {
+            return Q_dT<long double>(_v); }
+        static inline Q_dT<long double> operator "" _dT_ (unsigned long long int _v) {
+            return Q_dT<long double>(_v); }
     }
 
 
@@ -7571,11 +8185,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cT = units::Quantity<Value, cT>;
-    namespace literals {
-    Q_cT<long double> operator "" _cT (long double _v) {
-        return Q_cT<long double>(_v); }
-    Q_cT<long double> operator "" _cT (unsigned long long int _v) {
-        return Q_cT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cT<long double> operator "" _cT_ (long double _v) {
+            return Q_cT<long double>(_v); }
+        static inline Q_cT<long double> operator "" _cT_ (unsigned long long int _v) {
+            return Q_cT<long double>(_v); }
     }
 
 
@@ -7597,11 +8212,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mT = units::Quantity<Value, mT>;
-    namespace literals {
-    Q_mT<long double> operator "" _mT (long double _v) {
-        return Q_mT<long double>(_v); }
-    Q_mT<long double> operator "" _mT (unsigned long long int _v) {
-        return Q_mT<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mT<long double> operator "" _mT_ (long double _v) {
+            return Q_mT<long double>(_v); }
+        static inline Q_mT<long double> operator "" _mT_ (unsigned long long int _v) {
+            return Q_mT<long double>(_v); }
     }
 
 
@@ -7623,11 +8239,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EG = units::Quantity<Value, EG>;
-    namespace literals {
-    Q_EG<long double> operator "" _EG (long double _v) {
-        return Q_EG<long double>(_v); }
-    Q_EG<long double> operator "" _EG (unsigned long long int _v) {
-        return Q_EG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EG<long double> operator "" _EG_ (long double _v) {
+            return Q_EG<long double>(_v); }
+        static inline Q_EG<long double> operator "" _EG_ (unsigned long long int _v) {
+            return Q_EG<long double>(_v); }
     }
 
 
@@ -7649,11 +8266,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PG = units::Quantity<Value, PG>;
-    namespace literals {
-    Q_PG<long double> operator "" _PG (long double _v) {
-        return Q_PG<long double>(_v); }
-    Q_PG<long double> operator "" _PG (unsigned long long int _v) {
-        return Q_PG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PG<long double> operator "" _PG_ (long double _v) {
+            return Q_PG<long double>(_v); }
+        static inline Q_PG<long double> operator "" _PG_ (unsigned long long int _v) {
+            return Q_PG<long double>(_v); }
     }
 
 
@@ -7675,11 +8293,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TG = units::Quantity<Value, TG>;
-    namespace literals {
-    Q_TG<long double> operator "" _TG (long double _v) {
-        return Q_TG<long double>(_v); }
-    Q_TG<long double> operator "" _TG (unsigned long long int _v) {
-        return Q_TG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TG<long double> operator "" _TG_ (long double _v) {
+            return Q_TG<long double>(_v); }
+        static inline Q_TG<long double> operator "" _TG_ (unsigned long long int _v) {
+            return Q_TG<long double>(_v); }
     }
 
 
@@ -7701,11 +8320,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GG = units::Quantity<Value, GG>;
-    namespace literals {
-    Q_GG<long double> operator "" _GG (long double _v) {
-        return Q_GG<long double>(_v); }
-    Q_GG<long double> operator "" _GG (unsigned long long int _v) {
-        return Q_GG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GG<long double> operator "" _GG_ (long double _v) {
+            return Q_GG<long double>(_v); }
+        static inline Q_GG<long double> operator "" _GG_ (unsigned long long int _v) {
+            return Q_GG<long double>(_v); }
     }
 
 
@@ -7727,11 +8347,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MG = units::Quantity<Value, MG>;
-    namespace literals {
-    Q_MG<long double> operator "" _MG (long double _v) {
-        return Q_MG<long double>(_v); }
-    Q_MG<long double> operator "" _MG (unsigned long long int _v) {
-        return Q_MG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MG<long double> operator "" _MG_ (long double _v) {
+            return Q_MG<long double>(_v); }
+        static inline Q_MG<long double> operator "" _MG_ (unsigned long long int _v) {
+            return Q_MG<long double>(_v); }
     }
 
 
@@ -7753,11 +8374,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kG = units::Quantity<Value, kG>;
-    namespace literals {
-    Q_kG<long double> operator "" _kG (long double _v) {
-        return Q_kG<long double>(_v); }
-    Q_kG<long double> operator "" _kG (unsigned long long int _v) {
-        return Q_kG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kG<long double> operator "" _kG_ (long double _v) {
+            return Q_kG<long double>(_v); }
+        static inline Q_kG<long double> operator "" _kG_ (unsigned long long int _v) {
+            return Q_kG<long double>(_v); }
     }
 
 
@@ -7779,11 +8401,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hG = units::Quantity<Value, hG>;
-    namespace literals {
-    Q_hG<long double> operator "" _hG (long double _v) {
-        return Q_hG<long double>(_v); }
-    Q_hG<long double> operator "" _hG (unsigned long long int _v) {
-        return Q_hG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hG<long double> operator "" _hG_ (long double _v) {
+            return Q_hG<long double>(_v); }
+        static inline Q_hG<long double> operator "" _hG_ (unsigned long long int _v) {
+            return Q_hG<long double>(_v); }
     }
 
 
@@ -7805,11 +8428,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daG = units::Quantity<Value, daG>;
-    namespace literals {
-    Q_daG<long double> operator "" _daG (long double _v) {
-        return Q_daG<long double>(_v); }
-    Q_daG<long double> operator "" _daG (unsigned long long int _v) {
-        return Q_daG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daG<long double> operator "" _daG_ (long double _v) {
+            return Q_daG<long double>(_v); }
+        static inline Q_daG<long double> operator "" _daG_ (unsigned long long int _v) {
+            return Q_daG<long double>(_v); }
     }
 
 
@@ -7831,11 +8455,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_G = units::Quantity<Value, G>;
-    namespace literals {
-    Q_G<long double> operator "" _G (long double _v) {
-        return Q_G<long double>(_v); }
-    Q_G<long double> operator "" _G (unsigned long long int _v) {
-        return Q_G<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_G<long double> operator "" _G_ (long double _v) {
+            return Q_G<long double>(_v); }
+        static inline Q_G<long double> operator "" _G_ (unsigned long long int _v) {
+            return Q_G<long double>(_v); }
     }
 
 
@@ -7857,11 +8482,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dG = units::Quantity<Value, dG>;
-    namespace literals {
-    Q_dG<long double> operator "" _dG (long double _v) {
-        return Q_dG<long double>(_v); }
-    Q_dG<long double> operator "" _dG (unsigned long long int _v) {
-        return Q_dG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dG<long double> operator "" _dG_ (long double _v) {
+            return Q_dG<long double>(_v); }
+        static inline Q_dG<long double> operator "" _dG_ (unsigned long long int _v) {
+            return Q_dG<long double>(_v); }
     }
 
 
@@ -7883,11 +8509,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cG = units::Quantity<Value, cG>;
-    namespace literals {
-    Q_cG<long double> operator "" _cG (long double _v) {
-        return Q_cG<long double>(_v); }
-    Q_cG<long double> operator "" _cG (unsigned long long int _v) {
-        return Q_cG<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cG<long double> operator "" _cG_ (long double _v) {
+            return Q_cG<long double>(_v); }
+        static inline Q_cG<long double> operator "" _cG_ (unsigned long long int _v) {
+            return Q_cG<long double>(_v); }
     }
 
 
@@ -7909,11 +8536,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_EPa = units::Quantity<Value, EPa>;
-    namespace literals {
-    Q_EPa<long double> operator "" _EPa (long double _v) {
-        return Q_EPa<long double>(_v); }
-    Q_EPa<long double> operator "" _EPa (unsigned long long int _v) {
-        return Q_EPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_EPa<long double> operator "" _EPa_ (long double _v) {
+            return Q_EPa<long double>(_v); }
+        static inline Q_EPa<long double> operator "" _EPa_ (unsigned long long int _v) {
+            return Q_EPa<long double>(_v); }
     }
 
 
@@ -7935,11 +8563,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_PPa = units::Quantity<Value, PPa>;
-    namespace literals {
-    Q_PPa<long double> operator "" _PPa (long double _v) {
-        return Q_PPa<long double>(_v); }
-    Q_PPa<long double> operator "" _PPa (unsigned long long int _v) {
-        return Q_PPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_PPa<long double> operator "" _PPa_ (long double _v) {
+            return Q_PPa<long double>(_v); }
+        static inline Q_PPa<long double> operator "" _PPa_ (unsigned long long int _v) {
+            return Q_PPa<long double>(_v); }
     }
 
 
@@ -7961,11 +8590,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_TPa = units::Quantity<Value, TPa>;
-    namespace literals {
-    Q_TPa<long double> operator "" _TPa (long double _v) {
-        return Q_TPa<long double>(_v); }
-    Q_TPa<long double> operator "" _TPa (unsigned long long int _v) {
-        return Q_TPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_TPa<long double> operator "" _TPa_ (long double _v) {
+            return Q_TPa<long double>(_v); }
+        static inline Q_TPa<long double> operator "" _TPa_ (unsigned long long int _v) {
+            return Q_TPa<long double>(_v); }
     }
 
 
@@ -7987,11 +8617,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_GPa = units::Quantity<Value, GPa>;
-    namespace literals {
-    Q_GPa<long double> operator "" _GPa (long double _v) {
-        return Q_GPa<long double>(_v); }
-    Q_GPa<long double> operator "" _GPa (unsigned long long int _v) {
-        return Q_GPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_GPa<long double> operator "" _GPa_ (long double _v) {
+            return Q_GPa<long double>(_v); }
+        static inline Q_GPa<long double> operator "" _GPa_ (unsigned long long int _v) {
+            return Q_GPa<long double>(_v); }
     }
 
 
@@ -8013,11 +8644,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_MPa = units::Quantity<Value, MPa>;
-    namespace literals {
-    Q_MPa<long double> operator "" _MPa (long double _v) {
-        return Q_MPa<long double>(_v); }
-    Q_MPa<long double> operator "" _MPa (unsigned long long int _v) {
-        return Q_MPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_MPa<long double> operator "" _MPa_ (long double _v) {
+            return Q_MPa<long double>(_v); }
+        static inline Q_MPa<long double> operator "" _MPa_ (unsigned long long int _v) {
+            return Q_MPa<long double>(_v); }
     }
 
 
@@ -8039,11 +8671,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kPa = units::Quantity<Value, kPa>;
-    namespace literals {
-    Q_kPa<long double> operator "" _kPa (long double _v) {
-        return Q_kPa<long double>(_v); }
-    Q_kPa<long double> operator "" _kPa (unsigned long long int _v) {
-        return Q_kPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kPa<long double> operator "" _kPa_ (long double _v) {
+            return Q_kPa<long double>(_v); }
+        static inline Q_kPa<long double> operator "" _kPa_ (unsigned long long int _v) {
+            return Q_kPa<long double>(_v); }
     }
 
 
@@ -8065,11 +8698,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hPa = units::Quantity<Value, hPa>;
-    namespace literals {
-    Q_hPa<long double> operator "" _hPa (long double _v) {
-        return Q_hPa<long double>(_v); }
-    Q_hPa<long double> operator "" _hPa (unsigned long long int _v) {
-        return Q_hPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hPa<long double> operator "" _hPa_ (long double _v) {
+            return Q_hPa<long double>(_v); }
+        static inline Q_hPa<long double> operator "" _hPa_ (unsigned long long int _v) {
+            return Q_hPa<long double>(_v); }
     }
 
 
@@ -8091,11 +8725,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_daPa = units::Quantity<Value, daPa>;
-    namespace literals {
-    Q_daPa<long double> operator "" _daPa (long double _v) {
-        return Q_daPa<long double>(_v); }
-    Q_daPa<long double> operator "" _daPa (unsigned long long int _v) {
-        return Q_daPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_daPa<long double> operator "" _daPa_ (long double _v) {
+            return Q_daPa<long double>(_v); }
+        static inline Q_daPa<long double> operator "" _daPa_ (unsigned long long int _v) {
+            return Q_daPa<long double>(_v); }
     }
 
 
@@ -8117,11 +8752,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Pa = units::Quantity<Value, Pa>;
-    namespace literals {
-    Q_Pa<long double> operator "" _Pa (long double _v) {
-        return Q_Pa<long double>(_v); }
-    Q_Pa<long double> operator "" _Pa (unsigned long long int _v) {
-        return Q_Pa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Pa<long double> operator "" _Pa_ (long double _v) {
+            return Q_Pa<long double>(_v); }
+        static inline Q_Pa<long double> operator "" _Pa_ (unsigned long long int _v) {
+            return Q_Pa<long double>(_v); }
     }
 
 
@@ -8143,11 +8779,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dPa = units::Quantity<Value, dPa>;
-    namespace literals {
-    Q_dPa<long double> operator "" _dPa (long double _v) {
-        return Q_dPa<long double>(_v); }
-    Q_dPa<long double> operator "" _dPa (unsigned long long int _v) {
-        return Q_dPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dPa<long double> operator "" _dPa_ (long double _v) {
+            return Q_dPa<long double>(_v); }
+        static inline Q_dPa<long double> operator "" _dPa_ (unsigned long long int _v) {
+            return Q_dPa<long double>(_v); }
     }
 
 
@@ -8169,11 +8806,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cPa = units::Quantity<Value, cPa>;
-    namespace literals {
-    Q_cPa<long double> operator "" _cPa (long double _v) {
-        return Q_cPa<long double>(_v); }
-    Q_cPa<long double> operator "" _cPa (unsigned long long int _v) {
-        return Q_cPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cPa<long double> operator "" _cPa_ (long double _v) {
+            return Q_cPa<long double>(_v); }
+        static inline Q_cPa<long double> operator "" _cPa_ (unsigned long long int _v) {
+            return Q_cPa<long double>(_v); }
     }
 
 
@@ -8195,11 +8833,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mPa = units::Quantity<Value, mPa>;
-    namespace literals {
-    Q_mPa<long double> operator "" _mPa (long double _v) {
-        return Q_mPa<long double>(_v); }
-    Q_mPa<long double> operator "" _mPa (unsigned long long int _v) {
-        return Q_mPa<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mPa<long double> operator "" _mPa_ (long double _v) {
+            return Q_mPa<long double>(_v); }
+        static inline Q_mPa<long double> operator "" _mPa_ (unsigned long long int _v) {
+            return Q_mPa<long double>(_v); }
     }
 
 
@@ -8221,11 +8860,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Tbar = units::Quantity<Value, Tbar>;
-    namespace literals {
-    Q_Tbar<long double> operator "" _Tbar (long double _v) {
-        return Q_Tbar<long double>(_v); }
-    Q_Tbar<long double> operator "" _Tbar (unsigned long long int _v) {
-        return Q_Tbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Tbar<long double> operator "" _Tbar_ (long double _v) {
+            return Q_Tbar<long double>(_v); }
+        static inline Q_Tbar<long double> operator "" _Tbar_ (unsigned long long int _v) {
+            return Q_Tbar<long double>(_v); }
     }
 
 
@@ -8247,11 +8887,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Gbar = units::Quantity<Value, Gbar>;
-    namespace literals {
-    Q_Gbar<long double> operator "" _Gbar (long double _v) {
-        return Q_Gbar<long double>(_v); }
-    Q_Gbar<long double> operator "" _Gbar (unsigned long long int _v) {
-        return Q_Gbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Gbar<long double> operator "" _Gbar_ (long double _v) {
+            return Q_Gbar<long double>(_v); }
+        static inline Q_Gbar<long double> operator "" _Gbar_ (unsigned long long int _v) {
+            return Q_Gbar<long double>(_v); }
     }
 
 
@@ -8273,11 +8914,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_Mbar = units::Quantity<Value, Mbar>;
-    namespace literals {
-    Q_Mbar<long double> operator "" _Mbar (long double _v) {
-        return Q_Mbar<long double>(_v); }
-    Q_Mbar<long double> operator "" _Mbar (unsigned long long int _v) {
-        return Q_Mbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_Mbar<long double> operator "" _Mbar_ (long double _v) {
+            return Q_Mbar<long double>(_v); }
+        static inline Q_Mbar<long double> operator "" _Mbar_ (unsigned long long int _v) {
+            return Q_Mbar<long double>(_v); }
     }
 
 
@@ -8299,11 +8941,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_kbar = units::Quantity<Value, kbar>;
-    namespace literals {
-    Q_kbar<long double> operator "" _kbar (long double _v) {
-        return Q_kbar<long double>(_v); }
-    Q_kbar<long double> operator "" _kbar (unsigned long long int _v) {
-        return Q_kbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_kbar<long double> operator "" _kbar_ (long double _v) {
+            return Q_kbar<long double>(_v); }
+        static inline Q_kbar<long double> operator "" _kbar_ (unsigned long long int _v) {
+            return Q_kbar<long double>(_v); }
     }
 
 
@@ -8325,11 +8968,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_hbar = units::Quantity<Value, hbar>;
-    namespace literals {
-    Q_hbar<long double> operator "" _hbar (long double _v) {
-        return Q_hbar<long double>(_v); }
-    Q_hbar<long double> operator "" _hbar (unsigned long long int _v) {
-        return Q_hbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_hbar<long double> operator "" _hbar_ (long double _v) {
+            return Q_hbar<long double>(_v); }
+        static inline Q_hbar<long double> operator "" _hbar_ (unsigned long long int _v) {
+            return Q_hbar<long double>(_v); }
     }
 
 
@@ -8351,11 +8995,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dabar = units::Quantity<Value, dabar>;
-    namespace literals {
-    Q_dabar<long double> operator "" _dabar (long double _v) {
-        return Q_dabar<long double>(_v); }
-    Q_dabar<long double> operator "" _dabar (unsigned long long int _v) {
-        return Q_dabar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dabar<long double> operator "" _dabar_ (long double _v) {
+            return Q_dabar<long double>(_v); }
+        static inline Q_dabar<long double> operator "" _dabar_ (unsigned long long int _v) {
+            return Q_dabar<long double>(_v); }
     }
 
 
@@ -8377,11 +9022,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_bar = units::Quantity<Value, bar>;
-    namespace literals {
-    Q_bar<long double> operator "" _bar (long double _v) {
-        return Q_bar<long double>(_v); }
-    Q_bar<long double> operator "" _bar (unsigned long long int _v) {
-        return Q_bar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_bar<long double> operator "" _bar_ (long double _v) {
+            return Q_bar<long double>(_v); }
+        static inline Q_bar<long double> operator "" _bar_ (unsigned long long int _v) {
+            return Q_bar<long double>(_v); }
     }
 
 
@@ -8403,11 +9049,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_dbar = units::Quantity<Value, dbar>;
-    namespace literals {
-    Q_dbar<long double> operator "" _dbar (long double _v) {
-        return Q_dbar<long double>(_v); }
-    Q_dbar<long double> operator "" _dbar (unsigned long long int _v) {
-        return Q_dbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_dbar<long double> operator "" _dbar_ (long double _v) {
+            return Q_dbar<long double>(_v); }
+        static inline Q_dbar<long double> operator "" _dbar_ (unsigned long long int _v) {
+            return Q_dbar<long double>(_v); }
     }
 
 
@@ -8429,11 +9076,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_cbar = units::Quantity<Value, cbar>;
-    namespace literals {
-    Q_cbar<long double> operator "" _cbar (long double _v) {
-        return Q_cbar<long double>(_v); }
-    Q_cbar<long double> operator "" _cbar (unsigned long long int _v) {
-        return Q_cbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_cbar<long double> operator "" _cbar_ (long double _v) {
+            return Q_cbar<long double>(_v); }
+        static inline Q_cbar<long double> operator "" _cbar_ (unsigned long long int _v) {
+            return Q_cbar<long double>(_v); }
     }
 
 
@@ -8455,11 +9103,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_mbar = units::Quantity<Value, mbar>;
-    namespace literals {
-    Q_mbar<long double> operator "" _mbar (long double _v) {
-        return Q_mbar<long double>(_v); }
-    Q_mbar<long double> operator "" _mbar (unsigned long long int _v) {
-        return Q_mbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_mbar<long double> operator "" _mbar_ (long double _v) {
+            return Q_mbar<long double>(_v); }
+        static inline Q_mbar<long double> operator "" _mbar_ (unsigned long long int _v) {
+            return Q_mbar<long double>(_v); }
     }
 
 
@@ -8481,11 +9130,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_ubar = units::Quantity<Value, ubar>;
-    namespace literals {
-    Q_ubar<long double> operator "" _ubar (long double _v) {
-        return Q_ubar<long double>(_v); }
-    Q_ubar<long double> operator "" _ubar (unsigned long long int _v) {
-        return Q_ubar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_ubar<long double> operator "" _ubar_ (long double _v) {
+            return Q_ubar<long double>(_v); }
+        static inline Q_ubar<long double> operator "" _ubar_ (unsigned long long int _v) {
+            return Q_ubar<long double>(_v); }
     }
 
 
@@ -8507,11 +9157,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_nbar = units::Quantity<Value, nbar>;
-    namespace literals {
-    Q_nbar<long double> operator "" _nbar (long double _v) {
-        return Q_nbar<long double>(_v); }
-    Q_nbar<long double> operator "" _nbar (unsigned long long int _v) {
-        return Q_nbar<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_nbar<long double> operator "" _nbar_ (long double _v) {
+            return Q_nbar<long double>(_v); }
+        static inline Q_nbar<long double> operator "" _nbar_ (unsigned long long int _v) {
+            return Q_nbar<long double>(_v); }
     }
 
 
@@ -8533,11 +9184,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_psi = units::Quantity<Value, psi>;
-    namespace literals {
-    Q_psi<long double> operator "" _psi (long double _v) {
-        return Q_psi<long double>(_v); }
-    Q_psi<long double> operator "" _psi (unsigned long long int _v) {
-        return Q_psi<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_psi<long double> operator "" _psi_ (long double _v) {
+            return Q_psi<long double>(_v); }
+        static inline Q_psi<long double> operator "" _psi_ (unsigned long long int _v) {
+            return Q_psi<long double>(_v); }
     }
 
 
@@ -8559,11 +9211,12 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_atm = units::Quantity<Value, atm>;
-    namespace literals {
-    Q_atm<long double> operator "" _atm (long double _v) {
-        return Q_atm<long double>(_v); }
-    Q_atm<long double> operator "" _atm (unsigned long long int _v) {
-        return Q_atm<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_atm<long double> operator "" _atm_ (long double _v) {
+            return Q_atm<long double>(_v); }
+        static inline Q_atm<long double> operator "" _atm_ (unsigned long long int _v) {
+            return Q_atm<long double>(_v); }
     }
 
 
@@ -8585,14 +9238,15 @@ namespace mks
     };
     template<typename Value = long double>
     using Q_torr = units::Quantity<Value, torr>;
-    namespace literals {
-    Q_torr<long double> operator "" _torr (long double _v) {
-        return Q_torr<long double>(_v); }
-    Q_torr<long double> operator "" _torr (unsigned long long int _v) {
-        return Q_torr<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_torr<long double> operator "" _torr_ (long double _v) {
+            return Q_torr<long double>(_v); }
+        static inline Q_torr<long double> operator "" _torr_ (unsigned long long int _v) {
+            return Q_torr<long double>(_v); }
     }
 
 } /*namespace mks*/
 } /*namespace units*/
 } /*namespace chandra*/
-#endif /*CHANDRA_UNITS_H*/
+#endif /*CHANDRA_MKS_UNITS_H*/

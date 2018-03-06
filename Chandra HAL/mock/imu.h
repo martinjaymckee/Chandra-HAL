@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
 using namespace std;
 
 #include "../inertial.h"
@@ -12,22 +13,23 @@ namespace chandra
 namespace drivers
 {
 template<typename Value>
-struct MockIMUState
+struct MockIMUState // TODO: THIS SHOULD BE CHANGED TO MockNavState OR SOMETHING TO ADD ALTITUDE, ETC.
 {
         using vector_t = math::Matrix<Value, 3, 1>;
 
         MockIMUState() : t(0), accel(0), gyro(0), valid(false) {}
 
-        MockIMUState(Value _t, vector_t _accel, vector_t _gyro)
-            : t(_t), accel(_accel), gyro(_gyro), valid(true) {}
+        MockIMUState(Value _t, vector_t _accel, vector_t _gyro, Value _altitude)
+            : t(_t), accel(_accel), gyro(_gyro), altitude(_altitude), valid(true) {}
 
         MockIMUState(const MockIMUState<Value>& _other)
-            : t(_other.t), accel(_other.accel), gyro(_other.gyro), valid(_other.valid){}
+            : t(_other.t), accel(_other.accel), gyro(_other.gyro), altitude(_other.altitude), valid(_other.valid){}
 
         MockIMUState<Value>& operator = (const MockIMUState<Value>& _other) {
             t = _other.t;
             accel = _other.accel;
             gyro = _other.gyro;
+            altitude = _other.altitude;
             valid = _other.valid;
             return *this;
         }
@@ -35,6 +37,7 @@ struct MockIMUState
         Value t;
         vector_t accel;
         vector_t gyro;
+        Value altitude;
         bool valid;
 };
 
@@ -43,14 +46,16 @@ Stream& operator << (Stream& _stream, const MockIMUState<Value>& _state) {
     _stream << "t = " << _state.t;
     _stream << ", accel = " << _state.accel.T();
     _stream << ", gyro = " << _state.gyro.T();
+    _stream << ", altitude = " << _state.altitude;
     return _stream;
 }
 
 template<typename Value>
-class MockIMU : public AccelGyro<Value, 3>
+class MockIMU : public AccelGyro<MockIMU<Value>, Value, 3>
 {
     protected:
-        using base_t = AccelGyro<Value, 3>;
+        friend class AccelGyro<MockIMU<Value>, Value, 3>;
+        using base_t = AccelGyro<MockIMU<Value>, Value, 3>;
         typename base_t::value_t accel_offset_;
         typename base_t::value_t gyro_offset_;
         typename base_t::value_t accel_gain_;
@@ -87,15 +92,12 @@ class MockIMU : public AccelGyro<Value, 3>
             cout << "\tGyro Offset = " << gyro_offset_.T() << ", s.d. = " << gyro_sd_ << "\n";
             cout << "\tAccel Gain = " << gyro_gain_.T() << "\n";
             cout << "\tFlight Config with " << flight_.size() << " states\n";
-
-            /*cout << "\n\tFlight Config:\n";
-            for(auto state: flight_) {
-                cout << "\t\t" << state << "\n";
-            }
-            cout << "\n";*/
         }
 
-        // THIS IS SPECIFIC TO THE MOCK OBJECT TO MAKE TIMEBASED TESTING EASIER
+        bool enable(bool) { return true; }
+        bool enabled() const { return true; }
+
+        // THIS IS SPECIFIC TO THE MOCK OBJECT TO MAKE TIME BASED TESTING EASIER
         Value setTime(Value _t) {
             t_ = _t;
             return t_;
@@ -139,7 +141,8 @@ class MockIMU : public AccelGyro<Value, 3>
             const auto e = t_before / t_range;
             const auto accel = (e * state_a.accel) + ((1.0-e) * state_b.accel);
             const auto gyro = (e * state_a.gyro) + ((1.0-e) * state_b.gyro);
-            return {t, accel, gyro};
+            const auto altitude = (e * state_a.altitude) + ((1.0-e) * state_b.altitude);
+            return {t, accel, gyro, altitude};
         }
 
         MockIMUState<Value> filterStates(
@@ -149,7 +152,8 @@ class MockIMU : public AccelGyro<Value, 3>
         ) {
             const auto accel = (e * state_a.accel) + ((1.0-e) * state_b.accel);
             const auto gyro = (e * state_a.gyro) + ((1.0-e) * state_b.gyro);
-            return {state_b.t, accel, gyro};
+            const auto altitude = (e * state_a.altitude) + ((1.0-e) * state_b.altitude);
+            return {state_b.t, accel, gyro, altitude};
         }
 
         MockIMUState<Value> getState() {
@@ -175,7 +179,36 @@ class MockIMU : public AccelGyro<Value, 3>
             return imu_state_;
         }
 
+        //
+        // Proxy Callbacks
+        //
+        //  Accelerometer Callbacks
+        Value set_accel_fs(Value) { return 0; }
+        Value get_accel_fs() const { return 0; }
+
+        Value set_accel_odr(Value) { return 0; }
+        Value get_accel_odr() const { return 0; }
+
+        Value set_accel_lpf(Value) { return 0; }
+        Value get_accel_lpf() const { return 0; }
+
+        Value set_accel_hpf(Value) { return 0; }
+        Value get_accel_hpf() const { return 0;}
+
+        //  Gyroscope Callbacks
+        Value set_gyro_fs(Value) { return 0; }
+        Value get_gyro_fs() const { return 0; }
+
+        Value set_gyro_odr(Value) { return 0; }
+        Value get_gyro_odr() const { return 0; }
+
+        Value set_gyro_lpf(Value) { return 0;}
+        Value get_gyro_lpf() const { return 0; }
+
+        Value set_gyro_hpf(Value) { return 0; }
+        Value get_gyro_hpf() const { return 0; }
 };
+
 } /*namespace drivers*/
 } /*namespace chandra*/
 

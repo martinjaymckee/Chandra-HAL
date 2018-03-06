@@ -1,10 +1,3 @@
-/*
- * stream.h
- *
- *  Created on: May 18, 2017
- *      Author: martin
- */
-
 #ifndef CHANDRA_STREAM_H
 #define CHANDRA_STREAM_H
 
@@ -78,6 +71,11 @@ class ASCIIStreamImpl // TODO: THE SIZES OF THESE ARE NOT CLEAR.... IT SHOULD BE
 			Decimal<double, 4>::encode(_value, _p);
 			return StreamError::Ok;
 		}
+
+        StreamError ASCIIformat(const long double& _value, char* _p) {
+            Decimal<double, 6>::encode(_value, _p);
+            return StreamError::Ok;
+        }
 };
 
 class BinaryStreamImpl

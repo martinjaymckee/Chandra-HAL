@@ -1,10 +1,3 @@
-/*
- * gpio.h
- *
- *  Created on: Apr 6, 2016
- *      Author: martin
- */
-
 #ifndef CHANDRA_GPIO_H
 #define CHANDRA_GPIO_H
 
@@ -225,12 +218,13 @@ class LED
 
 		template<typename Scale = uint32_t>
 		LED& pwm( const duration_t& _period, const Scale& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ){
-			active_period_ = duration_t( (_duty_cycle * _period.count()) / 100); // TODO: FIGURE OUT IF THERE IS A SAFER WAY TO DO THIS
+            const auto duty_cycle = !pin_.inverted() ? Scale(100) - _duty_cycle : _duty_cycle;
+            active_period_ = duration_t( (duty_cycle * _period.count()) / 100); // TODO: FIGURE OUT IF THERE IS A SAFER WAY TO DO THIS
 			inactive_period_ = _period - active_period_;
 			mode_ = PWM;
 			if(_reset) {
 				pin_ = !_inverted;
-				state_ = !_inverted;
+                state_ = pin_;
 				timestamp_ = clock_t::now();
 			}
 			return *this;

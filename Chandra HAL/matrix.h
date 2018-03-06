@@ -2,9 +2,7 @@
 #define CHANDRA_MATRIX_H
 
 #include <initializer_list>
-#include <iostream>
 #include <type_traits>
-#include <random>
 
 namespace chandra
 {
@@ -186,7 +184,7 @@ class Matrix
         constexpr static index_t columns = Columns;
 
         // TODO: ONLY VECTORS SHOULD HAVE A SINGLE ARGUMENT.  TWO DIMENSIONAL MATRICIES SHOULD HAVE
-        //  AN OVERLOAD TAKES TWO INDICIES
+        //  AN OVERLOAD WHICH TAKES TWO INDICIES
         constexpr const value_t& operator () (int i, const int& j = -1) const {
             return internal::IndexData<Rows, Columns>::value(data_, i, j);
         }

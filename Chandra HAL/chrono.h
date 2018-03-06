@@ -13,8 +13,9 @@
 #include <ratio>
 
 #include "chip_utils.h"
+#include "units.h"
 
-#define SYSTICK_SOFTWARE_TIMESTAMP_MODE
+//#define SYSTICK_SOFTWARE_TIMESTAMP_MODE
 //#define SCT_HARDWARE_TIMESTAMP_MODE
 
 namespace chandra
@@ -25,11 +26,11 @@ namespace chrono
 class frequency
 {
 	public:
-		using rep = uint32_t;
+        using rep = chandra::units::mks::Q_Hz<uint32_t>;
 
-		static rep main() { return SystemCoreClock; }
+        static rep main() { return rep{SystemCoreClock}; }
 		static rep core() { return main() / LPC_SYSCON->SYSAHBCLKDIV; }
-		static rep tick() { return 0; }
+        static rep tick() { return rep{0}; }
 		static rep timer(size_t) { return core(); }
         static rep usart(size_t) { return main(); }
 		static rep spi(size_t) { return core(); }
@@ -78,7 +79,7 @@ class timestamp_clock
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
             // TODO: THIS SHOULD BE BASED ON THE REFERENCE FREQUENCY, IN MOST CASES....
             // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
-            top_ = (uint64_t(65536UL)* frequency::core()) / 1000000UL;
+            top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
             mult_ = 0xFFFFFFFFUL / top_;
             SysTick_Config(top_);
             NVIC_EnableIRQ(SysTick_IRQn);

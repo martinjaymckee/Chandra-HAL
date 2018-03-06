@@ -2,39 +2,36 @@
 #define CHANDRA_INEMO_H
 
 
-#include "clock.h"
+#include "chrono.h"
+#include "inertial.h"
+#include "register_device.h"
 #include "sensor_utils.h"
 #include "spi.h"
+#include "thermal.h"
 #include "timing.h"
-#include "vector.h"
 
 namespace chandra
 {
-namespace io
+namespace drivers
 {
 
-// TODO: Rather than use an axis_order object, it would be nice to simply pass in an axis transformer to allow for non-orthagonal
-//	axis transformations ( AS I AM GOING TO NEED FOR THE CURRENT PROJECT!)
-
-// TODO: NEED TO BE ABLE TO CONFIGURE BOTH SCALE AND GAIN, AT THE CHIP LEVEL, AS WELL AS TO OUTPUT VALUES SCALED TO THE PROPER
-//	UNITS (AS DEFINED BY THE "UNITS" LIBRARY... WHICH STILL NEEDS TO BE FOLDED IN
-
-// TODO: NEED A SCOPED SPI MODE CHANGER SO THAT EVERY COMMAND CAN "ENABLE" THE SPI TO THE CORRECT MODE (0) AND SET IT BACK BEFORE
-//	THE FUNCTION EXITS
-
-template<class value_type, class axis_order = AxesXYZ>
+// TODO: THIS NEEDS TO DERIVE FROM ACCELGYRO
+template<typename Value, typename Comm = chandra::io::SPIMaster>
 class LSM6DSM
+        : public AccelGyro<LSM6DSM<Value, Comm>, Value, 3>,
+          public Thermometer<LSM6DSM<Value, Comm>, Value>
 {
     protected:
-        typedef axis_order axes_map_t;
+        using register_access_t = chandra::drivers::RegisterDevice<Comm>;
 
     public:
-        using value_t = value_type;
+        friend class AccelGyro<LSM6DSM<Value, Comm>, Value, 3>;
+        using base_t = AccelGyro<LSM6DSM<Value, Comm>, Value, 3>;
+        using scalar_t = typename base_t::scalar_t;
+        using value_t = typename base_t::value_t;
+        using ref_t = LSM6DSM<Value, Comm>;
 
-        using accelerations_t = Vector3D<value_t>;
-        using angular_rates_t = Vector3D<value_t>;
-        using temperature_t = value_t;
-
+        // Register Addresses
         enum registers_t {
             FUNC_CFG_ACCESS = 0X01,
             SENSOR_SYNC_TIME_FRAME = 0X04,
@@ -94,125 +91,234 @@ class LSM6DSM
             // TODO: Remainder of Registers
         };
 
-        LSM6DSM( SPIMaster& _spi, const SPIMaster::cs_t& _cs = SPIMaster::CS0 ) : spi_(_spi), cs_(_cs), sample_timer_(10000) {}
+        LSM6DSM(register_access_t _regs) : regs_(_regs) {}
 
-        bool init(const uint32_t& _freq = 100) {
-            // Set Update Frequency
-            freq(_freq);
-
+        bool enable(bool) {
             // Configure Device
-            writeRegister(INT1_CTRL, 0x01); // Use Int1 for XL DRDY
-            writeRegister(INT2_CTRL, 0x02); // Use Int2 for G DRDY
+            //writeRegister(INT1_CTRL, 0x01); // Use Int1 for XL DRDY
+            //writeRegister(INT2_CTRL, 0x02); // Use Int2 for G DRDY
 
             // Configure Scale Factors
-            accel_divisor_ = 16768.0; // TODO: FIX THIS VALUE... THIS SHOULD BE ADJUSTABLE -- PLACE IT IN A FUNCTION
-            gyro_divisor_ = (32768.0 / 250.0); // FIX THIS VALUE... ALSO MAKE IT ADJUSTABLE IN A FUNCTION
+            accel_scale_ = 5.98e-4;
+            gyro_scale_ = 1.33e-4;
 
-            //return status.ok();
-            return true;
+            return id() == 0x6A;
         }
 
         // TODO: THIS SHOULD HAVE AN ENABLE FUNCTION (WHICH IS CALLED BY DEFAULT FROM THE INIT)
 
-        bool freq(const uint32_t _freq) {
-            // TODO: MAKE THIS ACTUALLY CHECK FOR VALIDITY, ETC.
-            // TODO: THIS NEEDS TO UPDATE THE INTERNAL DATA-RATE TO BE LARGE ENOUGH
-            uint8_t freq_bits = 0;
-            if(_freq < 26) {
-                freq_bits = 0x0B;
-            } else {
-                const auto div = _freq / 13;
-                freq_bits = log2(div) + 1;
-            }
-            writeRegister(CTRL2_G, freq_bits<<4); // TODO: THIS SHOULD USE AN updateRegister(reg, mask, val) COMMAND
-            writeRegister(CTRL1_XL, freq_bits<<4);
+        uint8_t id() { return regs_.byte(WHO_AM_I); }
 
-            sample_timer_.us(1000000UL / _freq);
-            return true;
-        }
-
-        uint8_t id() { return readRegister(WHO_AM_I); } // TODO: FIGURE OUT IF IT IS POSSIBLE TO MAKE THIS CONST... RIGHT NOW THE SPI COMMANDS ARE NON-CONST
-
-        UpdateStatus update() {
-            UpdateStatus update_status;
-            static const uint8_t read_num = 14;
-            static const uint8_t cmd = (1<<7) | OUT_TEMP_L;
+        SensorUpdateStatus update() {
+            SensorUpdateStatus status;
+            constexpr uint8_t read_num = 14;
             static uint8_t buffer[read_num];
-            if( sample_timer_.expired(Timer::AUTO_RESET)) {
-                spi_.tx(&cmd, 1, cs_, SPIMaster::START);
-                spi_.rx(buffer, read_num, cs_, SPIMaster::STOP);
-                raw_temperature_ = (static_cast<uint16_t>(buffer[1])<<8)|buffer[0];
-                raw_gyroscopes_[axes_map_t::x] = static_cast<int16_t>((static_cast<uint32_t>(buffer[3])<<8)|buffer[2]);
-                raw_gyroscopes_[axes_map_t::y] = static_cast<int16_t>((static_cast<uint32_t>(buffer[5])<<8)|buffer[4]);
-                raw_gyroscopes_[axes_map_t::z] = static_cast<int16_t>((static_cast<uint32_t>(buffer[7])<<8)|buffer[6]);
-                raw_accelerations_[axes_map_t::x] = static_cast<int16_t>((static_cast<uint32_t>(buffer[9])<<8)|buffer[8]);
-                raw_accelerations_[axes_map_t::y] = static_cast<int16_t>((static_cast<uint32_t>(buffer[11])<<8)|buffer[10]);
-                raw_accelerations_[axes_map_t::z] = static_cast<int16_t>((static_cast<uint32_t>(buffer[13])<<8)|buffer[12]);
-                update_status.updated = true;
-            }
-
-            return update_status;
+            //if( sample_timer_.expired(Timer::AUTO_RESET)) {
+            regs_.bytes(OUT_TEMP_L, read_num, buffer);
+            this->temp_raw_= convertTemp(val16(buffer[1], buffer[0]));
+            const auto gx = gyro_scale_ * val16(buffer[3], buffer[2]);
+            const auto gy = gyro_scale_ * val16(buffer[5], buffer[4]);
+            const auto gz = gyro_scale_ * val16(buffer[7], buffer[6]);
+            this->gyro_raw_ = value_t({gx, gy, gz});
+            const auto ax = accel_scale_ * val16(buffer[9], buffer[8]);
+            const auto ay = accel_scale_ * val16(buffer[11], buffer[10]);
+            const auto az = accel_scale_ * val16(buffer[13], buffer[12]);
+            this->accel_raw_ = value_t({ax, ay, az});
+            status.updated = true;
+            //}
+            //update_status.errors = SensorUpdateStatus::TimeoutError;
+            //update_status.errors = SensorUpdateStatus::ArithmeticError;
+            return status;
         }
 
-        accelerations_t accelerations() const { // TODO: CONSIDER ADDING THIS TO A PROCESS METHOD SO THAT IT ISN'T DONE EACH TIME THE VALUES ARE READ
-            const value_t x(raw_accelerations_[0]);
-            const value_t y(raw_accelerations_[1]);
-            const value_t z(raw_accelerations_[2]);
+    protected:
+        template<typename T> struct TD;
 
-            return accelerations_t(x/accel_divisor_, y/accel_divisor_, z/accel_divisor_);
+        static constexpr auto convertTemp(int16_t x) {
+            constexpr scalar_t scale(0.00390625);
+            constexpr scalar_t offset(25.0);
+            return (scale*x) + offset;
         }
 
-        angular_rates_t angularRates() const { // TODO: CONSIDER ADDING THIS TO A PROCESS METHOD SO THAT IT ISN'T DONE EACH TIME THE VALUES ARE READ
-            const value_t x(raw_gyroscopes_[0]);
-            const value_t y(raw_gyroscopes_[1]);
-            const value_t z(raw_gyroscopes_[2]);
-
-            return angular_rates_t(x/gyro_divisor_, y/gyro_divisor_, z/gyro_divisor_);
+        static constexpr auto val16(uint32_t h, uint8_t l) {
+            return static_cast<int16_t>((h<<8)|l);
         }
 
-        temperature_t temperature() const {
-            return temperature_t(raw_temperature_); // TODO: NEED TO ACTUALLY PROCESS THIS!!!!!
-        }
-
-    protected: // TODO: THESE SHOULD MOVE TO A BASE CLASS....
-        int log2 (uint32_t x) const {
+        static constexpr uint32_t log2(uint32_t x) {
             //return __builtin_ctz (x);
-            int count = 0;
+            uint32_t count = 0;
             while(x){
                 x >>= 1;
                 ++count;
             }
             return count;
-
         }
 
-        uint8_t readRegister(const uint8_t reg) {
-            const uint8_t cmd = (1<<7) | reg;
-            uint8_t val = 0x12;
-            spi_.tx(&cmd, 1, cs_, SPIMaster::START);
-            spi_.rx(&val, 1, cs_, SPIMaster::STOP);
-            return val;
+        static constexpr uint8_t calcOdrBits(const Value& _freq) {
+            uint8_t bits(0);
+            if(_freq == 0) {
+                bits = 0x00;
+            } else {
+                const auto div = _freq / 13;
+                bits = log2(div) + 1;
+            }
+            return bits;
         }
 
-        void writeRegister(const uint8_t reg, const uint8_t data) {
-            const uint8_t cmd[2] = {reg, data};
-            spi_.tx(cmd, 2, cs_);
-            return;
+        static constexpr uint32_t calcOdrFreq(const uint8_t& bits) {
+            return (bits == 0) ? 0 : (13 * (1UL << (bits-1UL)));
         }
 
+        //
+        // Proxy Callbacks
+        //
+        //  Accelerometer Callbacks
+        scalar_t set_accel_fs(scalar_t fs) {
+            static constexpr scalar_t accel_2(2.181662);
+            static constexpr scalar_t accel_4(4.363323);
+            static constexpr scalar_t accel_8(8.726646);
+            static constexpr scalar_t accel_16(17.453293);
+            scalar_t actual(accel_2);
+            uint8_t bits(0);
+
+            if(fs >= accel_8) { // 16 gees
+                actual = accel_16;
+                accel_scale_ = scalar_t(4.788403e-3);
+                bits = 0x06<<2;
+            } else if(fs >= accel_4) { // 8 gees
+                actual = accel_8;
+                accel_scale_ = scalar_t(2.394202e-3);
+                bits = 0x04<<2;
+            } else if(fs >= accel_2) { // 4 gees
+                actual = accel_4;
+                accel_scale_ = scalar_t(1.197101e-3);
+                bits = 0x02<<2;
+            } else { // 2 gees
+                accel_scale_ = scalar_t(5.985504e-4);
+            }
+            regs_.update(CTRL1_XL, 0x03<<2, bits);
+
+            return actual;
+        }
+        scalar_t get_accel_fs() const {
+            static constexpr scalar_t accel_2(2.181662);
+            static constexpr scalar_t accel_4(4.363323);
+            static constexpr scalar_t accel_8(8.726646);
+            static constexpr scalar_t accel_16(17.453293);
+            const uint8_t bits = uint8_t(regs_.byte(CTRL1_XL)>>2) & uint8_t(0x03);
+
+            switch(bits) {
+                case 0x00:
+                default:
+                    return accel_2;
+                case 0x01:
+                    return accel_16;
+                case 0x02:
+                    return accel_4;
+                case 0x03:
+                    return accel_8;
+            }
+        }
+        scalar_t set_accel_odr(scalar_t _freq) {
+            const uint8_t bits = calcOdrBits(_freq);
+            regs_.update(CTRL1_XL, 0xF0, static_cast<uint8_t>(bits<<4));
+            return calcOdrFreq(bits);
+        }
+        scalar_t get_accel_odr() const {
+            const uint8_t bits = uint8_t(regs_.byte(CTRL1_XL) >> 4) & 0x0F;
+            return calcOdrFreq(bits);
+        }
+
+        scalar_t set_accel_lpf(scalar_t) { return 0; }
+        scalar_t get_accel_lpf() const { return 0; }
+
+        scalar_t set_accel_hpf(scalar_t) { return 0; }
+        scalar_t get_accel_hpf() const { return 0;}
+
+        //  Gyroscope Callbacks
+        scalar_t set_gyro_fs(scalar_t fs) {
+            static constexpr scalar_t gyro_125(2.181662);
+            static constexpr scalar_t gyro_250(4.363323);
+            static constexpr scalar_t gyro_500(8.726646);
+            static constexpr scalar_t gyro_1000(17.453293);
+            static constexpr scalar_t gyro_2000(34.906585);
+            scalar_t actual(gyro_125);
+            uint8_t bits = 0x00;
+
+            if(fs >= gyro_1000) { // 2000 dps
+                actual = gyro_2000;
+                gyro_scale_ = scalar_t(1.065264e-3);
+                bits = 0x06<<1;
+            } else if(fs >= gyro_500) { // 1000 dps
+                actual = gyro_1000;
+                gyro_scale_ = scalar_t(5.326322e-4);
+                bits = 0x04<<1;
+            } else if(fs >= gyro_250) { // 500 dps
+                actual = gyro_500;
+                gyro_scale_ = scalar_t(2.663161e-4);
+                bits = 0x02<<1;
+            } else if(fs >= gyro_125) { // 250 dps
+                actual = gyro_250;
+                gyro_scale_ = scalar_t(1.331581e-4);
+                bits = 0x01<<1;
+            } else { // 125 dps
+                gyro_scale_ = scalar_t(6.657903e-5);
+            }
+            regs_.update(CTRL2_G, 0x07<<1, bits);
+            return actual;
+        }
+        scalar_t get_gyro_fs() const {
+            static constexpr scalar_t gyro_125(2.181662);
+            static constexpr scalar_t gyro_250(4.363323);
+            static constexpr scalar_t gyro_500(8.726646);
+            static constexpr scalar_t gyro_1000(17.453293);
+            static constexpr scalar_t gyro_2000(34.906585);
+            const uint8_t bits = uint8_t(regs_.byte(CTRL2_G)>>1) & uint8_t(0x07);
+
+            switch(bits) {
+                case 0x00:
+                default:
+                    return gyro_125;
+                case 0x01:
+                    return gyro_250;
+                case 0x02:
+                    return gyro_500;
+                case 0x04:
+                    return gyro_1000;
+                case 0x06:
+                    return gyro_2000;
+            }
+        }
+
+        scalar_t set_gyro_odr(scalar_t _freq) {
+            const uint8_t bits = calcOdrBits(_freq);
+            regs_.update(CTRL2_G, 0xF0, static_cast<uint8_t>(bits<<4));
+            return calcOdrFreq(bits);
+        }
+        scalar_t get_gyro_odr() const {
+            const uint8_t bits = uint8_t(regs_.byte(CTRL2_G) >> 4) & 0x0F;
+            return calcOdrFreq(bits);
+        }
+
+        scalar_t set_gyro_lpf(scalar_t) { return 0;}
+        scalar_t get_gyro_lpf() const { return 0; }
+
+        scalar_t set_gyro_hpf(scalar_t) { return 0; }
+        scalar_t get_gyro_hpf() const { return 0; }
 
     private:
-        SPIMaster& spi_;
-        SPIMaster::cs_t cs_;
-        Timer sample_timer_;
-        int16_t raw_accelerations_[3];
-        int16_t raw_gyroscopes_[3];
-        uint16_t raw_temperature_;
-        value_t accel_divisor_; // TODO: DECIDE IF THESE SAME VALUE TYPES SHOULD BE USED FOR ACCELEROMETER AND GYROSCOPE
-        value_t gyro_divisor_;
+        register_access_t regs_;
+        //Timer sample_timer_;
+        //int16_t raw_accelerations_[3];
+        //int16_t raw_gyroscopes_[3];
+        //uint16_t raw_temperature_;
+        scalar_t accel_scale_;
+        scalar_t gyro_scale_;
+        //value_t accel_divisor_; // TODO: DECIDE IF THESE SAME VALUE TYPES SHOULD BE USED FOR ACCELEROMETER AND GYROSCOPE
+        //value_t gyro_divisor_;
 };
 
-} /*namespace io*/
+} /*namespace drivers*/
 } /*namespace chandra*/
 
 #endif /*CHANDRA_INEMO_H*/

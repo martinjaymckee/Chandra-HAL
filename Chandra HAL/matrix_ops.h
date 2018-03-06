@@ -2,7 +2,6 @@
 #define CHANDRA_MATRIX_OPS_H
 
 #include <cmath>
-#include <iostream>
 using namespace std;
 
 #include "matrix.h"
@@ -270,9 +269,45 @@ constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b) {
     return result;
 }
 
+//
+// Vector Operations
+//
+
+
+//  Dot Product -- Any Length of Vector
+template<typename V1, typename V2, size_t N>
+constexpr V1 dot(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
+    V1 sum(0);
+    for(size_t idx = 0; idx < N; ++idx) {
+        sum += (_v1(idx) * _v2(idx));
+    }
+    return sum;
+}
+
+//  Cross Product -- Vectors of Length Three
+template<typename V1, typename V2>
+constexpr auto cross(const Matrix<V1, 3, 1>& _v1, const Matrix<V2, 3, 1>& _v2) {
+    Matrix<V1, 3, 1> v;
+    v(0) = ((_v1(1)*_v2(2)) - (_v1(2)*_v2(1)));
+    v(1) = ((_v1(2)*_v2(0)) - (_v1(0)*_v2(2)));
+    v(2) = ((_v1(0)*_v2(1)) - (_v1(1)*_v2(0)));
+    return v;
+}
+
+//  Norm
+template<typename V, size_t N>
+constexpr V norm(const Matrix<V, N, 1>& _v) { return dot(_v, _v); }
+
+//  Magnitude
+template<typename V, size_t N>
+constexpr V magnitude(const Matrix<V, N, 1>& _v) { return sqrt(norm(_v)); }
+
+} /*namespace math*/
+} /*namespace chandra*/
+
 // Stream Output
 template<typename Stream, typename Value, size_t N, size_t M>
-Stream& operator << (Stream& _stream, const Matrix<Value, N, M>& _val) {
+Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, M>& _val) {
     _stream << "[ ";
 
     for(size_t row = 0; row < N; ++row){
@@ -287,7 +322,7 @@ Stream& operator << (Stream& _stream, const Matrix<Value, N, M>& _val) {
 }
 
 template<typename Stream, typename Value, size_t N>
-Stream& operator << (Stream& _stream, const Matrix<Value, 1, N>& _val) {
+Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, 1, N>& _val) {
     _stream << "[ ";
     for(size_t column = 0; column < N; ++column){
         _stream << _val(column);
@@ -297,40 +332,15 @@ Stream& operator << (Stream& _stream, const Matrix<Value, 1, N>& _val) {
     return _stream;
 }
 
-//
-// Vector Operations
-//
-
-
-//  Dot Product -- Any Length of Vector
-template<typename V1, typename V2, size_t N>
-V1 dot(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
-    V1 sum(0);
-    for(size_t idx = 0; idx < N; ++idx) {
-        sum += (_v1(idx) * _v2(idx));
+template<typename Stream, typename Value, size_t N>
+Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, 1>& _val) {
+    _stream << "[ ";
+    for(size_t column = 0; column < N; ++column){
+        _stream << _val(column);
+        if(column != (N-1)) _stream << "; ";
     }
-    return sum;
+    _stream << " ]";
+    return _stream;
 }
-
-//  Cross Product -- Vectors of Length Three
-template<typename V1, typename V2>
-auto cross(const Matrix<V1, 3, 1>& _v1, const Matrix<V2, 3, 1>& _v2) {
-    Matrix<V1, 3, 1> v;
-    v(0) = ((_v1(1)*_v2(2)) - (_v1(2)*_v2(1)));
-    v(1) = ((_v1(2)*_v2(0)) - (_v1(0)*_v2(2)));
-    v(2) = ((_v1(0)*_v2(1)) - (_v1(1)*_v2(0)));
-    return v;
-}
-
-//  Norm
-template<typename V, size_t N>
-V norm(const Matrix<V, N, 1>& _v) { return dot(_v, _v); }
-
-//  Magnitude
-template<typename V, size_t N>
-V magnitude(const Matrix<V, N, 1>& _v) { return sqrt(norm(_v)); }
-
-} /*namespace math*/
-} /*namespace chandra*/
 #endif /*CHANDRA_MATRIX_OPS_H*/
 

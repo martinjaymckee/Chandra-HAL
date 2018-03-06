@@ -6,8 +6,8 @@ from mako.template import Template
 
 file_template = Template(
 """
-#ifndef CHANDRA_UNITS_H
-#define CHANDRA_UNITS_H
+#ifndef CHANDRA_${system.upper()}_UNITS_H
+#define CHANDRA_${system.upper()}_UNITS_H
 
 #include <ratio>
 
@@ -24,7 +24,7 @@ ${units}
 } /*namespace ${system}*/
 } /*namespace units*/
 } /*namespace chandra*/
-#endif /*CHANDRA_UNITS_H*/
+#endif /*CHANDRA_${system.upper()}_UNITS_H*/
 """)
 
 unit_template = Template(
@@ -46,11 +46,12 @@ unit_template = Template(
     };
     template<typename Value = long double>
     using Q_${symbol} = units::Quantity<Value, ${symbol}>;
-    namespace literals {
-    Q_${symbol}<long double> operator "" _${symbol} (long double _v) {
-        return Q_${symbol}<long double>(_v); }
-    Q_${symbol}<long double> operator "" _${symbol} (unsigned long long int _v) {
-        return Q_${symbol}<long double>(_v); }
+    namespace literals
+    {
+        static inline Q_${symbol}<long double> operator "" _${symbol}_ (long double _v) {
+            return Q_${symbol}<long double>(_v); }
+        static inline Q_${symbol}<long double> operator "" _${symbol}_ (unsigned long long int _v) {
+            return Q_${symbol}<long double>(_v); }
     }
 """)
 

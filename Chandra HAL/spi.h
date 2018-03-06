@@ -13,12 +13,26 @@ namespace chandra
 {
 namespace io
 {
+namespace internal
+{
+
+} /*namespace internal*/
+
 struct SPI
 {
+        using cs_t = uint8_t;
+
         enum transfer_mode_t {
             START,
             STOP,
             WRAP
+        };
+
+        enum : cs_t {
+            CS0 = static_cast<cs_t>(~0x01),
+            CS1 = static_cast<cs_t>(~0x02),
+            CS2 = static_cast<cs_t>(~0x04),
+            CS3 = static_cast<cs_t>(~0x08)
         };
 };
 
@@ -26,27 +40,26 @@ class SPIMaster
 {
 	public:
         using value_t = uint8_t;
-        using cs_t = uint8_t;
         using pin_t = chandra::io::IO;
-
-		static const cs_t  CS0 = ~0x01, CS1 = ~0x02, CS2 = ~0x04, CS3 = ~0x08;
+        using cs_t = SPI::cs_t;
+        using transfer_mode_t = SPI::transfer_mode_t;
 
         SPIMaster( uint8_t _num, pin_t _miso, pin_t _mosi, pin_t _sclk,
-             pin_t _cs0, auto _cs1=255, auto _cs2=255, auto _cs3=255 )
-            : spi_(getSPI(_num)), len_(8)
+             pin_t _cs0, const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3)
+            : num_(_num), spi_(getSPI(_num)), len_(8)
 		{
 	#if defined(__LPC82X__)
 			//	Initialize the peripheral clock and peripheral reset
-			if(spi_ == LPC_SPI0) {
+            if(num_ == 0) {
 				SystemClock::enable(0, 11);
 				PeripheralActivity::reset(0, 0);
-			} else if ( spi_ == LPC_SPI1 ) {
+            } else if (num_ == 1) {
 				SystemClock::enable(0, 12);
 				PeripheralActivity::reset(0, 1);
 			}
 	#elif defined(__LPC15XX__)
 			//	Initialize the peripheral clock and peripheral reset
-			if(spi_ == LPC_SPI0) {
+            if(num_ == 0) {
 				SystemClock::enable(1, 9);
 				PeripheralActivity::reset(1, 9);
 			} else if ( spi_ == LPC_SPI1 ) {
@@ -56,13 +69,33 @@ class SPIMaster
 	#endif
 			// Configure the Pins
 			setPins(_miso, _mosi, _sclk, _cs0, _cs1, _cs2, _cs3);
-
-			// Setup Clock Divisor
-            spi_->DIV = chandra::chrono::frequency::spi(num_) - 1UL;
 		}
+
+        SPIMaster( uint8_t _num, pin_t _miso, pin_t _mosi, pin_t _sclk,
+             pin_t _cs0, const pin_t& _cs1, const pin_t& _cs2)
+            : SPIMaster(_num, _miso, _mosi, _sclk, _cs0, _cs1, _cs2, io::IO(14, 31)) {}
+
+        SPIMaster( uint8_t _num, pin_t _miso, pin_t _mosi, pin_t _sclk,
+             pin_t _cs0, const pin_t& _cs1)
+            : SPIMaster(_num, _miso, _mosi, _sclk, _cs0, _cs1, io::IO(14, 31), io::IO(14, 31)) {}
+
+        SPIMaster( uint8_t _num, pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0)
+            : SPIMaster(_num, _miso, _mosi, _sclk, _cs0, io::IO(14, 31), io::IO(14, 31), io::IO(14, 31)) {}
+
+        auto freq(const units::mks::Q_Hz<uint32_t> _freq) {
+            // Setup Clock Divisor
+            const auto fspi = chrono::frequency::spi(num_);
+            const auto ratio = (fspi / _freq).value();
+            const auto div = ratio > 1? ratio - 1 : 1;
+            spi_->DIV = div;
+            return units::mks::Q_Hz<uint32_t>(fspi/(div+1)); // TODO: CHECK IF THIS IS ACCURATE....
+        }
+
+        auto freq() { return freq(units::mks::Q_Hz<uint32_t>(1000000)); }
 
 		bool enable( bool _enable, uint8_t _mode = 0 ) {
 			if(_enable) {
+				if(spi_->DIV == 0) freq(); // Set Default frequency if currently unset
 				spi_->CFG = (_mode<<3) | (1<<2); // Enable, In Master Mode
 				spi_->CFG |= (1<<0);
 			} else {
@@ -74,7 +107,7 @@ class SPIMaster
 		bool enable() const { return spi_->CFG & (1<<0); }
 		uint8_t mode() const { return (spi_->CFG >> 4) & 0x03; }
 
-		void tx(const value_t* _buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = WRAP){
+        void tx(const value_t* _buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
 			uint16_t ctrl = 0;
 
 			//	Set Transfer Packet Length and RXIGNORE
@@ -87,7 +120,7 @@ class SPIMaster
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-				if((index == (_cnt-1)) && ((_transfer_mode == STOP) | (_transfer_mode == WRAP))){
+                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
 					ctrl |= (1<<4);
 				}
 
@@ -100,7 +133,7 @@ class SPIMaster
 			return;
 		}
 
-		value_t* rx(value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = WRAP, const value_t& _stuff = 0xFF) {
+        value_t* rx(value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP, const value_t& _stuff = 0xFF) const {
 			value_t* out_buf = _out_buf;
 			uint16_t ctrl = 0;
 
@@ -114,7 +147,7 @@ class SPIMaster
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-				if((index == (_cnt-1)) && ((_transfer_mode == STOP) | (_transfer_mode == WRAP))){
+                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
 					ctrl |= (1<<4);
 				}
 
@@ -133,7 +166,7 @@ class SPIMaster
 		}
 
 
-		value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = WRAP) {
+        value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
 			value_t* out_buf = _out_buf;
 			uint16_t ctrl = 0;
 
@@ -148,7 +181,7 @@ class SPIMaster
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-				if((index == (_cnt-1)) && ((_transfer_mode == STOP) | (_transfer_mode == WRAP))){
+                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
 					ctrl |= (1<<4);
 				}
 
@@ -169,7 +202,7 @@ class SPIMaster
 
 
 	private:
-        SPI_PERIPHERAL_TYPE* getSPI(uint8_t _num) {
+        LPC_SPI_T* getSPI(uint8_t _num) {
             switch(_num) {
                 case 0:
                 default:
@@ -180,53 +213,68 @@ class SPIMaster
             return nullptr;
         }
 
+
+        uint8_t ID(const chandra::io::IO& _pin) {
+            return (32*_pin.port()) + _pin.pin();
+        }
+
+        uint8_t ID(const chandra::io::internal::NullIO&) { return 255; }
+
         void setPins(const pin_t& _miso, const pin_t& _mosi, const pin_t& _sclk, const pin_t& _cs0,
-                      auto _cs1=255, auto _cs2=255, auto _cs3=255) {
+                      const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3) {
+            const auto miso = ID(_miso);
+            const auto mosi = ID(_mosi);
+            const auto sclk = ID(_sclk);
+            const auto cs0 = ID(_cs0);
+            const auto cs1 = ID(_cs1);
+            const auto cs2 = ID(_cs2);
+            const auto cs3 = ID(_cs3);
+
 			//	Enable AHB clock domains for SWM
 			SystemClock::enable(0, 12);
 
-#if defined(__LPC82x__)
+#if defined(__LPC82X__)
 			//
 			// Setup the Main SPI Pins
 			//
-			if( spi_ == LPC_SPI0 ){
-				LPC_SWM->PINASSIGN[3] = (LPC_SWM->PINASSIGN[3] & 0x00FFFFFF) | (_sclk<<24);
-				LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFF000000) | (_cs0<<16) | (_miso<<8) | _mosi;
+            if(num_ == 0){
+                LPC_SWM->PINASSIGN[3] = (LPC_SWM->PINASSIGN[3] & 0x00FFFFFF) | (sclk<<24);
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFF000000) | (cs0<<16) | (miso<<8) | mosi;
 			} else {
-				LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFF) | (_mosi<<24) | (_sclk<<16);
-				LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFFFF0000) | (_cs0<<8) | _miso;
+                LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFF) | (mosi<<24) | (sclk<<16);
+                LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFFFF0000) | (cs0<<8) | miso;
 			}
 
 			//
 			// Setup the Chip Select lines
 			//
-			if( spi_== LPC_SPI0 ){
-				if(_cs1 != 255) LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0x00FFFFFF) | (_cs1<<24);
-				if(_cs2 != 255) LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFFFF00) | _cs2;
-				if(_cs3 != 255) LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFF00FF) | (_cs3<<8);
+            if(num_ == 0){
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0x00FFFFFF) | (cs1<<24);
+                LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFFFF00) | cs2;
+                LPC_SWM->PINASSIGN[5] = (LPC_SWM->PINASSIGN[5] & 0xFFFF00FF) | (cs3<<8);
 			} else {
-				if(_cs1 != 255) LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFF00FFFF) | (_cs1<<16);
+                LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFF00FFFF) | (cs1<<16);
 			}
 #elif defined(__LPC15XX__)
 			//
 			// Setup the Main SPI Pins
 			//
-			if( spi_ == LPC_SPI0 ){
-				LPC_SWM->PINASSIGN[3] = (LPC_SWM->PINASSIGN[3] & 0x000000FF) | (_miso<<24) | (_mosi<<16) | (_sclk<<8);
-				LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[3] & 0xFFFFFF00) | _cs0;
+            if(num_ == 0){
+                LPC_SWM->PINASSIGN[3] = (LPC_SWM->PINASSIGN[3] & 0x000000FF) | (miso<<24) | (mosi<<16) | (sclk<<8);
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[3] & 0xFFFFFF00) | cs0;
 			} else {
-				LPC_SWM->PINASSIGN[5] = (_cs0<<24) | (_miso<<16) | (_mosi<<8) | _sclk;
+                LPC_SWM->PINASSIGN[5] = (cs0<<24) | (miso<<16) | (mosi<<8) | sclk;
 			}
 
 			//
 			// Setup the Chip Select lines
 			//
-			if( spi_== LPC_SPI0 ){
-				if(_cs1 != 255) LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFFFF00FF) | (_cs1<<8);
-				if(_cs2 != 255) LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFF00FFFF) | (_cs2<<16);
-				if(_cs3 != 255) LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0x00FFFFFF) | (_cs3<<24);
+            if(num_ == 0){
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFFFF00FF) | (cs1<<8);
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0xFF00FFFF) | (cs2<<16);
+                LPC_SWM->PINASSIGN[4] = (LPC_SWM->PINASSIGN[4] & 0x00FFFFFF) | (cs3<<24);
 			} else {
-				if(_cs1 != 255) LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFFFFFF00) | _cs1;
+                LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFFFFFF00) | cs1;
 			}
 #endif
 
@@ -235,7 +283,8 @@ class SPIMaster
 			return;
 		}
 
-		SPI_PERIPHERAL_TYPE* spi_;
+        uint8_t num_;
+        mutable LPC_SPI_T* spi_;
 		uint8_t len_;
 };
 

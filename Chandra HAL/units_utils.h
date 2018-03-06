@@ -61,18 +61,25 @@ constexpr auto offset_sub(const Value& _val) {
     return offset_sub_impl<(Ratio::num == 0), Ratio>::calc(_val);
 }
 
-template<bool FP, bool Simple, bool Pass, intmax_t Num, intmax_t Den>
+
+template<typename T> struct TD;
+
+template<bool Integral, bool Simple, bool Pass, intmax_t Num, intmax_t Den>
 struct convert_scale_impl
 {
         template<typename Value>
-        static constexpr auto calc(const Value& _val) { return (Num*_val) / Den; }
+        static constexpr auto calc(const Value& _val) {
+            TD<std::ratio<Num,Den>> simple;
+            return (Num*_val) / Den;
+        }
 };
 
 template<intmax_t Num, intmax_t Den>
-struct convert_scale_impl<true, false, false, Num, Den>
+struct convert_scale_impl<false, false, false, Num, Den>
 {
         template<typename Value>
         static constexpr auto calc(const Value& _val) {
+            TD<std::ratio<Num,Den>> floating;
             using ratio_t = std::ratio<Num, Den>;
             using scalar_t = scalar_of_t<Value>;
             constexpr auto factor = ratio_cast<scalar_t, ratio_t>::value;
@@ -80,32 +87,42 @@ struct convert_scale_impl<true, false, false, Num, Den>
         }
 };
 
-template<bool FP, intmax_t Num>
-struct convert_scale_impl<FP, true, false, Num, 1>
+template<bool Integral, intmax_t Num>
+struct convert_scale_impl<Integral, true, false, Num, 1>
 {
         template<typename Value>
-        static constexpr auto calc(const Value& _val) { return Num*_val; }
+        static constexpr auto calc(const Value& _val) {
+            TD<std::ratio<Num,1>> mult;
+            return Num*_val;
+        }
 };
 
-template<bool FP, intmax_t Den>
-struct convert_scale_impl<FP, true, false, 1, Den>
+template<bool Integral, intmax_t Den>
+struct convert_scale_impl<Integral, true, false, 1, Den>
 {
         template<typename Value>
-        static constexpr auto calc(const Value& _val) { return _val/Den; }
+        static constexpr auto calc(const Value& _val) {
+            TD<std::ratio<1,Den>> div;
+            return _val/Den;
+        }
 };
 
-template<bool FP, bool Simple, intmax_t N>
-struct convert_scale_impl<FP, Simple, true, N, N>
+template<bool Integral, bool Simple, intmax_t N>
+struct convert_scale_impl<Integral, Simple, true, N, N>
 {
         template<typename Value>
-        static constexpr auto calc(const Value& _val) { return _val; }
+        static constexpr auto calc(const Value& _val) {
+            TD<std::ratio<N,N>> pass;
+            return _val;
+        }
 };
 
 template<typename Dest, typename Src, typename Value>
 constexpr auto convert_scale(const Value& _val) {
     using convert_ratio_t = std::ratio<Dest::den*Src::num, Dest::num*Src::den>;
+    TD<convert_ratio_t> convert;
     return convert_scale_impl<
-            std::is_floating_point<scalar_of_t<Value>>::value,
+            !std::is_integral<scalar_of_t<Value>>::value,
             (convert_ratio_t::num == 1 || convert_ratio_t::den == 1),
             (convert_ratio_t::num == convert_ratio_t::den),
             convert_ratio_t::num,

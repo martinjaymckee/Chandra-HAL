@@ -126,7 +126,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			//		-- Calculate the clock divider
 			//		-- Calculate the fractional multiplier
 			//		-- Calculate the actual clock rate and error
-            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0));
+            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0).value());
 			const calc_t clk_div = (sys_clk + (_clk/2)) / _clk;
 			const calc_t mult = (((256.0 * sys_clk) + (_clk * clk_div / 2.0)) / (_clk * clk_div)) - 256.0;
 			const calc_t denom = (clk_div * (256.0 + mult));
@@ -150,7 +150,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			const calc_t mult = static_cast<calc_t>((LPC_SYSCON->FRGCTRL>>8)&0xFF);
 	#endif
 			if(clk_div == 0) return 0; // If the clock is stopped
-            return (256 * static_cast<calc_t>(chandra::chrono::frequency::usart(0))) / (clk_div * (256 + mult));
+            return (256 * static_cast<calc_t>(chandra::chrono::frequency::usart(0).value())) / (clk_div * (256 + mult));
 		}
 
         bool mode(const uint8_t& _data_bits=8, const Parity& _parity = Parity::None, const uint8_t& _stop_bits=1) {
@@ -164,6 +164,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		bool enable(bool _enable) { // TODO: CONFIGURE THIS METHOD TO PROPERLY ENABLE/DISABLE AND CONFIGURE THE TRANSMISSION FORMAT
 			static const uint32_t enable_mask = (1<<0);
 			if(_enable) {
+                // IF BAUD, ETC ARE NOT CONFIGURED, DO A DEFAULT SETUP HERE
 				usart_->CFG |= enable_mask;
 			} else {
 				usart_->CFG &= ~enable_mask;
@@ -204,7 +205,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 			//	Configure USART Clocking
 			//		-- Calculate Baud Rate Generator
-            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0));
+            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0).value());
 			const calc_t clk_div = static_cast<calc_t>(LPC_SYSCON->UARTCLKDIV);
 	#if defined(__LPC82X__)
 			const calc_t mult = static_cast<calc_t>(LPC_SYSCON->UARTFRGMULT);
@@ -275,7 +276,6 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		}
 
         void rxISR(char _ch) { rx_buffer_ << encoder_t::encode(_ch); }
-
 
         auto& rx_buffer() { return rx_buffer_; }
         auto& tx_buffer() { return tx_buffer_; }

@@ -41,7 +41,7 @@ class Quantity
 
         // Assignment
         template<typename V, typename U>
-        auto operator = (const Quantity<V, U>& _val) {
+        constexpr auto operator = (const Quantity<V, U>& _val) {
             val_ = units::convert<Units, U>(_val);
             return *this;
         }
@@ -51,37 +51,37 @@ class Quantity
         //
         //  Equality
         template<typename V, typename U>
-        constexpr bool operator == (const Quantity<V, U>& _val) {
+        constexpr bool operator == (const Quantity<V, U>& _val) const {
             return val_ == units::convert<Units, U>(_val).value();
         }
 
         //  Inequality
         template<typename V, typename U>
-        constexpr bool operator != (const Quantity<V, U>& _val) {
+        constexpr bool operator != (const Quantity<V, U>& _val) const {
             return val_ != units::convert<Units, U>(_val).value();
         }
 
         //  Greater Than
         template<typename V, typename U>
-        constexpr bool operator > (const Quantity<V, U>& _val) {
+        constexpr bool operator > (const Quantity<V, U>& _val) const {
             return val_ > units::convert<Units, U>(_val).value();
         }
 
         //  Greater Than or Equal
         template<typename V, typename U>
-        constexpr bool operator >= (const Quantity<V, U>& _val) {
+        constexpr bool operator >= (const Quantity<V, U>& _val) const {
             return val_ >= units::convert<Units, U>(_val).value();
         }
 
         //  Less Than
         template<typename V, typename U>
-        constexpr bool operator < (const Quantity<V, U>& _val) {
+        constexpr bool operator < (const Quantity<V, U>& _val) const {
             return val_ < units::convert<Units, U>(_val).value();
         }
 
         //  Less Than or Equal
         template<typename V, typename U>
-        constexpr bool operator <= (const Quantity<V, U>& _val) {
+        constexpr bool operator <= (const Quantity<V, U>& _val) const {
             return val_ <= units::convert<Units, U>(_val).value();
         }
 
@@ -89,20 +89,20 @@ class Quantity
         // Arithmetic Operations
         //
         //  Negation
-        auto operator - () const {
+        constexpr auto operator - () const {
             return Quantity<value_t, Units>(-val_);
         }
 
         //  Addition
         template<typename V, typename U>
-        auto operator += (const Quantity<V, U>& _val) {
+        constexpr auto operator += (const Quantity<V, U>& _val) {
             val_ += units::convert<Units, U>(_val);
             return *this;
         }
 
         //  Subtraction
         template<typename V, typename U>
-        auto operator -= (const Quantity<V, U>& _val) {
+        constexpr auto operator -= (const Quantity<V, U>& _val) {
             val_ -= units::convert<double, Units, U>(_val);
             return *this;
         }
@@ -111,7 +111,7 @@ class Quantity
         //      ALSO, THEY DO NOT WORK THE SAME WAY WITH UNITS THAT HAVE A BASE (LIKE ABSOLUTE TEMPERATURE)
         //  Scalar Multiplication -- This only works if V is not a quantity
         template<typename V>
-        auto operator *= (const V& _val) {
+        constexpr auto operator *= (const V& _val) {
             static_assert(
                 !match_quantity(_val),
                 "Quantity multiply-assign only available for scalars"
@@ -122,7 +122,7 @@ class Quantity
 
         //  Scalar Division
         template<typename V>
-        auto operator /= (const V& _val) {
+        constexpr auto operator /= (const V& _val) {
             static_assert(
                 !match_quantity(_val),
                 "Quantity divide-assign only available for scalars"
@@ -131,21 +131,21 @@ class Quantity
             return *this;
         }
 
-        value_t value() const { return val_; }
+        constexpr value_t value() const { return val_; }
 
     protected:
         value_t val_;
 };
 
 template<typename V1, typename U1, typename V2, typename U2>
-auto operator + (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
+constexpr auto operator + (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULDN'T WORK IF BOTH ARE ABSOLUTE UNITS
     using return_t = Quantity<std::common_type_t<V1, V2>, U1>;
     return return_t(_a.value() + convert<U1, U2>(_b.value()));
 }
 
 template<typename V1, typename U1, typename V2, typename U2>
-auto operator - (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
+constexpr auto operator - (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULD WORK ONLY IF BOTH ARE EITHER RELATIVE OR ABSOLUTE UNITS
     using return_t = Quantity<std::common_type_t<V1, V2>, U1>;
     return return_t(_a.value() - convert<U1, U2>(_b.value()));
@@ -157,7 +157,7 @@ auto operator - (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
 // Multiplication
 //
 template<typename V1, typename U1, typename V2, typename U2>
-auto operator * (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
+constexpr auto operator * (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     static_assert(
         !(U1::absolute || U2::absolute),
         "Attempting to multiply units which are not relative"
@@ -169,7 +169,7 @@ auto operator * (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
 }
 
 template<typename V1, typename U1, typename Scalar>
-auto operator * (const Quantity<V1, U1>& _a, const Scalar& _s) {
+constexpr auto operator * (const Quantity<V1, U1>& _a, const Scalar& _s) {
     static_assert(
         !U1::absolute,
         "Attempting to multiply a unit which is not relative by a scalar"
@@ -180,7 +180,7 @@ auto operator * (const Quantity<V1, U1>& _a, const Scalar& _s) {
 }
 
 template<typename Scalar, typename V1, typename U1>
-auto operator * (const Scalar& _s, const Quantity<V1, U1>& _a) {
+constexpr auto operator * (const Scalar& _s, const Quantity<V1, U1>& _a) {
     static_assert(
         !U1::absolute,
         "Attempting to multiply a unit which is not relative by a scalar"
@@ -191,7 +191,7 @@ auto operator * (const Scalar& _s, const Quantity<V1, U1>& _a) {
 }
 
 template<typename V1, typename U1, typename V2, typename U2>
-auto operator / (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
+constexpr auto operator / (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     static_assert(
         !(U1::absolute || U2::absolute),
         "Attempting to divide units which are not relative"
@@ -203,7 +203,7 @@ auto operator / (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
 }
 
 template<typename V1, typename U1, typename Scalar>
-auto operator / (const Quantity<V1, U1>& _a, const Scalar& _s) {
+constexpr auto operator / (const Quantity<V1, U1>& _a, const Scalar& _s) {
     static_assert(
         !U1::absolute,
         "Attempting to divide a non-relative unit by a scalar"
@@ -221,12 +221,12 @@ Stream& operator << (Stream& _stream, const Quantity<Value, Units>& _q) {
 }
 
 template<typename Units, typename Value, typename BaseUnits>
-auto as(const Quantity<Value, BaseUnits>& _val) {
+constexpr auto as(const Quantity<Value, BaseUnits>& _val) {
     return Quantity<Value, Units>{units::convert<Units, BaseUnits>(_val.value())};
 }
 
 template<typename Units, typename Value>
-auto as(const Value& _val) {
+constexpr auto as(const Value& _val) {
     return Quantity<Value, Units>{_val};
 }
 

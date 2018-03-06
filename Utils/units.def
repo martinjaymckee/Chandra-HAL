@@ -74,6 +74,11 @@ Time hr = 3600
 Time day = 86400
 
 #
+# Units of Frequency
+#
+Frequency *Hz = 1
+
+#
 # Units of Velocity
 #
 #   SI

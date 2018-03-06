@@ -21,18 +21,19 @@ namespace chandra
 namespace io
 {
 
+// TODO: MODIFY TO USE STREAM....
 template<uint32_t _rxtx_buffer_length = 128>
 class LoopbackVirtualSerial
+        : public Stream< LoopbackVirtualSerial<_rxtx_buffer_length, _rxtx_buffer_length> >
 {
 	protected:
-		typedef long calc_t;
-        typedef LoopbackVirtualSerial<_rxtx_buffer_length> virtual_serial_t;
+        using calc_t = long;
+        using LoopbackVirtualSerial<_rxtx_buffer_length>;
 
 	public:
         LoopbackVirtualSerial() {}
 
-
-		USARTClockStatus<calc_t> uclk( unsigned long _clk = ( 4 * 115200 * 16 ) ) {
+        USARTClockStatus<calc_t> uclk( unsigned long = 0 ) {
 			USARTClockStatus<calc_t> status;
 			status.clk = -1;
 			status.ppm = -1;
@@ -50,7 +51,7 @@ class LoopbackVirtualSerial
 
 		bool enable() const { return true; }
 
-		USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ){
+        USARTClockStatus<calc_t> baud( unsigned int, unsigned int = 0 ){
 			USARTClockStatus<calc_t> status;
 			status.clk = -1;
 			status.ppm = -1;
@@ -61,35 +62,9 @@ class LoopbackVirtualSerial
 			return buffer_.available();
 		}
 
-        virtual_serial_t& operator << ( char _ch ) {
+        bool put( char _ch ) {
 			buffer_ << _ch;
-			return *this;
-		}
-
-        virtual_serial_t& operator << ( const char* _str ) {
-			while( *_str ) {
-				buffer_ << *_str;
-				++_str;
-			}
-			return *this;
-		}
-
-        virtual_serial_t& operator << ( unsigned int _val ) {
-			char temp[20];
-			Unsigned<unsigned int>::toA(_val, temp);
-			return this->operator << ( temp );
-		}
-
-        virtual_serial_t& operator << ( int _val ) {
-			char temp[20];
-			Signed<int>::toA(_val, temp);
-			return this->operator << ( temp );
-		}
-
-        virtual_serial_t& operator << ( double _val ) {
-			char temp[20];
-			Float<double>::toD(_val, temp);
-			return this->operator << ( temp );
+            return true;
 		}
 
 		operator char() { return read(); }
@@ -107,39 +82,20 @@ class LoopbackVirtualSerial
 
 template<uint32_t _tx_buffer_length = 256, uint32_t _rx_buffer_length = 256>
 class FlowthroughVirtualSerial
+        : public Stream< FlowthroughVirtualSerial<_tx_buffer_length, _rx_buffer_length> >
 {
         protected:
-                typedef long calc_t;
-                typedef FlowthroughVirtualSerial<_tx_buffer_length, _rx_buffer_length> virtual_serial_t;
+                using calc_t = long;
+                using virtual_serial_t = FlowthroughVirtualSerial<_tx_buffer_length, _rx_buffer_length>;
 
-                struct RXBufferProxy
+                struct RXBufferProxy : public Stream<RXBufferProxy>
                 {
                     public:
                         RXBufferProxy(virtual_serial_t& _serial) : serial_(_serial) {}
-                        void operator << ( char _ch ) {
+
+                        bool put( char _ch ) {
                             serial_.rx_buffer_ << _ch;
-                        }
-
-                        void operator << ( const char* _str ) {
-                            while( *_str ) {
-                                serial_.rx_buffer_ << *_str;
-                                ++_str;
-                            }
-                        }
-
-                        void operator << ( unsigned int _val ) {
-                            char temp[20];
-                            Unsigned<unsigned int>::toA(_val, temp);
-                        }
-
-                        void operator << ( int _val ) {
-                            char temp[20];
-                            Signed<int>::toA(_val, temp);
-                        }
-
-                        void operator << ( double _val ) {
-                            char temp[20];
-                            Float<double>::toD(_val, temp);
+                            return true;
                         }
 
                     private:
@@ -149,7 +105,7 @@ class FlowthroughVirtualSerial
         public:
                 FlowthroughVirtualSerial() : rx(*this) {}
 
-                USARTClockStatus<calc_t> uclk( unsigned long _clk = ( 4 * 115200 * 16 ) ) {
+                USARTClockStatus<calc_t> uclk( unsigned long = 0 ) {
                         USARTClockStatus<calc_t> status;
                         status.clk = -1;
                         status.ppm = -1;
@@ -167,7 +123,7 @@ class FlowthroughVirtualSerial
 
                 bool enable() const { return true; }
 
-                USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ){
+                USARTClockStatus<calc_t> baud( unsigned int, unsigned int = 0 ){
                         USARTClockStatus<calc_t> status;
                         status.clk = -1;
                         status.ppm = -1;
@@ -178,35 +134,9 @@ class FlowthroughVirtualSerial
                         return rx_buffer_.available();
                 }
 
-                virtual_serial_t& operator << ( char _ch ) {
+                bool put( char _ch ) {
                         tx_buffer_ << _ch;
-                        return *this;
-                }
-
-                virtual_serial_t& operator << ( const char* _str ) {
-                        while( *_str ) {
-                                tx_buffer_ << *_str;
-                                ++_str;
-                        }
-                        return *this;
-                }
-
-                virtual_serial_t& operator << ( unsigned int _val ) {
-                        char temp[20];
-                        Unsigned<unsigned int>::toA(_val, temp);
-                        return this->operator << ( temp );
-                }
-
-                virtual_serial_t& operator << ( int _val ) {
-                        char temp[20];
-                        Signed<int>::toA(_val, temp);
-                        return this->operator << ( temp );
-                }
-
-                virtual_serial_t& operator << ( double _val ) {
-                        char temp[20];
-                        Float<double>::toD(_val, temp);
-                        return this->operator << ( temp );
+                        return true;
                 }
 
                 operator char() { return read(); }
@@ -224,7 +154,6 @@ class FlowthroughVirtualSerial
                 FixedCircularBuffer<char, _tx_buffer_length> tx_buffer_;
                 FixedCircularBuffer<char, _rx_buffer_length> rx_buffer_;
 };
-
 
 } /*namespace io*/
 } /*namespace chandra*/

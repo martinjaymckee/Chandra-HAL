@@ -122,11 +122,13 @@ class Quaternion
 
         //  Assignment
         template<typename V>
-        ref_t& operator = (const Quaternion<V>& _q) {
+        constexpr ref_t& operator = (const Quaternion<V>& _q) {
             w = _q.w;
             x = _q.x;
             y = _q.y;
             z = _q.z;
+
+            return *this;
         }
 
         //
@@ -134,11 +136,11 @@ class Quaternion
         //
 
         //  Negative Quaternion
-        constexpr ref_t operator - () { return ref_t(-w, -x, -y, -z); }
+        constexpr ref_t operator - () const { return ref_t(-w, -x, -y, -z); }
 
         //  Addition
         template<typename V>
-        ref_t& operator += (const Quaternion<V>& _q) {
+        constexpr ref_t& operator += (const Quaternion<V>& _q) {
             w += _q.w;
             x += _q.x;
             y += _q.y;
@@ -148,7 +150,7 @@ class Quaternion
 
         //  Subtraction
         template<typename V>
-        ref_t& operator -= (const Quaternion<V>& _q) {
+        constexpr ref_t& operator -= (const Quaternion<V>& _q) {
             w -= _q.w;
             x -= _q.x;
             y -= _q.y;
@@ -158,7 +160,7 @@ class Quaternion
 
         //  Multiplication By Scalar
         template<typename V>
-        ref_t& operator *= (const V& _c) {
+        constexpr ref_t& operator *= (const V& _c) {
             w *= _c;
             x *= _c;
             y *= _c;
@@ -168,7 +170,7 @@ class Quaternion
 
         //  Multiplication By Quaternion
         template<typename V>
-        ref_t& operator *= (const Quaternion<V>& _r) {
+        constexpr ref_t& operator *= (const Quaternion<V>& _r) {
             const auto t_w = (w * _r.w) - (x * _r.x) - (y * _r.y) - (z * _r.z);
             const auto t_x = (x * _r.w) + (w * _r.x) - (z * _r.y) + (y * _r.z);
             const auto t_y = (y * _r.w) + (z * _r.x) + (w * _r.y) - (x * _r.z);
@@ -182,7 +184,7 @@ class Quaternion
 
         // Division By Scalar
         template<typename V>
-        ref_t& operator /= (const V& _c) {
+        constexpr ref_t& operator /= (const V& _c) {
             w /= _c;
             x /= _c;
             y /= _c;
@@ -192,7 +194,7 @@ class Quaternion
 
         //  Division By Quaternion
         template<typename V>
-        ref_t& operator /= (const Quaternion<V>& _r) {
+        constexpr ref_t& operator /= (const Quaternion<V>& _r) {
             const auto r_norm = (w*w) + (x*x) + (y*y) + (z*z);
             const auto t_w = (w * _r.w) + (x * _r.x) + (y * _r.y) + (z * _r.z);
             const auto t_x = (x * _r.w) - (w * _r.x) - (z * _r.y) + (y * _r.z);
@@ -206,14 +208,14 @@ class Quaternion
         }
 
         //  Quaternion Norm
-        auto norm() const { return (w*w) + (x*x) + (y*y) + (z*z); }
+        constexpr Value norm() const { return (w*w) + (x*x) + (y*y) + (z*z); }
 
         //  Quaternion Magnitude
-        auto magnitude() const { return sqrt(norm()); }
+        constexpr Value magnitude() const { return sqrt(norm()); }
 
         //  Normalized Quaternion
-        ref_t normalized() const {
-            const auto m = magnitude();
+        constexpr ref_t normalized() const {
+            const Value m = magnitude();
             return ref_t(w/m, x/m, y/m, z/m);
         }
 
