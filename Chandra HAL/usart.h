@@ -13,7 +13,13 @@
 #include <stdint.h>
 #include <string.h>
 
+#if defined(__LPC82X__) || defined(__LPC15XX__)
 #include <chip.h>
+#elif defined(__LPC84X__)
+#include <LPC8xx.h>
+#else
+#error "Undefined processor type for USART implementation."
+#endif
 
 #include "circular_buffer.h"
 #include "chip_utils.h"
@@ -74,6 +80,12 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
         using clock_t = chandra::chrono::timestamp_clock;
         using encoder_t = internal::RX<char, typename clock_t::time_point, _timestamped>;
 
+        #if defined(__LPC82X__) || defined(__LPC15XX__)
+        using lpc_peripheral_t = LPC_USART_T;
+        #elif defined(__LPC84X__)
+        using lpc_peripheral_t = LPC_USART_TypeDef;
+        #endif
+
 	public:
         using tx_value_t = char;
         using rx_value_t = decltype(encoder_t::encode('0'));
@@ -81,16 +93,28 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 	protected:
         USART( const uint8_t& _num, const auto& _tx, const auto& _rx, auto /*hack to force delegation*/ )
             : num_(_num), irq_num_(getIRQNum(_num)), usart_(getUSART(_num)), tx_(_tx), rx_(_rx) {
-			// TODO: CHANGE THIS TO WORK FOR ANY OF THE USARTS
-	#if defined(__LPC82X__)
+            #if defined(__LPC82X__)
             SystemClock::enable(0, 14+num_);// Turn on USARTx Clock
             PeripheralActivity::reset(0, 2); // Reset Fractional Divider
             PeripheralActivity::reset(0, 3+num_); // Reset USARTx
-	#elif defined(__LPC15XX__)
+            #elif defined(__LPC15XX__) 			// TODO: CHANGE THIS TO WORK FOR ANY OF THE USARTS
 			SystemClock::enable(1, 17);// Turn on USART Clock
 			PeripheralActivity::reset(1, 17); // Reset USART0
 			//PeripheralActivity::reset(0, ??); // Reset Fractional Divider
-	#endif
+            #elif defined(__LPC84X__)
+            if(num_ <= 2) {
+                const uint8_t idx = 14+num_;
+                SystemClock::enable(0, idx);
+                PeripheralActivity::reset(0, idx);
+            } else {
+                const uint8_t idx = 30+num_-2;
+                SystemClock::enable(0, idx);
+                PeripheralActivity::reset(0, idx);
+            }
+            #else
+            #error "USART clock configuration not defined for this processor"
+            #endif
+
 			//	Configure the Pins for this USART
             setPins();
 
@@ -99,7 +123,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			NVIC_EnableIRQ(irq_num_); // TODO: CHANGE THIS TO WORK FOR ANY OF THE USARTS
 
 			//	Initialize the USART Clock to a reasonable rate if it has not, already, been.
-			if(LPC_SYSCON->UARTCLKDIV == 0) uclk();
+            if(getFractionalInputClockDiv() == 0) uclk();
 
 			//	Initialize to 8-databits, No parity and 1 stop bit
 			mode();
@@ -118,39 +142,24 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
                const io::IO& _tx,
                const io::internal::NullIO& _rx ) : USART(_num, _tx, _rx, 0) {}
 
-		USARTClockStatus<calc_t> uclk( unsigned long _clk = ( 4 * 115200 * 16 ) ) {
-			// TODO: IT WOULD BE GREAT TO SET THE UCLK TO THE HIGHEST MULTIPLE OF THE STANDARD USART RATE POSSIBLE IF A DEFAULT VALUE IS PASSED
+        USARTClockStatus<calc_t> uclk(calc_t target_uclk = 0) {
 			USARTClockStatus<calc_t> status;
-
-			//	Configure USART Clocking
-			//		-- Calculate the clock divider
-			//		-- Calculate the fractional multiplier
-			//		-- Calculate the actual clock rate and error
-            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0).value());
-			const calc_t clk_div = (sys_clk + (_clk/2)) / _clk;
-			const calc_t mult = (((256.0 * sys_clk) + (_clk * clk_div / 2.0)) / (_clk * clk_div)) - 256.0;
-			const calc_t denom = (clk_div * (256.0 + mult));
-			status.clk = (256.0 * sys_clk + (denom/2.0)) / denom;
-			status.ppm = (1000000.0 *(status.clk - _clk)) / _clk;
-			LPC_SYSCON->UARTCLKDIV = clk_div; // USART Clock Divisor
-	#if defined(__LPC82X__)
-			LPC_SYSCON->UARTFRGDIV = 0xFF; // Set Divisor to 255 + 1 (256)
-			LPC_SYSCON->UARTFRGMULT = mult; // Set Multiplier to value calculated above
-	#elif defined(__LPC15XX__)
-			LPC_SYSCON->FRGCTRL = (mult<<8) | 0xFF; // Set divisor to 255 + 1 ( 256 ) and multiplier to value calculated above
-	#endif
+            if(target_uclk != 0) {
+                const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
+                const int32_t div(256);
+                const uint32_t mult = multCalc(sys_clk, target_uclk, div);
+                status.clk = uclkCalc(sys_clk, mult, div);
+                status.ppm = ppmCalc(target_uclk, status.clk);
+            }
 			return status;
 		}
 
 		calc_t actual_uclk() {
-			const calc_t clk_div = static_cast<calc_t>(LPC_SYSCON->UARTCLKDIV);
-	#if defined(__LPC82X__)
-			const calc_t mult = static_cast<calc_t>(LPC_SYSCON->UARTFRGMULT);
-	#elif defined(__LPC15XX__)
-			const calc_t mult = static_cast<calc_t>((LPC_SYSCON->FRGCTRL>>8)&0xFF);
-	#endif
-			if(clk_div == 0) return 0; // If the clock is stopped
-            return (256 * static_cast<calc_t>(chandra::chrono::frequency::usart(0).value())) / (clk_div * (256 + mult));
+            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
+            const calc_t div = getFractionalInputClockDiv();
+            const calc_t mult = getFractionalInputClockMult();
+            if(isClockRunning()) return 0; // If the clock is stopped
+            return uclkCalc(sys_clk, mult, div);
 		}
 
         bool mode(const uint8_t& _data_bits=8, const Parity& _parity = Parity::None, const uint8_t& _stop_bits=1) {
@@ -201,26 +210,20 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		bool txInv() const { return usart_->CFG &= (1<<23); }
 
 		USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ){ // IT WOULD BE BETTER TO SET THE CLOCK DIVIDER AND MULTIPLIER IN A SEPERATE METHOD SO THAT MULTIPLE USARTS CAN BE USED
-			USARTClockStatus<calc_t> status;
-
-			//	Configure USART Clocking
-			//		-- Calculate Baud Rate Generator
-            const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(0).value());
-			const calc_t clk_div = static_cast<calc_t>(LPC_SYSCON->UARTCLKDIV);
-	#if defined(__LPC82X__)
-			const calc_t mult = static_cast<calc_t>(LPC_SYSCON->UARTFRGMULT);
-	#elif defined(__LPC15XX__)
-			const calc_t mult = static_cast<calc_t>((LPC_SYSCON->FRGCTRL>>8)&0xFF);
-	#endif
-			double denom = (_osr * _baud * clk_div * (256.0 + mult));
-			const calc_t brg = static_cast<calc_t>((256.0 * sys_clk + (denom/2.0)) / denom);
-
-			const calc_t denom_2 = _osr * brg * clk_div * (256.0 + mult);
-			status.clk = (256.0 * sys_clk + (denom_2 / 2.0)) / denom_2;
-			status.ppm = (1000000.0 * (status.clk - _baud)) / _baud;
-			usart_->BRG = brg-1; // Set Baud Rate Generator Divisor to value calculated above ( less 1 for rollover )
+            USARTClockStatus<calc_t> status;
+            const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
+            int32_t running_uclk = actual_uclk();
+            if(running_uclk == 0) {
+                const int32_t target_brg = brgCalc((2*sys_clk)/3, _baud, _osr);
+                const int32_t target_uclk = target_brg * _baud * _osr;
+                running_uclk = uclk(target_uclk).clk;
+            }
+            const calc_t brg = brgCalc(running_uclk, _baud, _osr);
+            status.clk = baudCalc(running_uclk, brg, _osr);
+            status.ppm = ppmCalc(_baud, status.clk);
+            usart_->BRG = brg-1; // Set Baud Rate Generator Divisor to value calculated above ( less 1 for rollover )
 			// usart_->OSR = _osr-1; // TODO: FIGURE OUT WHY THIS ISN'T WORKING....
-
+            LPC_SYSCON->FCLKSEL[num_] = 0x02; // Use FRG0 as source clock
 			return status;
 		}
 
@@ -268,7 +271,11 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		void txISR() {
 			if(tx_buffer_.available()){
 				while( !(usart_->STAT & (1<<2)) ) {} // Wait for TX Ready Flag
+                #if defined(__LPC82X__) || defined(__LPC15XX__)
 				usart_->TXDATA = char(tx_buffer_);
+                #elif defined(__LPC84X__)
+				usart_->TXDAT = char(tx_buffer_);
+				#endif
 				usart_->INTENSET = (1<<2); // Enable the TX Ready Interrupt
 			} else {
 				usart_->INTENCLR = (1<<2); // Disable the TX Ready Interrupt
@@ -280,7 +287,117 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
         auto& rx_buffer() { return rx_buffer_; }
         auto& tx_buffer() { return tx_buffer_; }
 
-	protected:
+    protected:
+        static constexpr int32_t brgCalc(int32_t clk, int32_t baud, const int32_t& osr=16) {
+            const int32_t denom = osr*baud;
+            return (clk+(denom/2))/denom;
+        }
+
+        static constexpr int32_t baudCalc(int32_t clk, int32_t brg, const int32_t& osr=16) {
+            const int32_t denom = osr*brg;
+            return (clk+(denom/2))/denom;
+        }
+
+        static constexpr int32_t multCalc(int32_t clk, int32_t uclk, const int32_t& div=256) {
+            return (((div*int64_t(clk)) + (uclk/2))/uclk) - div;
+        }
+
+        static constexpr int32_t uclkCalc(int32_t clk, int32_t mult, const int32_t& div=256) {
+            return (div*int64_t(clk))/(div+mult);
+        }
+
+        static constexpr int32_t ppmCalc(int32_t target, int32_t actual) {
+            return (int64_t(1000000)*(actual-target))/target;
+        }
+
+        static constexpr bool isClockRunning(const uint8_t& _num_frg = 0) {
+            #if defined(__LPC82X__)
+            (void)_num_frg;
+            return LPC_SYSCON->UARTFRGDIV != 0xFF;
+            #elif defined(__LPC84X__)
+            if(_num_frg == 0) {
+                return LPC_SYSCON->FRG0DIV != 0xFF;
+            } else if(_num_frg == 1) {
+                return LPC_SYSCON->FRG1DIV != 0xFF;
+            }
+            return 0;
+            #elif defined(__LPC15XX__)
+            (void)_num_frg;
+            return (LPC_SYSCON->FRGCTRL&0xFF) != 0xFF;
+            #endif
+        }
+
+        static constexpr calc_t getFractionalInputClockDiv(const uint8_t& _num_frg = 0) {
+            #if defined(__LPC82X__)
+            (void)_num_frg;
+            return static_cast<calc_t>(LPC_SYSCON->UARTFRGDIV) + 1;
+            #elif defined(__LPC84X__)
+            if(_num_frg == 0) {
+                return static_cast<calc_t>(LPC_SYSCON->FRG0DIV) + 1;
+            } else if(_num_frg == 1) {
+                return static_cast<calc_t>(LPC_SYSCON->FRG1DIV) + 1;
+            }
+            return 0;
+            #elif defined(__LPC15XX__)
+            (void)_num_frg;
+            return static_cast<calc_t>(LPC_SYSCON->FRGCTRL&0xFF) + 1;
+            #endif
+        }
+
+        static constexpr calc_t getFractionalInputClockMult(const uint8_t& _num_frg = 0) {
+            #if defined(__LPC82X__)
+            (void)_num_frg;
+            return static_cast<calc_t>(LPC_SYSCON->UARTFRGMULT);
+            #elif defined(__LPC84X__)
+            if(_num_frg == 0) {
+                return static_cast<calc_t>(LPC_SYSCON->FRG0MULT);
+            } else if(_num_frg == 1) {
+                return static_cast<calc_t>(LPC_SYSCON->FRG1MULT);
+            }
+            return 0;
+            #elif defined(__LPC15XX__)
+            (void)_num_frg;
+            return static_cast<calc_t>((LPC_SYSCON->FRGCTRL>>8)&0xFF);
+            #endif
+        }
+
+        static constexpr bool setFractionalInputClock(
+                const uint8_t& _usart,
+                const uint32_t& _mult,
+                const uint32_t& _div,
+                const uint8_t& _num_frg = 0
+        ) {
+            #if defined(__LPC82X__) || defined(__LPC15XX__)
+            (void)_div;
+            (void)_num_frg;
+            (void)_usart;
+            LPC_SYSCON->UARTCLKMULT = _mult;
+            LPC_SYSCON->UARTCLKDIV = 0xFF; // Must be 256 (255+1)
+            return true;
+            #elif defined(__LPC15XX__)
+            (void)_div;
+            (void)_num_frg;
+            (void)_usart;
+            LPC_SYSCON->FRGCTRL = (mult<<8) | 0xFF; // Div must be 256 (255+1)
+            return true;
+            #elif defined(__LPC84X__)
+            (void)_div;
+            if(_num_frg == 0) {
+                LPC_SYSCON->FRG0MULT = _mult;
+                LPC_SYSCON->FRG0DIV = 0xFF; // Must be 256 (255+1)
+                LPC_SYSCON->FRG0CLKSEL = 0x01; // Set Main Clock as Source
+                return true;
+            } else if(_num_frg == 1) {
+                LPC_SYSCON->FRG1MULT = _mult;
+                LPC_SYSCON->FRG1DIV = 0xFF; // Must be 256 (255+1)
+                LPC_SYSCON->FRG1CLKSEL = 0x01; // Set Main Clock as Source
+                return true;
+            } else {
+                return false;
+            }
+            #endif
+        }
+
         // TODO: DECIDE IF MSB/LSB-FIRST HANDLING IS USEFUL AND HOW IT WOULD BE CONFIGURED
         //  IF IT IS TO BE USED, DECIDE UPON AN OPTIMIZED REVERSE IMPLEMENTATION
         constexpr char reverse(char b) const {
@@ -306,14 +423,14 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
             return (32*_io.port()) + _io.pin();
         }
 
-        void setPins(){
-	#if defined(__LPC82X__)
+        void setPins(){            
+            const uint8_t rx_pin = pinIndex(rx_);
+            const uint8_t tx_pin = pinIndex(tx_);
+            #if defined(__LPC82X__)
 			//	Enable AHB clock domains for SWM
 			SystemClock::enable(0, 7);
 
             //	Setup Switch Matrix
-            const uint8_t rx_pin = pinIndex(rx_);
-            const uint8_t tx_pin = pinIndex(tx_);
             switch(num_) {
                 default:
                 case 0:
@@ -331,7 +448,38 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 			//	Disable AHB clock domain for SWM
 			SystemClock::enable(0, 7, false);
-	#elif defined(__LPC15XX__)
+            #elif defined(__LPC84X__)
+            //	Enable AHB clock domains for SWM -- SWM Clock and USART0-2 are the same as LPC82X
+            SystemClock::enable(0, 7);
+
+            //	Setup Switch Matrix
+            switch(num_) {
+                default:
+                case 0:
+                    LPC_SWM->PINASSIGN[0] = 0xFFFF0000 | (rx_pin<<8) | tx_pin;
+                    break;
+
+                case 1:
+                    LPC_SWM->PINASSIGN[1] = 0xFF0000FF | (rx_pin<<16) | (tx_pin<<8);
+                    break;
+
+                case 2:
+                    LPC_SWM->PINASSIGN[2] = 0x0000FFFF | (rx_pin<<24) | (tx_pin<<16);
+                    break;
+
+                case 3:
+                    LPC_SWM->PINASSIGN[11] = 0x00FFFFFF | (tx_pin<<24);
+                    LPC_SWM->PINASSIGN[12] = 0xFFFFFF00 | rx_pin;
+                    break;
+
+                case 4:
+                    LPC_SWM->PINASSIGN[2] = 0x0000FFFF | (rx_pin<<24) | (tx_pin<<16);
+                    break;
+            }
+
+            //	Disable AHB clock domain for SWM
+            SystemClock::enable(0, 7, false);
+            #elif defined(__LPC15XX__)
             // TODO: THIS IS NOT PROPERLY HANDLING SWM MAPPING FOR USARTS OTHER THAN 0
 			//	Enable AHB clock domains for SWM
 			SystemClock::enable(0, 12);
@@ -341,9 +489,9 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 			//	Disable AHB clock domain for SWM
 			SystemClock::enable(0, 12, false);
-	#else
-		#error "USART Set Pin Functionality not defined for this processor!"
-	#endif
+            #else
+            #error "USART Set Pin Functionality not defined for this processor!"
+            #endif
 			return;
 		}
 
@@ -357,13 +505,18 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 				case 2:
 					return UART2_IRQn;
-
+                #if defined(__LPC84X__)
+                case 3:
+                    return UART3_IRQn;
+                case 4:
+                    return UART4_IRQn;
+                #endif
 				default:
 					return UART0_IRQn; // TODO: DECIDE IF THIS IS WHAT I WANT TO DO
 			}
 		}
 
-		static LPC_USART_T* getUSART(const uint8_t& _num) {
+        static lpc_peripheral_t* getUSART(const uint8_t& _num) {
 			switch(_num) {
 				case 0:
 					return LPC_USART0;
@@ -373,7 +526,12 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 				case 2:
 					return LPC_USART2;
-
+                #if defined(__LPC84X__)
+                case 3:
+                    return LPC_USART3;
+                case 4:
+                    return LPC_USART4;
+                #endif
 				default:
 					break;
 			}
@@ -383,7 +541,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 	private:
         const uint8_t num_;
         const IRQn_Type irq_num_;
-        LPC_USART_T* usart_;
+        lpc_peripheral_t* usart_;
         const chandra::io::IO tx_;
         const chandra::io::IO rx_;
         bool msb_first_;
@@ -399,6 +557,7 @@ using TimestampedUSART = USART<tx_buffer_length, rx_buffer_length, true>;
 
 #define USART_IRQ_NAME(a) UART##a##_IRQHandler
 #define USART_REGISTER(a) LPC_USART##a
+#if defined(__LPC82X__) || defined(__LPC15XX__)
 #define USART_ISR_HANDLER(num, var)\
 extern "C" {\
 void USART_IRQ_NAME(num)(void){\
@@ -410,5 +569,17 @@ void USART_IRQ_NAME(num)(void){\
     }\
 }\
 }
-
+#elif defined(__LPC84X__)
+#define USART_ISR_HANDLER(num, var)\
+extern "C" {\
+void USART_IRQ_NAME(num)(void){\
+    if(USART_REGISTER(num)->INTSTAT & (1<<2)) {\
+        var.txISR();\
+    } else if( USART_REGISTER(num)->INTSTAT & (1<<0) ) {\
+        const char c = USART_REGISTER(num)->RXDAT;\
+        var.rxISR(c);\
+    }\
+}\
+}
+#endif
 #endif /*CHANDRA_USART_H*/

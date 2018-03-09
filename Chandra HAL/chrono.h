@@ -28,7 +28,11 @@ class frequency
 	public:
         using rep = chandra::units::mks::Q_Hz<uint32_t>;
 
+#if defined(__LPC84X__)
+        static rep main() { return rep{12000000}; }
+#else
         static rep main() { return rep{SystemCoreClock}; }
+#endif
 		static rep core() { return main() / LPC_SYSCON->SYSAHBCLKDIV; }
         static rep tick() { return rep{0}; }
 		static rep timer(size_t) { return core(); }

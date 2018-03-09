@@ -10,7 +10,13 @@
 
 #include <stdint.h>
 
-#include <chip.h>
+#if defined(__LPC82X__)
+#include <LPC8xx.h>
+#elif defined(__LPC82X__)
+#include <LPC8xx.h>
+#elif defined(__LPC15XX__)
+#include <LPC15xx.h>
+#endif
 
 #include "chip_utils.h"
 #include "chrono.h"
@@ -30,7 +36,11 @@ struct IODef
 	const uint8_t pin;
 	const bool inverted;
 };
+
+struct NullIO {};
 } /*namespace internal*/
+
+static const internal::NullIO NC;
 
 class IO
 {
@@ -76,12 +86,18 @@ class IO
 
 		template<class T>
 		IO& operator = ( const T& _value ) {
-	#if defined(__LPC82X__)
+    #if defined(__LPC82X__)
 			if(inverted_^bool(_value)){
 				LPC_GPIO_PORT->SET[0] |= mask_;
 			} else {
 				LPC_GPIO_PORT->CLR[0] |= mask_;
 			}
+    #elif defined(__LPC84X__)
+            if(inverted_^bool(_value)){
+                LPC_GPIO_PORT->SET[0] |= mask_;
+            } else {
+                LPC_GPIO_PORT->CLR[0] |= mask_;
+            }
 	#elif defined(__LPC15XX__)
 			if(inverted_ ? !bool(_value) : bool(_value)){
 				LPC_GPIO->SET[port_] |= mask_;
@@ -93,8 +109,10 @@ class IO
 		}
 
 		IO& operator ~ () {
-	#if defined(__LPC82X__)
-			LPC_GPIO_PORT->NOT[0] |= mask_;
+    #if defined(__LPC82X__)
+            LPC_GPIO_PORT->NOT[0] |= mask_;
+    #if defined(__LPC84X__)
+            LPC_GPIO_PORT->NOT[0] |= mask_;
 	#elif defined(__LPC15XX__)
 			LPC_GPIO->NOT[port_] |= mask_;
 	#endif
@@ -102,8 +120,10 @@ class IO
 		}
 
 		operator bool() const {
-	#if defined(__LPC82X__)
+    #if defined(__LPC82X__)
 			const bool read = (LPC_GPIO_PORT->PIN[0] & mask_);
+    #elif defined(__LPC84X__)
+        const bool read = (LPC_GPIO_PORT->PIN[0] & mask_);
 	#elif defined(__LPC15XX__)
 			const bool read = (LPC_GPIO->PIN[port_] & mask_);
 	#endif

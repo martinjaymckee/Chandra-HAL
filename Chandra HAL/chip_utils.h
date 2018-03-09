@@ -10,6 +10,8 @@
 //
 #if defined(__LPC82X__)
 #include "implementation/lpc82x_chip_utils.h"
+#elif defined(__LPC84X__)
+#include "implementation/lpc84x_chip_utils.h"
 #elif defined(__LPC15XX__)
 #include "implementation/lpc15xx_chip_utils.h"
 #endif
