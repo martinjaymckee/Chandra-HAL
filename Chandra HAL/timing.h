@@ -79,9 +79,9 @@ class Timer
 			return base_;
 		}
 
-        time_point_t reset() { return reset(expiration_); }
+        time_point_t reset() { return reset(clock_t::now()); }
 
-        ExpirationStatus operator() (const auto& _check = clock_t::now(),
+        ExpirationStatus operator() (const auto& _check,
                                      const timer_control_t& _control = Reset) {
             if(chandra::chrono::after(expiration_, _check)) {
                 const auto expiration = expiration_;
