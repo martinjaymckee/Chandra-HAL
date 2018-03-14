@@ -29,7 +29,7 @@ struct offset_add_impl<false, Ratio>
 {
         template<typename Value>
         static constexpr Value calc(const Value& _val) {
-            return _val + ratio_cast<scalar_of_t<Value>, Ratio>::value;
+            return _val + ratio_cast<Ratio>(Value{1});
         }
 };
 
@@ -52,7 +52,7 @@ struct offset_sub_impl<false, Ratio>
 {
         template<typename Value>
         static constexpr Value calc(const Value& _val) {
-            return _val - ratio_cast<scalar_of_t<Value>, Ratio>::value;
+            return _val - ratio_cast<Ratio>(Value{1});
         }
 };
 
@@ -103,6 +103,8 @@ struct convert_scale_impl<Value, Integral, true, false, 1, N>
             return _v/N;
         }
 };
+
+//template<typename T> struct TD;
 
 // Optimized FP implementation
 template<typename Value, intmax_t Num, intmax_t Den>

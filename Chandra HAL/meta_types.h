@@ -20,13 +20,21 @@ struct scalar_of<math::Matrix<Value, N, M>>
 template<typename Value>
 using scalar_of_t = typename scalar_of<Value>::type;
 
-template<typename Value, typename Ratio>
-struct ratio_cast
-{
-        static constexpr Value value = static_cast<Value>(Ratio::num) / Ratio::den;
-};
+template<typename Ratio, typename Value>
+Value ratio_cast(const Value& v) {
+    cout << "\t*** Default Ratio Cast\n";
+    return (v * Ratio::num) / Ratio::den;
+}
 
-// TODO: NEED TO IMPLEMENT THE RATIO CAST IN IAMB SO THAT FIXED-POINT VALUES ARE USABLE IN QUANTITIES....
+#if defined(__USING_IAMB__)
+template<typename Ratio, typename S, size_t F, typename C>
+auto ratio_cast(const iamb::FixedPoint<S, F, C>& v) {
+    using value_t = iamb::FixedPoint<S, F, C>;
+    cout << "\t*** Iamb Ratio Cast!\n";
+    return v * value_t::IntDiv(Ratio::num, Ratio::den);
+}
+#endif
+
 } /*namespace chandra*/
 #endif /*CHANDRA_META_TYPES_H*/
 
