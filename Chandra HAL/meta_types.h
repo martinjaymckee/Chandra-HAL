@@ -22,7 +22,7 @@ using scalar_of_t = typename scalar_of<Value>::type;
 
 template<typename Ratio, typename Value>
 Value ratio_cast(const Value& v) {
-    cout << "\t*** Default Ratio Cast\n";
+//    cout << "\t*** Default Ratio Cast\n";
     return (v * Ratio::num) / Ratio::den;
 }
 
@@ -30,7 +30,7 @@ Value ratio_cast(const Value& v) {
 template<typename Ratio, typename S, size_t F, typename C>
 auto ratio_cast(const iamb::FixedPoint<S, F, C>& v) {
     using value_t = iamb::FixedPoint<S, F, C>;
-    cout << "\t*** Iamb Ratio Cast!\n";
+//    cout << "\t*** Iamb Ratio Cast!\n";
     return v * value_t::IntDiv(Ratio::num, Ratio::den);
 }
 #endif

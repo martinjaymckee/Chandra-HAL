@@ -69,7 +69,7 @@ template<typename Value, bool Integral, bool NumOne, bool DenOne, intmax_t Num, 
 struct convert_scale_impl
 {
         static Value calc(const Value& _v) {
-            cout << "\t*** Default scale -- ratio<" << Num << ", " << Den << ">\n";
+//            cout << "\t*** Default scale -- ratio<" << Num << ", " << Den << ">\n";
             return (Num * _v) / Den;
         }
 };
@@ -79,7 +79,7 @@ template<typename Value, bool Integral, bool NumOne, bool DenOne, intmax_t N>
 struct convert_scale_impl<Value, Integral, NumOne, DenOne, N, N>
 {
         static Value calc(const Value& _v) {
-            cout << "\t*** Pass -- ratio<" << N << ", " << N << ">\n";
+//            cout << "\t*** Pass -- ratio<" << N << ", " << N << ">\n";
             return _v;
         }
 };
@@ -89,7 +89,7 @@ template<typename Value, bool Integral, intmax_t N>
 struct convert_scale_impl<Value, Integral, false, true, N, 1>
 {
         static Value calc(const Value& _v) {
-            cout << "\t*** Multiply -- ratio<" << N << ", " << 1 << ">\n";
+//            cout << "\t*** Multiply -- ratio<" << N << ", " << 1 << ">\n";
             return N*_v;
         }
 };
@@ -99,7 +99,7 @@ template<typename Value, bool Integral, intmax_t N>
 struct convert_scale_impl<Value, Integral, true, false, 1, N>
 {
         static Value calc(const Value& _v) {
-            cout << "\t*** Divide -- ratio<" << 1 << ", " << N << ">\n";
+//            cout << "\t*** Divide -- ratio<" << 1 << ", " << N << ">\n";
             return _v/N;
         }
 };
@@ -112,7 +112,7 @@ struct convert_scale_impl<Value, false, false, false, Num, Den>
 {
         static Value calc(const Value& _v) {
             using ratio_t = std::ratio<Num, Den>;
-            cout << "\t*** Optimized FP -- ratio<" << Num << ", " << Den << ">\n";
+//            cout << "\t*** Optimized FP -- ratio<" << Num << ", " << Den << ">\n";
             return ratio_cast<ratio_t>(_v);
         }
 };
@@ -146,8 +146,13 @@ constexpr Value convert(const Value& _val) {
 
     using src_factor_t = typename Src::factor_t;
     using dest_factor_t = typename Dest::factor_t;
+    using convert_factor_t = std::ratio<
+        src_factor_t::num*dest_factor_t::den,
+        src_factor_t::den*dest_factor_t::num
+    >; // TODO: TEST THIS
+
     return internal::offset_add<typename Dest::offset_t>(
-        internal::convert_scale<dest_factor_t, src_factor_t>(
+        internal::convert_scale<convert_factor_t>(
             internal::offset_sub<typename Src::offset_t>(_val)
         )
     );
