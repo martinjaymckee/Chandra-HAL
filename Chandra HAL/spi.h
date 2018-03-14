@@ -3,7 +3,13 @@
 
 #include <stdint.h>
 
+#if defined(__LPC82X__) || defined(__LPC15XX__)
 #include <chip.h>
+#elif defined(__LPC84X__)
+#include <LPC8xx.h>
+#else
+#error "Undefined processor type for USART implementation."
+#endif
 
 #include "chip_utils.h"
 #include "chrono.h"
@@ -20,6 +26,12 @@ namespace internal
 
 struct SPI
 {
+        #if defined(__LPC82X__) || defined(__LPC15XX__)
+        using lpc_peripheral_t = LPC_SPI_T;
+        #elif defined(__LPC84X__)
+        using lpc_peripheral_t = LPC_SPI_TypeDef;
+        #endif
+
         using cs_t = uint8_t;
 
         enum transfer_mode_t {
@@ -48,7 +60,7 @@ class SPIMaster
              pin_t _cs0, const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3)
             : num_(_num), spi_(getSPI(_num)), len_(8)
 		{
-	#if defined(__LPC82X__)
+    #if defined(__LPC82X__)
 			//	Initialize the peripheral clock and peripheral reset
             if(num_ == 0) {
 				SystemClock::enable(0, 11);
@@ -57,12 +69,21 @@ class SPIMaster
 				SystemClock::enable(0, 12);
 				PeripheralActivity::reset(0, 1);
 			}
+    #elif defined(__LPC84X__)
+            //	Initialize the peripheral clock and peripheral reset
+            if(num_ == 0) {
+                SystemClock::enable(0, 11);
+                PeripheralActivity::reset(0, 11);
+            } else if (num_ == 1) {
+                SystemClock::enable(0, 12);
+                PeripheralActivity::reset(0, 12);
+            }
 	#elif defined(__LPC15XX__)
 			//	Initialize the peripheral clock and peripheral reset
             if(num_ == 0) {
 				SystemClock::enable(1, 9);
 				PeripheralActivity::reset(1, 9);
-			} else if ( spi_ == LPC_SPI1 ) {
+            } else if (num_ == 1) {
 				SystemClock::enable(1, 10);
 				PeripheralActivity::reset(1, 10);
 			}
@@ -88,6 +109,9 @@ class SPIMaster
             const auto ratio = (fspi / _freq).value();
             const auto div = ratio > 1? ratio - 1 : 1;
             spi_->DIV = div;
+#if defined(__LPC84X__)
+            LPC_SYSCON->FCLKSEL[9+num_] = 0x01;
+#endif
             return units::mks::Q_Hz<uint32_t>(fspi/(div+1)); // TODO: CHECK IF THIS IS ACCURATE....
         }
 
@@ -202,7 +226,7 @@ class SPIMaster
 
 
 	private:
-        LPC_SPI_T* getSPI(uint8_t _num) {
+        SPI::lpc_peripheral_t* getSPI(uint8_t _num) {
             switch(_num) {
                 case 0:
                 default:
@@ -231,9 +255,15 @@ class SPIMaster
             const auto cs3 = ID(_cs3);
 
 			//	Enable AHB clock domains for SWM
-			SystemClock::enable(0, 12);
-
 #if defined(__LPC82X__)
+			SystemClock::enable(0, 12);
+#elif defined(__LPC84X__)
+            SystemClock::enable(0, 7);
+#else
+#error "No system clock enable defined for this processor!"
+#endif
+
+#if defined(__LPC82X__) || defined(__LPC84X__)
 			//
 			// Setup the Main SPI Pins
 			//
@@ -276,15 +306,22 @@ class SPIMaster
 			} else {
                 LPC_SWM->PINASSIGN[6] = (LPC_SWM->PINASSIGN[6] & 0xFFFFFF00) | cs1;
 			}
+#else
+#error "No definition of SPI pin configuration for this processor!"
 #endif
 
 			//	Disable AHB clock domain for SWM
-			SystemClock::enable(0, 12, false);
+#if defined(__LPC82X__)
+            SystemClock::enable(0, 12, false);
+#elif defined(__LPC84X__)
+            SystemClock::enable(0, 7, false);
+#endif
+
 			return;
 		}
 
         uint8_t num_;
-        mutable LPC_SPI_T* spi_;
+        mutable SPI::lpc_peripheral_t* spi_;
 		uint8_t len_;
 };
 

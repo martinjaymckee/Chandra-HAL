@@ -164,17 +164,35 @@ class IO
         const bool inverted_;
 };
 
+// TODO: MOVE THE LED IMPLEMENTATION (AND RGBLED IMPLEMENTATION) OUT OF THE GPIO
+//  FILE AND INTO LED.H, WHICH WILL DEPEND UPON GPIO.H
+
+// TODO: USE THESE "COLORS" TO CREATE A NICE RGBLED OBJECT WHICH HANDLES THE LED IN
+//  THE SAME WAY AS A SINGLE LED ONLY ALLOWS YOU TO USE "ACTIVE" AND "INACTIVE" COLORS
+//  AND THEREFORE "BLINK" BETWEEN COLORS.
+
+enum class colors_t {
+    OFF = 0X00,
+    RED = 0X01,
+    GREEN = 0X02,
+    YELLOW = 0X03,
+    BLUE = 0X04,
+    MAGENTA = 0x05,
+    CYAN = 0X06,
+    WHITE = 0X07
+};
+
 // TODO: BASE THE LED CLASS UPON PREVIOUSLY DEFINED "NON-BLOCKING" IO OPERATIONS
 class LED
 {
     public:
-        typedef enum {
+        enum mode_t {
             Fixed,
             Pulse,
             PWM
-        } mode_t; // TODO: THIS COULD ( SHOULD? ) BE GENERALIZED TO AN LED "COMMAND"
+        }; // TODO: THIS COULD ( SHOULD? ) BE GENERALIZED TO AN LED "COMMAND"
 
-        using clock_t = chandra::chrono::timestamp_clock;
+        using clock_t = chandra::chrono::timestamp_clock; // TODO: SHOULD THIS BE PASSED IN?
         using duration_t = clock_t::duration;
         using time_point_t = clock_t::time_point;
 
@@ -190,7 +208,7 @@ class LED
 
         LED(const internal::IODef& _io) : LED(IO(_io)) {}
 
-        void init() {
+        void init() { // TODO: DECIDE IF IT MAKES SENSE TO INCLUDE AN INIT METHOD EVEN THOUGH IT'S A NOP
 
         }
 

@@ -64,72 +64,68 @@ constexpr auto offset_sub(const Value& _val) {
 
 template<typename T> struct TD;
 
-template<bool Integral, bool Simple, bool Pass, intmax_t Num, intmax_t Den>
+// Default implementation -- for arbitrary ratio and integral values
+template<typename Value, bool Integral, bool NumOne, bool DenOne, intmax_t Num, intmax_t Den>
 struct convert_scale_impl
 {
-        template<typename Value>
-        static constexpr auto calc(const Value& _val) {
-            TD<std::ratio<Num,Den>> simple;
-            return (Num*_val) / Den;
+        static Value calc(const Value& _v) {
+            cout << "\t*** Default scale -- ratio<" << Num << ", " << Den << ">\n";
+            return (Num * _v) / Den;
         }
 };
 
-template<intmax_t Num, intmax_t Den>
-struct convert_scale_impl<false, false, false, Num, Den>
+// Pass implementation
+template<typename Value, bool Integral, bool NumOne, bool DenOne, intmax_t N>
+struct convert_scale_impl<Value, Integral, NumOne, DenOne, N, N>
 {
-        template<typename Value>
-        static constexpr auto calc(const Value& _val) {
-            TD<std::ratio<Num,Den>> floating;
+        static Value calc(const Value& _v) {
+            cout << "\t*** Pass -- ratio<" << N << ", " << N << ">\n";
+            return _v;
+        }
+};
+
+// Multiply implementation
+template<typename Value, bool Integral, intmax_t N>
+struct convert_scale_impl<Value, Integral, false, true, N, 1>
+{
+        static Value calc(const Value& _v) {
+            cout << "\t*** Multiply -- ratio<" << N << ", " << 1 << ">\n";
+            return N*_v;
+        }
+};
+
+// Divide implementation
+template<typename Value, bool Integral, intmax_t N>
+struct convert_scale_impl<Value, Integral, true, false, 1, N>
+{
+        static Value calc(const Value& _v) {
+            cout << "\t*** Divide -- ratio<" << 1 << ", " << N << ">\n";
+            return _v/N;
+        }
+};
+
+// Optimized FP implementation
+template<typename Value, intmax_t Num, intmax_t Den>
+struct convert_scale_impl<Value, false, false, false, Num, Den>
+{
+        static Value calc(const Value& _v) {
             using ratio_t = std::ratio<Num, Den>;
-            using scalar_t = scalar_of_t<Value>;
-            constexpr auto factor = ratio_cast<scalar_t, ratio_t>::value;
-            return factor * _val;
+            cout << "\t*** Optimized FP -- ratio<" << Num << ", " << Den << ">\n";
+            return ratio_cast<ratio_t>(_v);
         }
 };
 
-template<bool Integral, intmax_t Num>
-struct convert_scale_impl<Integral, true, false, Num, 1>
-{
-        template<typename Value>
-        static constexpr auto calc(const Value& _val) {
-            TD<std::ratio<Num,1>> mult;
-            return Num*_val;
-        }
-};
-
-template<bool Integral, intmax_t Den>
-struct convert_scale_impl<Integral, true, false, 1, Den>
-{
-        template<typename Value>
-        static constexpr auto calc(const Value& _val) {
-            TD<std::ratio<1,Den>> div;
-            return _val/Den;
-        }
-};
-
-template<bool Integral, bool Simple, intmax_t N>
-struct convert_scale_impl<Integral, Simple, true, N, N>
-{
-        template<typename Value>
-        static constexpr auto calc(const Value& _val) {
-            TD<std::ratio<N,N>> pass;
-            return _val;
-        }
-};
-
-template<typename Dest, typename Src, typename Value>
-constexpr auto convert_scale(const Value& _val) {
-    using convert_ratio_t = std::ratio<Dest::den*Src::num, Dest::num*Src::den>;
-    TD<convert_ratio_t> convert;
+template<typename Ratio, typename Value>
+Value convert_scale(const Value& _v) {
     return convert_scale_impl<
-            !std::is_integral<scalar_of_t<Value>>::value,
-            (convert_ratio_t::num == 1 || convert_ratio_t::den == 1),
-            (convert_ratio_t::num == convert_ratio_t::den),
-            convert_ratio_t::num,
-            convert_ratio_t::den
-        >::calc(_val);
+            Value,                          // Pass in Value type
+            std::is_integral<Value>::value, // Check if Value is integral
+            (Ratio::num == 1),              // Check if the numerator is one
+            (Ratio::den == 1),              // Check if the denominator is one
+            Ratio::num,                     // Pass the numerator
+            Ratio::den                      // Pass the denominator
+            >::calc(_v);
 }
-
 } /*namespace internal*/
 
 template<typename Dest, typename Src, typename Value>

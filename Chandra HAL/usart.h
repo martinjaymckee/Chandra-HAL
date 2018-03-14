@@ -148,6 +148,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
                 const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
                 const int32_t div(256);
                 const uint32_t mult = multCalc(sys_clk, target_uclk, div);
+                setFractionalInputClock(num_, mult, div);
                 status.clk = uclkCalc(sys_clk, mult, div);
                 status.ppm = ppmCalc(target_uclk, status.clk);
             }
@@ -209,7 +210,8 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 		bool txInv() const { return usart_->CFG &= (1<<23); }
 
-		USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ){ // IT WOULD BE BETTER TO SET THE CLOCK DIVIDER AND MULTIPLIER IN A SEPERATE METHOD SO THAT MULTIPLE USARTS CAN BE USED
+		USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ) {
+			// TODO: ALLOW THIS TO USE SEPERATE FRGs ON THE 84X
             USARTClockStatus<calc_t> status;
             const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
             int32_t running_uclk = actual_uclk();
@@ -222,7 +224,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
             status.clk = baudCalc(running_uclk, brg, _osr);
             status.ppm = ppmCalc(_baud, status.clk);
             usart_->BRG = brg-1; // Set Baud Rate Generator Divisor to value calculated above ( less 1 for rollover )
-			// usart_->OSR = _osr-1; // TODO: FIGURE OUT WHY THIS ISN'T WORKING....
+            usart_->OSR = _osr-1; // TODO: FIGURE OUT WHY THIS ISN'T WORKING....
             LPC_SYSCON->FCLKSEL[num_] = 0x02; // Use FRG0 as source clock
 			return status;
 		}
