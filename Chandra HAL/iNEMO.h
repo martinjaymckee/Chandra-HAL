@@ -184,11 +184,11 @@ class LSM6DSM
             if(fs >= accel_8) { // 16 gees
                 actual = accel_16;
                 accel_scale_ = scalar_t(4.788403e-3);
-                bits = 0x06<<2;
+                bits = 0x01<<2;
             } else if(fs >= accel_4) { // 8 gees
                 actual = accel_8;
                 accel_scale_ = scalar_t(2.394202e-3);
-                bits = 0x04<<2;
+                bits = 0x03<<2;
             } else if(fs >= accel_2) { // 4 gees
                 actual = accel_4;
                 accel_scale_ = scalar_t(1.197101e-3);

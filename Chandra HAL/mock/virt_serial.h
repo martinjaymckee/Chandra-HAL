@@ -13,8 +13,11 @@
 #include <stdint.h>
 #include <string.h>
 
+#define __CHANDRA_MOCK__
+#include "../circular_buffer.h"
 #include "../format.h"
-//#include "../usart_utils.h"
+#include "../stream.h"
+#include "../usart_utils.h"
 
 namespace chandra
 {
@@ -24,11 +27,11 @@ namespace io
 // TODO: MODIFY TO USE STREAM....
 template<uint32_t _rxtx_buffer_length = 128>
 class LoopbackVirtualSerial
-        : public Stream< LoopbackVirtualSerial<_rxtx_buffer_length, _rxtx_buffer_length> >
+        : public Stream< LoopbackVirtualSerial<_rxtx_buffer_length> >
 {
 	protected:
         using calc_t = long;
-        using LoopbackVirtualSerial<_rxtx_buffer_length>;
+        using virtual_serial_t = LoopbackVirtualSerial<_rxtx_buffer_length>;
 
 	public:
         LoopbackVirtualSerial() {}
@@ -58,11 +61,12 @@ class LoopbackVirtualSerial
 			return status;
 		}
 
-		bool available() const {
-			return buffer_.available();
-		}
+        size_t available() const {
+            return buffer_.size();
+        }
 
         bool put( char _ch ) {
+//            cout << "Put - 0x" << std::hex << int(_ch) << std::dec << "\n";
 			buffer_ << _ch;
             return true;
 		}
@@ -77,7 +81,7 @@ class LoopbackVirtualSerial
 		}
 
 	private:
-		FixedCircularBuffer<char, _rxtx_buffer_length> buffer_;
+        chandra::FixedCircularBuffer<char, _rxtx_buffer_length> buffer_;
 };
 
 template<uint32_t _tx_buffer_length = 256, uint32_t _rx_buffer_length = 256>
@@ -130,8 +134,8 @@ class FlowthroughVirtualSerial
                         return status;
                 }
 
-                bool available() const {
-                        return rx_buffer_.available();
+                size_t available() const {
+                    return rx_buffer_.size();
                 }
 
                 bool put( char _ch ) {
@@ -151,8 +155,8 @@ class FlowthroughVirtualSerial
                 RXBufferProxy rx;
 
         private:
-                FixedCircularBuffer<char, _tx_buffer_length> tx_buffer_;
-                FixedCircularBuffer<char, _rx_buffer_length> rx_buffer_;
+                chandra::FixedCircularBuffer<char, _tx_buffer_length> tx_buffer_;
+                chandra::FixedCircularBuffer<char, _rx_buffer_length> rx_buffer_;
 };
 
 } /*namespace io*/

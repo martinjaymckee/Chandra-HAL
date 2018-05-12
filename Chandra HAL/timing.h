@@ -44,12 +44,19 @@ class Timer
 			operator bool() const { return expired; }
 		};
 
-        Timer(
-                const duration_t& _duration = duration_t{0},
-                const time_point_t& _base = clock_t::now() )
-            : duration_(_duration), base_(_base),
-              expiration_(_base+_duration), running_(true) {}
+        Timer(const time_point_t _base = clock_t::now())
+            : duration_{0}, base_{_base},
+              expiration_{_base}, running_(false) {}
 
+        Timer( const duration_t _duration )
+            : duration_(_duration), base_(clock_t::now()),
+              running_(_duration.count() != 0) {
+            expiration_ = base_ + duration_;
+        }
+
+        Timer( const duration_t _duration, const time_point_t _base )
+            : duration_(_duration), base_(_base),
+              expiration_(_base+_duration), running_(_duration.count() != 0) {}
 
         duration_t duration(const auto& _duration, const timer_control_t& _control = None) {
             duration_ = _duration;
@@ -87,6 +94,7 @@ class Timer
                 const auto expiration = expiration_;
                 if((_control & Rebase) || (_control & All)) reset(expiration_);
                 else if(_control & Reset) reset(expiration_);
+                overflowed_ = chandra::chrono::after(expiration_, _check);
                 return {true, expiration};
             }
             return {false, time_point_t{0us}};
@@ -96,11 +104,16 @@ class Timer
             return this->operator ()(clock_t::now(), _control);
         }
 
+        bool overflowed() const {
+            return overflowed_;
+        }
+
 	private:
         duration_t duration_;
         time_point_t base_;
         time_point_t expiration_;
         bool running_;
+        bool overflowed_;
 };
 
 } /*namespace chrono*/

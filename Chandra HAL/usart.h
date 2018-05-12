@@ -17,6 +17,8 @@
 #include <chip.h>
 #elif defined(__LPC84X__)
 #include <LPC8xx.h>
+#elif defined(__CHANDRA_MOCK__)
+#warning "USART file parsed in mock mode."
 #else
 #error "Undefined processor type for USART implementation."
 #endif
@@ -27,50 +29,12 @@
 #include "format.h"
 #include "gpio.h"
 #include "stream.h"
+#include "usart_utils.h"
 
-namespace chandra // TODO: ADD RX TIMESTAMPING
+namespace chandra
 {
 namespace io
 {
-
-template <class T>
-struct USARTClockStatus
-{
-        T clk;
-        T ppm;
-};
-
-enum class Parity {
-    None = 0x00,
-    Even = 0x02,
-    Odd = 0x03
-};
-
-namespace internal
-{
-template<class Value, class Timepoint>
-struct TimestampedValue
-{
-        Value value;
-        Timepoint timestamp;
-        operator Value () const { return value; }
-};
-
-template<class Value, class Timepoint, bool _timestamped=false>
-struct RX
-{
-        static Value encode(const Value& _value) { return _value; }
-};
-
-
-template<class Value, class Timepoint>
-struct RX<Value, Timepoint, true>
-{
-        static TimestampedValue<Value, Timepoint> encode(const Value& _value) {
-            return {_value, Timepoint::clock::now()};
-        }
-};
-} /*namespace internal*/
 
 template<uint32_t tx_buffer_length = 128, uint32_t rx_buffer_length = tx_buffer_length, bool _timestamped=false>
 class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
@@ -111,6 +75,8 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
                 SystemClock::enable(0, idx);
                 PeripheralActivity::reset(0, idx);
             }
+            #elif defined(__CHANDRA_MOCK__)
+            #warning "Chandra USART constructor parsed as mock."
             #else
             #error "USART clock configuration not defined for this processor"
             #endif

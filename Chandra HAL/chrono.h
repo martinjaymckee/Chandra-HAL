@@ -30,10 +30,17 @@ class frequency
 
 #if defined(__LPC84X__)
         static rep main() { return rep{12000000}; }
+#elif defined(__CHANDRA_MOCK__)
+        static rep main() { return rep{50000000}; }
 #else
         static rep main() { return rep{SystemCoreClock}; }
 #endif
+
+#if defined(__LPC82X__) || defined(__LPC84X__) || defined(__LPC15XX__)
 		static rep core() { return main() / LPC_SYSCON->SYSAHBCLKDIV; }
+#else
+        static rep core() { return main(); }
+#endif
         static rep tick() { return rep{0}; }
 		static rep timer(size_t) { return core(); }
         static rep usart(size_t) { return main(); }
@@ -67,6 +74,9 @@ class timestamp_clock
             const rep upper = rep(high_bits)<<16;
             const duration time{upper|lower};
             return time_point{time};
+#elif defined(__CHANDRA_MOCK__)
+#warning "Chandra clock frequencies parsed as mock."
+            return time_point{duration{0}}; // TODO: IMPLEMENT MOCK FUNCTIONALITY FOR THE TIMESTAMP CLOCK
 #else
 #error "No Timestamp Clock Mode Defined!"
 #endif
@@ -100,11 +110,27 @@ class timestamp_clock
 //                               SysTick_CTRL_ENABLE_Msk;                    /* Enable SysTick IRQ and SysTick Timer */
 //              return (0);                                                  /* Function successful */
 //            }            */
+#elif defined(__CHANDRA_MOCK__)
+#warning "Chandra clock init parsed as mock."
 #else
 #error "No Timestamp Clock Mode Defined!"
 #endif
 		}
 
+        static void reset() noexcept {
+#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
+            LPC_SCT->COUNT=0;
+            return;
+#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
+            SysTick->VAL = top_-1;
+            high_bits_ = 0;
+            return;
+#elif defined(__CHANDRA_MOCK__)
+#warning "Chandra clock reset parsed as mock."
+#else
+#error "No Timestamp Clock Mode Defined!"
+#endif
+        }
 		// Map to C API
 //		static time_t to_time_t(const timepoint_& t) noexcept;
 //		static time_point from_time_t(time_t t) noexcept;
