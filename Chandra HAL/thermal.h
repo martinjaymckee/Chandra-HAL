@@ -34,7 +34,7 @@ class Thermal
         };
 };
 
-template<typename Derived, typename Value, typename TempUnits = units::mks::C>
+template<typename Derived, typename Value, typename TempUnits = units::mks::degC>
 class Thermometer : public Thermal<Thermometer<Derived, Value, TempUnits>, Value>
 {
     protected:
@@ -52,4 +52,3 @@ class Thermometer : public Thermal<Thermometer<Derived, Value, TempUnits>, Value
 } /*namespace chandra*/
 
 #endif /*CHANDRA_THERMAL_H*/
-

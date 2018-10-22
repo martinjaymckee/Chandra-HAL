@@ -26,24 +26,20 @@ namespace chrono
 class frequency
 {
 	public:
-        using rep = chandra::units::mks::Q_Hz<uint32_t>;
+    using rep = chandra::units::mks::Q_Hz<uint32_t>;
 
-#if defined(__LPC84X__)
-        static rep main() { return rep{12000000}; }
-#elif defined(__CHANDRA_MOCK__)
-        static rep main() { return rep{50000000}; }
-#else
-        static rep main() { return rep{SystemCoreClock}; }
-#endif
+	#if defined(__LPC84X__)
+    static rep core() { return rep{12000000}; }
+	#elif defined(__CHANDRA_MOCK__)
+    static rep core() { return rep{50000000}; }
+	#else
+		static rep core() { return rep{SystemCoreClock}; }
+	#endif
 
-#if defined(__LPC82X__) || defined(__LPC84X__) || defined(__LPC15XX__)
-		static rep core() { return main() / LPC_SYSCON->SYSAHBCLKDIV; }
-#else
-        static rep core() { return main(); }
-#endif
-        static rep tick() { return rep{0}; }
+  	static rep main() { return rep{LPC_SYSCON->SYSAHBCLKDIV * core()}; }
+    static rep tick() { return rep{0}; }
 		static rep timer(size_t) { return core(); }
-        static rep usart(size_t) { return main(); }
+    static rep usart(size_t) { return main(); }
 		static rep spi(size_t) { return core(); }
 		static rep i2c(size_t) { return core(); }
 		static rep adc(size_t) { return core(); }
@@ -53,9 +49,9 @@ class frequency
 class timestamp_clock
 {
 	public:
-#if defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
+	#if defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
 //        friend void SysTick_Handler();
-#endif
+	#endif
 		using rep = uint32_t;
 		using period = std::micro;
 		using duration = std::chrono::duration<rep, period>;
@@ -63,41 +59,56 @@ class timestamp_clock
 		static constexpr bool is_steady = false;
 
 		static time_point now() noexcept {
-#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
-            return time_point{duration{LPC_SCT->COUNT_U}};
-#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-            NVIC_DisableIRQ(SysTick_IRQn);
-            const auto counts = SysTick->VAL;
-            const auto high_bits = high_bits_;
-            NVIC_EnableIRQ(SysTick_IRQn);
-            const rep lower = (mult_ * (top_ - counts))>>16;
-            const rep upper = rep(high_bits)<<16;
-            const duration time{upper|lower};
-            return time_point{time};
-#elif defined(__CHANDRA_MOCK__)
-#warning "Chandra clock frequencies parsed as mock."
-            return time_point{duration{0}}; // TODO: IMPLEMENT MOCK FUNCTIONALITY FOR THE TIMESTAMP CLOCK
-#else
-#error "No Timestamp Clock Mode Defined!"
-#endif
+	#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
+		#if defined(__LPC84X__)
+			return time_point{duration{LPC_SCT->COUNT}}
+		#elif defined(__LPC15XX__)
+			return time_point{duration{LPC_SCT3->COUNT_U}};
+		#else
+			return time_point{duration{LPC_SCT->COUNT_U}};
+		#endif
+	#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
+	    NVIC_DisableIRQ(SysTick_IRQn);
+      const auto counts = SysTick->VAL;
+      const auto high_bits = high_bits_;
+      NVIC_EnableIRQ(SysTick_IRQn);
+      const rep lower = (mult_ * (top_ - counts))>>16;
+      const rep upper = rep(high_bits)<<16;
+      const duration time{upper|lower};
+      return time_point{time};
+	#elif defined(__CHANDRA_MOCK__)
+			#warning "Chandra clock frequencies parsed as mock."
+      return time_point{duration{0}}; // TODO: IMPLEMENT MOCK FUNCTIONALITY FOR THE TIMESTAMP CLOCK
+	#else
+			#error "No Timestamp Clock Mode Defined!"
+	#endif
 		}
 
 		static void init() noexcept {
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
-			const uint32_t counts = static_cast<uint32_t>((frequency::core() / 1000000UL)) - 1UL;
-            SystemClock::enable(0, 8, true);
-            PeripheralActivity::reset(0, 8);
-			LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
-			LPC_SCT->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
-			return;
+		#if defined(__LPC15XX__)
+					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+					SystemClock::enable(1, 5, true);
+					PeripheralActivity::reset(1, 5);
+					LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+					LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+					return;
+		#else
+					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+		      SystemClock::enable(0, 8, true);
+		      PeripheralActivity::reset(0, 8);
+					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+					LPC_SCT->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+					return;
+		#endif
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-            // TODO: THIS SHOULD BE BASED ON THE REFERENCE FREQUENCY, IN MOST CASES....
-            // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
-            top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
-            mult_ = 0xFFFFFFFFUL / top_;
-            SysTick_Config(top_);
-            NVIC_EnableIRQ(SysTick_IRQn);
-            return;
+	        // TODO: THIS SHOULD BE BASED ON THE REFERENCE FREQUENCY, IN MOST CASES....
+	        // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
+	        top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
+	        mult_ = 0xFFFFFFFFUL / top_;
+	        SysTick_Config(top_);
+	        NVIC_EnableIRQ(SysTick_IRQn);
+	        return;
 //           __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 //            {
 //              if ((ticks - 1) > SysTick_LOAD_RELOAD_Msk)  return (1);      /* Reload value impossible *///
@@ -119,7 +130,16 @@ class timestamp_clock
 
         static void reset() noexcept {
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
-            LPC_SCT->COUNT=0;
+			#if defined(__LPC82X__)
+        		LPC_SCT->COUNT_U = 0;
+			#elif defined(__LPC84X__)
+          	LPC_SCT->COUNT=0;
+			#elif defined(__LPC15XX__)
+          	LPC_SCT3->COUNT_U=0;
+
+			#else
+			#error "Chrono Reset is undefined for processor type!"
+			#endif
             return;
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
             SysTick->VAL = top_-1;

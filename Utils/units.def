@@ -37,7 +37,6 @@ Mass pdl = 7.23066 # Poundal
 #   SI
 Length *m = 1
 #   Imperial
-
 Length mi = mi_conv
 Length yd = yd_conv
 Length ft = ft_conv
@@ -147,11 +146,11 @@ AngularAcceleration grad_per_s2 = grad_conv
 # Units of Temperature
 #
 #   SI
-Temperature *C = 1 (+0) # Celsius
+Temperature *degC = 1 (+0) # Degrees Celsius
 Temperature *K = 1 (-273.15) # Kelvin
 #   Imperial
-Temperature *F = .5555555 (+32) # Farenheit
-Temperature *R = .5555555 (491.67) # Rankine
+Temperature *degF = .5555555 (+32) # Degrees Farenheit
+Temperature *degRa = .5555555 (+491.67) # Degrees Rankine
 
 #
 # Units of Magnetic Flux (Density)
@@ -172,3 +171,32 @@ Pressure psi = 6894.76 # Pounds per Square Inch
 Pressure atm = 101325 # Atmospheres
 Pressure torr = 133.322 # Torr
 
+#
+# Units of Voltage
+#
+ElectricPotential *V = 1 # Volt
+
+#
+# Units of Current
+#
+ElectricalCurrent *A = 1 # Ampere
+
+#
+# Units of Resistance
+#
+ElectricalResistance *ohm = 1 # Ohms (This is the incorrect symbol....)
+
+#
+# Units of Conductance
+#
+ElectricalConductance *S = 1 # Siemens (mhos)
+
+#
+# Units of Capacitance
+#
+Capacitance *F = 1 # Farads
+
+#
+# Units of Inductance
+#
+Inductance *H = 1 # Henrys

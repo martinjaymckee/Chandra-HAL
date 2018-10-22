@@ -11,11 +11,12 @@
 #include <stdint.h>
 
 #if defined(__LPC82X__)
-#include <LPC8xx.h>
-#elif defined(__LPC82X__)
+//#include <LPC8xx.h>
+#include<chip.h>
+#elif defined(__LPC84X__)
 #include <LPC8xx.h>
 #elif defined(__LPC15XX__)
-#include <LPC15xx.h>
+#include <chip.h>
 #endif
 
 #include "chip_utils.h"

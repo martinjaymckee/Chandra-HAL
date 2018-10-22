@@ -205,7 +205,7 @@ constexpr auto operator * (const Matrix<V, M, N>& A, const Scalar& s) {
 }
 
 
-// Element-Wise Multiplication
+// Element-Wise Division
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto ediv(const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
     using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;

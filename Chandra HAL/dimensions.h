@@ -125,10 +125,9 @@ using ElectricCharge = decltype(Time() * ElectricCurrent());
 using ElectricChargeDensity = decltype(ElectricCharge() / Volume());
 using ElectricDisplacement = decltype(ElectricCharge() / Area());
 using ElectricFieldStrength = decltype(Mass() * Length() / internal::Time3() / ElectricCurrent());
-using ElectricalConductance =
-    decltype(internal::ElectricCurrent2() * internal::Time3() / Area() / Mass());
+using ElectricalConductance = decltype(internal::ElectricCurrent2() * internal::Time3() / Area() / Mass());
 using ElectricalConductivity = decltype(ElectricalConductance() / Length());
-using ElectricPotential = decltype(Mass() * Area() / ElectricCurrent() / internal::Time2());
+using ElectricPotential = decltype(Mass() * Area() / ElectricCharge() / internal::Time3());
 using ElectricalResistance = decltype(ElectricalConductance().inv());
 using ElectricalResistivity = decltype(ElectricalConductivity().inv());
 using Energy = decltype(Mass() * Area() / internal::Time2());
@@ -197,4 +196,3 @@ using YoungsModulus = decltype(Mass() / Length() / internal::Time2());
 } /*namespace units*/
 } /*namespace chandra*/
 #endif /*CHANDRA_DIMENSIONS_H*/
-

@@ -308,14 +308,8 @@ class LSM6DSM
 
     private:
         register_access_t regs_;
-        //Timer sample_timer_;
-        //int16_t raw_accelerations_[3];
-        //int16_t raw_gyroscopes_[3];
-        //uint16_t raw_temperature_;
         scalar_t accel_scale_;
         scalar_t gyro_scale_;
-        //value_t accel_divisor_; // TODO: DECIDE IF THESE SAME VALUE TYPES SHOULD BE USED FOR ACCELEROMETER AND GYROSCOPE
-        //value_t gyro_divisor_;
 };
 
 } /*namespace drivers*/

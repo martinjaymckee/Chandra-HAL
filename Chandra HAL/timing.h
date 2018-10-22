@@ -19,101 +19,102 @@ template<class Clock = chandra::chrono::timestamp_clock>
 class Timer
 {
 	public:
-        using clock_t = Clock;
-        using time_point_t = typename Clock::time_point;
-        using duration_t = typename Clock::duration;
-        using ref_t = Timer<Clock>&;
+    using clock_t = Clock;
+    using time_point_t = typename Clock::time_point;
+    using duration_t = typename Clock::duration;
+    using ref_t = Timer<Clock>&;
 
-        enum timer_control_t {
-            None = 0x00,
-            Rebase = 0x01,
-            Reset = 0x02,
-            Start = 0x04,
-            Stop = 0x08,
-            All = 0xFF
-        };
+    enum timer_control_t {
+      None = 0x00,
+      Rebase = 0x01,
+      Reset = 0x02,
+      Start = 0x04,
+      Stop = 0x08,
+      All = 0xFF
+    };
 
 		struct ExpirationStatus
 		{
-            ExpirationStatus(const bool& _expired, const time_point_t& _expiration) :
-                expired(_expired), expiration(_expiration) {}
+      ExpirationStatus(const bool& _expired, const time_point_t& _expiration)
+				: expired(_expired), expiration(_expiration) {}
 
-            const bool expired;
-            const time_point_t expiration;
+      const bool expired;
+      const time_point_t expiration;
 
 			operator bool() const { return expired; }
 		};
 
-        Timer(const time_point_t _base = clock_t::now())
-            : duration_{0}, base_{_base},
-              expiration_{_base}, running_(false) {}
+    Timer(const time_point_t _base = clock_t::now())
+      : duration_{0}, base_{_base}, expiration_{_base}, running_(false) {}
 
-        Timer( const duration_t _duration )
-            : duration_(_duration), base_(clock_t::now()),
-              running_(_duration.count() != 0) {
-            expiration_ = base_ + duration_;
-        }
+    Timer( const duration_t _duration )
+      : duration_(_duration), base_(clock_t::now()), running_(_duration.count() != 0)
+		{
+        expiration_ = base_ + duration_;
+    }
 
-        Timer( const duration_t _duration, const time_point_t _base )
-            : duration_(_duration), base_(_base),
-              expiration_(_base+_duration), running_(_duration.count() != 0) {}
+    Timer( const duration_t _duration, const time_point_t _base )
+      : duration_(_duration), base_(_base),
+				expiration_(_base+_duration), running_(_duration.count() != 0) {}
 
-        duration_t duration(const auto& _duration, const timer_control_t& _control = None) {
-            duration_ = _duration;
-            if(_control & Reset) reset();
-            if(_control & Rebase) reset(clock_t::now());
-            return duration_;
+    duration_t duration(const auto& _duration, const timer_control_t& _control = None) {
+      duration_ = _duration;
+      if(_control & Reset) reset();
+      if(_control & Rebase) reset(clock_t::now());
+      return duration_;
 		}
 
-        duration_t duration() const { return duration_; }
+    duration_t duration() const { return duration_; }
 
-        time_point_t base(const auto& _base) {
+    time_point_t base(const auto& _base) {
 			base_ = _base;
 			return base_;
 		}
 
-        time_point_t base() const { return base_; }
+    time_point_t base() const { return base_; }
 
-        time_point_t expiration() const { return expiration_; }
+    time_point_t expiration() const { return expiration_; }
 
-        duration_t remaining(const auto& _base = clock_t::now()) const {
-            return expiration_ - _base;
+    duration_t remaining(const auto& _base = clock_t::now()) const {
+      return expiration_ - _base;
 		}
 
-        time_point_t reset(const auto& _base) {
+    time_point_t reset(const auto& _base) {
 			base_ = _base;
-            expiration_ = base_ + duration_;
+      expiration_ = base_ + duration_;
 			return base_;
 		}
 
-        time_point_t reset() { return reset(clock_t::now()); }
+    time_point_t reset() { return reset(clock_t::now()); }
 
-        ExpirationStatus operator() (const auto& _check,
-                                     const timer_control_t& _control = Reset) {
-            if(chandra::chrono::after(expiration_, _check)) {
-                const auto expiration = expiration_;
-                if((_control & Rebase) || (_control & All)) reset(expiration_);
-                else if(_control & Reset) reset(expiration_);
-                overflowed_ = chandra::chrono::after(expiration_, _check);
-                return {true, expiration};
-            }
-            return {false, time_point_t{0us}};
-        }
+    ExpirationStatus operator() (
+			const auto& _check, const timer_control_t& _control = Reset)
+		{
+      if(chandra::chrono::after(expiration_, _check)) {
+        const auto expiration = expiration_;
+        if((_control & Rebase) || (_control & All)) reset(expiration_);
+        else if(_control & Reset) reset(expiration_);
+        overflowed_ = chandra::chrono::after(expiration_, _check);
+        return {true, expiration};
+      }
 
-        ExpirationStatus operator () (const timer_control_t& _control = Reset) {
-            return this->operator ()(clock_t::now(), _control);
-        }
+      return {false, time_point_t{0us}};
+    }
 
-        bool overflowed() const {
-            return overflowed_;
-        }
+    ExpirationStatus operator () (const timer_control_t& _control = Reset) {
+      return this->operator ()(clock_t::now(), _control);
+    }
+
+    bool overflowed() const {
+      return overflowed_;
+    }
 
 	private:
-        duration_t duration_;
-        time_point_t base_;
-        time_point_t expiration_;
-        bool running_;
-        bool overflowed_;
+    duration_t duration_;
+    time_point_t base_;
+    time_point_t expiration_;
+    bool running_;
+    bool overflowed_;
 };
 
 } /*namespace chrono*/

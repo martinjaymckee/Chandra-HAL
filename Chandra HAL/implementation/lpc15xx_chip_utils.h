@@ -40,17 +40,9 @@ class SystemClock
 			(void) _reg;
 			if(_bit > 31) return false;
 			if(_state) {
-				#if defined(__LPC82X__)
-					LPC_SYSCON->SYSAHBCLKCTRL |= (1<<_bit);
-				#elif defined(__LPC15XX__)
 					LPC_SYSCON->SYSAHBCLKCTRL[_reg] |= (1<<_bit);
-				#endif
 			} else {
-				#if defined(__LPC82X__)
-					LPC_SYSCON->SYSAHBCLKCTRL &= ~(1<<_bit);
-				#elif defined(__LPC15XX__)
 					LPC_SYSCON->SYSAHBCLKCTRL[_reg] &= ~(1<<_bit);
-				#endif
 			}
 			return _state;
 		}
@@ -59,11 +51,7 @@ class SystemClock
 			(void) _reg;
 			(void) _state;
 			if(_bit > 31) return false;
-			#if defined(__LPC82X__)
-				return static_cast<bool>(LPC_SYSCON->SYSAHBCLKCTRL & (1<<_bit));
-			#elif defined(__LPC15XX__)
-				return static_cast<bool>(LPC_SYSCON->SYSAHBCLKCTRL[_reg] & (1<<_bit));
-			#endif
+			return static_cast<bool>(LPC_SYSCON->SYSAHBCLKCTRL[_reg] & (1<<_bit));
 		}
 };
 
@@ -86,37 +74,23 @@ class FixedFunctionIO
 	public:
 		static bool enable( const uint8_t& _reg, const uint8_t& _bit, const bool& _state = true ) {
 			(void) _reg;
-			#if defined(__LPC82X__)
-				SystemClock::ScopedEnable en(0, 7);
-			#elif defined(__LPC15XX__)
-				SystemClock::ScopedEnable en(0, 12);
-			#endif
+			const bool state = SystemClock::state(0, 12);
+			SystemClock::enable(0, 12, true);
 
-			#if defined(__LPC82X__)
-				if(_state) {
-					LPC_SWM->PINENABLE0 &= ~(1<<_bit);
-				} else {
-					LPC_SWM->PINENABLE0 |= (1<<_bit);
-				}
-			#elif defined(__LPC15XX__)
-				if(_state) {
-					LPC_SWM->PINENABLE[_reg] &= ~(1<<_bit);
-				} else {
-					LPC_SWM->PINENABLE[_reg] |= (1<<_bit);
-				}
-			#endif
+			if(_state) {
+				LPC_SWM->PINENABLE[_reg] &= ~(1<<_bit);
+			} else {
+				LPC_SWM->PINENABLE[_reg] |= (1<<_bit);
+			}
 
+			SystemClock::enable(0, 12, state);
 			return _state;
 		}
 
 		static bool enabled(const uint8_t& _reg, const uint8_t& _bit) {
 			(void) _reg;
 			const auto mask = 1<<_bit;
-			#if defined(__LPC82X__)
-				return (LPC_SWM->PINENABLE0 & mask) != 0;
-			#elif defined(LPC15XX__)
-				return (LPC_SWM->PINENABLE[_reg] & mask) != 0;
-			#endif
+			return (LPC_SWM->PINENABLE[_reg] & mask) != 0;
 		}
 };
 
@@ -125,11 +99,7 @@ class GPIO
 	public:
 		static uint8_t clkIndex(const uint8_t& _port) {
 			(void) _port;
-			#if defined(__LPC82X__)
-				return 6;
-			#elif defined(__LPC15XX__)
-				if(_port <=2 ) return 14 + _port;
-			#endif
+			if(_port <=2 ) return 14 + _port;
 			return 0xFF; // INVALID PORT
 		}
 
@@ -141,19 +111,11 @@ class GPIO
 		static bool direction(const uint8_t& _port, const uint8_t& _pin, const bool& _output) {
 			(void) _port;
 			const uint32_t mask = 1UL<<_pin;
-			#if defined(__LPC82X__)
-				if( _output ){
-					LPC_GPIO_PORT->DIR[0] |= mask;
-				} else {
-					LPC_GPIO_PORT->DIR[0] &= ~mask;
-				}
-			#elif defined(__LPC15XX__)
-				if( _output ){
-					LPC_GPIO->DIR[_port] |= mask;
-				} else {
-					LPC_GPIO->DIR[_port] &= ~mask;
-				}
-			#endif
+			if( _output ){
+				LPC_GPIO->DIR[_port] |= mask;
+			} else {
+				LPC_GPIO->DIR[_port] &= ~mask;
+			}
 
 			return _output;
 		}
@@ -161,11 +123,7 @@ class GPIO
 		static bool direction(const uint8_t& _port, const uint8_t& _pin) {
 			(void) _port;
 			const uint32_t mask = 1UL<<_pin;
-			#if defined(__LPC82X__)
-				return static_cast<bool>( LPC_GPIO_PORT->DIR[0] & mask );
-			#elif defined(__LPC15XX__)
-				return static_cast<bool>( LPC_GPIO->DIR[_port] & mask );
-			#endif
+			return static_cast<bool>( LPC_GPIO->DIR[_port] & mask );
 		}
 };
 
@@ -173,15 +131,13 @@ class PinMap
 {
 	public:
 		static bool set(const uint8_t& _reg, const uint8_t& _offset, const uint8_t _pin_index) {
-			#if defined(__LPC82X__)
-				SystemClock::ScopedEnable en(0, 7);
-			#elif defined(__LPC15XX__)
-				SystemClock::ScopedEnable en(0, 12);
-			#endif
+			const bool state = SystemClock::state(0, 12);
+			SystemClock::enable(0, 12, true);
 
 			const uint32_t shift = 8UL*_offset;
 			const uint32_t mask = 0xFFUL << shift;
 			LPC_SWM->PINASSIGN[_reg] = (LPC_SWM->PINASSIGN[_reg]&~mask) |(_pin_index<<shift);
+			SystemClock::enable(0, 12, state);
 			return true;
 		}
 
