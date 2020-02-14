@@ -213,7 +213,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		}
 
     size_t available() const {
-    	return rx_buffer_.size();
+			return rx_buffer_.size();
 		}
 
     bool sending() const { // not buffer empty or transmit active
@@ -541,7 +541,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 	private:
     const uint8_t num_;
     const IRQn_Type irq_num_;
-    lpc_peripheral_t* usart_;
+    volatile lpc_peripheral_t* usart_;
     const chandra::io::IO tx_;
     const chandra::io::IO rx_;
     bool msb_first_;

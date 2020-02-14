@@ -3,7 +3,15 @@
 
 #include <stdint.h>
 
+#if defined(__LPC15XX__) || defined(__LPC82X__)
 #include <chip.h>
+#elif defined(__LPC84X__)
+#include <LPC8xx.h>
+#elif defined(__CHANDRA_MOCK__)
+#warning "I2C file parsed in mock mode."
+#else
+#error "I2C processor undefined!"
+#endif
 
 #include "chip_utils.h"
 #include "chrono.h"
@@ -17,7 +25,13 @@ namespace io
 class I2CMaster
 {
 	public:
-		typedef uint32_t size_t;
+		using size_t = uint32_t;
+
+		#if defined(__LPC82X__) || defined(__LPC15XX__)
+    using lpc_peripheral_t = LPC_I2C_T;
+    #elif defined(__LPC84X__)
+    using lpc_peripheral_t = LPC_I2C_TypeDef;
+    #endif
 
 		enum I2CCompletionState {
 			I2C_OK,
@@ -56,17 +70,47 @@ class I2CMaster
 		};
 
 
-        I2CMaster(uint8_t _num) : i2c_(getI2CPeripheral(_num)) {} // TODO: ADD THE ABILITY TO CONFIGURE PINS ON SOME I2C PERIPHERALS
+    I2CMaster(uint8_t _num, const chandra::io::IO& _scl, const chandra::io::IO& _sda)
+			: num_(_num), i2c_(getI2CPeripheral(_num)), scl_(_scl), sda_(_sda) {
+
+			} // TODO: ADD THE ABILITY TO CONFIGURE PINS ON SOME I2C PERIPHERALS
 
 		void init(const uint32_t& _f_i2c = 400000 ) {
-	#if defined(__LPC82X__)
+
 			//	Enable the I2C Clock & Reset the Peripheral
+			#if defined(__LPC82X__)
 			SystemClock::enable(0, 5); // TODO: CHECK THESE REGISTERS AND BITS
 			PeripheralActivity::reset(0, 6);
+			#elif defined(__LPC84X__)
+			switch(num_) {
+				default:
+				case 0:
+					SystemClock::enable(0, 5);
+					PeripheralActivity::reset(0, 5);
+					break;
+				case 1:
+					SystemClock::enable(0, 21);
+					PeripheralActivity::reset(0, 21);
+					break;
+				case 2:
+					SystemClock::enable(0, 22);
+					PeripheralActivity::reset(0, 22);
+					break;
+				case 3:
+					SystemClock::enable(0, 23);
+					PeripheralActivity::reset(0, 23);
+					break;
+			}
+
+			#elif defined(__LPC15XX__)
+			SystemClock::enable(1, 13);
+			PeripheralActivity::reset(1, 13);
+			#endif
 
 			//	Configure I2C sub-system Clock Generation
-			setI2CClockParams(SystemCoreClock, _f_i2c);
+			setI2CClockParams(chandra::chrono::frequency::i2c(num_).value(), _f_i2c);
 
+	#if defined(__LPC82X__)
 			//	Configure the SWM
 			FixedFunctionIO::enable(0, 11);
 			FixedFunctionIO::enable(0, 12);
@@ -74,14 +118,35 @@ class I2CMaster
 			//	Set Pins for standard I2C Mode
 			LPC_IOCON->PIO0[IOCON_PIO10] = 0x80; // Bit 7 is reserved and is supposed to be a 1
 			LPC_IOCON->PIO0[IOCON_PIO11] = 0x80;
+	#elif defined(__LPC84X__)
+			//	Configure the SWM
+			//	Enable AHB clock domains for SWM
+			SystemClock::enable(0, 7);
+
+      //	Setup Switch Matrix
+			const uint8_t scl_pin = 32*scl_.port() + scl_.pin();
+			const uint8_t sda_pin = 32*sda_.port() + sda_.pin();
+
+      switch(num_) {
+        default:
+				case 0:
+					FixedFunctionIO::enable(0, 13);
+					FixedFunctionIO::enable(0, 12);
+					break;
+
+        case 1:
+          LPC_SWM->PINASSIGN[9] = 0x0000FFFF | (scl_pin<<24) | (sda_pin<<16);
+          break;
+
+        case 2:
+          LPC_SWM->PINASSIGN[10] = 0xFFFF0000 | (scl_pin<<8) | sda_pin;
+          break;
+
+        case 3:
+          LPC_SWM->PINASSIGN[10] = 0x0000FFFF | (scl_pin<<24) | (sda_pin<<16);
+          break;
+      }
 	#elif defined(__LPC15XX__)
-			//	Enable the I2C Clock & Reset the Peripheral
-			SystemClock::enable(1, 13);
-			PeripheralActivity::reset(1, 13);
-
-			//	Configure I2C sub-system Clock Generation
-			setI2CClockParams(SystemCoreClock, _f_i2c);
-
 			//	Configure the SWM
 			FixedFunctionIO::enable(1, 3);
 			FixedFunctionIO::enable(1, 4);
@@ -200,7 +265,7 @@ class I2CMaster
 					waitForPending();
 					state = masterState();
 					if((state == ARBITRATION_LOST) || (state == START_STOP_ERROR)){
-						continueTXRX(); // Clear the error flags and tries again
+						continueTXRX(); // Clear the error flags and try again
 						valid = false;
 						if(attempt >= _max_attempts) break;
 						++attempt;
@@ -277,12 +342,28 @@ class I2CMaster
 		}
 
     protected:
-        I2C_PERPIHERAL_TYPE* getI2CPeripheral(const uint8_t&) {
-            return LPC_I2C0; // TODO: IMPLEMENT THIS SELECTION FUNCTION
+        lpc_peripheral_t* getI2CPeripheral(const uint8_t& _idx) {
+					switch(_idx) {
+						default:
+						case 0:
+							return LPC_I2C0;
+
+						case 1:
+							return LPC_I2C1;
+
+						case 2:
+							return LPC_I2C2;
+
+						case 3:
+							return LPC_I2C3;
+					}
         }
 
 	private:
-		I2C_PERIPHERAL_TYPE* i2c_;
+		uint8_t num_;
+		volatile lpc_peripheral_t* i2c_;
+		const chandra::io::IO scl_;
+    const chandra::io::IO sda_;
 };
 
 template<class output_stream_type>

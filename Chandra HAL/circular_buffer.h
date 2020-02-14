@@ -94,7 +94,7 @@ class FixedCircularBuffer
     private:
         Array<value_t,N> buffer_;
         size_t idx_;
-        size_t cnt_;
+        volatile size_t cnt_;
 };
 
 } /*namespace chandra*/

@@ -179,7 +179,7 @@ ElectricPotential *V = 1 # Volt
 #
 # Units of Current
 #
-ElectricalCurrent *A = 1 # Ampere
+ElectricCurrent *A = 1 # Ampere
 
 #
 # Units of Resistance

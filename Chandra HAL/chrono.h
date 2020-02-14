@@ -20,6 +20,8 @@
 
 namespace chandra
 {
+using namespace std::literals::chrono_literals;
+
 namespace chrono
 {
 
@@ -61,7 +63,7 @@ class timestamp_clock
 		static time_point now() noexcept {
 	#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 		#if defined(__LPC84X__)
-			return time_point{duration{LPC_SCT->COUNT}}
+			return time_point{duration{LPC_SCT->COUNT}};
 		#elif defined(__LPC15XX__)
 			return time_point{duration{LPC_SCT3->COUNT_U}};
 		#else
@@ -92,6 +94,14 @@ class timestamp_clock
 					PeripheralActivity::reset(1, 5);
 					LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
 					LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+					return;
+
+		#elif defined(__LPC84X__)
+					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+					SystemClock::enable(0, 8, true);
+					PeripheralActivity::reset(0, 8);
+					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+					LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 					return;
 		#else
 					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;

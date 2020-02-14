@@ -7,13 +7,13 @@ namespace chandra
 class PeripheralActivity
 {
 	public:
-        static void assert(const uint8_t& /*_reg*/, const uint8_t /*_bit*/ ) {}
+        static void activate(const uint8_t& /*_reg*/, const uint8_t /*_bit*/ ) {}
 
-        static void deassert(const uint8_t& /*_reg*/, const uint8_t /*_bit*/ ) {}
+        static void deactivate(const uint8_t& /*_reg*/, const uint8_t /*_bit*/ ) {}
 
         static void reset(const uint8_t& _reg, const uint8_t _bit ) {
-			deassert(_reg, _bit);
-			assert(_reg, _bit);
+			deactivate(_reg, _bit);
+			activate(_reg, _bit);
 		}
 };
 

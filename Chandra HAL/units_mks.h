@@ -7197,703 +7197,703 @@ namespace mks
 
 
 //
-// Unit "EdegR"
+// Unit "EdegRa"
 //
-    struct EdegR
+    struct EdegRa
     {
         using factor_t = std::ratio<555555500000000000, 1>; // 5.55556e+17
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = EdegR;
+        using relative_t = EdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "EdegR";
+            _stream << "EdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_EdegR = units::Quantity<Value, EdegR>;
+    using Q_EdegRa = units::Quantity<Value, EdegRa>;
     namespace literals
     {
-        static inline Q_EdegR<long double> operator "" _EdegR_ (long double _v) {
-            return Q_EdegR<long double>(_v); }
-        static inline Q_EdegR<long double> operator "" _EdegR_ (unsigned long long int _v) {
-            return Q_EdegR<long double>(_v); }
+        static inline Q_EdegRa<long double> operator "" _EdegRa_ (long double _v) {
+            return Q_EdegRa<long double>(_v); }
+        static inline Q_EdegRa<long double> operator "" _EdegRa_ (unsigned long long int _v) {
+            return Q_EdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "EdegR_abs"
+// Unit "EdegRa_abs"
 //
-    struct EdegR_abs
+    struct EdegRa_abs
     {
         using factor_t = std::ratio<555555500000000000, 1>; // 5.55556e+17
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = EdegR;
+        using relative_t = EdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "EdegR_abs";
+            _stream << "EdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_EdegR_abs = units::Quantity<Value, EdegR_abs>;
+    using Q_EdegRa_abs = units::Quantity<Value, EdegRa_abs>;
     namespace literals
     {
-        static inline Q_EdegR_abs<long double> operator "" _EdegR_abs_ (long double _v) {
-            return Q_EdegR_abs<long double>(_v); }
-        static inline Q_EdegR_abs<long double> operator "" _EdegR_abs_ (unsigned long long int _v) {
-            return Q_EdegR_abs<long double>(_v); }
+        static inline Q_EdegRa_abs<long double> operator "" _EdegRa_abs_ (long double _v) {
+            return Q_EdegRa_abs<long double>(_v); }
+        static inline Q_EdegRa_abs<long double> operator "" _EdegRa_abs_ (unsigned long long int _v) {
+            return Q_EdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "PdegR"
+// Unit "PdegRa"
 //
-    struct PdegR
+    struct PdegRa
     {
         using factor_t = std::ratio<555555500000000, 1>; // 5.55556e+14
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = PdegR;
+        using relative_t = PdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "PdegR";
+            _stream << "PdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_PdegR = units::Quantity<Value, PdegR>;
+    using Q_PdegRa = units::Quantity<Value, PdegRa>;
     namespace literals
     {
-        static inline Q_PdegR<long double> operator "" _PdegR_ (long double _v) {
-            return Q_PdegR<long double>(_v); }
-        static inline Q_PdegR<long double> operator "" _PdegR_ (unsigned long long int _v) {
-            return Q_PdegR<long double>(_v); }
+        static inline Q_PdegRa<long double> operator "" _PdegRa_ (long double _v) {
+            return Q_PdegRa<long double>(_v); }
+        static inline Q_PdegRa<long double> operator "" _PdegRa_ (unsigned long long int _v) {
+            return Q_PdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "PdegR_abs"
+// Unit "PdegRa_abs"
 //
-    struct PdegR_abs
+    struct PdegRa_abs
     {
         using factor_t = std::ratio<555555500000000, 1>; // 5.55556e+14
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = PdegR;
+        using relative_t = PdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "PdegR_abs";
+            _stream << "PdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_PdegR_abs = units::Quantity<Value, PdegR_abs>;
+    using Q_PdegRa_abs = units::Quantity<Value, PdegRa_abs>;
     namespace literals
     {
-        static inline Q_PdegR_abs<long double> operator "" _PdegR_abs_ (long double _v) {
-            return Q_PdegR_abs<long double>(_v); }
-        static inline Q_PdegR_abs<long double> operator "" _PdegR_abs_ (unsigned long long int _v) {
-            return Q_PdegR_abs<long double>(_v); }
+        static inline Q_PdegRa_abs<long double> operator "" _PdegRa_abs_ (long double _v) {
+            return Q_PdegRa_abs<long double>(_v); }
+        static inline Q_PdegRa_abs<long double> operator "" _PdegRa_abs_ (unsigned long long int _v) {
+            return Q_PdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "TdegR"
+// Unit "TdegRa"
 //
-    struct TdegR
+    struct TdegRa
     {
         using factor_t = std::ratio<555555500000, 1>; // 5.55556e+11
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = TdegR;
+        using relative_t = TdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "TdegR";
+            _stream << "TdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_TdegR = units::Quantity<Value, TdegR>;
+    using Q_TdegRa = units::Quantity<Value, TdegRa>;
     namespace literals
     {
-        static inline Q_TdegR<long double> operator "" _TdegR_ (long double _v) {
-            return Q_TdegR<long double>(_v); }
-        static inline Q_TdegR<long double> operator "" _TdegR_ (unsigned long long int _v) {
-            return Q_TdegR<long double>(_v); }
+        static inline Q_TdegRa<long double> operator "" _TdegRa_ (long double _v) {
+            return Q_TdegRa<long double>(_v); }
+        static inline Q_TdegRa<long double> operator "" _TdegRa_ (unsigned long long int _v) {
+            return Q_TdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "TdegR_abs"
+// Unit "TdegRa_abs"
 //
-    struct TdegR_abs
+    struct TdegRa_abs
     {
         using factor_t = std::ratio<555555500000, 1>; // 5.55556e+11
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = TdegR;
+        using relative_t = TdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "TdegR_abs";
+            _stream << "TdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_TdegR_abs = units::Quantity<Value, TdegR_abs>;
+    using Q_TdegRa_abs = units::Quantity<Value, TdegRa_abs>;
     namespace literals
     {
-        static inline Q_TdegR_abs<long double> operator "" _TdegR_abs_ (long double _v) {
-            return Q_TdegR_abs<long double>(_v); }
-        static inline Q_TdegR_abs<long double> operator "" _TdegR_abs_ (unsigned long long int _v) {
-            return Q_TdegR_abs<long double>(_v); }
+        static inline Q_TdegRa_abs<long double> operator "" _TdegRa_abs_ (long double _v) {
+            return Q_TdegRa_abs<long double>(_v); }
+        static inline Q_TdegRa_abs<long double> operator "" _TdegRa_abs_ (unsigned long long int _v) {
+            return Q_TdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "GdegR"
+// Unit "GdegRa"
 //
-    struct GdegR
+    struct GdegRa
     {
         using factor_t = std::ratio<555555500, 1>; // 5.55556e+08
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = GdegR;
+        using relative_t = GdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "GdegR";
+            _stream << "GdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_GdegR = units::Quantity<Value, GdegR>;
+    using Q_GdegRa = units::Quantity<Value, GdegRa>;
     namespace literals
     {
-        static inline Q_GdegR<long double> operator "" _GdegR_ (long double _v) {
-            return Q_GdegR<long double>(_v); }
-        static inline Q_GdegR<long double> operator "" _GdegR_ (unsigned long long int _v) {
-            return Q_GdegR<long double>(_v); }
+        static inline Q_GdegRa<long double> operator "" _GdegRa_ (long double _v) {
+            return Q_GdegRa<long double>(_v); }
+        static inline Q_GdegRa<long double> operator "" _GdegRa_ (unsigned long long int _v) {
+            return Q_GdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "GdegR_abs"
+// Unit "GdegRa_abs"
 //
-    struct GdegR_abs
+    struct GdegRa_abs
     {
         using factor_t = std::ratio<555555500, 1>; // 5.55556e+08
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = GdegR;
+        using relative_t = GdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "GdegR_abs";
+            _stream << "GdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_GdegR_abs = units::Quantity<Value, GdegR_abs>;
+    using Q_GdegRa_abs = units::Quantity<Value, GdegRa_abs>;
     namespace literals
     {
-        static inline Q_GdegR_abs<long double> operator "" _GdegR_abs_ (long double _v) {
-            return Q_GdegR_abs<long double>(_v); }
-        static inline Q_GdegR_abs<long double> operator "" _GdegR_abs_ (unsigned long long int _v) {
-            return Q_GdegR_abs<long double>(_v); }
+        static inline Q_GdegRa_abs<long double> operator "" _GdegRa_abs_ (long double _v) {
+            return Q_GdegRa_abs<long double>(_v); }
+        static inline Q_GdegRa_abs<long double> operator "" _GdegRa_abs_ (unsigned long long int _v) {
+            return Q_GdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "MdegR"
+// Unit "MdegRa"
 //
-    struct MdegR
+    struct MdegRa
     {
         using factor_t = std::ratio<1111111, 2>; // 555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = MdegR;
+        using relative_t = MdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "MdegR";
+            _stream << "MdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_MdegR = units::Quantity<Value, MdegR>;
+    using Q_MdegRa = units::Quantity<Value, MdegRa>;
     namespace literals
     {
-        static inline Q_MdegR<long double> operator "" _MdegR_ (long double _v) {
-            return Q_MdegR<long double>(_v); }
-        static inline Q_MdegR<long double> operator "" _MdegR_ (unsigned long long int _v) {
-            return Q_MdegR<long double>(_v); }
+        static inline Q_MdegRa<long double> operator "" _MdegRa_ (long double _v) {
+            return Q_MdegRa<long double>(_v); }
+        static inline Q_MdegRa<long double> operator "" _MdegRa_ (unsigned long long int _v) {
+            return Q_MdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "MdegR_abs"
+// Unit "MdegRa_abs"
 //
-    struct MdegR_abs
+    struct MdegRa_abs
     {
         using factor_t = std::ratio<1111111, 2>; // 555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = MdegR;
+        using relative_t = MdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "MdegR_abs";
+            _stream << "MdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_MdegR_abs = units::Quantity<Value, MdegR_abs>;
+    using Q_MdegRa_abs = units::Quantity<Value, MdegRa_abs>;
     namespace literals
     {
-        static inline Q_MdegR_abs<long double> operator "" _MdegR_abs_ (long double _v) {
-            return Q_MdegR_abs<long double>(_v); }
-        static inline Q_MdegR_abs<long double> operator "" _MdegR_abs_ (unsigned long long int _v) {
-            return Q_MdegR_abs<long double>(_v); }
+        static inline Q_MdegRa_abs<long double> operator "" _MdegRa_abs_ (long double _v) {
+            return Q_MdegRa_abs<long double>(_v); }
+        static inline Q_MdegRa_abs<long double> operator "" _MdegRa_abs_ (unsigned long long int _v) {
+            return Q_MdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "kdegR"
+// Unit "kdegRa"
 //
-    struct kdegR
+    struct kdegRa
     {
         using factor_t = std::ratio<1111111, 2000>; // 555.555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = kdegR;
+        using relative_t = kdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "kdegR";
+            _stream << "kdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_kdegR = units::Quantity<Value, kdegR>;
+    using Q_kdegRa = units::Quantity<Value, kdegRa>;
     namespace literals
     {
-        static inline Q_kdegR<long double> operator "" _kdegR_ (long double _v) {
-            return Q_kdegR<long double>(_v); }
-        static inline Q_kdegR<long double> operator "" _kdegR_ (unsigned long long int _v) {
-            return Q_kdegR<long double>(_v); }
+        static inline Q_kdegRa<long double> operator "" _kdegRa_ (long double _v) {
+            return Q_kdegRa<long double>(_v); }
+        static inline Q_kdegRa<long double> operator "" _kdegRa_ (unsigned long long int _v) {
+            return Q_kdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "kdegR_abs"
+// Unit "kdegRa_abs"
 //
-    struct kdegR_abs
+    struct kdegRa_abs
     {
         using factor_t = std::ratio<1111111, 2000>; // 555.555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = kdegR;
+        using relative_t = kdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "kdegR_abs";
+            _stream << "kdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_kdegR_abs = units::Quantity<Value, kdegR_abs>;
+    using Q_kdegRa_abs = units::Quantity<Value, kdegRa_abs>;
     namespace literals
     {
-        static inline Q_kdegR_abs<long double> operator "" _kdegR_abs_ (long double _v) {
-            return Q_kdegR_abs<long double>(_v); }
-        static inline Q_kdegR_abs<long double> operator "" _kdegR_abs_ (unsigned long long int _v) {
-            return Q_kdegR_abs<long double>(_v); }
+        static inline Q_kdegRa_abs<long double> operator "" _kdegRa_abs_ (long double _v) {
+            return Q_kdegRa_abs<long double>(_v); }
+        static inline Q_kdegRa_abs<long double> operator "" _kdegRa_abs_ (unsigned long long int _v) {
+            return Q_kdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "hdegR"
+// Unit "hdegRa"
 //
-    struct hdegR
+    struct hdegRa
     {
         using factor_t = std::ratio<1111111, 20000>; // 55.5555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = hdegR;
+        using relative_t = hdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "hdegR";
+            _stream << "hdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_hdegR = units::Quantity<Value, hdegR>;
+    using Q_hdegRa = units::Quantity<Value, hdegRa>;
     namespace literals
     {
-        static inline Q_hdegR<long double> operator "" _hdegR_ (long double _v) {
-            return Q_hdegR<long double>(_v); }
-        static inline Q_hdegR<long double> operator "" _hdegR_ (unsigned long long int _v) {
-            return Q_hdegR<long double>(_v); }
+        static inline Q_hdegRa<long double> operator "" _hdegRa_ (long double _v) {
+            return Q_hdegRa<long double>(_v); }
+        static inline Q_hdegRa<long double> operator "" _hdegRa_ (unsigned long long int _v) {
+            return Q_hdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "hdegR_abs"
+// Unit "hdegRa_abs"
 //
-    struct hdegR_abs
+    struct hdegRa_abs
     {
         using factor_t = std::ratio<1111111, 20000>; // 55.5555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = hdegR;
+        using relative_t = hdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "hdegR_abs";
+            _stream << "hdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_hdegR_abs = units::Quantity<Value, hdegR_abs>;
+    using Q_hdegRa_abs = units::Quantity<Value, hdegRa_abs>;
     namespace literals
     {
-        static inline Q_hdegR_abs<long double> operator "" _hdegR_abs_ (long double _v) {
-            return Q_hdegR_abs<long double>(_v); }
-        static inline Q_hdegR_abs<long double> operator "" _hdegR_abs_ (unsigned long long int _v) {
-            return Q_hdegR_abs<long double>(_v); }
+        static inline Q_hdegRa_abs<long double> operator "" _hdegRa_abs_ (long double _v) {
+            return Q_hdegRa_abs<long double>(_v); }
+        static inline Q_hdegRa_abs<long double> operator "" _hdegRa_abs_ (unsigned long long int _v) {
+            return Q_hdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "dadegR"
+// Unit "dadegRa"
 //
-    struct dadegR
+    struct dadegRa
     {
         using factor_t = std::ratio<1111111, 200000>; // 5.55556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = dadegR;
+        using relative_t = dadegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "dadegR";
+            _stream << "dadegRa";
         }
     };
     template<typename Value = long double>
-    using Q_dadegR = units::Quantity<Value, dadegR>;
+    using Q_dadegRa = units::Quantity<Value, dadegRa>;
     namespace literals
     {
-        static inline Q_dadegR<long double> operator "" _dadegR_ (long double _v) {
-            return Q_dadegR<long double>(_v); }
-        static inline Q_dadegR<long double> operator "" _dadegR_ (unsigned long long int _v) {
-            return Q_dadegR<long double>(_v); }
+        static inline Q_dadegRa<long double> operator "" _dadegRa_ (long double _v) {
+            return Q_dadegRa<long double>(_v); }
+        static inline Q_dadegRa<long double> operator "" _dadegRa_ (unsigned long long int _v) {
+            return Q_dadegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "dadegR_abs"
+// Unit "dadegRa_abs"
 //
-    struct dadegR_abs
+    struct dadegRa_abs
     {
         using factor_t = std::ratio<1111111, 200000>; // 5.55556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = dadegR;
+        using relative_t = dadegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "dadegR_abs";
+            _stream << "dadegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_dadegR_abs = units::Quantity<Value, dadegR_abs>;
+    using Q_dadegRa_abs = units::Quantity<Value, dadegRa_abs>;
     namespace literals
     {
-        static inline Q_dadegR_abs<long double> operator "" _dadegR_abs_ (long double _v) {
-            return Q_dadegR_abs<long double>(_v); }
-        static inline Q_dadegR_abs<long double> operator "" _dadegR_abs_ (unsigned long long int _v) {
-            return Q_dadegR_abs<long double>(_v); }
+        static inline Q_dadegRa_abs<long double> operator "" _dadegRa_abs_ (long double _v) {
+            return Q_dadegRa_abs<long double>(_v); }
+        static inline Q_dadegRa_abs<long double> operator "" _dadegRa_abs_ (unsigned long long int _v) {
+            return Q_dadegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "degR"
+// Unit "degRa"
 //
-    struct degR
+    struct degRa
     {
         using factor_t = std::ratio<5, 9>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = degR;
+        using relative_t = degRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "degR";
+            _stream << "degRa";
         }
     };
     template<typename Value = long double>
-    using Q_degR = units::Quantity<Value, degR>;
+    using Q_degRa = units::Quantity<Value, degRa>;
     namespace literals
     {
-        static inline Q_degR<long double> operator "" _degR_ (long double _v) {
-            return Q_degR<long double>(_v); }
-        static inline Q_degR<long double> operator "" _degR_ (unsigned long long int _v) {
-            return Q_degR<long double>(_v); }
+        static inline Q_degRa<long double> operator "" _degRa_ (long double _v) {
+            return Q_degRa<long double>(_v); }
+        static inline Q_degRa<long double> operator "" _degRa_ (unsigned long long int _v) {
+            return Q_degRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "degR_abs"
+// Unit "degRa_abs"
 //
-    struct degR_abs
+    struct degRa_abs
     {
         using factor_t = std::ratio<5, 9>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = degR;
+        using relative_t = degRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "degR_abs";
+            _stream << "degRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_degR_abs = units::Quantity<Value, degR_abs>;
+    using Q_degRa_abs = units::Quantity<Value, degRa_abs>;
     namespace literals
     {
-        static inline Q_degR_abs<long double> operator "" _degR_abs_ (long double _v) {
-            return Q_degR_abs<long double>(_v); }
-        static inline Q_degR_abs<long double> operator "" _degR_abs_ (unsigned long long int _v) {
-            return Q_degR_abs<long double>(_v); }
+        static inline Q_degRa_abs<long double> operator "" _degRa_abs_ (long double _v) {
+            return Q_degRa_abs<long double>(_v); }
+        static inline Q_degRa_abs<long double> operator "" _degRa_abs_ (unsigned long long int _v) {
+            return Q_degRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "ddegR"
+// Unit "ddegRa"
 //
-    struct ddegR
+    struct ddegRa
     {
         using factor_t = std::ratio<1, 18>; // 0.0555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = ddegR;
+        using relative_t = ddegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "ddegR";
+            _stream << "ddegRa";
         }
     };
     template<typename Value = long double>
-    using Q_ddegR = units::Quantity<Value, ddegR>;
+    using Q_ddegRa = units::Quantity<Value, ddegRa>;
     namespace literals
     {
-        static inline Q_ddegR<long double> operator "" _ddegR_ (long double _v) {
-            return Q_ddegR<long double>(_v); }
-        static inline Q_ddegR<long double> operator "" _ddegR_ (unsigned long long int _v) {
-            return Q_ddegR<long double>(_v); }
+        static inline Q_ddegRa<long double> operator "" _ddegRa_ (long double _v) {
+            return Q_ddegRa<long double>(_v); }
+        static inline Q_ddegRa<long double> operator "" _ddegRa_ (unsigned long long int _v) {
+            return Q_ddegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "ddegR_abs"
+// Unit "ddegRa_abs"
 //
-    struct ddegR_abs
+    struct ddegRa_abs
     {
         using factor_t = std::ratio<1, 18>; // 0.0555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = ddegR;
+        using relative_t = ddegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "ddegR_abs";
+            _stream << "ddegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_ddegR_abs = units::Quantity<Value, ddegR_abs>;
+    using Q_ddegRa_abs = units::Quantity<Value, ddegRa_abs>;
     namespace literals
     {
-        static inline Q_ddegR_abs<long double> operator "" _ddegR_abs_ (long double _v) {
-            return Q_ddegR_abs<long double>(_v); }
-        static inline Q_ddegR_abs<long double> operator "" _ddegR_abs_ (unsigned long long int _v) {
-            return Q_ddegR_abs<long double>(_v); }
+        static inline Q_ddegRa_abs<long double> operator "" _ddegRa_abs_ (long double _v) {
+            return Q_ddegRa_abs<long double>(_v); }
+        static inline Q_ddegRa_abs<long double> operator "" _ddegRa_abs_ (unsigned long long int _v) {
+            return Q_ddegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "cdegR"
+// Unit "cdegRa"
 //
-    struct cdegR
+    struct cdegRa
     {
         using factor_t = std::ratio<1, 180>; // 0.00555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = cdegR;
+        using relative_t = cdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "cdegR";
+            _stream << "cdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_cdegR = units::Quantity<Value, cdegR>;
+    using Q_cdegRa = units::Quantity<Value, cdegRa>;
     namespace literals
     {
-        static inline Q_cdegR<long double> operator "" _cdegR_ (long double _v) {
-            return Q_cdegR<long double>(_v); }
-        static inline Q_cdegR<long double> operator "" _cdegR_ (unsigned long long int _v) {
-            return Q_cdegR<long double>(_v); }
+        static inline Q_cdegRa<long double> operator "" _cdegRa_ (long double _v) {
+            return Q_cdegRa<long double>(_v); }
+        static inline Q_cdegRa<long double> operator "" _cdegRa_ (unsigned long long int _v) {
+            return Q_cdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "cdegR_abs"
+// Unit "cdegRa_abs"
 //
-    struct cdegR_abs
+    struct cdegRa_abs
     {
         using factor_t = std::ratio<1, 180>; // 0.00555556
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = cdegR;
+        using relative_t = cdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "cdegR_abs";
+            _stream << "cdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_cdegR_abs = units::Quantity<Value, cdegR_abs>;
+    using Q_cdegRa_abs = units::Quantity<Value, cdegRa_abs>;
     namespace literals
     {
-        static inline Q_cdegR_abs<long double> operator "" _cdegR_abs_ (long double _v) {
-            return Q_cdegR_abs<long double>(_v); }
-        static inline Q_cdegR_abs<long double> operator "" _cdegR_abs_ (unsigned long long int _v) {
-            return Q_cdegR_abs<long double>(_v); }
+        static inline Q_cdegRa_abs<long double> operator "" _cdegRa_abs_ (long double _v) {
+            return Q_cdegRa_abs<long double>(_v); }
+        static inline Q_cdegRa_abs<long double> operator "" _cdegRa_abs_ (unsigned long long int _v) {
+            return Q_cdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "mdegR"
+// Unit "mdegRa"
 //
-    struct mdegR
+    struct mdegRa
     {
         using factor_t = std::ratio<1, 1800>; // 0.000555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = mdegR;
+        using relative_t = mdegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "mdegR";
+            _stream << "mdegRa";
         }
     };
     template<typename Value = long double>
-    using Q_mdegR = units::Quantity<Value, mdegR>;
+    using Q_mdegRa = units::Quantity<Value, mdegRa>;
     namespace literals
     {
-        static inline Q_mdegR<long double> operator "" _mdegR_ (long double _v) {
-            return Q_mdegR<long double>(_v); }
-        static inline Q_mdegR<long double> operator "" _mdegR_ (unsigned long long int _v) {
-            return Q_mdegR<long double>(_v); }
+        static inline Q_mdegRa<long double> operator "" _mdegRa_ (long double _v) {
+            return Q_mdegRa<long double>(_v); }
+        static inline Q_mdegRa<long double> operator "" _mdegRa_ (unsigned long long int _v) {
+            return Q_mdegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "mdegR_abs"
+// Unit "mdegRa_abs"
 //
-    struct mdegR_abs
+    struct mdegRa_abs
     {
         using factor_t = std::ratio<1, 1800>; // 0.000555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = mdegR;
+        using relative_t = mdegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "mdegR_abs";
+            _stream << "mdegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_mdegR_abs = units::Quantity<Value, mdegR_abs>;
+    using Q_mdegRa_abs = units::Quantity<Value, mdegRa_abs>;
     namespace literals
     {
-        static inline Q_mdegR_abs<long double> operator "" _mdegR_abs_ (long double _v) {
-            return Q_mdegR_abs<long double>(_v); }
-        static inline Q_mdegR_abs<long double> operator "" _mdegR_abs_ (unsigned long long int _v) {
-            return Q_mdegR_abs<long double>(_v); }
+        static inline Q_mdegRa_abs<long double> operator "" _mdegRa_abs_ (long double _v) {
+            return Q_mdegRa_abs<long double>(_v); }
+        static inline Q_mdegRa_abs<long double> operator "" _mdegRa_abs_ (unsigned long long int _v) {
+            return Q_mdegRa_abs<long double>(_v); }
     }
 
 
 
 //
-// Unit "udegR"
+// Unit "udegRa"
 //
-    struct udegR
+    struct udegRa
     {
         using factor_t = std::ratio<5, 9000001>; // 5.55555e-07
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = udegR;
+        using relative_t = udegRa;
         static constexpr bool absolute = false;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "udegR";
+            _stream << "udegRa";
         }
     };
     template<typename Value = long double>
-    using Q_udegR = units::Quantity<Value, udegR>;
+    using Q_udegRa = units::Quantity<Value, udegRa>;
     namespace literals
     {
-        static inline Q_udegR<long double> operator "" _udegR_ (long double _v) {
-            return Q_udegR<long double>(_v); }
-        static inline Q_udegR<long double> operator "" _udegR_ (unsigned long long int _v) {
-            return Q_udegR<long double>(_v); }
+        static inline Q_udegRa<long double> operator "" _udegRa_ (long double _v) {
+            return Q_udegRa<long double>(_v); }
+        static inline Q_udegRa<long double> operator "" _udegRa_ (unsigned long long int _v) {
+            return Q_udegRa<long double>(_v); }
     }
 
 
 
 //
-// Unit "udegR_abs"
+// Unit "udegRa_abs"
 //
-    struct udegR_abs
+    struct udegRa_abs
     {
         using factor_t = std::ratio<5, 9000001>; // 5.55555e-07
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
-        using relative_t = udegR;
+        using relative_t = udegRa;
         static constexpr bool absolute = true;
         template<typename Stream>
         static void streamname(Stream& _stream) {
-            _stream << "udegR_abs";
+            _stream << "udegRa_abs";
         }
     };
     template<typename Value = long double>
-    using Q_udegR_abs = units::Quantity<Value, udegR_abs>;
+    using Q_udegRa_abs = units::Quantity<Value, udegRa_abs>;
     namespace literals
     {
-        static inline Q_udegR_abs<long double> operator "" _udegR_abs_ (long double _v) {
-            return Q_udegR_abs<long double>(_v); }
-        static inline Q_udegR_abs<long double> operator "" _udegR_abs_ (unsigned long long int _v) {
-            return Q_udegR_abs<long double>(_v); }
+        static inline Q_udegRa_abs<long double> operator "" _udegRa_abs_ (long double _v) {
+            return Q_udegRa_abs<long double>(_v); }
+        static inline Q_udegRa_abs<long double> operator "" _udegRa_abs_ (unsigned long long int _v) {
+            return Q_udegRa_abs<long double>(_v); }
     }
 
 
@@ -9578,7 +9578,7 @@ namespace mks
     struct EA
     {
         using factor_t = std::ratio<1000000000000000000, 1>; // 1e+18
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = EA;
         static constexpr bool absolute = false;
@@ -9605,7 +9605,7 @@ namespace mks
     struct PA
     {
         using factor_t = std::ratio<1000000000000000, 1>; // 1e+15
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = PA;
         static constexpr bool absolute = false;
@@ -9632,7 +9632,7 @@ namespace mks
     struct TA
     {
         using factor_t = std::ratio<1000000000000, 1>; // 1e+12
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = TA;
         static constexpr bool absolute = false;
@@ -9659,7 +9659,7 @@ namespace mks
     struct GA
     {
         using factor_t = std::ratio<1000000000, 1>; // 1e+09
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = GA;
         static constexpr bool absolute = false;
@@ -9686,7 +9686,7 @@ namespace mks
     struct MA
     {
         using factor_t = std::ratio<1000000, 1>; // 1e+06
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = MA;
         static constexpr bool absolute = false;
@@ -9713,7 +9713,7 @@ namespace mks
     struct kA
     {
         using factor_t = std::ratio<1000, 1>; // 1000
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = kA;
         static constexpr bool absolute = false;
@@ -9740,7 +9740,7 @@ namespace mks
     struct hA
     {
         using factor_t = std::ratio<100, 1>; // 100
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = hA;
         static constexpr bool absolute = false;
@@ -9767,7 +9767,7 @@ namespace mks
     struct daA
     {
         using factor_t = std::ratio<10, 1>; // 10
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = daA;
         static constexpr bool absolute = false;
@@ -9794,7 +9794,7 @@ namespace mks
     struct A
     {
         using factor_t = std::ratio<1, 1>; // 1
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = A;
         static constexpr bool absolute = false;
@@ -9821,7 +9821,7 @@ namespace mks
     struct dA
     {
         using factor_t = std::ratio<1, 10>; // 0.1
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dA;
         static constexpr bool absolute = false;
@@ -9848,7 +9848,7 @@ namespace mks
     struct cA
     {
         using factor_t = std::ratio<1, 100>; // 0.01
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cA;
         static constexpr bool absolute = false;
@@ -9875,7 +9875,7 @@ namespace mks
     struct mA
     {
         using factor_t = std::ratio<1, 1000>; // 0.001
-        using dimensions_t = dimensions::ElectricalCurrent;
+        using dimensions_t = dimensions::ElectricCurrent;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mA;
         static constexpr bool absolute = false;
