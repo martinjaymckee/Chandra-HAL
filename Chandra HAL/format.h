@@ -8,6 +8,8 @@
 #ifndef CHANDRA_FORMAT_H
 #define CHANDRA_FORMAT_H
 
+#include <cmath>
+
 #include "cstr_utils.h"
 #include "meta_math.h"
 

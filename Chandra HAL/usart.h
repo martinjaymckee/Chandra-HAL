@@ -204,7 +204,8 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		#if defined(__LPC82X__) || defined(__LPC84X__)
 	    usart_->OSR = _osr-1; // TODO: FIGURE OUT WHY THIS ISN'T WORKING....
 		#elif defined(__LPC15XX__)
-			#warning "OSR register not defined in LPC15xx LPCOpen API."
+			//usart_->OSR = _osr-1;
+			//#warning "OSR register not defined in LPC15xx LPCOpen API."
 		#endif
 		#if defined(__LPC84X__)
       LPC_SYSCON->FCLKSEL[num_] = 0x02; // Use FRG0 as source clock

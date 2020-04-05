@@ -22,6 +22,8 @@
 #include "chip_utils.h"
 #include "chrono.h"
 
+// TODO: NEED TO HANDLE DEFAULT CONSTRUCTED GPIO PINS IN A BETTER WAY SO THAT THEY ARE SAFER
+
 namespace chandra
 {
 namespace io
@@ -56,6 +58,8 @@ class IO
         static IO Input( const internal::IODef& _io) { return {_io.port, _io.pin, true, _io.inverted}; }
         static IO Output( uint8_t _port, uint8_t _pin, bool _inverted = false ) { return {_port, _pin, true, _inverted}; }
         static IO Output( const internal::IODef& _io) { return {_io.port, _io.pin, true, _io.inverted}; }
+
+        IO() : port_(255), pin_(255), mask_(0), inverted_(false) {}
 
         IO(uint8_t _port, uint8_t _pin, bool _is_output = false, bool _inverted = false)
         : port_(_port), pin_(_pin), mask_(1UL<<_pin), inverted_(_inverted) {
@@ -131,9 +135,9 @@ class IO
             return inverted_ ? !read : read;
         }
 
-        uint8_t port() const { return port_; }
-        uint8_t pin() const { return pin_; }
-
+        constexpr uint8_t port() const { return port_; }
+        constexpr uint8_t pin() const { return pin_; }
+        constexpr bool valid() const { return mask_ != 0; }
 
         // TODO: ADD "WAIT" TRIGGERS, WITH AND WITHOUT TIMEOUTS... THEY DON'T BELONG IN GPIO, HOWEVER, THEY SHOULD BE IN
         //	THE CHANDRA EVENT SYSTEM SOMEWHERE....  MAYBE SOMETHING LIKE UNTILTRUE AND UNTILFALSE, OR SOMETHING AS SIMPLE AS

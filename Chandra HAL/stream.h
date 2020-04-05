@@ -3,6 +3,22 @@
 
 #include "format.h"
 
+//
+// Pre-processor directives to configure the ASCII formatting
+//	of floating-point numbers
+//
+#ifndef CHANDRA_FLOAT_FORMAT_DIGITS
+#define CHANDRA_FLOAT_FORMAT_DIGITS 2
+#endif
+
+#ifndef CHANDRA_DOUBLE_FORMAT_DIGITS
+#define CHANDRA_DOUBLE_FORMAT_DIGITS 4
+#endif
+
+#ifndef CHANDRA_LONG_DOUBLE_FORMAT_DIGITS
+#define CHANDRA_LONG_DOUBLE_FORMAT_DIGITS 6
+#endif
+
 namespace chandra
 {
 //
@@ -63,19 +79,19 @@ class ASCIIStreamImpl // TODO: THE SIZES OF THESE ARE NOT CLEAR.... IT SHOULD BE
 		}
 
 		StreamError ASCIIformat(const float& _value, char* _p) {
-			Decimal<float, 2>::encode(_value, _p);
+			Decimal<float, CHANDRA_FLOAT_FORMAT_DIGITS>::encode(_value, _p);
 			return StreamError::Ok;
 		}
 
 		StreamError ASCIIformat(const double& _value, char* _p) {
-			Decimal<double, 4>::encode(_value, _p);
+			Decimal<double, CHANDRA_DOUBLE_FORMAT_DIGITS>::encode(_value, _p);
 			return StreamError::Ok;
 		}
 
-        StreamError ASCIIformat(const long double& _value, char* _p) {
-            Decimal<double, 6>::encode(_value, _p);
-            return StreamError::Ok;
-        }
+    StreamError ASCIIformat(const long double& _value, char* _p) {
+        Decimal<double, CHANDRA_LONG_DOUBLE_FORMAT_DIGITS>::encode(_value, _p);
+        return StreamError::Ok;
+    }
 };
 
 class BinaryStreamImpl

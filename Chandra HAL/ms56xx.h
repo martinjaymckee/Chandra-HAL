@@ -13,11 +13,46 @@ template<class Value>
 class MS5637
 {
   protected:
+    using clock_t = chandra::chrono::Timer<>::clock_t;
+    using time_point_t = typename clock_t::time_point;
+
+    const uint32_t sensor_settling_samples = 20;
+    const uint32_t temp_point_samples = 10;
+    const uint32_t press_cal_samples = 75;
+    const uint32_t temp_cal_samples = 75;
+    const uint32_t adc_flush_samples = 25;
+
+    struct MeanVarianceEstimator
+    {
+        bool initialized = false;
+        Value weight = 0.05;
+        Value variance = 0;
+        Value mean = 0;
+
+        bool operator () (Value _val) {
+          if(!initialized) {
+            mean = _val;
+            variance = 0;
+            initialized = true;
+          } else {
+            mean = (weight * _val) + ((1-weight) * mean);
+            const auto err = _val - mean;
+            variance = (weight * (err * err)) + ((1-weight) * variance);
+          }
+
+          return true;
+        }
+    };
+
     enum update_state_t {
         PressureTrigger,
         PressureSample,
         TemperatureTrigger,
-        TemperatureSample
+        TemperatureSample,
+        InitUpdate,
+        CalTemperature,
+        CalPressureFlush,
+        CalPressure
     };
 
     enum calc_mode_t {
@@ -36,22 +71,46 @@ class MS5637
     };
 
   public:
-    static const uint8_t addr = 0x76;
+    struct UpdateStatus
+    {
+        // TODO: ADD SOMETHING TO SHOW THE "STATE" THAT THE MS5637 IS IN (NORMAL, INITIALIZING, CALIBRATING, ETC. )
+        // TODO: ADD SOMETHING THAT SHOWS THE BEGINNING OF A NEW CYCLE
+        UpdateStatus(const time_point_t& _timestamp) : timestamp{_timestamp} {}
+        bool restart = false;
+        bool processed = false;
+        bool calculated = false;
+        bool calibrating = false;
+        time_point_t timestamp;
+        operator bool() const { return calculated; }
+    };
 
+    const uint8_t addr = 0x76;
+
+    // TODO: REMOVE THE CAL_MEAN AND CHANGE CAL_VARIANCE -> variance
+    //  THIS SHOULD BE SPLIT INTO A PRESSURE PROXY AND TEMPERATURE PROXY?
+    //  ALSO, THIS NEEDS TO RETURN A QUANTITY RATHER THAN A BARE NUMBER
     class ValueProxy
     {
       public:
-        ValueProxy(Value& _val) : val_(_val) {}
+        ValueProxy(const Value& _val, const Value& _cal_mean, const Value& _cal_variance)
+          : cal_mean(_cal_mean), cal_variance(_cal_variance), val_(_val) {}
+
+        Value value() const { return val_; }
 
         template<class T>
         operator T () const { return static_cast<T>(val_); }
 
+        const Value& cal_mean;
+        const Value& cal_variance;
+
       private:
-        Value& val_;
+        const Value& val_;
     };
 
     MS5637(chandra::io::I2CMaster& _i2c)
-      : pressure(pressure_val_), temperature(temperature_val_), i2c_(_i2c) {}
+      : pressure(pressure_val_, pressure_cal_estimator_.mean, pressure_cal_estimator_.variance),
+        temperature(temperature_val_, temperature_cal_estimator_.mean, temperature_cal_estimator_.variance),
+        i2c_(_i2c) {}
 
     bool init() { // TODO: THIS FUNCTION (AND LATER THE I2C INIT FUNCTION AS WELL, NEED TO TAKE A FREQUENCY QUANTITY RATHER THAN JUST A NUMBER)
       pressure_cfg_.cmd = 0x40;
@@ -60,73 +119,220 @@ class MS5637
       i2c_.init(400000);
       i2c_.enable(true);
 
-      pressure_val_ = 12;
-      temperature_val_ = 34;
-
       loadCalibrationValues();
 
       updateOSRConfig(pressure_cfg_, 8192);
-      updateOSRConfig(temperature_cfg_, 1024);
+      updateOSRConfig(temperature_cfg_, 4096);
       updateFrequencyConfig(pressure_cfg_, 50);
-      updateFrequencyConfig(temperature_cfg_, 1);
+      updateFrequencyConfig(temperature_cfg_, 0.5);
+      // TODO: ENSURE THAT THE SAMPLE RATE IS VALID
+      // I2C TIME IS 64/F_I2C SECONDS PER SAMPLE
+
+      temperature_cal_estimator_.weight = 0.15;
+
+      if(!calibrated_) {
+        calibrate();
+      }
 
       return valid();
     }
 
-    bool update() {
+    bool calibrate(bool _blocking = false) {
+      update_state_ = initialized_ ? CalTemperature : InitUpdate;
+      calibrated_ = false;
+      sample_count_ = 0;
+      temperature_cal_estimator_.initialized = false;
+      pressure_cal_estimator_.initialized = false;
+      if(_blocking){
+        while(!calibrated_) update();
+      }
+      return true;
+    }
+
+    bool calibrated() const { return calibrated_; }
+
+    UpdateStatus update() {
+      UpdateStatus status{clock_t::now()};
+
       switch(update_state_) {
         default:
+        case InitUpdate:
+          if(initialized_) {
+            if(calibrated_) {
+              update_state_ = TemperatureTrigger;
+            } else {
+              update_state_ = CalTemperature;
+              pressure_cal_estimator_.initialized = false;
+              temperature_cal_estimator_.initialized = false;
+            }
+          } else {
+            if(sample_count_ < (temp_point_samples+sensor_settling_samples)) {
+              if(adc_running_) {
+                if(adc_timer_(status.timestamp)) {
+                  temperature_raw_ = readADC();
+                  if(sample_count_ > sensor_settling_samples) {
+                    status.calculated = calculateCorrectedValues();
+                    temperature_cal_estimator_(temperature_val_);
+                  }
+                  ++sample_count_;
+                  status.processed = true;
+                  adc_running_ = false;
+                }
+              } else {
+                sendCMD(temperature_cfg_.cmd);
+                adc_timer_.duration(20ms);
+                status.processed = true;
+                adc_running_ = true;
+              }
+            } else {
+              Tinit_ = temperature_cal_estimator_.mean;
+              temperature_cal_estimator_.initialized = false;
+              temperature_cal_estimator_.weight = 0.05;
+              sample_count_ = 0;
+              initialized_ = true;
+              update_state_ = CalTemperature;
+              status.processed = true;
+            }
+          }
+          break;
+
         case PressureTrigger:
-          if(pressure_cfg_.timer()) {
+          if(pressure_cfg_.timer(status.timestamp)) {
             sendCMD(pressure_cfg_.cmd);
             adc_timer_.duration(std::chrono::microseconds{pressure_cfg_.adc_delay_us});
             adc_timer_.reset();
             update_state_ = PressureSample;
+            status.processed = true;
           } else {
             update_state_ = TemperatureTrigger;
           }
           break;
 
         case PressureSample:
-          if(adc_timer_()) {
+          if(adc_timer_(status.timestamp)) {
             pressure_raw_ = readADC();
             update_state_ = TemperatureTrigger;
             if( (calc_mode_==OnPressure) or (calc_mode_==OnBoth) ) {
-              return calculateCorrectedValues();
+              status.calculated = calculateCorrectedValues();
             }
+            status.processed = true;
           }
           break;
 
         case TemperatureTrigger:
-          if(temperature_cfg_.timer()) {
+          if(temperature_cfg_.timer(status.timestamp)) {
             sendCMD(temperature_cfg_.cmd);
             adc_timer_.duration(std::chrono::microseconds{temperature_cfg_.adc_delay_us});
             adc_timer_.reset();
             update_state_ = TemperatureSample;
+            status.processed = true;
           } else {
             update_state_ = PressureTrigger;
           }
           break;
 
         case TemperatureSample:
-          if(adc_timer_()) {
+          if(adc_timer_(status.timestamp)) {
             temperature_raw_ = readADC();
             update_state_ = PressureTrigger;
             if( (calc_mode_==OnTemperature) or (calc_mode_==OnBoth) ) {
-              return calculateCorrectedValues();
+              status.calculated = calculateCorrectedValues();
             }
+            status.processed = true;
+          }
+          break;
+
+        case CalTemperature:
+          status.calibrating = true;
+          if(sample_count_ < temp_cal_samples) {
+            if(adc_running_) {
+              if(adc_timer_(status.timestamp)) {
+                temperature_raw_ = readADC();
+                status.calculated = calculateCorrectedValues();
+                temperature_cal_estimator_(temperature_val_);
+                ++sample_count_;
+                status.processed = true;
+                adc_running_ = false;
+              }
+            } else {
+              sendCMD(temperature_cfg_.cmd);
+              adc_timer_.duration(20ms);
+              status.processed = true;
+              adc_running_ = true;
+            }
+          } else {
+            sample_count_ = 0;
+            update_state_ = CalPressureFlush;
+            status.processed = true;
+          }
+          break;
+
+        case CalPressureFlush:
+          status.calibrating = true;
+          if(sample_count_ < adc_flush_samples) {
+            if(adc_running_) {
+              if(adc_timer_(status.timestamp)) {
+                readADC();
+                ++sample_count_;
+                status.processed = true;
+                adc_running_ = false;
+              }
+            } else {
+              sendCMD(pressure_cfg_.cmd);
+              adc_timer_.duration(20ms);
+              status.processed = true;
+              adc_running_ = true;
+            }
+          } else {
+            sample_count_ = 0;
+            update_state_ = CalPressure;
+            status.processed = true;
+          }
+          update_state_ = CalPressure;
+          break;
+
+        case CalPressure:
+          status.calibrating = true;
+          if(sample_count_ < press_cal_samples) {
+            if(adc_running_) {
+              if(adc_timer_(status.timestamp)) {
+                pressure_raw_ = readADC();
+                status.calculated = calculateCorrectedValues();
+                pressure_cal_estimator_(pressure_val_);
+                ++sample_count_;
+                status.processed = true;
+                adc_running_ = false;
+              }
+            } else {
+              sendCMD(pressure_cfg_.cmd);
+              adc_timer_.duration(20ms);
+              status.processed = true;
+              adc_running_ = true;
+            }
+          } else {
+            sample_count_ = 0;
+            update_state_ = TemperatureTrigger;
+            status.processed = true;
+            calibrated_ = true;
           }
           break;
       }
 
-      return false;
+      return status;
     }
 
-    // TODO: THIS NEEDS TO BE CONST.  FIX THE CRC CALCULATION
-    bool valid() { // TODO: DECIDE IF THERE IS ANYTHING ELSE THAT SHOULD BE CHECKED TO DETERMINE VALIDITY
+    bool valid() const { // TODO: DECIDE IF THERE IS ANYTHING ELSE THAT SHOULD BE CHECKED TO DETERMINE VALIDITY
       const uint8_t crc = (C_[0] >> 12) & 0x0F;
-      return crc == crc4(C_);
+      return (crc == crc4(C_)) and initialized_ and calibrated_;
     }
+
+    Value setSelfHeating() {
+      Tselfheating_ = temperature_val_ - Tinit_;
+      return Tselfheating_;
+    }
+
+    Value Tinit() const { return Tinit_; }
+    Value Tselfheating() const { return Tselfheating_; }
 
     ValueProxy pressure;
     ValueProxy temperature;
@@ -191,7 +397,7 @@ class MS5637
       _cfg.osr = 256;
 
     	const uint32_t us_slope = 513; // TODO: MOVE THIS TO THE TOP TO MAKE CONFIGURATION EASIER
-    	const uint32_t us_offset = 34;
+    	const uint32_t us_offset = 45;
 
     	while( (_osr > _cfg.osr) and (_cfg.osr < 8192) ) {
     		++shift;
@@ -205,12 +411,16 @@ class MS5637
     	return true;
     }
 
-    bool updateFrequencyConfig(SampleConfig& _cfg, const uint8_t& _freq) {
-      const uint32_t sample_us = 1000000UL / _freq;
+    bool updateFrequencyConfig(SampleConfig& _cfg, const auto& _freq) {
+      const uint32_t sample_us = (1000000UL + (_freq/2)) / _freq;
       _cfg.timer.duration(std::chrono::microseconds{sample_us});
       return true;
     }
 
+    // NOTE: IT MAKES SENSE TO MOVE THIS INTO A BASE CLASS SO THAT I CAN ALSO
+    //  WRITE A FLOATING-POINT VERSION FOR USE WITH FLOATING-POINT VALUE TYPES.
+    //  THIS WILL ALSO MAKE IT POSSIBLE TO MOVE THE CALCULATION OF THE CONSTANTS
+    //  TO CALIBRATION LOAD TIME, WHICH IS A NICE OPTIMIZATION.
     bool calculateCorrectedValues() {
       const int64_t Tref = 256 * static_cast<int64_t>(C_[5]);
       const int64_t dT = static_cast<int64_t>(temperature_raw_) - Tref;
@@ -244,15 +454,17 @@ class MS5637
 
       const int64_t P = (((static_cast<int64_t>(pressure_raw_) * sens) / 2097152) - off) / 32768LL;
       pressure_val_ = static_cast<Value>(P) / Value{100};
-      temperature_val_ = static_cast<Value>(T) / Value{100};
+      temperature_val_ = static_cast<Value>(T+T2) / Value{100};
 
-      (void) T2;
-      (void) P;
       return true;
     }
 
   private:
-    update_state_t update_state_ = TemperatureTrigger;
+    bool initialized_ = false;
+    bool calibrated_ = false;
+    bool adc_running_ = false;
+    uint32_t sample_count_;
+    update_state_t update_state_ = InitUpdate;
     calc_mode_t calc_mode_ = OnPressure;
     chandra::chrono::Timer<> adc_timer_;
     chandra::io::I2CMaster& i2c_;
@@ -262,6 +474,10 @@ class MS5637
     uint32_t temperature_raw_;
     Value pressure_val_;
     Value temperature_val_;
+    MeanVarianceEstimator pressure_cal_estimator_;
+    MeanVarianceEstimator temperature_cal_estimator_;
+    Value Tinit_ = 0;
+    Value Tselfheating_ = 0;
     uint16_t C_[8];
 };
 
