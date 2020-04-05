@@ -121,7 +121,12 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
       return true;
     }
 
-    bool put( char _ch ) {
+    bool put(char _ch, bool _raw = false) {
+      if(!_raw) {
+        if(_ch == '\n') {
+          return newline();
+        }
+      }
       const bool success = data(_ch);
       cur_pos_ = advance_position(cur_pos_, 1);
       return success;
@@ -151,6 +156,12 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
 		// 	}
 		// 	return true;
 		// }
+
+
+    bool newline() {
+      const uint8_t new_row = (cur_pos_.row+1)%Rows;
+      return pos(new_row, 0);
+    }
 
   protected:
     constexpr uint8_t row_addr(const uint8_t _row) {
@@ -258,11 +269,6 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
       const uint8_t row = (idx / Columns) % Rows;
       const uint8_t column = idx % Columns;
       return {row, column};
-    }
-
-    bool newline() {
-      const uint8_t new_row = (cur_pos_.row+1)%Rows;
-      return pos(new_row, 0);
     }
 
   private:
