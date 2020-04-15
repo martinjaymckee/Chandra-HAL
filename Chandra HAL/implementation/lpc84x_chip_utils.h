@@ -82,8 +82,8 @@ namespace chandra
 	class GPIO
 	{
 		public:
-			static constexpr uint8_t clkIndex(const uint8_t& /*_port*/) {
-				return 6;
+			static constexpr uint8_t clkIndex(const uint8_t& _port) {
+				return _port == 0 ? 6 : 20;
 			}
 
 			static bool enableClk(const uint8_t& _port, const bool& _value=true ) {

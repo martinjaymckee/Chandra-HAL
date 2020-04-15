@@ -11,7 +11,6 @@
 #include <stdint.h>
 
 #if defined(__LPC82X__)
-//#include <LPC8xx.h>
 #include<chip.h>
 #elif defined(__LPC84X__)
 #include <LPC8xx.h>

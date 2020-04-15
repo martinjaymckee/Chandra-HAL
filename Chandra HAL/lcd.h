@@ -26,6 +26,7 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
 {
   protected:
     using io_t = chandra::io::IO;
+    using ref_t = CharacterLCD<Rows, Columns>;
 
     enum lcd_mode_t {
         FourBit,
@@ -121,16 +122,7 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
       return true;
     }
 
-    bool put(char _ch, bool _raw = false) {
-      if(!_raw) {
-        if(_ch == '\n') {
-          return newline();
-        }
-      }
-      const bool success = data(_ch);
-      cur_pos_ = advance_position(cur_pos_, 1);
-      return success;
-		}
+    bool pos(const Pos& _pos) { return pos(_pos.row, _pos.column); }
 
     bool display(bool _visible) {
       display_visible_ = _visible;
@@ -161,6 +153,27 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
     bool newline() {
       const uint8_t new_row = (cur_pos_.row+1)%Rows;
       return pos(new_row, 0);
+    }
+
+    //
+    // Stream Functions
+    //
+    bool put(char _ch, bool _raw = false) {
+      if(!_raw) {
+        if(_ch == '\n') {
+          return newline();
+        }
+      }
+      const bool success = data(_ch);
+      bool overflow;
+      cur_pos_ = advance_position(cur_pos_, 1, overflow);
+      if(overflow) pos(cur_pos_);
+      return success;
+		}
+
+    ref_t& operator << (eol) {
+      newline();
+      return *this;
     }
 
   protected:
@@ -263,11 +276,12 @@ class CharacterLCD : public Stream<CharacterLCD<Rows, Columns>>
       return 0;
     }
 
-    constexpr Pos advance_position(const Pos& _pos, uint8_t _adv) const {
+    constexpr Pos advance_position(const Pos& _pos, uint8_t _adv, bool& _overflow) const {
       // TODO: THIS IS LIKELY TO BE VERY SLOW.  LOOK INTO MAKING THIS MORE EFFICIENT
       const uint32_t idx = (_pos.row * Columns + _pos.column) + _adv;
       const uint8_t row = (idx / Columns) % Rows;
       const uint8_t column = idx % Columns;
+      _overflow = row != _pos.row;
       return {row, column};
     }
 

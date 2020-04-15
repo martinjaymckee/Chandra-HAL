@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#if defined(__LPC15XX__) || defined(__LPC82X__)
+#if defined(__LPC82X__) || defined(__LPC15XX__)
 #include <chip.h>
 #elif defined(__LPC84X__)
 #include <LPC8xx.h>
@@ -22,9 +22,12 @@ namespace chandra
 namespace io
 {
 
+
+//template<class Clock = chandra::chrono::timestamp_clock>
 class I2CMaster
 {
 	public:
+		using clock_t = chandra::chrono::timestamp_clock; // This should come from a template parameter... Clock;
 		using size_t = uint32_t;
 
 		#if defined(__LPC82X__) || defined(__LPC15XX__)
@@ -75,12 +78,29 @@ class I2CMaster
 
 			} // TODO: ADD THE ABILITY TO CONFIGURE PINS ON SOME I2C PERIPHERALS
 
-		void init(const uint32_t& _f_i2c = 400000 ) {
+		bool init(const uint32_t& _f_i2c = 400000, bool _auto_enable = true) {
 
 			//	Enable the I2C Clock & Reset the Peripheral
 			#if defined(__LPC82X__)
-			SystemClock::enable(0, 5); // TODO: CHECK THESE REGISTERS AND BITS
-			PeripheralActivity::reset(0, 6);
+			switch(num_) {
+				default:
+				case 0:
+					SystemClock::enable(0, 5);
+					PeripheralActivity::reset(0, 6);
+					break;
+				case 1:
+					SystemClock::enable(0, 21);
+					PeripheralActivity::reset(0, 14);
+					break;
+				case 2:
+					SystemClock::enable(0, 22);
+					PeripheralActivity::reset(0, 15);
+					break;
+				case 3:
+					SystemClock::enable(0, 23);
+					PeripheralActivity::reset(0, 16);
+					break;
+			}
 			#elif defined(__LPC84X__)
 			switch(num_) {
 				default:
@@ -116,8 +136,10 @@ class I2CMaster
 			FixedFunctionIO::enable(0, 12);
 
 			//	Set Pins for standard I2C Mode
+			SystemClock::enable(0, 18);
 			LPC_IOCON->PIO0[IOCON_PIO10] = 0x80; // Bit 7 is reserved and is supposed to be a 1
 			LPC_IOCON->PIO0[IOCON_PIO11] = 0x80;
+			SystemClock::enable(0, 18, false);
 	#elif defined(__LPC84X__)
 			//	Configure the SWM
 			//	Enable AHB clock domains for SWM
@@ -155,6 +177,7 @@ class I2CMaster
 			LPC_IOCON->PIO[0][22] = 0x00; // TODO: CHECK THIS CONFIGURATION
 			LPC_IOCON->PIO[0][23] = 0x00;
 	#endif
+			return enable(_auto_enable);
 		}
 
 		bool enable(bool _enable = true) {
@@ -212,7 +235,7 @@ class I2CMaster
 
 					i2c_->MSTDAT = _data[index];
 					continueTXRX();
-					waitForPending();
+					if(!waitForPending()) return I2CStatus(I2C_TIMEOUT);
 				}
 				stop(_framing);
 			} else if(status == IDLE) {
@@ -231,7 +254,7 @@ class I2CMaster
 				for(size_t index = 0; index < _cnt; ++index) {
 					_data[index] = i2c_->MSTDAT;
 					continueTXRX();
-					waitForPending();
+					if(!waitForPending()) return I2CStatus(I2C_TIMEOUT);
 					state = masterState();
 					if(state != RX_AVAIL){
 						// ?? STOP
@@ -262,7 +285,7 @@ class I2CMaster
 					i2c_->MSTDAT = start_byte;
 					i2c_->STAT;
 					i2c_->MSTCTL = (1<<1); // Trigger the start
-					waitForPending();
+					if(!waitForPending()) return START_STOP_ERROR;
 					state = masterState();
 					if((state == ARBITRATION_LOST) || (state == START_STOP_ERROR)){
 						continueTXRX(); // Clear the error flags and try again
@@ -293,8 +316,15 @@ class I2CMaster
 			return masterState();
 		}
 
-		void waitForPending() const {
-			while( !((i2c_->STAT) & (1<<0)) ) {};
+		// NOTE: THIS HAS BEEN MODIFIED TO HANDLE TIMEOUT...
+		//	THIS REQUIRES MORE CODE BUT IT SHOULDN'T BE MUCH SLOWER... SINCE IT IS A BUSY LOOP ANYWAY.
+		bool waitForPending() const {
+			const auto start = clock_t::now();
+			while( !((i2c_->STAT) & (1<<0)) ) {
+				// TODO: FIX TIMEOUT HANDLING...
+				if(false and chandra::chrono::after(10ms, start, clock_t::now())) return false;
+			}
+			return true;
 		}
 
 		I2CMasterState masterState() const {
@@ -361,7 +391,7 @@ class I2CMaster
 
 	private:
 		uint8_t num_;
-		volatile lpc_peripheral_t* i2c_;
+		mutable volatile lpc_peripheral_t* i2c_;  // TODO: FIGURE OUT IF BOTH MUTABLE AND VOLATILE ARE REQUIRED
 		const chandra::io::IO scl_;
     const chandra::io::IO sda_;
 };

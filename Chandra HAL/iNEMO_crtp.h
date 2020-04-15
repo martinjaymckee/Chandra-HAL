@@ -10,6 +10,10 @@
 #include "thermal.h"
 #include "timing.h"
 
+// TODO: FIGURE OUT HOW THIS CAN BE SPECIALIZED FOR LSM6DSM, LSM6DS3, LSM6DS...
+//  ARE THERE DIFFERENCES IN THE REGISTER MAP?  IF SO, HOW LARGE ARE THEY? DO
+//  THOSE DIFFERENCES REQUIRE DIFFRENT ALGORITHMS?
+
 namespace chandra
 {
 namespace drivers
@@ -305,11 +309,16 @@ class LSM6DSM
 
         LSM6DSM(register_access_t _regs) : base_t(_regs), regs_(_regs) {}
 
+        bool init() {
+          enable(true);
+          return id() == 0x69;// LSM6DS3 //0x6A // LSM6DSM
+        }
+
         bool enable(bool) {
             // Configure Device
             //writeRegister(INT1_CTRL, 0x01); // Use Int1 for XL DRDY
             //writeRegister(INT2_CTRL, 0x02); // Use Int2 for G DRDY
-            return id() == 0x69; //0x6A;
+            return true;
         }
 
         // TODO: THIS SHOULD HAVE AN ENABLE FUNCTION (WHICH IS CALLED BY DEFAULT FROM THE INIT)

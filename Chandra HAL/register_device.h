@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-//#include "i2c.h" // TODO: NEED TO PORT THE I2C HEADER AND CREATE A REGISTER DEVICE
+#include "i2c.h"
 #include "spi.h"
 
 namespace chandra
@@ -46,20 +46,38 @@ struct RegisterDevice
 
         // 16-Bit Half Word
         void write(const uint8_t /*reg*/, const uint16_t /*data*/) {}
+};
 
-        //
-        // Register Update Commands
-        //
-        //  Single Byte
-        void update(const uint8_t /*reg*/, const uint8_t /*mask*/, const uint8_t /*data*/) {}
+template<class Derived>
+struct RegisterDeviceMixin
+{
+  //
+  // Register Update Commands
+  //
 
-        //  16-Bit Half Word
-        void update(const uint8_t /*reg*/, const uint16_t /*mask*/, const uint16_t /*data*/) {}
+  //  Single Byte
+  void update(const uint8_t reg, const auto mask, const uint8_t data) {
+      const uint8_t init = static_cast<Derived*>(this)->byte(reg);
+      const uint8_t new_data = (init&~mask)|(data&mask);
+      return static_cast<Derived*>(this)->write(reg, new_data);
+  }
+
+  // 16-Bit Half Word
+  void update(const uint8_t reg, const auto mask, const uint16_t& data) {
+      const uint16_t init = static_cast<Derived*>(this)->hword(reg);
+      const uint16_t new_data = (init&~mask)|(data&mask);
+      return static_cast<Derived*>(this)->write(reg, new_data);
+  }
+
+  // TODO: IMPLEMET REGISTER FIELD UPDATE COMMANDS
+  //  FOR INSTANCE FIELD(REG, OFFSET, WIDTH, VALUE)
+  //  HOW TO HANDLE BYTE REGISTERS VS. HWORD REGISTERS
 };
 
 // SPI Register Machine Implementation
 template<>
 struct RegisterDevice<chandra::io::SPIMaster>
+ : public RegisterDeviceMixin<RegisterDevice<chandra::io::SPIMaster>>
 {
         using comm_t = chandra::io::SPIMaster;
         using util_t = chandra::io::SPI;
@@ -95,36 +113,72 @@ struct RegisterDevice<chandra::io::SPIMaster>
             return static_cast<int16_t>((uint16_t(val[1])<<8)|val[0]);
         }
 
-        void write(const uint8_t reg, const uint8_t data) {
+        void write(const uint8_t reg, const uint8_t& data) {
             const uint8_t cmd[2] = {reg, data};
             comm.tx(cmd, 2, cs);
             return;
         }
 
-        void write(const uint8_t reg, const uint16_t data) {
+        void write(const uint8_t reg, const uint16_t& data) {
             const uint8_t cmd[3] = {reg, static_cast<uint8_t>(data>>8), static_cast<uint8_t>(data&0xFF)};
             comm.tx(cmd, 3, cs);
             return;
-        }
-
-        void update(const uint8_t reg, const auto mask, const uint8_t data) {
-            const uint8_t init = byte(reg);
-            const uint8_t new_data = (init&~mask)|(data&mask);
-            return write(reg, new_data);
-        }
-
-        void update(const uint8_t reg, const auto mask, const uint16_t data) {
-            const uint16_t init = hword(reg);
-            const uint16_t new_data = (init&~mask)|(data&mask);
-            return write(reg, new_data);
         }
 
         comm_t comm;
         util_t::cs_t cs;
 };
 
+// I2C Register Machine Implementation
+//  THERE ARE A NUMBER OF CONST CORRECTNESS PROBLEMS WITH THIS THAT ARE A RESULT OF
+//    THE I2C OBJECT NOT BEING AS CONST CORRECT AS WOULD BE NICE.  WORK ON THAT
+template<>
+struct RegisterDevice<chandra::io::I2CMaster>
+ : public RegisterDeviceMixin<RegisterDevice<chandra::io::I2CMaster>>
+{
+        using comm_t = chandra::io::I2CMaster;
+        using ref_t = RegisterDevice<comm_t>;
+
+        RegisterDevice(comm_t& _comm, uint8_t _addr)
+            : comm(_comm), addr(_addr) {}
+
+        RegisterDevice(const ref_t& _other) : comm(_other.comm), addr(_other.addr) {}
+
+        uint8_t byte(const uint8_t reg) { // CONST
+            uint8_t val;
+            comm.readReg(addr, reg, &val);
+            return val;
+        }
+
+        template<size_t N>
+        uint8_t bytes(const uint8_t reg, const size_t _num, uint8_t (&_buffer)[N]) { // CONST
+            const size_t num = std::min(N, _num);
+            comm.readReg(addr, reg, _buffer, num);
+            return num;
+        }
+
+        int16_t hword(const uint8_t reg) { // CONST
+            uint8_t val[2];
+            comm.readReg(addr, reg, val);
+            return static_cast<int16_t>((uint16_t(val[1])<<8)|val[0]);
+        }
+
+        void write(const uint8_t reg, const uint8_t& data) {
+            comm.writeReg(addr, reg, &data);
+            return;
+        }
+
+        void write(const uint8_t reg, const uint16_t& _data) {
+            const uint8_t data[2] = {static_cast<uint8_t>(_data>>8), static_cast<uint8_t>(_data&0xFF)};
+            comm.writeReg(addr, reg, data, 2);
+            return;
+        }
+
+        comm_t comm;
+        uint8_t addr;
+};
+
 } /*namespace drivers*/
 } /*namespace chandra*/
 
 #endif /*CHANDRA_REGISTER_DEVICE_H*/
-

@@ -33,3 +33,8 @@ rather, a place to drop ideas so they don't get forgotten.
     5. AI
     6. ???
 4. Create a "cookbook" of code snippets for all libraries at least at the HAL level and higher.
+5. Describe use of libraries with MCUXpresso
+    - Required system libraries LPCOpen, LPC8xx.h, etc.
+    - Compilation settings, preprocessor, etc.
+    - Hardware used by library
+    - 

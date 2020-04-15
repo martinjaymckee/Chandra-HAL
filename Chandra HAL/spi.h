@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#if defined(__LPC82X__) || defined(__LPC15XX__)
+#if defined(__LPC82X__) ||defined(__LPC15XX__)
 #include <chip.h>
 #elif defined(__LPC84X__)
 #include <LPC8xx.h>
@@ -131,7 +131,7 @@ class SPIMaster
 		bool enable() const { return spi_->CFG & (1<<0); }
 		uint8_t mode() const { return (spi_->CFG >> 4) & 0x03; }
 
-        void tx(const value_t* _buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
+    void tx(const value_t* _buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
 			uint16_t ctrl = 0;
 
 			//	Set Transfer Packet Length and RXIGNORE
@@ -190,7 +190,7 @@ class SPIMaster
 		}
 
 
-        value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
+    value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
 			value_t* out_buf = _out_buf;
 			uint16_t ctrl = 0;
 
@@ -320,8 +320,8 @@ class SPIMaster
 			return;
 		}
 
-        uint8_t num_;
-        mutable SPI::lpc_peripheral_t* spi_;
+    uint8_t num_;
+    mutable SPI::lpc_peripheral_t* spi_;
 		uint8_t len_;
 };
 

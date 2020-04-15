@@ -65,43 +65,46 @@ struct SensorUpdateStatus
         timestamp_t timestamp;
 };
 
-template<typename Stream>
-Stream& operator << (Stream& _stream, const SensorUpdateStatus& _status) {
-    _stream << "SensorUpdateStatus( ";
-    if(_status.updated){
-        _stream << "updated";
-    } else {
-        _stream << "held";
-    }
-    _stream << ", " << _status.timestamp.time_since_epoch().count();
-    if(!_status.ok()) {
-        bool first = true;
-        _stream << ", ";
-        if(_status.errors.communication()) {
-            _stream << "CommunicationsError";
-            first = false;
-        }
-        if(_status.errors.timeout()) {
-            if(!first) _stream << "|";
-            _stream << "TimeoutError";
-            first = false;
-        }
-        if(_status.errors.arithmetic()) {
-            if(!first) _stream << "|";
-            _stream << "ArithmeticError";
-            first = false;
-        }
-        if(_status.errors.mode()) {
-            if(!first) _stream << "|";
-            _stream << "ModeError";
-        }
-    }
-    _stream << " )";
-    return _stream;
-}
+// TODO: FIGURE OUT HOW TO MAKE THIS WORK WITH THE STREAM FUNCTIONALITY...
+//  THIS IS PROBABLY GOING TO REQUIRE USING SFINAE OR SOMETHING IN THE CORE OF
+//  OF THE STREAM LIBRARY
+
+// template<typename Stream>
+// Stream& operator << (Stream& _stream, const SensorUpdateStatus& _status) {
+//     _stream << "SensorUpdateStatus( ";
+//     if(_status.updated){
+//         _stream << "updated";
+//     } else {
+//         _stream << "held";
+//     }
+//     _stream << ", " << _status.timestamp.time_since_epoch().count();
+//     if(!_status.ok()) {
+//         bool first = true;
+//         _stream << ", ";
+//         if(_status.errors.communication()) {
+//             _stream << "CommunicationsError";
+//             first = false;
+//         }
+//         if(_status.errors.timeout()) {
+//             if(!first) _stream << "|";
+//             _stream << "TimeoutError";
+//             first = false;
+//         }
+//         if(_status.errors.arithmetic()) {
+//             if(!first) _stream << "|";
+//             _stream << "ArithmeticError";
+//             first = false;
+//         }
+//         if(_status.errors.mode()) {
+//             if(!first) _stream << "|";
+//             _stream << "ModeError";
+//         }
+//     }
+//     _stream << " )";
+//     return _stream;
+// }
 
 } /*namespace drivers*/
 } /*namespace chandra*/
 
 #endif /*CHANDRA_SENSOR_UTILS_H*/
-

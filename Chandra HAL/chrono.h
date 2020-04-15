@@ -25,6 +25,7 @@ using namespace std::literals::chrono_literals;
 namespace chrono
 {
 
+// TODO: REALLY NEED TO BE ABLE TO CONFIGURE THE CLOCK FREQUENCY OF THE SYSTEM... GET RID OF SYSTEMCORECLOCK!
 class frequency
 {
 	public:
@@ -35,7 +36,7 @@ class frequency
 	#elif defined(__CHANDRA_MOCK__)
     static rep core() { return rep{50000000}; }
 	#else
-		static rep core() { return rep{SystemCoreClock}; }
+		static rep core() { return rep{12000000}; }//SystemCoreClock}; }
 	#endif
 
   	static rep main() { return rep{LPC_SYSCON->SYSAHBCLKDIV * core()}; }

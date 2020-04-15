@@ -112,13 +112,16 @@ class MS5637
         temperature(temperature_val_, temperature_cal_estimator_.mean, temperature_cal_estimator_.variance),
         i2c_(_i2c) {}
 
-    bool init() { // TODO: THIS FUNCTION (AND LATER THE I2C INIT FUNCTION AS WELL, NEED TO TAKE A FREQUENCY QUANTITY RATHER THAN JUST A NUMBER)
+    bool init(const uint32_t _f_i2c=400000) {// TODO: THIS FUNCTION (AND LATER THE I2C INIT FUNCTION AS WELL, NEED TO TAKE A FREQUENCY QUANTITY RATHER THAN JUST A NUMBER)
       pressure_cfg_.cmd = 0x40;
       temperature_cfg_.cmd = 0x50;
 
-      i2c_.init(400000);
+      i2c_.init(_f_i2c); // TODO: CHECK THAT THESE WORK...
       i2c_.enable(true);
 
+      reset();
+
+      // This should probably return communication errors
       loadCalibrationValues();
 
       updateOSRConfig(pressure_cfg_, 8192);
@@ -130,11 +133,21 @@ class MS5637
 
       temperature_cal_estimator_.weight = 0.15;
 
+      adc_timer_.run();
+
       if(!calibrated_) {
         calibrate();
       }
 
       return valid();
+    }
+
+    bool reset() {
+      // TODO: TO MAKE THIS EVEN MORE LIKELY TO WORK, TAKE MANUAL CONTROL OF THE SCL PINS
+      // AND TOGGLE THE SCL LINE SEVERAL TIMES BEFORE SENDING THE COMMAD...
+      sendCMD(0x1E);
+      // TODO: IT MAY MAKE SENSE TO USE SOME AMOUNT OF DELAY AFTER THE SOFTWARE RESET...?
+      return true;
     }
 
     bool calibrate(bool _blocking = false) {
@@ -361,10 +374,10 @@ class MS5637
       return (static_cast<uint32_t>(bytes[0]) << 16) | (static_cast<uint32_t>(bytes[1]) << 8) | bytes[2];
     }
 
-    uint8_t crc4(const uint16_t (&_C)[8]) const {
+    uint8_t crc4(const uint16_t (&Ci)[8]) const {
       uint16_t C[8];
       for(uint8_t cnt = 0; cnt < 8; ++cnt) {
-        C[cnt] = _C[cnt];
+        C[cnt] = Ci[cnt];
       }
     	uint16_t rem = 0; // crc reminder
 

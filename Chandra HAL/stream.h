@@ -114,10 +114,10 @@ template<class Derived>
 class Stream : public ASCIIStreamImpl, public BinaryStreamImpl
 {
 	public:
-		bool puts(const char* _p) { // TODO: THIS SHOULD REALLY USE UINT8_T....
+		bool puts(const char* _p, bool _raw=false) { // TODO: THIS SHOULD REALLY USE UINT8_T....
 			char c;
 			while((c=*_p) != '\0'){
-				if(!static_cast<Derived*>(this)->put(c)) return false;
+				if(!static_cast<Derived*>(this)->put(c, _raw)) return false;
 				++_p;
 			}
 
@@ -165,8 +165,36 @@ struct eol {
 	eol() {}
 };
 
+struct RawCharacterWrapper
+{
+	RawCharacterWrapper(char _ch) : ch(_ch) {}
+	char ch;
+};
+
+struct RawStringWrapper
+{
+	RawStringWrapper(const char* _s) : s(_s) {}
+	const char* s;
+};
+
+// TODO: CREATE A RAW STRING WRAPPER LIKE THE CHARACTER WRAPPER
+
+static inline RawCharacterWrapper raw_c(char _ch) { return {_ch}; }
+
 template<class Derived>
-Stream<Derived>& operator << (Stream<Derived>& _stream, eol) { return _stream; }
+Derived& operator << (Stream<Derived>& _stream, eol) { return _stream; }
+
+template<class Derived>
+Derived& operator << (Stream<Derived>& _stream, const RawCharacterWrapper& _raw) {
+	static_cast<Derived*>(&_stream)->put(_raw.ch, true);
+	return *static_cast<Derived*>(&_stream);
+}
+
+template<class Derived>
+Derived& operator << (Stream<Derived>& _stream, const RawStringWrapper& _raw) {
+	static_cast<Derived*>(&_stream)->puts(_raw.s, true);
+	return *static_cast<Derived*>(&_stream);
+}
 
 //
 // Fixed-Width Manipulator

@@ -224,7 +224,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		//
 		// Stream Functionality
 		//
-		bool put( char _ch ) {
+		bool put(char _ch, bool /*_raw*/ = false ) {
 //            NVIC_DisableIRQ(irq_num_);
 			waitForBuffer();
             tx_buffer_ << _ch;
