@@ -89,8 +89,8 @@ class RecursiveMeanVarianceFilter
 
         template<class V>
         bool initalize_timeconstants( const auto& _tau_mean, auto& _tau_var, const frequency_t<V>& _fs ) {
-          const auto tau_mean = std::chrono::duration_cast<std::chrono:us>(_tau_mean);
-          const auto tau_var = std::chrono::duration_cast<std::chrono::us>(_tau_var);
+          const auto tau_mean = std::chrono::duration_cast<std::chrono::microseconds>(_tau_mean);
+          const auto tau_var = std::chrono::duration_cast<std::chrono::microseconds>(_tau_var);
           const auto ts = calcSampleTime(_fs.value());
           A_ = calcCoef(tau_mean.count(), ts);
           B_ = calcCoef(tau_var.count(), ts);
@@ -151,7 +151,7 @@ class RecursiveMeanVarianceFilter
 
     protected:
         constexpr scalar_t calcD(scalar_t _A, scalar_t _B) const {
-          return ((scalar(1.0) - B_) + (scalar(1.0) + A_)) / scalar_t(2.0);
+          return ((scalar_t(1.0) - B_) + (scalar_t(1.0) + A_)) / scalar_t(2.0);
         }
 
         constexpr scalar_t calcCoef(scalar_t _tau, scalar_t _ts) const {
@@ -163,7 +163,7 @@ class RecursiveMeanVarianceFilter
           return 0;
         }
 
-        constexpr std::chrono::us calcSampleTime(const scalar_t& _fs) const {
+        constexpr std::chrono::microseconds calcSampleTime(const scalar_t& _fs) const {
           return {scalar_t(1000000) / _fs}; // TODO: THIS IS PROBABLY GOING TO REQUIRE A DURATION CAST....
         }
 

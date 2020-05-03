@@ -34,15 +34,23 @@ class Quantity
         explicit Quantity() : val_{0} {}
         explicit Quantity(value_t _val) : val_(_val) {}
 
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         Quantity(const Quantity<V, U>& _other){
-            val_ = units::convert<Units, U>(_other.value());
+            val_ = units::convert<Value, Units, U>(_other.value());
         }
 
         // Assignment
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr auto operator = (const Quantity<V, U>& _val) {
-            val_ = units::convert<Units, U>(_val);
+            val_ = units::convert<Value, Units, U>(_val);
             return *this;
         }
 
@@ -50,39 +58,63 @@ class Quantity
         // Comparison Operations
         //
         //  Equality
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator == (const Quantity<V, U>& _val) const {
-            return val_ == units::convert<Units, U>(_val).value();
+            return val_ == units::convert<Value, Units, U>(_val.value());
         }
 
         //  Inequality
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator != (const Quantity<V, U>& _val) const {
-            return val_ != units::convert<Units, U>(_val).value();
+            return val_ != units::convert<Value, Units, U>(_val.value());
         }
 
         //  Greater Than
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator > (const Quantity<V, U>& _val) const {
-            return val_ > units::convert<Units, U>(_val).value();
+            return val_ > units::convert<Value, Units, U>(_val.value());
         }
 
         //  Greater Than or Equal
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator >= (const Quantity<V, U>& _val) const {
-            return val_ >= units::convert<Units, U>(_val).value();
+            return val_ >= units::convert<Value, Units, U>(_val.value());
         }
 
         //  Less Than
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator < (const Quantity<V, U>& _val) const {
-            return val_ < units::convert<Units, U>(_val).value();
+            return val_ < units::convert<Value, Units, U>(_val.value());
         }
 
         //  Less Than or Equal
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr bool operator <= (const Quantity<V, U>& _val) const {
-            return val_ <= units::convert<Units, U>(_val).value();
+            return val_ <= units::convert<Value, Units, U>(_val.value());
         }
 
         //
@@ -94,23 +126,31 @@ class Quantity
         }
 
         //  Addition
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr auto operator += (const Quantity<V, U>& _val) {
-            val_ += units::convert<Units, U>(_val);
+            val_ += units::convert<Value, Units, U>(_val);
             return *this;
         }
 
         //  Subtraction
-        template<typename V, typename U>
+        template<
+          typename V,
+          typename U,
+          typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
+        >
         constexpr auto operator -= (const Quantity<V, U>& _val) {
-            val_ -= units::convert<double, Units, U>(_val);
+            val_ -= units::convert<Value, Units, U>(_val);
             return *this;
         }
 
         //  NOTE: SCALAR MULTIPLICATION AND DIVISION ONLY WORK IF V IS NOT A QUANTITY
         //      ALSO, THEY DO NOT WORK THE SAME WAY WITH UNITS THAT HAVE A BASE (LIKE ABSOLUTE TEMPERATURE)
         //  Scalar Multiplication -- This only works if V is not a quantity
-        template<typename V>
+        template<typename V, typename scalar = typename std::enable_if<!match_quantity(V()), void>::type>
         constexpr auto operator *= (const V& _val) {
             static_assert(
                 !match_quantity(_val),
@@ -121,7 +161,7 @@ class Quantity
         }
 
         //  Scalar Division
-        template<typename V>
+        template<typename V, typename scalar = typename std::enable_if<!match_quantity(V()), void>::type>
         constexpr auto operator /= (const V& _val) {
             static_assert(
                 !match_quantity(_val),
@@ -140,15 +180,17 @@ class Quantity
 template<typename V1, typename U1, typename V2, typename U2>
 constexpr auto operator + (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULDN'T WORK IF BOTH ARE ABSOLUTE UNITS
-    using return_t = Quantity<std::common_type_t<V1, V2>, U1>;
-    return return_t(_a.value() + convert<U1, U2>(_b.value()));
+    using Value = std::common_type_t<V1, V2>;
+    using return_t = Quantity<Value, U1>;
+    return return_t(_a.value() + convert<Value, U1, U2>(_b.value()));
 }
 
 template<typename V1, typename U1, typename V2, typename U2>
 constexpr auto operator - (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULD WORK ONLY IF BOTH ARE EITHER RELATIVE OR ABSOLUTE UNITS
-    using return_t = Quantity<std::common_type_t<V1, V2>, U1>;
-    return return_t(_a.value() - convert<U1, U2>(_b.value()));
+    using Value = std::common_type_t<V1, V2>;
+    using return_t = Quantity<Value, U1>;
+    return return_t(_a.value() - convert<Value, U1, U2>(_b.value()));
 }
 
 // MULTIPLICATION AND DIVISION SHOULD WORK ONLY IF BOTH UNITS ARE RELATIVE
@@ -222,7 +264,7 @@ Stream& operator << (Stream& _stream, const Quantity<Value, Units>& _q) {
 
 template<typename Units, typename Value, typename BaseUnits>
 constexpr auto as(const Quantity<Value, BaseUnits>& _val) {
-    return Quantity<Value, Units>{units::convert<Units, BaseUnits>(_val.value())};
+    return Quantity<Value, Units>{units::convert<Value, Units, BaseUnits>(_val.value())};
 }
 
 template<typename Units, typename Value>
@@ -233,4 +275,3 @@ constexpr auto as(const Value& _val) {
 } /*namespace units*/
 } /*namespace chandra*/
 #endif /*CHANDRA_QUANTITY_H*/
-

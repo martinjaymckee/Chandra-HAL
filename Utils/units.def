@@ -65,6 +65,28 @@ Area ft3 = ft_conv**3
 Area in3 = in_conv**3
 
 #
+# Units of Amount
+#
+Amount mol = 1
+
+#
+# Units of Density
+#
+Density *g_per_m3 = 1e-3 # kilograms per cubic meter
+Density *g_per_cc = 1000 # grams per cubic centimeter
+
+#
+# Units of Energy
+#
+Energy *J = 1 # Joule
+Energy eV = 6.24150947961e17 # Electron Volt
+Energy ft_lbf = .737571913262 # Foot-pound Force
+Energy BTU = 9.4781339e-4 # British Thermal Unit -- ISO Standard
+Energy kWh = 2.777777777777777e-7 # Kilowatt-hour
+Energy Ha = 2.29371227847e17 # Hartree
+Energy Ry = 1.14685613924e17 # Rydberg
+
+#
 # Units of Time -- TODO: THESE SHOULD CONVERT TO/FROM <CHRONO> DURATIONS
 #
 Time *s = 1

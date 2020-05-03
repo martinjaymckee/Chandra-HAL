@@ -130,8 +130,8 @@ Value convert_scale(const Value& _v) {
 }
 } /*namespace internal*/
 
-template<typename Dest, typename Src, typename Value>
-constexpr Value convert(const Value& _val) {
+template<typename Value, typename Dest, typename Src, typename V2>
+constexpr Value convert(const V2& _val) {
     static_assert(
         Dest::absolute == Src::absolute,
         "Attempting to convert between relative and absolute units."
@@ -153,7 +153,7 @@ constexpr Value convert(const Value& _val) {
 
     return internal::offset_add<typename Dest::offset_t>(
         internal::convert_scale<convert_factor_t>(
-            internal::offset_sub<typename Src::offset_t>(_val)
+            internal::offset_sub<typename Src::offset_t>(static_cast<Value>(_val))
         )
     );
 }
@@ -197,8 +197,77 @@ struct DivUnits
             UnitsB::streamname(_stream);
         }
 };
+
+template<typename Dims, typename Factor, size_t Exp>
+struct PowUnitsImpl
+{
+    using child_t = PowUnitsImpl<Dims, Factor, Exp-1>;
+    using dimensions_t = decltype(Dims()*typename child_t::dimensions_t());
+    using factor_t = typename std::ratio_multiply<Factor, typename child_t::factor_t>::type;
+};
+
+template<typename Dims, typename Factor>
+struct PowUnitsImpl<Dims, Factor, 1>
+{
+    using dimensions_t = Dims;
+    using factor_t = Factor;
+};
+
+template<typename Dims, typename Factor>
+struct PowUnitsImpl<Dims, Factor, 0>
+{
+    using dimensions_t = chandra::units::dimensions::Unitless;
+    using factor_t = std::ratio<1,1>;
+};
+
+template<typename Units, size_t Exp>
+struct PowUnits
+{
+        static_assert(!Units::absolute, "Unable to raise absolute units to a power");
+        using impl_t = PowUnitsImpl<typename Units::dimensions_t, typename Units::factor_t, Exp>;
+        using dimensions_t = typename impl_t::dimensions_t;
+        using factor_t = typename impl_t::factor_t;
+        using offset_t = std::ratio<0,1>;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            Units::streamname(_stream);
+            _stream << "^";
+            _stream << Exp;
+        }
+};
 } /*namespace internal*/
+
+// TODO: THERE SHOULD BE A WAY TO CONSTRAIN THE UNITS TYPE TO SOMETHING THAT
+//  IS A LENGTH, MASS, ETC. IN THESE SORTS OF FUNCTIONS
+template<
+  typename L,
+  typename is_L = typename std::is_same<typename L::dimensions_t, chandra::units::dimensions::Length>
+>
+using areaFrom = internal::PowUnits<L, 2>;
+
+template<
+  typename L,
+  typename is_L = typename std::is_same<typename L::dimensions_t, chandra::units::dimensions::Length>
+>
+using volumeFrom = internal::PowUnits<L, 3>;
+
+template<
+  typename M, typename L,
+  typename is_M = typename std::is_same<typename M::dimensions_t, chandra::units::dimensions::Mass>::type,
+  typename is_L = typename std::is_same<typename L::dimensions_t, chandra::units::dimensions::Length>::type
+>
+using densityFrom = internal::DivUnits<M, volumeFrom<L>>;
+
+template<typename L, typename T>
+using velocityFrom = internal::DivUnits<L, T>;
+
+template<typename L, typename T>
+using accelerationFrom = internal::DivUnits<L, internal::PowUnits<T, 2>>;
+
+template<typename F, typename L>
+using pressureFrom = internal::DivUnits<F, areaFrom<L>>;
+
 } /*namespace units*/
 } /*namespace chandra*/
 #endif /*CHANDRA_DIMENSION_CONVERT_H*/
-

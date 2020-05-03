@@ -2094,6 +2094,1167 @@ namespace mks
 
 
 //
+// Unit "mol"
+//
+    struct mol
+    {
+        using factor_t = std::ratio<1, 1>; // 1
+        using dimensions_t = dimensions::Amount;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mol;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mol";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mol = units::Quantity<Value, mol>;
+    namespace literals
+    {
+        static inline Q_mol<long double> operator "" _mol_ (long double _v) {
+            return Q_mol<long double>(_v); }
+        static inline Q_mol<long double> operator "" _mol_ (unsigned long long int _v) {
+            return Q_mol<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Eg_per_m3"
+//
+    struct Eg_per_m3
+    {
+        using factor_t = std::ratio<1000000000000000, 1>; // 1e+15
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Eg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Eg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Eg_per_m3 = units::Quantity<Value, Eg_per_m3>;
+    namespace literals
+    {
+        static inline Q_Eg_per_m3<long double> operator "" _Eg_per_m3_ (long double _v) {
+            return Q_Eg_per_m3<long double>(_v); }
+        static inline Q_Eg_per_m3<long double> operator "" _Eg_per_m3_ (unsigned long long int _v) {
+            return Q_Eg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Pg_per_m3"
+//
+    struct Pg_per_m3
+    {
+        using factor_t = std::ratio<1000000000000, 1>; // 1e+12
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Pg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Pg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Pg_per_m3 = units::Quantity<Value, Pg_per_m3>;
+    namespace literals
+    {
+        static inline Q_Pg_per_m3<long double> operator "" _Pg_per_m3_ (long double _v) {
+            return Q_Pg_per_m3<long double>(_v); }
+        static inline Q_Pg_per_m3<long double> operator "" _Pg_per_m3_ (unsigned long long int _v) {
+            return Q_Pg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Tg_per_m3"
+//
+    struct Tg_per_m3
+    {
+        using factor_t = std::ratio<1000000000, 1>; // 1e+09
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Tg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Tg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Tg_per_m3 = units::Quantity<Value, Tg_per_m3>;
+    namespace literals
+    {
+        static inline Q_Tg_per_m3<long double> operator "" _Tg_per_m3_ (long double _v) {
+            return Q_Tg_per_m3<long double>(_v); }
+        static inline Q_Tg_per_m3<long double> operator "" _Tg_per_m3_ (unsigned long long int _v) {
+            return Q_Tg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Gg_per_m3"
+//
+    struct Gg_per_m3
+    {
+        using factor_t = std::ratio<1000000, 1>; // 1e+06
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Gg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Gg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Gg_per_m3 = units::Quantity<Value, Gg_per_m3>;
+    namespace literals
+    {
+        static inline Q_Gg_per_m3<long double> operator "" _Gg_per_m3_ (long double _v) {
+            return Q_Gg_per_m3<long double>(_v); }
+        static inline Q_Gg_per_m3<long double> operator "" _Gg_per_m3_ (unsigned long long int _v) {
+            return Q_Gg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Mg_per_m3"
+//
+    struct Mg_per_m3
+    {
+        using factor_t = std::ratio<1000, 1>; // 1000
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Mg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Mg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Mg_per_m3 = units::Quantity<Value, Mg_per_m3>;
+    namespace literals
+    {
+        static inline Q_Mg_per_m3<long double> operator "" _Mg_per_m3_ (long double _v) {
+            return Q_Mg_per_m3<long double>(_v); }
+        static inline Q_Mg_per_m3<long double> operator "" _Mg_per_m3_ (unsigned long long int _v) {
+            return Q_Mg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "kg_per_m3"
+//
+    struct kg_per_m3
+    {
+        using factor_t = std::ratio<1, 1>; // 1
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = kg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "kg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_kg_per_m3 = units::Quantity<Value, kg_per_m3>;
+    namespace literals
+    {
+        static inline Q_kg_per_m3<long double> operator "" _kg_per_m3_ (long double _v) {
+            return Q_kg_per_m3<long double>(_v); }
+        static inline Q_kg_per_m3<long double> operator "" _kg_per_m3_ (unsigned long long int _v) {
+            return Q_kg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "hg_per_m3"
+//
+    struct hg_per_m3
+    {
+        using factor_t = std::ratio<1, 10>; // 0.1
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = hg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "hg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_hg_per_m3 = units::Quantity<Value, hg_per_m3>;
+    namespace literals
+    {
+        static inline Q_hg_per_m3<long double> operator "" _hg_per_m3_ (long double _v) {
+            return Q_hg_per_m3<long double>(_v); }
+        static inline Q_hg_per_m3<long double> operator "" _hg_per_m3_ (unsigned long long int _v) {
+            return Q_hg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dag_per_m3"
+//
+    struct dag_per_m3
+    {
+        using factor_t = std::ratio<1, 100>; // 0.01
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dag_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dag_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dag_per_m3 = units::Quantity<Value, dag_per_m3>;
+    namespace literals
+    {
+        static inline Q_dag_per_m3<long double> operator "" _dag_per_m3_ (long double _v) {
+            return Q_dag_per_m3<long double>(_v); }
+        static inline Q_dag_per_m3<long double> operator "" _dag_per_m3_ (unsigned long long int _v) {
+            return Q_dag_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "g_per_m3"
+//
+    struct g_per_m3
+    {
+        using factor_t = std::ratio<1, 1000>; // 0.001
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = g_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "g_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_g_per_m3 = units::Quantity<Value, g_per_m3>;
+    namespace literals
+    {
+        static inline Q_g_per_m3<long double> operator "" _g_per_m3_ (long double _v) {
+            return Q_g_per_m3<long double>(_v); }
+        static inline Q_g_per_m3<long double> operator "" _g_per_m3_ (unsigned long long int _v) {
+            return Q_g_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dg_per_m3"
+//
+    struct dg_per_m3
+    {
+        using factor_t = std::ratio<1, 10000>; // 0.0001
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dg_per_m3 = units::Quantity<Value, dg_per_m3>;
+    namespace literals
+    {
+        static inline Q_dg_per_m3<long double> operator "" _dg_per_m3_ (long double _v) {
+            return Q_dg_per_m3<long double>(_v); }
+        static inline Q_dg_per_m3<long double> operator "" _dg_per_m3_ (unsigned long long int _v) {
+            return Q_dg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "cg_per_m3"
+//
+    struct cg_per_m3
+    {
+        using factor_t = std::ratio<1, 100000>; // 1e-05
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = cg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "cg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_cg_per_m3 = units::Quantity<Value, cg_per_m3>;
+    namespace literals
+    {
+        static inline Q_cg_per_m3<long double> operator "" _cg_per_m3_ (long double _v) {
+            return Q_cg_per_m3<long double>(_v); }
+        static inline Q_cg_per_m3<long double> operator "" _cg_per_m3_ (unsigned long long int _v) {
+            return Q_cg_per_m3<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Pg_per_cc"
+//
+    struct Pg_per_cc
+    {
+        using factor_t = std::ratio<1000000000000000000, 1>; // 1e+18
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Pg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Pg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Pg_per_cc = units::Quantity<Value, Pg_per_cc>;
+    namespace literals
+    {
+        static inline Q_Pg_per_cc<long double> operator "" _Pg_per_cc_ (long double _v) {
+            return Q_Pg_per_cc<long double>(_v); }
+        static inline Q_Pg_per_cc<long double> operator "" _Pg_per_cc_ (unsigned long long int _v) {
+            return Q_Pg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Tg_per_cc"
+//
+    struct Tg_per_cc
+    {
+        using factor_t = std::ratio<1000000000000000, 1>; // 1e+15
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Tg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Tg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Tg_per_cc = units::Quantity<Value, Tg_per_cc>;
+    namespace literals
+    {
+        static inline Q_Tg_per_cc<long double> operator "" _Tg_per_cc_ (long double _v) {
+            return Q_Tg_per_cc<long double>(_v); }
+        static inline Q_Tg_per_cc<long double> operator "" _Tg_per_cc_ (unsigned long long int _v) {
+            return Q_Tg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Gg_per_cc"
+//
+    struct Gg_per_cc
+    {
+        using factor_t = std::ratio<1000000000000, 1>; // 1e+12
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Gg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Gg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Gg_per_cc = units::Quantity<Value, Gg_per_cc>;
+    namespace literals
+    {
+        static inline Q_Gg_per_cc<long double> operator "" _Gg_per_cc_ (long double _v) {
+            return Q_Gg_per_cc<long double>(_v); }
+        static inline Q_Gg_per_cc<long double> operator "" _Gg_per_cc_ (unsigned long long int _v) {
+            return Q_Gg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Mg_per_cc"
+//
+    struct Mg_per_cc
+    {
+        using factor_t = std::ratio<1000000000, 1>; // 1e+09
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Mg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Mg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Mg_per_cc = units::Quantity<Value, Mg_per_cc>;
+    namespace literals
+    {
+        static inline Q_Mg_per_cc<long double> operator "" _Mg_per_cc_ (long double _v) {
+            return Q_Mg_per_cc<long double>(_v); }
+        static inline Q_Mg_per_cc<long double> operator "" _Mg_per_cc_ (unsigned long long int _v) {
+            return Q_Mg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "kg_per_cc"
+//
+    struct kg_per_cc
+    {
+        using factor_t = std::ratio<1000000, 1>; // 1e+06
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = kg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "kg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_kg_per_cc = units::Quantity<Value, kg_per_cc>;
+    namespace literals
+    {
+        static inline Q_kg_per_cc<long double> operator "" _kg_per_cc_ (long double _v) {
+            return Q_kg_per_cc<long double>(_v); }
+        static inline Q_kg_per_cc<long double> operator "" _kg_per_cc_ (unsigned long long int _v) {
+            return Q_kg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "hg_per_cc"
+//
+    struct hg_per_cc
+    {
+        using factor_t = std::ratio<100000, 1>; // 100000
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = hg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "hg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_hg_per_cc = units::Quantity<Value, hg_per_cc>;
+    namespace literals
+    {
+        static inline Q_hg_per_cc<long double> operator "" _hg_per_cc_ (long double _v) {
+            return Q_hg_per_cc<long double>(_v); }
+        static inline Q_hg_per_cc<long double> operator "" _hg_per_cc_ (unsigned long long int _v) {
+            return Q_hg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dag_per_cc"
+//
+    struct dag_per_cc
+    {
+        using factor_t = std::ratio<10000, 1>; // 10000
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dag_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dag_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dag_per_cc = units::Quantity<Value, dag_per_cc>;
+    namespace literals
+    {
+        static inline Q_dag_per_cc<long double> operator "" _dag_per_cc_ (long double _v) {
+            return Q_dag_per_cc<long double>(_v); }
+        static inline Q_dag_per_cc<long double> operator "" _dag_per_cc_ (unsigned long long int _v) {
+            return Q_dag_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "g_per_cc"
+//
+    struct g_per_cc
+    {
+        using factor_t = std::ratio<1000, 1>; // 1000
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = g_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "g_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_g_per_cc = units::Quantity<Value, g_per_cc>;
+    namespace literals
+    {
+        static inline Q_g_per_cc<long double> operator "" _g_per_cc_ (long double _v) {
+            return Q_g_per_cc<long double>(_v); }
+        static inline Q_g_per_cc<long double> operator "" _g_per_cc_ (unsigned long long int _v) {
+            return Q_g_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dg_per_cc"
+//
+    struct dg_per_cc
+    {
+        using factor_t = std::ratio<100, 1>; // 100
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dg_per_cc = units::Quantity<Value, dg_per_cc>;
+    namespace literals
+    {
+        static inline Q_dg_per_cc<long double> operator "" _dg_per_cc_ (long double _v) {
+            return Q_dg_per_cc<long double>(_v); }
+        static inline Q_dg_per_cc<long double> operator "" _dg_per_cc_ (unsigned long long int _v) {
+            return Q_dg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "cg_per_cc"
+//
+    struct cg_per_cc
+    {
+        using factor_t = std::ratio<10, 1>; // 10
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = cg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "cg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_cg_per_cc = units::Quantity<Value, cg_per_cc>;
+    namespace literals
+    {
+        static inline Q_cg_per_cc<long double> operator "" _cg_per_cc_ (long double _v) {
+            return Q_cg_per_cc<long double>(_v); }
+        static inline Q_cg_per_cc<long double> operator "" _cg_per_cc_ (unsigned long long int _v) {
+            return Q_cg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "mg_per_cc"
+//
+    struct mg_per_cc
+    {
+        using factor_t = std::ratio<1, 1>; // 1
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mg_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mg_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mg_per_cc = units::Quantity<Value, mg_per_cc>;
+    namespace literals
+    {
+        static inline Q_mg_per_cc<long double> operator "" _mg_per_cc_ (long double _v) {
+            return Q_mg_per_cc<long double>(_v); }
+        static inline Q_mg_per_cc<long double> operator "" _mg_per_cc_ (unsigned long long int _v) {
+            return Q_mg_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "ug_per_cc"
+//
+    struct ug_per_cc
+    {
+        using factor_t = std::ratio<1, 1000>; // 0.001
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = ug_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "ug_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_ug_per_cc = units::Quantity<Value, ug_per_cc>;
+    namespace literals
+    {
+        static inline Q_ug_per_cc<long double> operator "" _ug_per_cc_ (long double _v) {
+            return Q_ug_per_cc<long double>(_v); }
+        static inline Q_ug_per_cc<long double> operator "" _ug_per_cc_ (unsigned long long int _v) {
+            return Q_ug_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "ng_per_cc"
+//
+    struct ng_per_cc
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = ng_per_cc;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "ng_per_cc";
+        }
+    };
+    template<typename Value = long double>
+    using Q_ng_per_cc = units::Quantity<Value, ng_per_cc>;
+    namespace literals
+    {
+        static inline Q_ng_per_cc<long double> operator "" _ng_per_cc_ (long double _v) {
+            return Q_ng_per_cc<long double>(_v); }
+        static inline Q_ng_per_cc<long double> operator "" _ng_per_cc_ (unsigned long long int _v) {
+            return Q_ng_per_cc<long double>(_v); }
+    }
+
+
+
+//
+// Unit "EJ"
+//
+    struct EJ
+    {
+        using factor_t = std::ratio<1000000000000000000, 1>; // 1e+18
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = EJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "EJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_EJ = units::Quantity<Value, EJ>;
+    namespace literals
+    {
+        static inline Q_EJ<long double> operator "" _EJ_ (long double _v) {
+            return Q_EJ<long double>(_v); }
+        static inline Q_EJ<long double> operator "" _EJ_ (unsigned long long int _v) {
+            return Q_EJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "PJ"
+//
+    struct PJ
+    {
+        using factor_t = std::ratio<1000000000000000, 1>; // 1e+15
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = PJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "PJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_PJ = units::Quantity<Value, PJ>;
+    namespace literals
+    {
+        static inline Q_PJ<long double> operator "" _PJ_ (long double _v) {
+            return Q_PJ<long double>(_v); }
+        static inline Q_PJ<long double> operator "" _PJ_ (unsigned long long int _v) {
+            return Q_PJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "TJ"
+//
+    struct TJ
+    {
+        using factor_t = std::ratio<1000000000000, 1>; // 1e+12
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = TJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "TJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_TJ = units::Quantity<Value, TJ>;
+    namespace literals
+    {
+        static inline Q_TJ<long double> operator "" _TJ_ (long double _v) {
+            return Q_TJ<long double>(_v); }
+        static inline Q_TJ<long double> operator "" _TJ_ (unsigned long long int _v) {
+            return Q_TJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "GJ"
+//
+    struct GJ
+    {
+        using factor_t = std::ratio<1000000000, 1>; // 1e+09
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = GJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "GJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_GJ = units::Quantity<Value, GJ>;
+    namespace literals
+    {
+        static inline Q_GJ<long double> operator "" _GJ_ (long double _v) {
+            return Q_GJ<long double>(_v); }
+        static inline Q_GJ<long double> operator "" _GJ_ (unsigned long long int _v) {
+            return Q_GJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "MJ"
+//
+    struct MJ
+    {
+        using factor_t = std::ratio<1000000, 1>; // 1e+06
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = MJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "MJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_MJ = units::Quantity<Value, MJ>;
+    namespace literals
+    {
+        static inline Q_MJ<long double> operator "" _MJ_ (long double _v) {
+            return Q_MJ<long double>(_v); }
+        static inline Q_MJ<long double> operator "" _MJ_ (unsigned long long int _v) {
+            return Q_MJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "kJ"
+//
+    struct kJ
+    {
+        using factor_t = std::ratio<1000, 1>; // 1000
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = kJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "kJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_kJ = units::Quantity<Value, kJ>;
+    namespace literals
+    {
+        static inline Q_kJ<long double> operator "" _kJ_ (long double _v) {
+            return Q_kJ<long double>(_v); }
+        static inline Q_kJ<long double> operator "" _kJ_ (unsigned long long int _v) {
+            return Q_kJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "hJ"
+//
+    struct hJ
+    {
+        using factor_t = std::ratio<100, 1>; // 100
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = hJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "hJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_hJ = units::Quantity<Value, hJ>;
+    namespace literals
+    {
+        static inline Q_hJ<long double> operator "" _hJ_ (long double _v) {
+            return Q_hJ<long double>(_v); }
+        static inline Q_hJ<long double> operator "" _hJ_ (unsigned long long int _v) {
+            return Q_hJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "daJ"
+//
+    struct daJ
+    {
+        using factor_t = std::ratio<10, 1>; // 10
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = daJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "daJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_daJ = units::Quantity<Value, daJ>;
+    namespace literals
+    {
+        static inline Q_daJ<long double> operator "" _daJ_ (long double _v) {
+            return Q_daJ<long double>(_v); }
+        static inline Q_daJ<long double> operator "" _daJ_ (unsigned long long int _v) {
+            return Q_daJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "J"
+//
+    struct J
+    {
+        using factor_t = std::ratio<1, 1>; // 1
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = J;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "J";
+        }
+    };
+    template<typename Value = long double>
+    using Q_J = units::Quantity<Value, J>;
+    namespace literals
+    {
+        static inline Q_J<long double> operator "" _J_ (long double _v) {
+            return Q_J<long double>(_v); }
+        static inline Q_J<long double> operator "" _J_ (unsigned long long int _v) {
+            return Q_J<long double>(_v); }
+    }
+
+
+
+//
+// Unit "dJ"
+//
+    struct dJ
+    {
+        using factor_t = std::ratio<1, 10>; // 0.1
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = dJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "dJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_dJ = units::Quantity<Value, dJ>;
+    namespace literals
+    {
+        static inline Q_dJ<long double> operator "" _dJ_ (long double _v) {
+            return Q_dJ<long double>(_v); }
+        static inline Q_dJ<long double> operator "" _dJ_ (unsigned long long int _v) {
+            return Q_dJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "cJ"
+//
+    struct cJ
+    {
+        using factor_t = std::ratio<1, 100>; // 0.01
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = cJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "cJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_cJ = units::Quantity<Value, cJ>;
+    namespace literals
+    {
+        static inline Q_cJ<long double> operator "" _cJ_ (long double _v) {
+            return Q_cJ<long double>(_v); }
+        static inline Q_cJ<long double> operator "" _cJ_ (unsigned long long int _v) {
+            return Q_cJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "mJ"
+//
+    struct mJ
+    {
+        using factor_t = std::ratio<1, 1000>; // 0.001
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mJ = units::Quantity<Value, mJ>;
+    namespace literals
+    {
+        static inline Q_mJ<long double> operator "" _mJ_ (long double _v) {
+            return Q_mJ<long double>(_v); }
+        static inline Q_mJ<long double> operator "" _mJ_ (unsigned long long int _v) {
+            return Q_mJ<long double>(_v); }
+    }
+
+
+
+//
+// Unit "eV"
+//
+    struct eV
+    {
+        using factor_t = std::ratio<624150947960999936, 1>; // 6.24151e+17
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = eV;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "eV";
+        }
+    };
+    template<typename Value = long double>
+    using Q_eV = units::Quantity<Value, eV>;
+    namespace literals
+    {
+        static inline Q_eV<long double> operator "" _eV_ (long double _v) {
+            return Q_eV<long double>(_v); }
+        static inline Q_eV<long double> operator "" _eV_ (unsigned long long int _v) {
+            return Q_eV<long double>(_v); }
+    }
+
+
+
+//
+// Unit "ft_lbf"
+//
+    struct ft_lbf
+    {
+        using factor_t = std::ratio<5000, 6779>; // 0.737572
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = ft_lbf;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "ft_lbf";
+        }
+    };
+    template<typename Value = long double>
+    using Q_ft_lbf = units::Quantity<Value, ft_lbf>;
+    namespace literals
+    {
+        static inline Q_ft_lbf<long double> operator "" _ft_lbf_ (long double _v) {
+            return Q_ft_lbf<long double>(_v); }
+        static inline Q_ft_lbf<long double> operator "" _ft_lbf_ (unsigned long long int _v) {
+            return Q_ft_lbf<long double>(_v); }
+    }
+
+
+
+//
+// Unit "BTU"
+//
+    struct BTU
+    {
+        using factor_t = std::ratio<50, 52753>; // 0.000947813
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = BTU;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "BTU";
+        }
+    };
+    template<typename Value = long double>
+    using Q_BTU = units::Quantity<Value, BTU>;
+    namespace literals
+    {
+        static inline Q_BTU<long double> operator "" _BTU_ (long double _v) {
+            return Q_BTU<long double>(_v); }
+        static inline Q_BTU<long double> operator "" _BTU_ (unsigned long long int _v) {
+            return Q_BTU<long double>(_v); }
+    }
+
+
+
+//
+// Unit "kWh"
+//
+    struct kWh
+    {
+        using factor_t = std::ratio<1, 3600000>; // 2.77778e-07
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = kWh;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "kWh";
+        }
+    };
+    template<typename Value = long double>
+    using Q_kWh = units::Quantity<Value, kWh>;
+    namespace literals
+    {
+        static inline Q_kWh<long double> operator "" _kWh_ (long double _v) {
+            return Q_kWh<long double>(_v); }
+        static inline Q_kWh<long double> operator "" _kWh_ (unsigned long long int _v) {
+            return Q_kWh<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Ha"
+//
+    struct Ha
+    {
+        using factor_t = std::ratio<229371227847000000, 1>; // 2.29371e+17
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Ha;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Ha";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Ha = units::Quantity<Value, Ha>;
+    namespace literals
+    {
+        static inline Q_Ha<long double> operator "" _Ha_ (long double _v) {
+            return Q_Ha<long double>(_v); }
+        static inline Q_Ha<long double> operator "" _Ha_ (unsigned long long int _v) {
+            return Q_Ha<long double>(_v); }
+    }
+
+
+
+//
+// Unit "Ry"
+//
+    struct Ry
+    {
+        using factor_t = std::ratio<114685613924000000, 1>; // 1.14686e+17
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = Ry;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "Ry";
+        }
+    };
+    template<typename Value = long double>
+    using Q_Ry = units::Quantity<Value, Ry>;
+    namespace literals
+    {
+        static inline Q_Ry<long double> operator "" _Ry_ (long double _v) {
+            return Q_Ry<long double>(_v); }
+        static inline Q_Ry<long double> operator "" _Ry_ (unsigned long long int _v) {
+            return Q_Ry<long double>(_v); }
+    }
+
+
+
+//
 // Unit "Es"
 //
     struct Es

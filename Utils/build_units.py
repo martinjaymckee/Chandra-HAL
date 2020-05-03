@@ -97,6 +97,7 @@ def PrefixedUnits(symbol, dimensions, factor, offset=None, power=1, param_limit=
 
 class FactorValue:
     def __init__(self, value, sig_digits=None, min_sig_digits=4):
+        self.__value = None
         self.__value = float(value)
         self.__sig_digits = 0
         if sig_digits is None and isinstance(value, str):

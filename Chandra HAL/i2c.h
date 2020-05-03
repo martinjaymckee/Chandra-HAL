@@ -102,6 +102,7 @@ class I2CMaster
 					break;
 			}
 			#elif defined(__LPC84X__)
+			LPC_SYSCON->FCLKSEL[5+num_] = 0x01;
 			switch(num_) {
 				default:
 				case 0:
@@ -168,6 +169,7 @@ class I2CMaster
           LPC_SWM->PINASSIGN[10] = 0x0000FFFF | (scl_pin<<24) | (sda_pin<<16);
           break;
       }
+			SystemClock::enable(0, 7, false);
 	#elif defined(__LPC15XX__)
 			//	Configure the SWM
 			FixedFunctionIO::enable(1, 3);
@@ -195,6 +197,9 @@ class I2CMaster
 			static const uint32_t enable_mask = 1UL<<0;
 			return (i2c_->CFG & enable_mask) != 0;
 		}
+
+		const chandra::io::IO& sda() const { return sda_; }
+		const chandra::io::IO& scl() const { return scl_; }
 
 		I2CStatus writeCMD(const uint8_t& _addr, const uint8_t& _cmd) { return writeBytes( _addr, &_cmd, 1 ); }
 
@@ -463,7 +468,6 @@ void printI2CStatus(output_stream_type& _stream, I2CMaster::I2CStatus _status, c
 	}
 	_stream << ", txrx bytes = " << static_cast<unsigned int>(_status.cnt) << " ]\n\r";
 }
-
 } /*namespace io*/
 } /*namespace chandra*/
 

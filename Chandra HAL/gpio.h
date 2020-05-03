@@ -73,6 +73,14 @@ class IO
             output(is_output);
         }
 
+        // IO& operator = (const IO& _other) { // NOTE: THIS DOESN'T WORK BECAUSE THE VALUES ARE CONSTANT
+        //   port_ = _other.port_;
+        //   pin_ = _other.pin_;
+        //   mask_ = _other.mask_;
+        //   inverted_ = _other.inverted_;
+        //   return *this;
+        // }
+
         void init() {
             // Enable AHB clock to the GPIO domain.
             GPIO::enableClk(port_);
