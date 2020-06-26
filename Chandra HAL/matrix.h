@@ -13,10 +13,12 @@ namespace internal
 template<int Rows, int Columns>
 struct IndexData
 {
-        constexpr static const auto& value(const auto (&data)[Rows][Columns], int i, int j) {
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[Rows][Columns], int i, int j) {
             return data[i][j];
         }
-        constexpr static auto& value(auto (&data)[Rows][Columns], int i, int j) {
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[Rows][Columns], int i, int j) {
             return data[i][j];
         }
 };
@@ -24,10 +26,12 @@ struct IndexData
 template<int Rows>
 struct IndexData<Rows, 1>
 {
-        constexpr static const auto& value(const auto (&data)[Rows][1], int i, int) {
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[Rows][1], int i, int) {
             return data[i][0];
         }
-        constexpr static auto& value(auto (&data)[Rows][1], int i, int) {
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[Rows][1], int i, int) {
             return data[i][0];
         }
 };
@@ -35,10 +39,12 @@ struct IndexData<Rows, 1>
 template<int Columns>
 struct IndexData<1, Columns>
 {
-        constexpr static const auto& value(const auto (&data)[1][Columns], int i, int) {
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[1][Columns], int i, int) {
             return data[0][i];
         }
-        constexpr static auto& value(auto (&data)[1][Columns], int i, int) {
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[1][Columns], int i, int) {
             return data[0][i];
         }
 };
@@ -70,10 +76,10 @@ class Matrix
         //
 
         //  Default constructor does not initialize memory
-        Matrix() {}
+		Matrix() = default;
 
         //  Single argument constructor initializes memory to the passed value
-        constexpr Matrix(const value_t& v) {
+        explicit constexpr Matrix(const value_t& v) {
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
                     data_[row][column] = v;
@@ -95,7 +101,17 @@ class Matrix
             }
         }
 
-        //  Construct an Identity matrix
+		//	Copy Constructor
+		template<typename OtherValue>
+		constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
+			for (index_t row = 0; row < Rows; ++row) {
+				for (index_t column = 0; column < Columns; ++column) {
+					data_[row][column] = static_cast<Value>(_other.data_[row][column]);
+				}
+			}
+		}
+        
+		//  Construct an Identity matrix
         static constexpr matrix_t Eye() {
             matrix_t matrix;
             static_assert(Rows == Columns, "Attempting to make a non-square identity matrix!");
@@ -135,20 +151,28 @@ class Matrix
         }
         // TODO: Add an offset argument to the Diagonal Matrix Factory and create a TriDiagonal method with similar arguments
 
-        //  Construct a matrix of counting numbers (beginning at zero, at the moment) in either
-        //      row major format (true) or column major format (false)
-        static constexpr matrix_t Count(const bool& row_major = true) {
+		// Construct a matrix of numbers calculated from the row and colum index by a
+		//		passed in function object
+        template<typename Func>
+		static constexpr matrix_t MapBuild(Func f) {
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
-                    const auto v = row_major ? (row * Columns) + column : (column * Rows) + row;
+					const auto v = f(row, column);
                     matrix.data_[row][column] = v;
                 }
             }
             return matrix;
         }
-        // TODO: This could be easily generalized to provide more complicated functions with
-        //      a base and step size.  OR, JUST MAKE A FACTORY THAT TAKES A LAMBDA AS AN ARGUMENT!
+
+		//  Construct a matrix of counting numbers (beginning at the base -- zero by default)
+		//      in either row major format (true) or column major format (false)
+		static constexpr matrix_t Count(value_t base = 0, const bool& row_major = true) {
+			return MapBuild(
+				[=](index_t row, index_t column) 
+				{ return base + (row_major ? (row * Columns) + column : (column * Rows) + row); }
+			);
+		}
 
         // TODO: THIS IS A HACK, AT THE MOMENT.  IT'S NOT GIVING GOOD RANDOM NUMBERS NOR IS IT
         //      AT ALL FLEXIBLE AS TO TYPE (I.E. NO FRACTIONAL NUMBERS)
@@ -158,7 +182,7 @@ class Matrix
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
                     state = 987656789 * state + 1357911;
-                    matrix.data_[row][column] = (state >> 32) % mod;
+                    matrix.data_[row][column] = static_cast<Value>((state >> 32) % mod);
                 }
             }
             return matrix;
@@ -219,8 +243,9 @@ class Matrix
         }
 
         //  Scalar Addition
-        constexpr matrix_t& operator += (const auto& v) {
-            static_assert(std::is_convertible<decltype(v), value_t>::value,
+        template<typename ScalarValue>
+        constexpr matrix_t& operator += (const ScalarValue& v) {
+            static_assert(std::is_convertible<ScalarValue, value_t>::value,
                           "Unable to convert type to matrix value type in scalar addition.");
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -242,8 +267,9 @@ class Matrix
         }
 
         //  Scalar Subtraction
-        constexpr matrix_t& operator -= (const auto& v) {
-            static_assert(std::is_convertible<decltype(v), value_t>::value,
+        template<typename ScalarValue>
+        constexpr matrix_t& operator -= (const ScalarValue& v) {
+            static_assert(std::is_convertible<ScalarValue, value_t>::value,
                           "Unable to convert type to matrix value type in scalar subtraction.");
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -254,7 +280,10 @@ class Matrix
         }
 
         //  Scalar Multiplication
-        constexpr matrix_t& operator *= (const auto& v) {
+        template<typename ScalarValue>
+        constexpr matrix_t& operator *= (const ScalarValue& v) {
+          static_assert(std::is_convertible<ScalarValue, value_t>::value,
+                        "Unable to convert type to matrix value type in scalar multiplication.");
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
                     data_[row][column] *= v;
@@ -264,7 +293,10 @@ class Matrix
         }
 
         //  Scalar Division
-        constexpr matrix_t& operator /= (const auto& v) {
+        template<typename ScalarValue>
+        constexpr matrix_t& operator /= (const ScalarValue& v) {
+          static_assert(std::is_convertible<ScalarValue, value_t>::value,
+                        "Unable to convert type to matrix value type in scalar division.");
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
                     data_[row][column] /= v;
@@ -299,4 +331,3 @@ class Matrix
 } /*namespace chandra*/
 
 #endif /*CHANDRA_MATRIX_H*/
-

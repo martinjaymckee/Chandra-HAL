@@ -95,6 +95,7 @@ class ADC
                         adc_.adc_->SEQ_CTRL[0] &= ~mask_;
                     }
 					#elif defined(__LPC82X__)
+
                     #elif defined(__LPC84X__)
                     if( _enabled ) {
                         adc_.adc_->SEQA_CTRL |= (1<<18) | mask_;
@@ -126,7 +127,7 @@ class ADC
                          return false;
                     }
 
-					enablePin(false);
+										enablePin(false);
                 #if defined(__LPC15XX__)
                     adc_.adc_->INSEL = uint32_t(_src);
 				#else
@@ -149,7 +150,8 @@ class ADC
                     #if defined(__LPC82X__) || defined(__LPC15XX__)
                     return static_cast<T>(adc_.adc_->DR[chan_]&0x0000FFF0UL);
                     #elif defined(__LPC84X__)
-                    return static_cast<T>(adc_.adc_->DAT[chan_]&0x0000FFF0UL);
+                    //return static_cast<T>(adc_.adc_->DAT[chan_]&0x0000FFF0UL);
+                    return static_cast<T>((adc_.adc_->DAT[chan_]>>4)&0xFFF);										
                     #endif
                 }
 

@@ -82,8 +82,8 @@ namespace internal
 template<typename Value, size_t N>
 struct Inverter
 {
-        static Matrix<Value, N, N> calc(const Matrix<Value, N, N>&) {
-            return Matrix<Value, N, N>();
+        static Matrix<Value, N, N> calc(const Matrix<Value, N, N>& _A) {
+            return solve(_A, Matrix<Value, N, N>::Eye());
         }
 };
 
@@ -308,11 +308,14 @@ constexpr V magnitude(const Matrix<V, N, 1>& _v) { return sqrt(norm(_v)); }
 // Stream Output
 template<typename Stream, typename Value, size_t N, size_t M>
 Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, M>& _val) {
-    _stream << "[ ";
+	const Value epsilon{ 1e-25 };
+
+	_stream << "[ ";
 
     for(size_t row = 0; row < N; ++row){
         for(size_t column = 0; column < M; ++column){
-            _stream << _val(row, column);
+			const auto v = _val(row, column);
+			_stream << ((v > epsilon) ? v : Value{ 0 });
             if(column != (M-1)) _stream << ", ";
         }
         if(row != (N-1)) _stream << ";\n";
@@ -343,4 +346,3 @@ Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, 1>& 
     return _stream;
 }
 #endif /*CHANDRA_MATRIX_OPS_H*/
-

@@ -186,12 +186,12 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 		bool txInv() const { return usart_->CFG &= (1<<23); }
 
-		USARTClockStatus<calc_t> baud( unsigned int _baud, unsigned int _osr = 16 ) {
+		USARTClockStatus<calc_t> baud( unsigned int _baud, bool _recalc_uclk = false, unsigned int _osr = 16 ) {
 			// TODO: ALLOW THIS TO USE SEPERATE FRGs ON THE 84X
       USARTClockStatus<calc_t> status;
       const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
       int32_t running_uclk = actual_uclk();
-      if(running_uclk == 0) {
+      if(running_uclk == 0 or _recalc_uclk) {
           const int32_t target_brg = brgCalc((2*sys_clk)/3, _baud, _osr);
           const int32_t target_uclk = target_brg * _baud * _osr;
           running_uclk = uclk(target_uclk).clk;

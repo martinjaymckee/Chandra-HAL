@@ -37,15 +37,22 @@ class CTimer
         using duration_t = typename CTimer::duration_t;
 
         CTimerMatch(CTimer& _parent, const uint8_t& _idx)
-          : parent_(_parent), idx_(_idx) {}
+          : parent_(_parent), idx_(_idx), port_{255}, pin_{255} { parent_.timer_.MR[idx_]=0; }
 
         bool pwm_enable(bool _active, bool _interrupt=false) {
-          parent_.timer_.MCR |= (1<<10);
-          parent_.timer_.EMR |= (0x02<<((2*idx_) + 4));
-          parent_.timer_.PWMC |= (1<<idx_);
+          if(_active){
+            parent_.timer_.MCR |= (1<<10);
+            parent_.timer_.EMR |= (0x02<<((2*idx_) + 4));
+            parent_.timer_.PWMC |= (1<<idx_);
 
-          interrupt(_interrupt);
-          return true;
+            interrupt(_interrupt);
+          } else {
+            parent_.timer_.MCR &= ~(1<<10);
+            parent_.timer_.EMR &= ~(0x02<<((2*idx_) + 4));
+            parent_.timer_.PWMC &= ~(1<<idx_);
+          }
+
+          return _active;
         }
 
         bool pwm_enabled() const {
@@ -91,8 +98,6 @@ class CTimer
         }
 
         duration_t on_time(const duration_t& _t) {
-        	const auto f = chandra::chrono::frequency::timer(parent_.num());
-        	(void) f;
           const frequency_t f_clk{chandra::chrono::frequency::timer(parent_.num())};
           return on_time(_t, f_clk);
         }
@@ -122,11 +127,13 @@ class CTimer
           } else {
             PinMap::set(14, 0, PinMap::pinIndex(_io.port(), _io.pin()));
           }
+          port_ = _io.port();
+          pin_ = _io.pin();
           return true;
         }
 
         constexpr bool attached() const {
-          return false;
+          return port_ != 255;
         }
 
         bool interrupt(bool _active) {
@@ -145,6 +152,8 @@ class CTimer
       private:
         CTimer& parent_;
         uint8_t idx_;
+        uint8_t port_;
+        uint8_t pin_;
     };
 
   public:

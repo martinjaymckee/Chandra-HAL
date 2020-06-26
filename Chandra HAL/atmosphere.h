@@ -191,11 +191,9 @@ class AtmosphereImpl<Value, AtmosphereModel::US, LengthUnits, MassUnits, TimeUni
       {length_t{71000}, pressure_t{3.96}, temperature_t{214.65}, density_t{0.000064}, lapse_rate_t{-0.002}}
     };
 
-    const typename base_t::Parameters params_ = {
-      gas_constant_t{8.3144598},
-      molar_mass_t{0.0289644},
-      acceleration_t{9.80665}
-    };
+    const Value Rstar_{8.3144598};
+    const Value M_{0.0289644};
+    const Value g0_{9.80665};
 };
 
 } /* namespace internal*/
@@ -244,6 +242,8 @@ class Atmosphere
 
     using Properties = typename base_t::Properties;
 
+    Atmosphere() : exp_1_((this->g0_*this->M_)/this->Rstar_), exp_2_(this->Rstar_/(this->g0_*this->M_)) {}
+
     template<typename V, typename Units>
     constexpr length_t altitude(const chandra::units::Quantity<V, Units>& _v) const {
       return altitudeImpl(_v, typename Units::dimensions_t());
@@ -277,79 +277,124 @@ class Atmosphere
       return _h; // TODO: IMPLEMENT THIS!!!
     }
 
+    constexpr typename base_t::Parameters parameters() const {
+      return {
+        typename base_t::gas_constant_t{this->Rstar_},
+        typename base_t::molar_mass_t{this->M_},
+        typename base_t::acceleration_t{this->g0_}
+      };
+    };
+
   protected:
     //
     // Altitude Calculation
     //
+    constexpr length_t pToH(const pressure_t _P, const typename base_t::AtmosphereLayer& layer) const {
+      const auto P = _P.value();
+      const auto Pb = layer.Pb.value();
+      const auto Tb = layer.Tb.value();
+      const auto Lb = layer.Lb.value();
+      const auto hb = layer.hb.value();
+      const auto one = Value{1};
+
+      if(Lb != 0) {
+        return length_t{static_cast<Value>(hb + ((Tb/Lb)*((one/std::pow((P/Pb), (Lb*exp_2_)))-one)))};
+      }
+      return length_t{static_cast<Value>(hb - (std::log(P/Pb)*(exp_2_*Tb)))};
+    }
+
+    constexpr length_t rhoToH(const density_t _rho, const typename base_t::AtmosphereLayer& layer) const {
+      const auto rho = _rho.value();
+      const auto rhob = layer.rhob.value();
+      const auto Tb = layer.Tb.value();
+      const auto Lb = layer.Lb.value();
+      const auto hb = layer.hb.value();
+      const auto one = Value{1};
+
+      if(Lb != 0) {
+        return length_t{static_cast<Value>(hb + ((Tb/Lb)*((one/std::pow((rho/rhob), (one/(one+(exp_1_/Lb)))))-one)))};
+      }
+      return length_t{static_cast<Value>(hb - (std::log(rho/rhob)*(exp_2_*Tb)))};
+    }
+
     template<typename V, typename Units>
     constexpr length_t altitudeImpl(const chandra::units::Quantity<V, Units>& _v, const pressure_dims&) const {
-      return length_t{0};
+      return pToH(_v, this->pressureLayer(this->layers_, _v));
     }
 
     template<typename V, typename Units>
     constexpr length_t altitudeImpl(const chandra::units::Quantity<V, Units>& _v, const density_dims&) const {
-      return length_t{1};
+      return rhoToH(_v, this->densityLayer(this->layers_, _v));
     }
 
     //
     // Density Calculation
     //
-    template<typename V, typename Units>
-    constexpr density_t densityImpl(const chandra::units::Quantity<V, Units>& _v, const pressure_dims&) const {
-      return density_t{0};
-    }
-
-    template<typename V, typename Units>
-    constexpr density_t densityImpl(const chandra::units::Quantity<V, Units>& _v, const length_dims&) const {
-      const typename base_t::AtmosphereLayer& layer = this->altitudeLayer(this->layers_, _v);
-      const auto h = length_t{_v}.value();
+    constexpr density_t hToRho(const length_t _h, const typename base_t::AtmosphereLayer& layer) const {
+      const auto h = _h.value();
       const auto rhob = layer.rhob.value();
       const auto Tb = layer.Tb.value();
       const auto Lb = layer.Lb.value();
       const auto hb = layer.hb.value();
-      const auto g0 = this->params_.g0.value(); // TODO: IT MIGHT MAKE SENSE TO STORE THE PARAMETERS AS RAW VALUES
-      const auto Rstar = this->params_.Rstar.value();
-      const auto M = this->params_.M.value();
-      // TODO: POSSIBLE TO CALCULATE g0*M / (Rstar) AHEAD OF TIME...
       if(Lb != 0) {
-        return density_t{static_cast<Value>(rhob * std::pow((Tb / (Tb + (Lb*(h - hb)))), (Value{1} + ((g0*M)/(Rstar*Lb)))))};
+        return density_t{static_cast<Value>(rhob * std::pow((Tb / (Tb + (Lb*(h - hb)))), (Value{1} + (exp_1_/Lb))))};
       }
-      return density_t{static_cast<Value>(rhob * std::exp((-g0*M*(h - hb))/(Rstar*Tb)))};
+      return density_t{static_cast<Value>(rhob * std::exp((-exp_1_(h - hb))/Tb))};
+    }
+
+    template<typename V, typename Units>
+    constexpr density_t densityImpl(const chandra::units::Quantity<V, Units>& _v, const pressure_dims&) const {
+      const typename base_t::AtmosphereLayer& layer = this->densityLayer(this->layers_, _v);
+      const length_t h = rhoToH(_v, layer);
+      return hToRho(h, layer);
+    }
+
+    template<typename V, typename Units>
+    constexpr density_t densityImpl(const chandra::units::Quantity<V, Units>& _v, const length_dims&) const {
+      return hToRho(_v, this->densityLayer(this->layers_, _v));
     }
 
     //
     // Pressure Calculation
     //
-    template<typename V, typename Units>
-    constexpr pressure_t pressureImpl(const chandra::units::Quantity<V, Units>& _v, const density_dims&) const {
-      return pressure_t{0};
-    }
-
-    template<typename V, typename Units>
-    constexpr pressure_t pressureImpl(const chandra::units::Quantity<V, Units>& _v, const length_dims&) const {
-      const typename base_t::AtmosphereLayer& layer = this->altitudeLayer(this->layers_, _v);
-      const auto h = length_t{_v}.value();
+    constexpr pressure_t hToP(const length_t _h, const typename base_t::AtmosphereLayer& layer) const {
+      const auto h = _h.value();
       const auto Pb = layer.Pb.value();
       const auto Tb = layer.Tb.value();
       const auto Lb = layer.Lb.value();
       const auto hb = layer.hb.value();
-      const auto g0 = this->params_.g0.value(); // TODO: IT MIGHT MAKE SENSE TO STORE THE PARAMETERS AS RAW VALUES
-      const auto Rstar = this->params_.Rstar.value();
-      const auto M = this->params_.M.value();
-      // TODO: POSSIBLE TO CALCULATE g0*M / (Rstar) AHEAD OF TIME...
       if(Lb != 0) {
-        return pressure_t{static_cast<Value>(Pb * std::pow((Tb / (Tb + (Lb*(h - hb)))), ((g0*M)/(Rstar*Lb))))};
+        return pressure_t{static_cast<Value>(Pb * std::pow((Tb / (Tb + (Lb*(h - hb)))), (exp_1_/Lb)))};
       }
-      return pressure_t{static_cast<Value>(Pb * std::exp((-g0*M*(h - hb))/(Rstar*Tb)))};
+      return pressure_t{static_cast<Value>(Pb * std::exp((-exp_1_*(h - hb))/Tb))};
+    }
+
+    template<typename V, typename Units>
+    constexpr pressure_t pressureImpl(const chandra::units::Quantity<V, Units>& _v, const density_dims&) const {
+      const typename base_t::AtmosphereLayer& layer = this->densityLayer(this->layers_, _v);
+      const length_t h = pToH(_v, layer);
+      return hToP(h, layer);
+    }
+
+    template<typename V, typename Units>
+    constexpr pressure_t pressureImpl(const chandra::units::Quantity<V, Units>& _v, const length_dims&) const {
+      return hToP(_v, this->altitudeLayer(this->layers_, _v));
     }
 
     //
     // Temperature Calculation
     //
+    constexpr temperature_t hToT(const length_t _h, const typename base_t::AtmosphereLayer& layer) const {
+      const auto h = _h.value();
+      const auto Tb = layer.Tb.value();
+      const auto Lb = layer.Lb.value();
+      const auto hb = layer.hb.value();
+      return temperature_t{(Lb * (h - hb)) + Tb};
+    }
+
     template<typename V, typename Units>
     constexpr temperature_t temperatureImpl(const chandra::units::Quantity<V, Units>& _v, const length_dims&) const {
-      const typename base_t::AtmosphereLayer& layer = this->altitudeLayer(this->layers_, _v);
-      return temperature_t{(layer.Lb * (_v - layer.hb)) + layer.Tb};
+      return hToT(_v, this->altitudeLayer(this->layers_, _v));
     }
 
     //
@@ -369,6 +414,9 @@ class Atmosphere
     constexpr Properties propertiesImpl(const chandra::units::Quantity<V, Units>& _v, const pressure_dims&) const {
       return Properties{};
     }
+
+    const Value exp_1_;
+    const Value exp_2_;
 };
 
 } /* namespace aero */

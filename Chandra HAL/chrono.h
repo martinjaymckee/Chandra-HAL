@@ -25,18 +25,20 @@ using namespace std::literals::chrono_literals;
 namespace chrono
 {
 
-// TODO: REALLY NEED TO BE ABLE TO CONFIGURE THE CLOCK FREQUENCY OF THE SYSTEM... GET RID OF SYSTEMCORECLOCK!
+
+// TODO: ADD A PROTECTED CORE(FREQ) OVERLOAD THAT CAN BE USED BY FRIEND FUNCTIONS
+//	TO UPDATE THIS. THIS SHOULD STILL HANDLE ANY PRESCALAR/DIVIDERS ETC. IN THE PROCESSOR
 class frequency
 {
 	public:
     using rep = chandra::units::mks::Q_Hz<uint32_t>;
 
 	#if defined(__LPC84X__)
-    static rep core() { return rep{12000000}; }
+    static rep core() { return f_core_; }
 	#elif defined(__CHANDRA_MOCK__)
     static rep core() { return rep{50000000}; }
 	#else
-		static rep core() { return rep{12000000}; }//SystemCoreClock}; }
+		static rep core() { return f_core_; }
 	#endif
 
   	static rep main() { return rep{LPC_SYSCON->SYSAHBCLKDIV * core()}; }
@@ -47,6 +49,25 @@ class frequency
 		static rep i2c(size_t) { return core(); }
 		static rep adc(size_t) { return core(); }
 		static rep dac(size_t) { return core(); }
+
+		// TODO: MAKE THIS ONLY AVAILABLE FOR PROCESSORS THAT HAVE IT
+		static bool setFROClock(const rep& _f) {
+			// TODO: VALIDATE THE VALUE OF _F...
+			#define FRO_SET_CLOCK_API_ADDR 0x0F0026F5U
+			using func_t = void (*)(uint32_t);
+			func_t fro_set_func = reinterpret_cast<func_t>(FRO_SET_CLOCK_API_ADDR);
+			fro_set_func(_f.value()/1000); // THE API FUNCTION TAKES A VALUE IN kHz....
+			//(*reinterpret_cast<void (*)(uint32_t)>(FRO_SET_CLOCK_API_ADDR))(_f.value());
+			// Set FRO Direct Mode
+			LPC_SYSCON->FROOSCCTRL |= 1<<17; // Set direct mode bit
+			LPC_SYSCON->FRODIRECTCLKUEN = 0; // Update to direct mode
+			LPC_SYSCON->FRODIRECTCLKUEN = 1;
+			frequency::f_core_ = _f;
+			return true;
+		}
+
+	protected:
+		static rep f_core_;
 };
 
 class timestamp_clock
@@ -98,6 +119,9 @@ class timestamp_clock
 					return;
 
 		#elif defined(__LPC84X__)
+					#if defined(FRO_CLOCK)
+					frequency::setFROClock(frequency::rep{FRO_CLOCK});
+					#endif
 					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
 					SystemClock::enable(0, 8, true);
 					PeripheralActivity::reset(0, 8);
@@ -166,7 +190,6 @@ class timestamp_clock
 //		static time_t to_time_t(const timepoint_& t) noexcept;
 //		static time_point from_time_t(time_t t) noexcept;
 
-
 #if defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
     public:
         static volatile uint16_t high_bits_;
@@ -213,6 +236,7 @@ bool before(const std::chrono::time_point<Clock>& reference,
 } /*namespace chrono*/
 } /*namespace chandra*/
 
+// TODO: A CALL TO TIMESTAMP_CLOCK_IMPL SHOULD GO INTO CHANDRA_CORE.CPP
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 #define TIMESTAMP_CLOCK_IMPL
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)

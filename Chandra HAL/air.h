@@ -53,6 +53,7 @@ class Air
 
     //  RATIO OF SPECIFIC HEATS (GAMMA)
     constexpr Value gamma(const temperature_t& _T) const {
+      // Domain = [243.15, 1500]
       constexpr const Value C[] = {
           -1.27486493e-13,
           4.95701726e-10,
@@ -60,12 +61,26 @@ class Air
           2.38253065e-04,
           1.37472658
       };
-
       return chandra::math::HornersMethod<Value>(C, _T.value());
     }
 
     //  SPECIFIC HEAT (Cp and Cv) (relative to T and relative to T and P)
     //  Cv(T) = Cp(T) / gamma(T)
+    constexpr Value Cp(const temperature_t& _T) const {
+      // Domain = [250, 1500]
+      constexpr const Value C[] = {
+          -1.29141828e-10,
+          3.23095860e-07,
+          -4.70343363e-05,
+          9.91748498e-01
+      };
+      return chandra::math::HornersMethod<Value>(C, _T.value());
+    }
+
+    constexpr Value Cv(const temperature_t& _T) const {
+      // Domain = [250, 1500]
+      return Cp(_T) / gamma(_T);
+    }
 
     //  DYNAMIC/KINEMATIC VISCOSITY
     constexpr dynamic_viscosity_t mu(const temperature_t& _T) const {
