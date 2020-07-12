@@ -70,6 +70,7 @@
 \chapter{Overview}
 \section{Description}
 \section{Dependencies}
+THERE ARE CODE GENERATORS WRITTEN IN PYTHON
 \section{Platform Indepedence}
 
 \chapter{Getting Started}
@@ -81,8 +82,17 @@ THIS GETTING STARTED CHAPTER SHOULD INCLUDE A COUPLE OF COMPLETE APPLICATIONS.
 \chapter{Library Architecture}
 \section{Overview}
 \section{Core}
+\subsection{Math}
+ADD SYMMETRIC AND SKEW-SYMMETRIC MATRICIES.  THESE CAN HAVE OPTIMIED STORAGE AND MAY BE POSSIBLE TO OPTIMIZE OPERATIONS FOR THESE SPECIFIC FORMS (I.E. ADDITION CAN BE OPTIMIZED, MULTIPLICATION THAT CREATES A SKEW-SYMMETRIC MATRIC MAY BE OPTIMIZABLE, ETC.
+
+IT MAY MAKE SENSE TO USE EXPRESSION TEMPLATES TO SELECT THE IMPLEMENTATION OF OPERATIONS.
+
 \section{HAL}
 \section{Control}
+\subsection{Kalman Filtering}
+The Kalman filtering components of the Chandra library are designed to support multiple approaches to constructing a kalman filter.  Explicit implementation of a Kalman filter directly in source code by configuring the various matricies is simple.  This also has the advantage that it allows for dynamic modification of the matricies during runtime.  THERE SHOULD ALSO BE A CODE GENERATOR FOR CREATION OF 
+\subsection{PID}
+
 \section{Aero}
 
 \chapter{API}

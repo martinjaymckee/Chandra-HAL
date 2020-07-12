@@ -1,0 +1,23 @@
+# Any matricies which are not defined will be allowed to default naturally
+# and can be set in the final application.  However, operations including
+# those matricies will not be optimized because the values are not known
+
+dynamic dt # This specifies a value that must be passed at every time step
+            # dynamic values like this will trigger recalculation of the
+            # effected matrices prior to system update -- add a recalculate()
+            # method to the implementation and call it in the update() method
+            # prior to calling predict().
+
+X : [ Ps, dPs, ddPs ]
+
+Z : [ Ps ]
+
+F : [
+  Ps <- Ps + dt*dPs + ((dt**2)/2)*ddPs
+  dPs <- dPs + dt*ddPs
+  ddPs <- ddPs
+]
+
+H : [
+  Ps <- Ps
+]

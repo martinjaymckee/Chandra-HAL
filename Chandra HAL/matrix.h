@@ -56,6 +56,18 @@ template<typename Value, size_t Rows, size_t Columns>
 class VectorWrapper;
 } /*namespace internal*/
 
+// TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
+//        THE RANDOM NUMBERS (PASS IN A RANDOM GENERATOR)
+// TODO: ADD STATIC CONSTRUCTOR FROM A*A.t, L*D*L.t, AND OTHERS
+// TODO: ADD DIAGONAL MATRIX TYPE(TRIDIAGONAL, ETC.)
+// TODO: ADD SYMMETRIC/SKEW-SYMMETRIC MATRIX TYPE
+// TODO: ADD ROW-WISE/COLUMN-WISE STORAGE TYPES TO SPEED TRANSPOSE
+// TODO: ADD VIEWS (ROW, COLUMN, TRANSPOSE, ETC.)
+// TODO: ADD OPTIMIZED OPERATIONS WITH SPECIAL MATRIX TYPES
+//    -- SYMMETRIC MATRIX ADDITION
+//    -- MATRIX MULTIPLICATION TO SYMMETRIC MATRIX
+//    -- ?? EXPRESSION TEMPLATE FUNCTIONS
+
 template<typename Value, size_t Rows, size_t Columns>
 class Matrix
 {
@@ -76,7 +88,7 @@ class Matrix
         //
 
         //  Default constructor does not initialize memory
-		Matrix() = default;
+		    Matrix() = default;
 
         //  Single argument constructor initializes memory to the passed value
         explicit constexpr Matrix(const value_t& v) {
@@ -101,17 +113,28 @@ class Matrix
             }
         }
 
-		//	Copy Constructor
-		template<typename OtherValue>
-		constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
-			for (index_t row = 0; row < Rows; ++row) {
-				for (index_t column = 0; column < Columns; ++column) {
-					data_[row][column] = static_cast<Value>(_other.data_[row][column]);
-				}
-			}
-		}
-        
-		//  Construct an Identity matrix
+    		//	Copy Constructor
+    		template<typename OtherValue>
+    		constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
+    			for (index_t row = 0; row < Rows; ++row) {
+    				for (index_t column = 0; column < Columns; ++column) {
+    					data_[row][column] = static_cast<Value>(_other.data_[row][column]);
+    				}
+    			}
+    		}
+
+        //  Construct a zero matrix
+        static constexpr matrix_t Zeros() {
+          matrix_t matrix;
+            for(index_t row = 0; row < Rows; ++row){
+                for(index_t column = 0; column < Columns; ++column){
+                    matrix.data_[row][column] = 0;
+                }
+            }
+          return matrix;
+        }
+
+    		//  Construct an Identity matrix
         static constexpr matrix_t Eye() {
             matrix_t matrix;
             static_assert(Rows == Columns, "Attempting to make a non-square identity matrix!");
@@ -151,10 +174,10 @@ class Matrix
         }
         // TODO: Add an offset argument to the Diagonal Matrix Factory and create a TriDiagonal method with similar arguments
 
-		// Construct a matrix of numbers calculated from the row and colum index by a
-		//		passed in function object
+    		// Construct a matrix of numbers calculated from the row and colum index by a
+    		//		passed in function object
         template<typename Func>
-		static constexpr matrix_t MapBuild(Func f) {
+		    static constexpr matrix_t MapBuild(Func f) {
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -165,14 +188,14 @@ class Matrix
             return matrix;
         }
 
-		//  Construct a matrix of counting numbers (beginning at the base -- zero by default)
-		//      in either row major format (true) or column major format (false)
-		static constexpr matrix_t Count(value_t base = 0, const bool& row_major = true) {
-			return MapBuild(
-				[=](index_t row, index_t column) 
-				{ return base + (row_major ? (row * Columns) + column : (column * Rows) + row); }
-			);
-		}
+    		//  Construct a matrix of counting numbers (beginning at the base -- zero by default)
+    		//      in either row major format (true) or column major format (false)
+    		static constexpr matrix_t Count(value_t base = 0, const bool& row_major = true) {
+    			return MapBuild(
+    				[=](index_t row, index_t column)
+    				{ return base + (row_major ? (row * Columns) + column : (column * Rows) + row); }
+    			);
+    		}
 
         // TODO: THIS IS A HACK, AT THE MOMENT.  IT'S NOT GIVING GOOD RANDOM NUMBERS NOR IS IT
         //      AT ALL FLEXIBLE AS TO TYPE (I.E. NO FRACTIONAL NUMBERS)
@@ -186,6 +209,47 @@ class Matrix
                 }
             }
             return matrix;
+        }
+
+        static constexpr matrix_t RandomDiag(const size_t& seed = 12345, const size_t& mod=100) {
+            uint64_t state = seed;
+            matrix_t matrix;
+            for(index_t row = 0; row < Rows; ++row){
+                for(index_t column = 0; column < Columns; ++column){
+                    state = 987656789 * state + 1357911;
+                    if(row == column) {
+                      matrix.data_[row][column] = static_cast<Value>((state >> 32) % mod);
+                    } else {
+                      matrix.data_[row][column] = Value(0);
+                    }
+                }
+            }
+            return matrix;
+        }
+
+        static constexpr matrix_t RandomL(const size_t& seed = 12345, const size_t& mod=100) {
+            uint64_t state = seed;
+            matrix_t matrix;
+            for(index_t row = 0; row < Rows; ++row){
+                for(index_t column = 0; column < Columns; ++column){
+                    state = 987656789 * state + 1357911;
+                    if(row <= column) {
+                      matrix.data_[row][column] = static_cast<Value>((state >> 32) % mod);
+                    } else {
+                      matrix.data_[row][column] = Value(0);
+                    }
+                }
+            }
+            return matrix;
+        }
+
+        // TODO: THIS IS SUFFERING FROM ALL THE SAME PROBLEMS THAT THE OTHER RANDOM
+        //  CONSTRUCTORS ARE.
+        static constexpr matrix_t RandomSPD(const size_t& seed = 12345, const size_t& mod=100) {
+          auto L = matrix_t::RandomL(seed, mod);
+          for(index_t i = 0; i < Rows; ++i) L(i, i) = Value(1);
+          const auto D = matrix_t::RandomDiag(2*seed + mod, mod);
+          return (L * D) * L.T();
         }
 
         //

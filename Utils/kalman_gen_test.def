@@ -1,0 +1,53 @@
+# Any matricies which are not defined will be allowed to default naturally
+# and can be set in the final application.  However, operations including
+# those matricies will not be optimized because the values are not known
+
+# TODO: CREATE REPORTS AND WORN ABOUT UNUSED PARAMETERS OR OTHER ISSUES,
+#   DUMP THE EQUATIONS OF STATE, MEASUREMENT MODEL, ETC.  AND DUMP THE
+#   COMPUTED MATRICIES.
+# TODO: ADD THE ABILITY TO USE EXPRESSIONS FOR THE VALUE OF THE PARAMETERS.
+#   THESE SHOULD ALLOW REFERENCE TO OTHER CONSTANT VALUES.  DYNAMIC AND INIT
+#   VALUES ARE STILL NOT ALLOWED TO HAVE A VALUE.
+const dt = 1 / 50
+#init dt
+#dynamic dt # This specifies a value that must be passed at every time step
+            # dynamic values like this will trigger recalculation of the
+            # effected matrices prior to system update -- add a recalculate()
+            # method to the implementation and call it in the update() method
+            # prior to calling predict().
+init Pp_sd # This specifies a value that must be passed at initialization
+const d = 24 # This specifies a fixed value
+const Ps_sd = 1e-3
+
+X : [ Ps, dPs, ddPs, dPs_est, Pp, qc, dqc, ddqc, dqc_est ]
+
+Z : [ Ps, dPs, # This comment will be ignored...
+Pp, dPp ]
+
+R : [
+  Ps <- Ps_sd
+  dPs <- Ps_sd/dt
+  Pp <- Pp_sd
+  dq_est <- (Ps_sd+Pp_sd)/dt
+]
+
+F : [
+  Ps <- Ps + dt*dPs + ((dt**2)/2)*ddPs
+  dPs <- dPs + dt*ddPs
+  ddPs <- ddPs
+  dPs_est <- dPs - d*dt*ddPs
+  Pp <- Ps + qc + dt*dqc + ((dt**2)/2)*ddqc
+  qc <- Pp - Ps + dt*dqc + ((dt**2)/2)*ddqc
+  dqc <- dqc + dt*ddqc
+  ddqc <- ddqc
+  dqc_est <- dqc - d*dt*ddqc
+]
+
+# Q can be defined.  If it is not, operations will not be optimized
+
+H : [
+  Ps <- Ps
+  dPs_est <- dPs
+  Pp <- Pp
+  dqc_est <- dPp-dPs
+]
