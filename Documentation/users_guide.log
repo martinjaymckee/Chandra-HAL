@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  4 APR 2020 19:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  11 JUL 2020 23:57
 entering extended mode
 **./users_guide.tex
 (users_guide.tex
@@ -387,33 +387,75 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 1.
  [1
 
-{C:/Users/marti/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}])
+{C:/Users/marti/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Overfull \hbox (1.3752pt too wide) detected at line 46
+\OT1/cmr/bx/n/14.4 III 
+ []
+
+) [2]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 74.
+ [3] [4] [5] [6
+
+] [7] [8]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [2]
-Overfull \vbox (269.81677pt too high) has occurred while \output is active []
+ [9]
+Overfull \hbox (10.19826pt too wide) in paragraph at lines 105--107
+\OT1/cmr/m/n/12 The ADD SYM-MET-RIC AND SKEW-SYMMETRIC MA-TRICIES.
+ []
 
 
-[3]
+Overfull \hbox (2.11818pt too wide) in paragraph at lines 105--107
+\OT1/cmr/m/n/12 THESE CAN HAVE OP-TI-MIED STOR-AGE AND MAY BE POS-
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10]
+Overfull \hbox (11.66525pt too wide) in paragraph at lines 121--122
+\OT1/cmr/m/n/12 CURRENTLY THERE IS NO API SPEC-I-FIED FOR DAC, THERE
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [11]
+Overfull \hbox (0.91609pt too wide) in paragraph at lines 142--143
+\OT1/cmr/m/n/12 (PRES-SURE, DEN-SITY, TEM-PER-A-TURE, AL-TI-TUDE, ETC.),
+ []
+
+[12] [13
+
+] [14] [15] [16
+
+] [17] [18] [19]
 \tf@toc=\write4
 \openout4 = `users_guide.toc'.
 
  (users_guide.aux) ) 
 Here is how much of TeX's memory you used:
- 3641 strings out of 492453
- 49021 string characters out of 3129819
+ 3653 strings out of 492453
+ 49196 string characters out of 3129819
  143747 words of memory out of 3000000
- 8046 multiletter control sequences out of 15000+200000
- 10015 words of font info for 35 fonts, out of 3000000 for 9000
+ 8056 multiletter control sequences out of 15000+200000
+ 10708 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,11n,26p,198b,257s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 25i,11n,26p,1640b,259s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on users_guide.pdf (3 pages, 56576 bytes).
+.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmti12.pfb>
+Output written on users_guide.pdf (19 pages, 138105 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
+ 104 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
