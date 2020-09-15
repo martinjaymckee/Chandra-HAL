@@ -284,6 +284,8 @@ class SPIFlash25Series
                       static_cast<uint8_t>(addr&0x0000FF),
                       byte
                   };
+                  static_cast<const derived_t *>(this)->wren();
+                  while(!static_cast<const derived_t *>(this)->wel()){}                  
                   spi_.tx(data, 5, cs_, chandra::io::SPI::WRAP);
                   static_cast<const derived_t *>(this)->block();
                   ++addr;
