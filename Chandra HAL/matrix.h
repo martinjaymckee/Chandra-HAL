@@ -88,7 +88,7 @@ class Matrix
         //
 
         //  Default constructor does not initialize memory
-		    Matrix() = default;
+		    Matrix() {}
 
         //  Single argument constructor initializes memory to the passed value
         explicit constexpr Matrix(const value_t& v) {

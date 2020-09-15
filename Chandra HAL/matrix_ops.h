@@ -1,8 +1,6 @@
 #ifndef CHANDRA_MATRIX_OPS_H
 #define CHANDRA_MATRIX_OPS_H
 
-#include<iostream>
-
 #include <cmath>
 using namespace std;
 
@@ -212,7 +210,6 @@ struct SolveImplementation
 	static constexpr Matrix<V2, N, M> calc(const Matrix<V1, N, N> _A, Matrix<V2, N, M> b) {
 		Matrix<V1, N, N> A{ _A };
 
-		std::cout << "Solve with Gaussian Elimination\n";
 		// Gaussian Elimination
 		for (size_t head = 0; head < N; ++head) {
 			size_t max_head = head;
@@ -273,7 +270,6 @@ template<typename V1, typename V2, size_t N, size_t M>
 struct SolveImplementation<V1, V2, N, M, method::LDL>
 {
 	static constexpr Matrix<V2, N, M> calc(const Matrix<V1, N, N> A, Matrix<V2, N, M> b) {
-		std::cout << "Solve with LDLt decomposition\n";
 		const auto results = rdr(A);
 
 		internal::unitriangular_forwardsubstitute(results.Rt, b);
@@ -375,10 +371,14 @@ struct Inverter<Value, 3>
 };
 } /*namespace internal*/
 
-
-template<typename V, size_t N, typename Method = method::GE>
+template<typename V, size_t N>
 constexpr auto inverse(const Matrix<V, N, N>& _m) {
-    return internal::Inverter<V, N>::template calc<Method>(_m);
+    return internal::Inverter<V, N>::template calc<method::GE>(_m);
+}
+
+template<typename Method, typename V, size_t N>
+constexpr auto inverse(const Matrix<V, N, N> & _m) {
+	return internal::Inverter<V, N>::template calc<Method>(_m);
 }
 
 // Element-Wise Multiplication

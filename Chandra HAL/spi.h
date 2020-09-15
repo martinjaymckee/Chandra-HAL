@@ -37,7 +37,8 @@ struct SPI
         enum transfer_mode_t {
             START,
             STOP,
-            WRAP
+            WRAP,
+            PASS
         };
 
         enum : cs_t {
@@ -157,7 +158,7 @@ class SPIMaster
 			return;
 		}
 
-        value_t* rx(value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP, const value_t& _stuff = 0xFF) const {
+    value_t* rx(value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP, const value_t& _stuff = 0xFF) const {
 			value_t* out_buf = _out_buf;
 			uint16_t ctrl = 0;
 

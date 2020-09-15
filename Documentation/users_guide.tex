@@ -68,7 +68,7 @@
 \tableofcontents* % the asterisk means that the contents itself isn't put into the ToC
 
 \chapter{Overview}
-Chandra is a collection of almost entirely header-only libraries that are designed to support the development of real-time embedded control systems on microcontroller systems.  While Chandra supports running inside an RTOS, it does not require it because the libraries are designed in such a way that functionality can easilby be called from an explicit event loop.
+Chandra is a collection of almost entirely header-only libraries that are designed to support the development of real-time embedded control systems on microcontroller systems.  While Chandra supports running inside an RTOS, it does not require it nor is it specifically designed for it as the libraries are designed in such a way that functionality can easilby be called from an explicit event loop.  There is a single ``core'' .cpp file that defines the whole Chandra runtime\footprint{Currently there is only a single variable definition which could also be defined directly in the application code.  In future, however, additional values could be defined and, as such, it is cleaner to place them in the .cpp file.}.
 
 \section{Description}
 As they stand, the Chandra libraries consist of four sub-libraries: Chandra-Core, Chandra-HAL, Chandra-Control, and Chandra-Aero.  The Chandra Core libraries are functionality that is required for any of the other libraries but which is - otherwise - stand alone.  The core libraries could be used completely by themselves, though they do not provide enough functionality to implement a complete application because they do not contain features such as input and output.  The HAL libraries provide a hardware abstraction layer for the platform with a consistent API.  This is the only sub-library that requires explicit porting to new platforms\footnote{In future, it may make sense to optimized some of the core functionlaity based on the platform.  This might include chosing loop variable sizes or other microoptimizations.  The core functionality should work without requireing any porting, however.}.  The HAL includes things such as a system clock implementation, timing functionality, GPIO, serial peripherals, etc.  Some of the functionality in the HAL is platform independent as it is based directly on lower level functionality.  The porting documentation later in this guide describes what types and functions need to be implemented.  The third sub-library is Chandra-Control which provides observers, filters and control loop implementations.  Finally, Chandra-Aero provides special-purpose functions for aerodynamics related programs.  This includes functionality such as an atmosphere (~altitude, pressure, temperature, density~) model, basic air properties, lift and drag calculation, etc.
@@ -172,8 +172,36 @@ ATMOSPHERIC PROPERTIES, MODEL OF ATMOSPHERE (PRESSURE, DENSITY, TEMPERATURE, ALT
 \subsection{Scaled reading of a single ADC channel}
 \subsection{Reading multiple ADC channels}
 
+\section{Math}
+\subsection{Construct a matrix}
+\subsection{Solve a system of equations}
+\subsection{Invert a matrix}
+
 \appendix
 \part{Appendicies}
+
+\chapter{Setting up MCUXpresso for LPC Series Microcontrollers}
+\section{Installation}
+\section{Optimization and Standards}
+\section{Include Paths}
+\section{Preprocessor Definitions}
+
 \chapter{Porting Guide}
+The only section of the Chandra libraries that require porting when moving to new platforms is the Chandra-HAL components.  Any other components (core, control, and aero) are platform independent.
+
+ALL COMPONENTS THAT REQUIRE PORTING NEED TO HAVE HEADER TEMPLATES.
+\section{Low-Level Register Access}
+THIS IS THINGS LIKE CLOCK POWER, PERIPHERAL RESET, GPIO MAPPING, ETC.
+\section{Clock and Frequencies}
+\section{GPIO}
+\section{ADC}
+\section{Timers}
+THERE IS NO TIMER API DEFINED AT THE MOMENT, BUT THERE REALLY SHOULD BE ONE...
+\section{$I^2C$}
+\section{SPI}
+\section{USART}
+
+\section{(Optional) DAC}
+\section{(Optional) Special Peripherals}
 
 \end{document}

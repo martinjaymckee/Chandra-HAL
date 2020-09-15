@@ -17,6 +17,8 @@
 #include "chrono.h"
 #include "gpio.h"
 
+// TODO: CHANGE THE INIT FUNCTION TO TAKE A FREQUENCY QUANTITY (IN HZ)
+
 namespace chandra
 {
 namespace io

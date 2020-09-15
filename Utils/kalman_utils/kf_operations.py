@@ -1,3 +1,5 @@
+import math
+
 import sympy
 
 class OperationCounts:
@@ -53,13 +55,32 @@ class Unoptimized:
         return OperationCounts(addsubs=N*P*(M-1), mults=N*M*P, reads=2*N*M*P, writes=N*P)
     
     @classmethod
+    def matrixTranspose(cls, m0):
+        N, M = m0.shape
+        return OperationCounts(reads=M*N, writes=M*N)
+
+    @classmethod
     def GJInversion(cls, m0):
         assert m0.shape[0] == m0.shape[1], 'Fatal Error: Only symmetric matricies may be inverted'
         N = m0.shape[0]
         num = (N**3) + (N**2) - 3*N + 2
         cmps = (N*(N-1))/2
         return OperationCounts(addsubs=num, mults=num, divs=N, cmps=cmps, reads=num, writes=num)
-                
+      
+    @classmethod
+    def LDLInversion(cls, m0):
+        assert m0.shape[0] == m0.shape[1], 'Fatal Error: Only symmetric matricies may be inverted'
+        N = m0.shape[0]
+        num = int(math.ceil((N**3) / 3))
+        return OperationCounts(addsubs=num, mults=num, divs=N, cmps=0, reads=num, writes=num)
+             
+    @classmethod
+    def LDLSolve(cls, m0, m1):
+        assert m0.shape[0] == m0.shape[1], 'Fatal Error: Only symmetric matricies may be inverted'
+        N = m0.shape[0]
+        num = int(math.ceil((N**3) / 3))
+        return OperationCounts(addsubs=num, mults=num, divs=N, cmps=0, reads=num, writes=num)
+            
     @classmethod
     def predictStep(cls, F, X, B=None, u=None):
         ops = OperationCounts()
@@ -81,6 +102,47 @@ class Unoptimized:
         ops = ops + cls.matrixAddSub(F, F)
         return ops
          
+    @classmethod
+    def measureStep(cls, H, X, Z):
+        ops = OperationCounts()
+        ops = ops + cls.matrixMult(H, X)
+        ops = ops + cls.matrixAddSub(Z, Z)
+        return ops
+    
+    @classmethod
+    def gainUpdateStep(cls, H, P, R):
+        ops = OperationCounts()
+        # Calculate S
+        ops = ops + cls.matrixMult(H, P)
+        ops = ops + cls.matrixMult(H, P)
+        ops = ops + cls.matrixAddSub(R, R)
+        ops = ops + cls.LDLInversion(R)
+        ops = ops + cls.matrixMult(H, P)
+        ops = ops + cls.matrixMult(R, H)
+        
+        return ops
+        
+    @classmethod 
+    def correctStep(cls, H, K, X, Y, P):
+        ops = OperationCounts() 
+        
+        # State Correction
+        #   K*y
+        ops = ops + cls.matrixMult(K, Y)
+        #   X + K*y
+        ops = ops + cls.matrixAddSub(X, X)
+        
+        # Covariance Correction
+        #   K*H
+        ops = ops + cls.matrixMult(K, H)
+        #   I - K*H
+        ops = ops + cls.matrixAddSub(P, P)
+        #   (I - K*H)*P
+        ops = ops + cls.matrixMult(P, P)
+        
+        return ops
+    
+    
 def exprOps(expr):
     """This operation estimation is not handling some simple optimizations that 
     should be done (i.e. y-x is treated as -1*x+y) and it is overestimating multiplications
@@ -92,12 +154,12 @@ def exprOps(expr):
     
     ops = OperationCounts()
     if isinstance(expr, sympy.Symbol) or isinstance(expr, sympy.Number):
-        print('--> {}'.format(expr))
+        #print('--> {}'.format(expr))
         ops.reads += 1
     else:
         func = expr.func
         num = len(expr.args) - 1
-        print('--> ({}, {})'.format(func, expr.args))        
+        #print('--> ({}, {})'.format(func, expr.args))        
         process = True
         if func == sympy.Add:
             ops.addsubs += num

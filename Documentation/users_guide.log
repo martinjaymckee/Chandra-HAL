@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  11 JUL 2020 23:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  12 JUL 2020 00:13
 entering extended mode
 **./users_guide.tex
 (users_guide.tex
@@ -341,8 +341,8 @@ Package: inputenc 2018/08/11 v1.3c Input encoding file
 )
 
 ******************************************************
-Stock height and width: 845.04684pt by 597.50787pt
-Top and edge trims: 0pt and 0pt
+Stock height and width: 794.96999pt by 614.295pt
+Top and edge trims: 0pt and 16.78712pt
 Page height and width: 794.96999pt by 597.50787pt
 Text height and width: 548.5pt by 336pt
 Spine and edge margins: 99.91455pt and 161.59332pt
@@ -351,12 +351,12 @@ Headheight and headsep: 14.5pt and 21.93494pt
 Footskip: 30pt
 Columnsep and columnseprule: 10pt and 0pt
 Marginparsep and marginparwidth: 7pt and 147.59332pt
-Sidecapsep and sidecapwidth: 7pt and 92pt
-Sidebarhsep and sidebarwidth: 7pt and 92pt
+Sidecapsep and sidecapwidth: 7pt and 102pt
+Sidebarhsep and sidebarwidth: 7pt and 102pt
 Sidebarvsep and sidebartopsep: 14.5pt and 0pt
-Sidebarheight: 590.14995pt
-Sidefoothsep and sidefootwidth: 7pt and 92pt
-Sidefootvsep and sidefootheight: 14.5pt and 590.14995pt
+Sidebarheight: 546.64995pt
+Sidefoothsep and sidefootwidth: 7pt and 102pt
+Sidefootvsep and sidefootheight: 14.5pt and 546.64995pt
 ******************************************************
 
 (users_guide.aux)
@@ -401,12 +401,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-Overfull \hbox (10.19826pt too wide) in paragraph at lines 105--107
+Overfull \hbox (10.19826pt too wide) in paragraph at lines 107--109
 \OT1/cmr/m/n/12 The ADD SYM-MET-RIC AND SKEW-SYMMETRIC MA-TRICIES.
  []
 
 
-Overfull \hbox (2.11818pt too wide) in paragraph at lines 105--107
+Overfull \hbox (2.11818pt too wide) in paragraph at lines 107--109
 \OT1/cmr/m/n/12 THESE CAN HAVE OP-TI-MIED STOR-AGE AND MAY BE POS-
  []
 
@@ -414,7 +414,7 @@ Overfull \hbox (2.11818pt too wide) in paragraph at lines 105--107
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [10]
-Overfull \hbox (11.66525pt too wide) in paragraph at lines 121--122
+Overfull \hbox (11.66525pt too wide) in paragraph at lines 123--124
 \OT1/cmr/m/n/12 CURRENTLY THERE IS NO API SPEC-I-FIED FOR DAC, THERE
  []
 
@@ -422,13 +422,17 @@ Overfull \hbox (11.66525pt too wide) in paragraph at lines 121--122
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
-Overfull \hbox (0.91609pt too wide) in paragraph at lines 142--143
+Overfull \hbox (0.91609pt too wide) in paragraph at lines 144--145
 \OT1/cmr/m/n/12 (PRES-SURE, DEN-SITY, TEM-PER-A-TURE, AL-TI-TUDE, ETC.),
  []
 
 [12] [13
 
-] [14] [15] [16
+] [14]
+Overfull \vbox (280.78339pt too high) has occurred while \output is active []
+
+
+[15] [16
 
 ] [17] [18] [19]
 \tf@toc=\write4
@@ -438,7 +442,7 @@ Overfull \hbox (0.91609pt too wide) in paragraph at lines 142--143
 Here is how much of TeX's memory you used:
  3653 strings out of 492453
  49196 string characters out of 3129819
- 143747 words of memory out of 3000000
+ 143755 words of memory out of 3000000
  8056 multiletter control sequences out of 15000+200000
  10708 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -453,7 +457,7 @@ onts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
 m/cmti12.pfb>
-Output written on users_guide.pdf (19 pages, 138105 bytes).
+Output written on users_guide.pdf (19 pages, 139481 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

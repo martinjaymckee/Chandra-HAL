@@ -16,17 +16,24 @@ def calcObservability(F, H):
     return O.rank() == F.shape[0]
 
 
-def __expression_symbols(expr):
+def expression_symbols(expr):
     symbols = set()
     if isinstance(expr, sympy.Symbol):
         symbols.add(expr)
     else:
         for arg in expr.args:
-            ss = __expression_symbols(arg)
+            ss = expression_symbols(arg)
             for s in ss:
                 symbols.add(s)
     return symbols
 
+def matrix_symbols(m):
+    symbols = set()
+    for row in range(m.shape[0]):
+        for column in range(m.shape[1]):
+            expr = m[row,column]
+            symbols.update(expression_symbols(expr))
+    return symbols
 
 def __match_parameter(symbol, parameters):
     for param in parameters:
@@ -37,7 +44,7 @@ def __match_parameter(symbol, parameters):
 
 def expressionCalculationMode(expr, parameters):
     mode = 'const'
-    symbols = __expression_symbols(expr)
+    symbols = expression_symbols(expr)
     for symbol in symbols:
         param = __match_parameter(symbol, parameters)
         if param is None:
@@ -54,4 +61,5 @@ def expressionCalculationMode(expr, parameters):
 if __name__ == '__main__':
     x, y, z = sympy.symbols('x y z')
     w = 3*x + 4*x*y - y/z
-    symbols = __expression_symbols(w)
+    symbols = expression_symbols(w)
+    print(symbols)

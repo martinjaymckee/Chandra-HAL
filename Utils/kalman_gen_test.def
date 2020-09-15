@@ -8,16 +8,17 @@
 # TODO: ADD THE ABILITY TO USE EXPRESSIONS FOR THE VALUE OF THE PARAMETERS.
 #   THESE SHOULD ALLOW REFERENCE TO OTHER CONSTANT VALUES.  DYNAMIC AND INIT
 #   VALUES ARE STILL NOT ALLOWED TO HAVE A VALUE.
-const dt = 1 / 50
-#init dt
+#const dt = 1 / 50
+init dt
 #dynamic dt # This specifies a value that must be passed at every time step
             # dynamic values like this will trigger recalculation of the
             # effected matrices prior to system update -- add a recalculate()
             # method to the implementation and call it in the update() method
             # prior to calling predict().
-init Pp_sd # This specifies a value that must be passed at initialization
-const d = 24 # This specifies a fixed value
-const Ps_sd = 1e-3
+
+const d = 24 # This is the latency of derivitive estimation
+const Ps_sd = 1e-3 # This could be made an init value and initialized from EEPROM
+const Pp_sd = 1e-3
 
 X : [ Ps, dPs, ddPs, dPs_est, Pp, qc, dqc, ddqc, dqc_est ]
 

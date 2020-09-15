@@ -6,11 +6,12 @@ import sympy
 import sympy.parsing.sympy_parser
 
 class KalmanFilterParameter:
-    def __init__(self, name, value=None, mode='const'):
+    def __init__(self, name, value=None, mode='const', calc=False):
         self.__name = name
         self.__value = value
         self.__mode = mode
         self.__msg = 'ok'
+        self.__calc = calc
         
     def __str__(self):      
         #if not self.valid: return 'Invalid({})'.format(self.name)
@@ -26,6 +27,9 @@ class KalmanFilterParameter:
     
     @property
     def mode(self): return self.__mode
+    
+    @property
+    def calc(self): return self.__calc
     
     @property
     def valid(self):
@@ -180,6 +184,30 @@ class KalmanFilterDefinition:
         self.H = None
         self.R = None
 
+    @property
+    def const_params(self):
+        results = []
+        for param in self.params:
+            if param.mode == 'const':
+                results.append(param)
+        return results 
+    
+    @property
+    def init_params(self):
+        results = []
+        for param in self.params:
+            if param.mode == 'init':
+                results.append(param)
+        return results 
+    
+    @property
+    def dynamic_params(self):
+        results = []
+        for param in self.params:
+            if param.mode == 'dynamic':
+                results.append(param)
+        return results 
+        
     @property
     def valid(self):
         # X is None or it exists and all state values in X are defined in F

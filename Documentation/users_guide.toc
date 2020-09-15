@@ -41,7 +41,24 @@
 \contentsline {section}{\numberline {4.1}}{15}% 
 \contentsline {subsection}{}{15}% 
 \contentsline {chapter}{\chapternumberline {5}Chandra Cookbook}{15}% 
-\contentsline {section}{\numberline {5.1}}{15}% 
-\contentsline {subsection}{}{15}% 
+\contentsline {section}{\numberline {5.1}Clock and Timing}{15}% 
+\contentsline {subsection}{Performance Timers}{15}% 
+\contentsline {subsubsection}{Timing a function}{15}% 
+\contentsline {subsubsection}{Conditional timing of a function}{15}% 
+\contentsline {subsubsection}{Loop frequency measurement}{15}% 
+\contentsline {subsubsection}{Loop frequency statistics}{15}% 
+\contentsline {section}{\numberline {5.2}Digital I/O}{15}% 
+\contentsline {subsection}{Reading a digital pin}{15}% 
+\contentsline {subsection}{Writing to a digital pin}{15}% 
+\contentsline {subsection}{Reading a mechanical switch/button}{15}% 
+\contentsline {subsection}{Manual control of an LED}{15}% 
+\contentsline {subsection}{Automatic PWM of an LED}{15}% 
+\contentsline {subsection}{Automatic PWM of an LED with asynchronous update}{15}% 
+\contentsline {subsection}{Event on a pin falling (rising) edge}{15}% 
+\contentsline {subsection}{Reading a Quadrature Encoder}{15}% 
+\contentsline {section}{\numberline {5.3}Analog I/O}{15}% 
+\contentsline {subsection}{Raw reading of a single ADC channel}{15}% 
+\contentsline {subsection}{Scaled reading of a single ADC channel}{15}% 
+\contentsline {subsection}{Reading multiple ADC channels}{15}% 
 \contentsline {part}{\partnumberline {III}Appendicies}{17}% 
 \contentsline {appendix}{\chapternumberline {A}Porting Guide}{19}% 

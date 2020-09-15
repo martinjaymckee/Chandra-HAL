@@ -2,6 +2,7 @@
 #define CHANDRA_KALMAN_H
 
 #include <matrix.h>
+#include <matrix_ops.h>
 
 namespace chandra
 {
@@ -122,13 +123,16 @@ public:
 	}
 
 	void gain_update() {
-		const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
-		this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
+		//const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
+		//this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
+		const auto b = (this->H * this->P_prior);
+		const auto S = (b * this->H.T() + this->R);
+		this->K = (chandra::math::solve<chandra::math::method::LDL>(S, b)).T();
 		return;
 	}
 
 	state_t correct() {
-		constexpr static state_covariance_t I = state_covariance_t::Eye();
+		const static state_covariance_t I = state_covariance_t::Eye();
 		this->X_post = this->X_prior + (this->K * this->y);
 		this->P_post = (I - (this->K * this->H)) * this->P_prior;
 		return this->X_post;

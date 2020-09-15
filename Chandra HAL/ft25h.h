@@ -3,28 +3,13 @@
 
 #include<algorithm>
 
-#include "spi.h"
+#include<flash_utils.h>
+#include<spi.h>
 
 namespace chandra
 {
 namespace drivers
 {
-
-struct AddressRange
-{
-        size_t start;
-        size_t end;
-
-        operator bool() const { return end > start; }
-};
-
-struct SectorRange
-{
-        size_t start;
-        size_t end;
-
-        operator bool() const { return end > start; }
-};
 
 class FT25H16
 {
@@ -196,4 +181,3 @@ class FT25H16
 } /*namespace drivers*/
 } /*namespace chandra*/
 #endif // FT25H_H
-
