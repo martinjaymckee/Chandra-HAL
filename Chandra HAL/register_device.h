@@ -21,8 +21,6 @@ struct RegisterDevice
         template<typename... Args>
         RegisterDevice(comm_t&, Args...) {}
 
-        RegisterDevice(const ref_t&) {}
-
         //
         // Read Register Commands
         //
@@ -46,6 +44,9 @@ struct RegisterDevice
 
         // 16-Bit Half Word
         void write(const uint8_t /*reg*/, const uint16_t /*data*/) {}
+
+        template<size_t N>
+        void writebytes(const uint8_t /*reg*/, const size_t /*_num*/, const uint8_t (& /*data*/)[N]) {}
 };
 
 template<class Derived>
@@ -69,7 +70,7 @@ struct RegisterDeviceMixin
       return static_cast<Derived*>(this)->write(reg, new_data);
   }
 
-  // TODO: IMPLEMET REGISTER FIELD UPDATE COMMANDS
+  // TODO: IMPLEMENT REGISTER FIELD UPDATE COMMANDS
   //  FOR INSTANCE FIELD(REG, OFFSET, WIDTH, VALUE)
   //  HOW TO HANDLE BYTE REGISTERS VS. HWORD REGISTERS
 };
@@ -83,13 +84,11 @@ struct RegisterDevice<chandra::io::SPIMaster>
         using util_t = chandra::io::SPI;
         using ref_t = RegisterDevice<comm_t>;
 
-        RegisterDevice(comm_t& _comm, const util_t::cs_t& _cs = util_t::CS0)
-            : comm(_comm), cs(_cs) {}
-
-        RegisterDevice(const ref_t& _other) : comm(_other.comm), cs(_other.cs) {}
+        RegisterDevice(comm_t& _comm, const util_t::cs_t& _cs = util_t::CS0, const uint8_t& _write_mask = (0<<7), const uint8_t& _read_mask = (1<<7))
+            : comm(_comm), cs(_cs), write_mask(_write_mask), read_mask(_read_mask) {}
 
         uint8_t byte(const uint8_t reg) const {
-            const uint8_t cmd = (1<<7) | reg;
+            const uint8_t cmd = static_cast<uint8_t>(read_mask | reg);
             uint8_t val = 0x12;
             comm.tx(&cmd, 1, cs, util_t::START);
             comm.rx(&val, 1, cs, util_t::STOP);
@@ -99,14 +98,14 @@ struct RegisterDevice<chandra::io::SPIMaster>
         template<size_t N>
         uint8_t bytes(const uint8_t reg, const size_t _num, uint8_t (&_buffer)[N]) const {
             const size_t num = std::min(N, _num);
-            const uint8_t cmd = (1<<7) | reg;
+            const uint8_t cmd = static_cast<uint8_t>(read_mask | reg);
             comm.tx(&cmd, 1, cs, util_t::START);
             comm.rx(_buffer, num, cs, util_t::STOP);
             return num;
         }
 
         int16_t hword(const uint8_t reg) const {
-            const uint8_t cmd = (1<<7) | reg;
+            const uint8_t cmd = static_cast<uint8_t>(read_mask | reg);
             uint8_t val[2];
             comm.tx(&cmd, 1, cs, util_t::START);
             comm.rx(val, 2, cs, util_t::STOP);
@@ -114,19 +113,30 @@ struct RegisterDevice<chandra::io::SPIMaster>
         }
 
         void write(const uint8_t reg, const uint8_t& data) {
-            const uint8_t cmd[2] = {reg, data};
+            const uint8_t cmd[2] = {static_cast<uint8_t>(write_mask | reg), data};
             comm.tx(cmd, 2, cs);
             return;
         }
 
         void write(const uint8_t reg, const uint16_t& data) {
-            const uint8_t cmd[3] = {reg, static_cast<uint8_t>(data>>8), static_cast<uint8_t>(data&0xFF)};
+            const uint8_t cmd[3] = {static_cast<uint8_t>(write_mask | reg), static_cast<uint8_t>(data>>8), static_cast<uint8_t>(data&0xFF)};
             comm.tx(cmd, 3, cs);
             return;
         }
 
-        comm_t comm;
-        util_t::cs_t cs;
+        template<size_t N>
+        void writebytes(const uint8_t reg, const size_t _num, const uint8_t (& _data)[N]) {
+          const size_t num = std::min(N, _num);
+          const uint8_t cmd = static_cast<uint8_t>(write_mask | reg);
+          comm.tx(&cmd, 1, cs, chandra::io::SPI::START);
+          comm.tx(_data, num, cs, chandra::io::SPI::STOP);
+          return;
+        }
+
+        comm_t& comm;
+        const util_t::cs_t cs;
+        const uint8_t write_mask;
+        const uint8_t read_mask;
 };
 
 // I2C Register Machine Implementation
@@ -141,8 +151,6 @@ struct RegisterDevice<chandra::io::I2CMaster>
 
         RegisterDevice(comm_t& _comm, uint8_t _addr)
             : comm(_comm), addr(_addr) {}
-
-        RegisterDevice(const ref_t& _other) : comm(_other.comm), addr(_other.addr) {}
 
         uint8_t byte(const uint8_t reg) { // CONST
             uint8_t val;
@@ -172,6 +180,13 @@ struct RegisterDevice<chandra::io::I2CMaster>
             const uint8_t data[2] = {static_cast<uint8_t>(_data>>8), static_cast<uint8_t>(_data&0xFF)};
             comm.writeReg(addr, reg, data, 2);
             return;
+        }
+
+        template<size_t N>
+        void writebytes(const uint8_t reg, const size_t _num, const uint8_t (& _data)[N]) {
+          const size_t num = std::min(N, _num);
+          comm.writeReg(addr, reg, _data, N);
+          return;
         }
 
         comm_t comm;

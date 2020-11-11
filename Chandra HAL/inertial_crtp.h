@@ -268,6 +268,37 @@ class Gyroscope : public Inertial<Gyroscope<Derived, Value, GyroImpl, N, GyroUni
 };
 
 // Declare Magnetometer baseclass
+template<
+    class Derived,
+    class Value,
+    class MagImpl,
+    size_t N = 3,
+    class MagUnits = units::mks::T
+>
+class Magnetometer : public Inertial<Magnetometer<Derived, Value, MagImpl, N, MagUnits>, Value, N>
+{
+    protected:
+        friend class Inertial<Magnetometer<Derived, Value, MagImpl, N, MagUnits>, Value, N>;
+        using base_t = Inertial<Magnetometer<Derived, Value, MagImpl, N, MagUnits>, Value, N>;
+        using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
+        typename base_t::value_t mag_raw_;
+
+    public:
+      template<class... Args>
+        Magnetometer(Args... args)
+            : magnetometer(
+                  static_cast<Derived&>(*this),
+                  this->R, mag_raw_, args...
+              )
+        {
+            transformUpdate();
+        }
+
+        magnetometer_proxy_t magnetometer;
+
+    protected:
+        void transformUpdate() { magnetometer.calcA(); }
+};
 
 // Declare AccelGyro baseclass
 template<
@@ -314,10 +345,108 @@ class AccelGyro : public Inertial<AccelGyro<Derived, Value, AccelImpl, GyroImpl,
             gyroscope.calcA();
         }
 };
+
 // Declare AccelMag baseclass
+template<
+    typename Derived,
+    typename Value,
+    class AccelImpl,
+    class MagImpl,
+    size_t N = 3,
+    typename AccelUnits = units::mks::m_per_s2,
+    typename MagUnits = units::mks::T
+>
+class AccelMag : public Inertial<AccelMag<Derived, Value, AccelImpl, MagImpl, N, AccelUnits, MagUnits>, Value, N>
+{
+    protected:
+        friend class Inertial<AccelMag<Derived, Value, AccelImpl, MagImpl, N, AccelUnits, MagUnits>, Value, N>;
+        using base_t = Inertial<AccelMag<Derived, Value, AccelImpl, MagImpl, N, AccelUnits, MagUnits>, Value, N>;
+        using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
+        using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
+        typename base_t::value_t accel_raw_;
+        typename base_t::value_t mag_raw_;
+
+    public:
+        template<class... Args>
+        AccelMag(Args... args)
+            : accel_raw_{}, mag_raw_{},
+              accelerometer(
+                  static_cast<Derived&>(*this),
+                  this->R, accel_raw_, args...
+              ),
+              magnetometer(
+                  static_cast<Derived&>(*this),
+                  this->R, mag_raw_, args...
+              )
+        {
+            transformUpdate();
+        }
+
+        accelerometer_proxy_t accelerometer;
+        magnetometer_proxy_t magnetometer;
+
+    protected:
+        void transformUpdate() {
+            accelerometer.calcA();
+            magnetometer.calcA();
+        }
+};
 
 // Declare AccelGyroMag baseclass
+template<
+    typename Derived,
+    typename Value,
+    class AccelImpl,
+    class GyroImpl,
+    class MagImpl,
+    size_t N = 3,
+    typename AccelUnits = units::mks::m_per_s2,
+    typename GyroUnits = units::mks::rad_per_s,
+    typename MagUnits = units::mks::T
+>
+class AccelGyroMag : public Inertial<AccelGyroMag<Derived, Value, AccelImpl, GyroImpl, MagImpl, N, AccelUnits, GyroUnits, MagUnits>, Value, N>
+{
+    protected:
+        friend class Inertial<AccelGyroMag<Derived, Value, AccelImpl, GyroImpl, MagImpl, N, AccelUnits, GyroUnits, MagUnits>, Value, N>;
+        using base_t = Inertial<AccelGyroMag<Derived, Value, AccelImpl, GyroImpl, MagImpl, N, AccelUnits, GyroUnits, MagUnits>, Value, N>;
+        using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
+        using gyroscope_proxy_t = typename base_t::template Proxy<Derived, GyroUnits, GyroImpl>;
+        using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
+        typename base_t::value_t accel_raw_;
+        typename base_t::value_t gyro_raw_;
+        typename base_t::value_t mag_raw_;
 
+    public:
+        template<class... Args>
+        AccelGyroMag(Args... args)
+            : accel_raw_{}, gyro_raw_{}, mag_raw_{},
+              accelerometer(
+                  static_cast<Derived&>(*this),
+                  this->R, accel_raw_, args...
+              ),
+              gyroscope(
+                  static_cast<Derived&>(*this),
+                  this->R, gyro_raw_, args...
+              ),
+              magnetometer(
+                  static_cast<Derived&>(*this),
+                  this->R, mag_raw_, args...
+              )
+        {
+            transformUpdate();
+        }
+
+        accelerometer_proxy_t accelerometer;
+        gyroscope_proxy_t gyroscope;
+        magnetometer_proxy_t magnetometer;
+
+    protected:
+        void transformUpdate() {
+            accelerometer.calcA();
+            gyroscope.calcA();
+            magnetometer.calcA();
+        }
+};
 } /*namespace drivers*/
 } /*namespace chandra*/
 

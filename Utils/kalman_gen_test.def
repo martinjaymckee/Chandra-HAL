@@ -44,7 +44,10 @@ F : [
   dqc_est <- dqc - d*dt*ddqc
 ]
 
-# Q can be defined.  If it is not, operations will not be optimized
+# Q can be defined.  If it is not, it will default to a piecewise constant approximation.
+#   This approximation will use the fastest changing values in the state as identified
+#   by the highest derivitive term.  I.e. given Ps, dPs, and ddPs, ddPs will be selected
+#   as the fastest changing.
 
 H : [
   Ps <- Ps

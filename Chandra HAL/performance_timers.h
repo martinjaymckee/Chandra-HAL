@@ -41,6 +41,7 @@ class ActivityTimer
       activity_time_ = duration_t{0};
       timer_.reset();
       stats_ = statistics_t{};
+      stats_.count = Samples;
       return *this;
     }
 
@@ -86,11 +87,7 @@ class ActivityTimer
 
       if(samples_.full()) {
         stats_.valid = true;
-        stats_.count = Samples;
-
-        duration_t minimum;
         duration_t sum{0};
-        duration_t maximum;
 
         for(uint8_t idx=0; idx<Samples; ++idx) {
           const auto val = samples_[idx];
@@ -114,6 +111,80 @@ class ActivityTimer
     timer_t timer_;
     time_point_t start_time_;
     duration_t activity_time_;
+    statistics_t stats_;
+};
+
+template<uint8_t Samples=16, bool Sampling=true, class Clock = chandra::chrono::timestamp_clock, class Counts=uint32_t>
+class EventRate
+{
+  public:
+    using timer_t = chandra::chrono::Timer<Clock>;
+    using clock_t = Clock;
+    using duration_t = std::chrono::microseconds;
+    using time_point_t = typename timer_t::time_point_t;
+    using frequency_t = float;
+    using statistics_t = detail::BasicPerformanceStatistics<uint8_t, frequency_t>;
+
+    EventRate(const duration_t& _duration) : duration_(_duration) {}
+
+    bool init() {
+      timer_.duration(duration_);
+      return reset();
+    }
+
+    bool reset() {
+      samples_.clear();
+      counts_ = 0;
+      stats_ = statistics_t{};
+      stats_.count = Samples;
+      return true;
+    }
+
+    bool update() {
+      ++counts_;
+
+      if(timer_()) {
+        const frequency_t freq = ((counts_ * 1000000) + 500000) / duration_.count();
+        const bool updated = insertSample(freq);
+        counts_ = 0;
+        return updated;
+      }
+
+      return false;
+    }
+
+    statistics_t statistics() const { return stats_; }
+
+  private:
+    bool insertSample(const frequency_t& _freq) {
+      samples_ << _freq;
+
+      if(samples_.full()) {
+        stats_.valid = true;
+        frequency_t sum{0};
+
+        for(uint8_t idx=0; idx<Samples; ++idx) {
+          const auto val = samples_[idx];
+          if(idx == 0) {
+            stats_.minimum = val;
+            stats_.maximum = val;
+          } else {
+            if(val < stats_.minimum) stats_.minimum = val;
+            if(val > stats_.maximum) stats_.maximum = val;
+          }
+          sum += val;
+        }
+        stats_.mean = frequency_t{sum/Samples};
+        return true;
+      }
+
+      return false;
+    }
+
+    chandra::FixedCircularBuffer<Counts, Samples> samples_;
+    timer_t timer_;
+    duration_t duration_;
+    Counts counts_;
     statistics_t stats_;
 };
 

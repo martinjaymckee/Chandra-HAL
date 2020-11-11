@@ -321,8 +321,6 @@ class LSM6DSM
             return true;
         }
 
-        // TODO: THIS SHOULD HAVE AN ENABLE FUNCTION (WHICH IS CALLED BY DEFAULT FROM THE INIT)
-
         uint8_t id() { return regs_.byte(registers_t::WHO_AM_I); }
 
         SensorUpdateStatus update() {

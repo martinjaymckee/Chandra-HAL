@@ -51,6 +51,7 @@ class frequency
 		static rep dac(size_t) { return core(); }
 
 		// TODO: MAKE THIS ONLY AVAILABLE FOR PROCESSORS THAT HAVE IT
+		#if defined(__LPC84X__)
 		static bool setFROClock(const rep& _f) {
 			// TODO: VALIDATE THE VALUE OF _F...
 			#define FRO_SET_CLOCK_API_ADDR 0x0F0026F5U
@@ -65,7 +66,8 @@ class frequency
 			frequency::f_core_ = _f;
 			return true;
 		}
-
+		#endif
+		
 	protected:
 		static rep f_core_;
 };

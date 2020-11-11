@@ -2,6 +2,7 @@
 #define CHANDRA_MS56XX_H
 
 #include "i2c.h"
+#include "sensor_utils.h"
 #include "timing.h"
 
 namespace chandra
@@ -9,13 +10,14 @@ namespace chandra
 namespace drivers
 {
 
-template<class Value>
+template<class Value, class PressureUnits=units::mks::hPa, class TemperatureUnits=units::mks::degC>
 class MS5637
 {
   protected:
     using clock_t = chandra::chrono::Timer<>::clock_t;
     using time_point_t = typename clock_t::time_point;
-
+    using pressure_t = PressureUnits;
+    using temperature_t = TemperatureUnits;
     const uint32_t sensor_settling_samples = 20;
     const uint32_t temp_point_samples = 10;
     const uint32_t press_cal_samples = 75;
@@ -70,20 +72,9 @@ class MS5637
       chandra::chrono::Timer<> timer;
     };
 
-  public:
-    struct UpdateStatus
-    {
-        // TODO: ADD SOMETHING TO SHOW THE "STATE" THAT THE MS5637 IS IN (NORMAL, INITIALIZING, CALIBRATING, ETC. )
-        // TODO: ADD SOMETHING THAT SHOWS THE BEGINNING OF A NEW CYCLE
-        UpdateStatus(const time_point_t& _timestamp) : timestamp{_timestamp} {}
-        bool restart = false;
-        bool processed = false;
-        bool calculated = false;
-        bool calibrating = false;
-        time_point_t timestamp;
-        operator bool() const { return calculated; }
-    };
+    using status_t = SensorUpdateStatus<update_state_t>;
 
+  public:
     const uint8_t addr = 0x76;
 
     // TODO: REMOVE THE CAL_MEAN AND CHANGE CAL_VARIANCE -> variance
@@ -157,6 +148,10 @@ class MS5637
       return true;
     }
 
+    uint8_t id() {
+    	return 0xFF; // There is no ID read functionality
+    }
+
     bool calibrate(bool _blocking = false) {
       update_state_ = initialized_ ? CalTemperature : InitUpdate;
       calibrated_ = false;
@@ -171,8 +166,8 @@ class MS5637
 
     bool calibrated() const { return calibrated_; }
 
-    UpdateStatus update() {
-      UpdateStatus status{clock_t::now()};
+    status_t update() {
+      status_t status;
 
       switch(update_state_) {
         default:
@@ -337,7 +332,7 @@ class MS5637
           }
           break;
       }
-
+      status.state = update_state_;
       return status;
     }
 

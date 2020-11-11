@@ -351,7 +351,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
     }
 
     static constexpr bool setFractionalInputClock(
-      const uint8_t& _usart,
+      const uint8_t&,
       const uint32_t& _mult,
       const uint32_t& _div,
       const uint8_t& _num_frg = 0 )

@@ -104,7 +104,7 @@ class SPIMaster
         SPIMaster( uint8_t _num, pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0)
             : SPIMaster(_num, _miso, _mosi, _sclk, _cs0, io::IO(14, 31), io::IO(14, 31), io::IO(14, 31)) {}
 
-        auto freq(const units::mks::Q_Hz<uint32_t> _freq) {
+        auto frequency(const units::mks::Q_Hz<uint32_t> _freq) {
             // Setup Clock Divisor
             const auto fspi = chrono::frequency::spi(num_);
             const auto ratio = (fspi / _freq).value();
@@ -116,42 +116,75 @@ class SPIMaster
             return units::mks::Q_Hz<uint32_t>(fspi/(div+1)); // TODO: CHECK IF THIS IS ACCURATE....
         }
 
-        auto freq() { return freq(units::mks::Q_Hz<uint32_t>(1000000)); }
+        auto frequency() {
+          const auto fspi = chrono::frequency::spi(num_);
+          const auto div = spi_->DIV;
+          return units::mks::Q_Hz<uint32_t>(fspi/(div+1));
+        }
 
-		bool enable( bool _enable, uint8_t _mode = 0 ) {
+		bool enable(bool _enable, uint8_t _mode = 0 ) {
 			if(_enable) {
-				if(spi_->DIV == 0) freq(); // Set Default frequency if currently unset
+				if(spi_->DIV == 0) frequency(units::mks::Q_MHz<uint32_t>(1)); // Set Default frequency if currently unset
 				spi_->CFG = (_mode<<3) | (1<<2); // Enable, In Master Mode
 				spi_->CFG |= (1<<0);
+				spi_->DLY = 0;
+				ctrl_base_ = (((uint32_t(len_)-1) << 8) << 16);
 			} else {
-				spi_->CFG = 0; //&= ~((1<<2) | (1<<0)); -- TODO: CHCK THIS AND FIX IT IF IT ISN'T CORRECT
+				spi_->CFG = 0;
 			}
 			return _enable;
 		}
 
-		bool enable() const { return spi_->CFG & (1<<0); }
+		bool enabled() const { return spi_->CFG & (1<<0); }
 		uint8_t mode() const { return (spi_->CFG >> 4) & 0x03; }
 
+    bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0,
+      const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3) {
+      const uint8_t cfg = spi_->CFG;
+      enable(false);
+      setPins(_miso, _mosi, _sclk, _cs0, _cs1, _cs2, _cs3);
+      spi_->CFG = cfg;
+      return cfg & (1<<0);
+    }
+
+    bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0,
+      const pin_t& _cs1, const pin_t& _cs2) {
+        return rebind(_miso, _mosi, _sclk, _cs0, _cs1, _cs2, io::IO(14,31));
+    }
+
+    bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0,
+      const pin_t& _cs1) {
+        return rebind(_miso, _mosi, _sclk, _cs0, _cs1, io::IO(14,31), io::IO(14,31));
+    }
+
+    bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0) {
+        return rebind(_miso, _mosi, _sclk, _cs0, io::IO(14,31), io::IO(14,31), io::IO(14,31));
+    }
+
+    bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk) {
+        return rebind(_miso, _mosi, _sclk, io::IO(14,31), io::IO(14,31), io::IO(14,31), io::IO(14,31));
+    }
+
     void tx(const value_t* _buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
-			uint16_t ctrl = 0;
 
 			//	Set Transfer Packet Length and RXIGNORE
-			ctrl = ((len_-1) << 8) | (1<<6);
+			uint32_t ctrl = (((len_-1) << 8) | (1<<6)) << 16;
 
 			//	Initialize the Slave Select Lines
 			if(_cs != 255) {
-				ctrl |= (_cs&0x0F);
+				ctrl |= ((_cs&0x0F)<<16);
 			}
+
+      const uint32_t ctrl_end = ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP)) ? (1<<4)<<16 : 0x00;
+      const size_t end_cnt = _cnt-1;
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
-					ctrl |= (1<<4);
-				}
+        if(index == end_cnt) ctrl |= ctrl_end;
 
 				//	Wait for TXRDY and Write Data
 				while( !(spi_->STAT & (1<<1)) ){}
-				spi_->TXDATCTL = (ctrl<<16) | *_buf;
+				spi_->TXDATCTL = ctrl | *_buf;
 				++_buf;
 			}
 
@@ -160,25 +193,25 @@ class SPIMaster
 
     value_t* rx(value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP, const value_t& _stuff = 0xFF) const {
 			value_t* out_buf = _out_buf;
-			uint16_t ctrl = 0;
 
 			//	Set Transfer Packet Length
-			ctrl = ((len_-1) << 8);
+			uint32_t ctrl = ctrl_base_ | _stuff;
 
 			//	Initialize the Slave Select Lines
 			if(_cs != 255) {
-				ctrl |= (_cs&0x0F);
+				ctrl |= ((_cs&0x0F)<<16);
 			}
+
+      const uint32_t ctrl_end = ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP)) ? (1<<4)<<16 : 0x00;
+      const size_t end_cnt = _cnt-1;
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
-					ctrl |= (1<<4);
-				}
+        if(index == end_cnt) ctrl |= ctrl_end;
 
 				//	Wait for TXRDY and Write Data
 				while( !(spi_->STAT & (1<<1)) ){}
-				spi_->TXDATCTL = (ctrl<<16) | _stuff;
+				spi_->TXDATCTL = ctrl;
 
 				//	Wait for RXRDY and Read Data
 				while( !(spi_->STAT & (1<<0)) ){}
@@ -193,26 +226,24 @@ class SPIMaster
 
     value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {
 			value_t* out_buf = _out_buf;
-			uint16_t ctrl = 0;
 
 			//	Set Transfer Packet Length
-			ctrl = ((len_-1) << 8);
+			uint32_t ctrl = ((uint32_t(len_)-1) << 8)<<16;
 
 			//	Initialize the Slave Select Lines
 			if(_cs != 255) {
-				ctrl |= (_cs&0x0F);
+				ctrl |= ((_cs&0x0F)<<16);
 			}
 
-
+      const uint32_t ctrl_end = ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP)) ? (1<<4)<<16 : 0x00;
+      const size_t end_cnt = _cnt-1;
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-                if((index == (_cnt-1)) && ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP))){
-					ctrl |= (1<<4);
-				}
+        if(index == end_cnt) ctrl |= ctrl_end;
 
 				//	Wait for TXRDY and Write Data
 				while( !(spi_->STAT & (1<<1)) ){}
-				spi_->TXDATCTL = (ctrl<<16) | *_in_buf;
+				spi_->TXDATCTL = ctrl | *_in_buf;
 				++_in_buf;
 
 				//	Wait for RXRDY and Read Data
@@ -324,6 +355,7 @@ class SPIMaster
     uint8_t num_;
     mutable SPI::lpc_peripheral_t* spi_;
 		uint8_t len_;
+    uint32_t ctrl_base_;
 };
 
 } /*namespace io*/

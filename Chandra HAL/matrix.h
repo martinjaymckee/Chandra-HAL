@@ -1,6 +1,7 @@
 #ifndef CHANDRA_MATRIX_H
 #define CHANDRA_MATRIX_H
 
+#include <cstddef>
 #include <initializer_list>
 #include <type_traits>
 

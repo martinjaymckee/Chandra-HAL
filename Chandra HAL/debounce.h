@@ -19,9 +19,49 @@ enum class Logic
 
 namespace internal
 {
+template<class Derived>
+class LogicWrapperBase
+{
+  public:
+    bool low() { return static_cast<Derived*>(this)->operator()() == Logic::Low; }
+    bool high() { return static_cast<Derived*>(this)->operator()() == Logic::High; }
+    bool falling() { return static_cast<Derived*>(this)->operator()() == Logic::Falling; }
+    bool rising() { return static_cast<Derived*>(this)->operator()() == Logic::Rising; }
+};
+
+template<typename Source>
+class LogicWrapper : public LogicWrapperBase<LogicWrapper<Source>>
+{
+    public:
+        LogicWrapper(Source& _src)
+            : src_(_src), last_{bool(_src)} {}
+
+        Logic operator() () {
+            if(last_) { // Currently reading as High
+                if(bool(src_) == false) {
+                    last_ = false;
+                    return Logic::Falling;
+                }
+                return Logic::High;
+            } else { // Currently reading as Low
+                if(bool(src_) == true) {
+                    last_ = true;
+                    return Logic::Rising;
+                }
+                return Logic::Low;
+            }
+
+            return Logic::Undefined;
+        }
+
+    protected:
+        Source& src_;
+        bool last_;
+};
+
 // TODO: IT WOULD BE GOOD TO RETURN A TIMESTAMP ALONG WITH THE LOGIC STATE
 template<typename Source, typename Clock = chandra::chrono::timestamp_clock>
-class DebounceWrapper
+class DebounceWrapper : public LogicWrapperBase<DebounceWrapper<Source, Clock>>
 {
     public:
         using clock_t = Clock;
@@ -73,9 +113,12 @@ internal::DebounceWrapper<Source> debounce(Source& _src) {
     return {_src};
 }
 
+template<typename Source>
+internal::LogicWrapper<Source> logic(Source& _src) {
+    return {_src};
+}
 } /*namespace io*/
 } /*namespace chandra*/
 
 
 #endif /*CHANDRA_DEBOUNCE_H*/
-

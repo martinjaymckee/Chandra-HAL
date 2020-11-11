@@ -69,6 +69,31 @@ def generateStateMatrix(labels):
     return sympy.Matrix([[sympy.Symbol(label)] for label in labels])
 
 
+def generateDefaultProcessCovariance(x_names, F):
+    def dropDerivitiveMarking(name):
+        for idx in range(len(name)):
+            if not name[idx] == 'd':
+                return name[idx:], idx
+        return None, len(name)
+        
+    def createDerivitiveName(base, num):
+        return ('d'*num)+base 
+    
+    locus_set = {} 
+    for var in x_names:
+        base, num = dropDerivitiveMarking(var)
+        if not base is None:
+            if base in locus_set:
+                if num > locus_set[base]: locus_set[base] = num
+            else:
+                locus_set[base] = num
+    loci = []
+    for base, num in locus_set.items():
+        loci.append(createDerivitiveName(base, num))
+    print(loci)
+    return None
+
+
 def generateMatrixFromDefinition(name, matrix_def):
     errors = []
     row_symbols = __labels_to_symbols(matrix_def.row_labels)
@@ -124,7 +149,7 @@ def generatePredict(F, X, P, Q, B = None, U = None):
 
 
 def generateMeasurement(X, H, Z):
-    Y_pre = Z - (H * X)
+    Y_pre = sympy.simplify(Z - (H * X))
     return Y_pre
 
     

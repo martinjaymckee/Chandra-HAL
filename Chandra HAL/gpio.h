@@ -20,7 +20,6 @@
 
 #include "chip_utils.h"
 #include "chrono.h"
-
 // TODO: NEED TO HANDLE DEFAULT CONSTRUCTED GPIO PINS IN A BETTER WAY SO THAT THEY ARE SAFER
 
 namespace chandra
@@ -106,9 +105,9 @@ class IO
             }
     #elif defined(__LPC84X__)
             if(inverted_^bool(_value)){
-                LPC_GPIO_PORT->SET[0] |= mask_;
+                LPC_GPIO_PORT->SET[port_] |= mask_;
             } else {
-                LPC_GPIO_PORT->CLR[0] |= mask_;
+                LPC_GPIO_PORT->CLR[port_] |= mask_;
             }
     #elif defined(__LPC15XX__)
             if(inverted_ ? !bool(_value) : bool(_value)){
@@ -124,7 +123,7 @@ class IO
     #if defined(__LPC82X__)
             LPC_GPIO_PORT->NOT[0] |= mask_;
     #elif defined(__LPC84X__)
-            LPC_GPIO_PORT->NOT[0] |= mask_;
+            LPC_GPIO_PORT->NOT[port_] |= mask_;
     #elif defined(__LPC15XX__)
             LPC_GPIO->NOT[port_] |= mask_;
     #endif
@@ -135,7 +134,7 @@ class IO
     #if defined(__LPC82X__)
             const bool read = (LPC_GPIO_PORT->PIN[0] & mask_);
     #elif defined(__LPC84X__)
-        const bool read = (LPC_GPIO_PORT->PIN[0] & mask_);
+        const bool read = (LPC_GPIO_PORT->PIN[port_] & mask_);
     #elif defined(__LPC15XX__)
             const bool read = (LPC_GPIO->PIN[port_] & mask_);
     #endif
@@ -144,6 +143,8 @@ class IO
 
         constexpr uint8_t port() const { return port_; }
         constexpr uint8_t pin() const { return pin_; }
+        constexpr uint8_t number() const { return (32*port_) + pin_; }
+
         constexpr bool valid() const { return mask_ != 0; }
 
         // TODO: ADD "WAIT" TRIGGERS, WITH AND WITHOUT TIMEOUTS... THEY DON'T BELONG IN GPIO, HOWEVER, THEY SHOULD BE IN
@@ -201,7 +202,8 @@ class LED
         enum mode_t {
             Fixed,
             Pulse,
-            PWM
+            PWM,
+            Breathe
         }; // TODO: THIS COULD ( SHOULD? ) BE GENERALIZED TO AN LED "COMMAND"
 
         using clock_t = chandra::chrono::timestamp_clock; // TODO: SHOULD THIS BE PASSED IN?
@@ -246,10 +248,12 @@ class LED
             return *this;
         }
 
-        template<typename Scale = uint32_t>
-        LED& pwm( const duration_t& _period, const Scale& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ){
-            active_period_ = duration_t( (_duty_cycle * _period.count()) / 100); // TODO: FIGURE OUT IF THERE IS A SAFER WAY TO DO THIS
+        template<typename Scalar = uint32_t>
+        LED& pwm( const duration_t& _period, const Scalar& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ){
+            duty_cycle_ = _duty_cycle;
+            active_period_ = calcActivePeriod(_period, 100*_duty_cycle);
             inactive_period_ = _period - active_period_;
+            cycle_period_ = active_period_ + inactive_period_;
             mode_ = PWM;
             if(_reset) {
                 pin_ = !_inverted;
@@ -259,8 +263,8 @@ class LED
             return *this;
         }
 
-        template<typename Scale = uint32_t>
-        LED& pwmUpdate(const duration_t& _period, const Scale& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ) {
+        template<typename Scalar = uint32_t>
+        LED& pwmUpdate(const duration_t& _period, const Scalar& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ) {
             return pwm(_period, _duty_cycle, _inverted, false);
         }
 
@@ -279,6 +283,29 @@ class LED
             return *this;
         }
 
+        LED& pulse(const duration_t& _active_period, const bool& _blocking) {
+          return pulse(_active_period, _active_period, _blocking);
+        }
+
+        LED& breathe(const duration_t& _cycle_period, const bool _reset=true, const duration_t& _pwm_period = std::chrono::milliseconds{10}) {
+          const uint32_t steps = (_cycle_period.count() + (_pwm_period.count()/2)) / _pwm_period.count();
+          duty_cycle_step_ = (20000 + (steps/2)) / steps;
+          update_period_ = duration_t{(_cycle_period.count() + (steps/2)) / steps};
+          mode_ = Breathe;
+          if(_reset) {
+              duty_cycle_ = 0;
+              active_period_ = duration_t{0};
+              inactive_period_ = _pwm_period;
+              increasing_ = true;
+              pin_ = false;
+              state_ = false;
+              timestamp_ = clock_t::now();
+              update_timestamp_ = timestamp_;
+          }
+
+          return *this;
+        }
+
         bool update() {
             bool updated = false;
 
@@ -289,7 +316,7 @@ class LED
                     if( chandra::chrono::after(active_period_, timestamp_, current) ) {
                         ~pin_;
                         state_ = false;
-                        timestamp_ = current;
+                        timestamp_ += active_period_;
                     }
                 } else {
                     if( chandra::chrono::after(inactive_period_, timestamp_, current) ) {
@@ -297,18 +324,42 @@ class LED
                         updated = true;
                     }
                 }
-            } else if ( mode_ == PWM ) {
+            } else if ( (mode_ == PWM) or (mode_ == Breathe) ) {
+                if(mode_ == Breathe) {
+                  if(chandra::chrono::after(update_period_, update_timestamp_, current)){
+                    update_timestamp_ += update_period_;
+                    if(increasing_) {
+                      if(10000-duty_cycle_ < duty_cycle_step_) {
+                        duty_cycle_ = 10000;
+                        increasing_ = false;
+                      } else {
+                        duty_cycle_ += duty_cycle_step_;
+                      }
+                    } else {
+                      if(duty_cycle_ < duty_cycle_step_) {
+                        duty_cycle_ = 0;
+                        increasing_ = true;
+                      } else {
+                        duty_cycle_ -= duty_cycle_step_;
+                      }
+                    }
+                  }
+                  const auto pwm_period = active_period_+inactive_period_;
+                  active_period_ = calcActivePeriod(pwm_period, duty_cycle_);
+                  inactive_period_ = pwm_period-active_period_;
+                }
+
                 if( state_ ) {
                     if( chandra::chrono::after(active_period_, timestamp_, current) ) {
                         ~pin_;
                         state_ = !state_;
-                        timestamp_ = current;
+                        timestamp_ += active_period_;
                     }
                 } else {
                     if( chandra::chrono::after(inactive_period_, timestamp_, current) ) {
                         ~pin_;
                         state_ = !state_;
-                        timestamp_ = current;
+                        timestamp_ += inactive_period_;
                         updated = true;
                     }
                 }
@@ -317,6 +368,13 @@ class LED
             return updated;
         }
 
+    protected:
+      template<class Scalar>
+      duration_t calcActivePeriod(const duration_t& _period, const Scalar& _duty_cycle) {
+        const auto num = static_cast<uint64_t>(_duty_cycle) * _period.count();
+        return duration_t( (num + 5000) / 10000); // TODO: FIGURE OUT IF THERE IS A SAFER WAY TO DO THIS
+      }
+
     private:
         IO pin_;
         mode_t mode_;
@@ -324,7 +382,13 @@ class LED
         bool state_;
         duration_t active_period_;
         duration_t inactive_period_;
+        duration_t cycle_period_;
+        duration_t update_period_;
+        uint16_t duty_cycle_;
+        uint16_t duty_cycle_step_;
+        bool increasing_;
         time_point_t timestamp_;
+        time_point_t update_timestamp_;
 };
 
 

@@ -93,9 +93,6 @@ namespace chandra
 			static bool direction(const uint8_t& _port, const uint8_t& _pin, const bool& _output) {
 				const uint32_t mask = 1UL<<_pin;
 				if( _output ){
-					//if(_port == 0 and _pin == 4) { // TODO: THIS IS ONLY NEEDED IF THE TIMER IS RUNNING....
-					//    LPC_PMU->DPDCTRL |= 1<<1; // Disable Wakeup Pin
-					//}
 					LPC_GPIO_PORT->DIR[_port] |= mask;
 				} else {
 					LPC_GPIO_PORT->DIR[_port] &= ~mask;

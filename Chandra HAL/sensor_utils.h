@@ -11,6 +11,7 @@ namespace drivers
 //
 // Update Status Return Type
 //
+template<class StateType=uint8_t>
 struct SensorUpdateStatus
 {
         using clock_t = chandra::chrono::timestamp_clock;
@@ -48,21 +49,30 @@ struct SensorUpdateStatus
         };
 
         SensorUpdateStatus(
-                const bool& _updated = false,
+                const bool& _restart = false,
+                const bool& _processed = false,
+                const bool& _calculated = false,
+                const bool& _calibrating = false,
                 const uint8_t& _errors = Ok,
                 const timestamp_t& _timestamp = clock_t::now()
-        ) : updated(_updated), errors(_errors), timestamp(_timestamp) {}
+        ) : restart(_restart), processed(_processed), calculated(_calculated),
+            calibrating(_calibrating), errors(_errors), timestamp(_timestamp) {}
 
         SensorUpdateStatus(const ref_t& _other)
-            : updated(_other.updated), errors(_other.errors), timestamp(_other.timestamp) {}
+            : restart(_other.restart), processed(_other.processed), calculated(_other.calculated),
+              calibrating(_other.calibrating), errors(_other.errors), timestamp(_other.timestamp) {}
 
-        operator bool() const { return updated; }
+        operator bool() const { return processed; }
 
         bool ok() const { return errors.byte == 0; }
 
-        bool updated;
+        bool restart = false;
+        bool processed = false;
+        bool calculated = false;
+        bool calibrating = false;
         ErrorProxy errors;
         timestamp_t timestamp;
+        StateType state;
 };
 
 // TODO: FIGURE OUT HOW TO MAKE THIS WORK WITH THE STREAM FUNCTIONALITY...
