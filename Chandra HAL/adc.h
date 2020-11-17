@@ -76,6 +76,22 @@ class ADC
         class ADCChannel
         {
             public:
+								template<class V>
+								class ADCChannelResults
+								{
+										public:
+											ADCChannelResults(const bool& _updated, const V& _value) :
+												updated(_updated), value(_value) {}
+
+											template<class V2>
+											ADCChannelResults(const ADCChannelResults<V2>& _other) :
+												updated(_other.updated),
+												value(static_cast<V>(_other.value)) {}
+
+											bool updated{false};
+											V value{0};
+								};
+
                 using raw_value_t = uint16_t;
 
                 ADCChannel(ADC& _adc, const uint8_t& _chan, const bool& _enable = true  ) : adc_(_adc), chan_(_chan), mask_(1UL<<_chan) {
@@ -143,22 +159,23 @@ class ADC
                 static constexpr value_t min() noexcept { return Value{0}; }
                 static constexpr value_t max() noexcept { return Value{0xFFF0}; }
 
-                // TODO: THIS CAST OPERATOR SHOULD BE CHANGED TO A COUNTS() METHOD WHICH RETURNS USING
-                //	THE ADC VALUE_T AND SHOULD USE THE RAW() METHOD.
-                template<class T>
-                operator T () const {
-                    #if defined(__LPC82X__) || defined(__LPC15XX__)
-                    return static_cast<T>(adc_.adc_->DR[chan_]&0x0000FFF0UL);
-                    #elif defined(__LPC84X__)
-                    //return static_cast<T>(adc_.adc_->DAT[chan_]&0x0000FFF0UL);
-                    return static_cast<T>((adc_.adc_->DAT[chan_]>>4)&0xFFF);										
-                    #endif
-                }
+								ADCChannelResults<value_t> operator () () {
+									const auto raw_results = this->raw();
+									const volatile auto val_max = max();
+									const value_t value = ((adc_.vref_*raw_results.value)/max());
+									return {raw_results.updated, value};
+								}
 
-                // TODO: THIS SHOULD BE MADE PROTECTED AND SHOULD HOLD THE IMPLEMENTATION OF THE ADC READ
-                raw_value_t raw() const { return this->operator raw_value_t(); }
+								ADCChannelResults<raw_value_t> raw() const {
+										#if defined(__LPC82X__) || defined(__LPC15XX__)
+										const auto data = adc_.adc_->DR[chan_];
+										#elif defined(__LPC84X__)
+										const auto data = adc_.adc_->DAT[chan_];
+										#endif
+										return {bool(data&(1<<31)), (data&0x0000FFF0)};
+								}
 
-            protected:
+						protected:
                 bool enablePin(const bool& _enable) {
                     #if defined(__LPC82X__)
                         const auto bit_offset = 13;
@@ -181,7 +198,8 @@ class ADC
         //
         // ADC Block Implementation
         //
-        ADC(const uint8_t& _num) : adc_(getADC(_num)), num_(_num) {
+        ADC(const uint8_t& _num, const value_t& _vref)
+					: adc_(getADC(_num)), num_(_num), vref_(_vref) {
             switch(num_) {
                 #if defined(__LPC82X__) || defined(__LPC84X__)
                     default:
@@ -315,6 +333,7 @@ class ADC
 
     private:
         volatile adc_peripheral_t* adc_;
+				value_t vref_;
         uint8_t num_;
 };
 
