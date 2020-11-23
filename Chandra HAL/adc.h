@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
 #elif defined(__LPC84X__)
 #include <LPC8xx.h>
 #else
-#error "Undefined processor type for USART implementation."
+#error "Undefined processor type for ADC implementation."
 #endif
 
 #include "chrono.h"
@@ -110,8 +110,9 @@ class ADC
                     } else {
                         adc_.adc_->SEQ_CTRL[0] &= ~mask_;
                     }
-					#elif defined(__LPC82X__)
-
+										#elif defined(__LPC82X__)
+										static_assert(false, "ADCChannel::enable() is undefined for LPC824");
+										// TODO: IMPLEMENT FOR 82X
                     #elif defined(__LPC84X__)
                     if( _enabled ) {
                         adc_.adc_->SEQA_CTRL |= (1<<18) | mask_;
@@ -157,11 +158,12 @@ class ADC
                 ADCSource src() const { return src_; }
 
                 static constexpr value_t min() noexcept { return Value{0}; }
-                static constexpr value_t max() noexcept { return Value{0xFFF0}; }
+//                static constexpr value_t max() noexcept { return Value{0xFFF0}; }
+								static constexpr value_t max() noexcept { return Value{0xFFF}; }
 
 								ADCChannelResults<value_t> operator () () {
 									const auto raw_results = this->raw();
-									const volatile auto val_max = max();
+									const auto val_max = max();
 									const value_t value = ((adc_.vref_*raw_results.value)/max());
 									return {raw_results.updated, value};
 								}
@@ -172,7 +174,8 @@ class ADC
 										#elif defined(__LPC84X__)
 										const auto data = adc_.adc_->DAT[chan_];
 										#endif
-										return {bool(data&(1<<31)), (data&0x0000FFF0)};
+										const uint16_t raw_data = ((data>>4)&0xFFF);
+										return {bool(data&(1<<31)), raw_data};
 								}
 
 						protected:
@@ -207,6 +210,8 @@ class ADC
                         SystemClock::enable(0, 24);
                         PeripheralActivity::reset(0, 24);
                         PowerConfiguration::enable(0, 4);
+												LPC_SYSCON->ADCCLKDIV = 1;                 // Enable clock, and divide-by-1 at this clock divider
+											  LPC_SYSCON->ADCCLKSEL = 0; // Use fro_clk as source for ADC async clock												
                         break;
                 #elif defined(__LPC15XX__)
                     case 0:
@@ -230,11 +235,10 @@ class ADC
             #if defined(__LPC82X__)
             adc_->SEQ_CTRL[0] |= (0b11<<30); // Enable the Sequence and Set to "End-Of-Sequence" Mode
             #elif defined(__LPC15XX__)
-            //LPC_SYSCON->PDRUNCFG &= ~(1<<(10+num_)); //NOTE: THIS IS BEING DONE IN THE CONSTRUCTOR
             adc_->SEQ_CTRL[0] |= (0b11<<30); // Enable the Sequence and Set to "End-Of-Sequence" Mode
             #elif defined(__LPC84X__)
-            //LPC_SYSCON->PDRUNCFG &= ~(1<<4);
             adc_->SEQA_CTRL |= (0b11<<30);
+						adc_->CTRL = (1<<31);
             #endif
 
             calibrate();
@@ -255,7 +259,7 @@ class ADC
             	500000UL,
                 chandra::chrono::frequency::adc(num_).value()) - 1UL;
 
-            adc_->CTRL = (1<<30) | div;
+            adc_->CTRL = (1<<31) | (1<<30) | div;
 
             if( _blocking ) {
                 while( (adc_->CTRL & (1<<30)) == (1<<30)) {} // Loop until calibration done
@@ -315,7 +319,7 @@ class ADC
         }
 
         static chandra::chrono::frequency::rep maximumADCClock() {
-            #if defined(__LPC82X__) || defined(__LPC84X__) // TODO: CHECK 84X MAXIMUM CLOCK
+            #if defined(__LPC82X__) || defined(__LPC84X__)
                 return chandra::chrono::frequency::rep{30000000};
             #elif defined(__LPC15XX__)
                 return chandra::chrono::frequency::rep{50000000};

@@ -72,7 +72,7 @@ class RFM9xLoRa
 			RegRxPacketCountH = 0x16,
 			RegRxPacketCountL = 0x17,
 			RegModemStatus = 0x18,
-			RegLastSnr = 0x19,
+			RegLastSNR = 0x19,
 			RegLastRSSI = 0x1A,
 			RegCurrentRSSI = 0x1B,
 			RegHopChannel = 0x1C,
@@ -131,6 +131,12 @@ class RFM9xLoRa
 			data = (_sf << 4) | (1<<2);
 			regs.write(RegModemConfig2, data);
 
+			// Clear all interrupts
+			regs.write(RegIrqFlag, static_cast<uint8_t>(0xFF));
+
+			// Clear Payload Bytes
+			regs.write(RegRxPayloadBytes, static_cast<uint8_t>(0));
+
 			// Configure Output Power
 			power(_db);
 
@@ -151,17 +157,17 @@ class RFM9xLoRa
 		bool power(float _db) {
 			bool success = false;
 			uint8_t data = 0;
-			if(_db < 14) { // Transmit through RFO pin
-			    const double dP = _db + 4.2;
-			    const uint8_t OutputPower = uint8_t(std::min(15.0, dP));
-			    const uint8_t MaxPower = uint8_t((dP - OutputPower + 0.3) / 0.6);
-			    data = (MaxPower << 4) | OutputPower;
-			} else { // Transmit through the PA_BOOST pin
-				if(_db > 18) _db = 18;
-				const uint8_t output_power = static_cast<uint8_t>(_db - 2);
-				data = (1<<7) | (output_power);
+			// if(_db < 2) { // Transmit through RFO pin
+			//     const double dP = _db + 4.2;
+			//     const uint8_t OutputPower = uint8_t(std::min(15.0, dP));
+			//     const uint8_t MaxPower = uint8_t((dP - OutputPower + 0.3) / 0.6);
+			//     data = (MaxPower << 4) | OutputPower;
+			uint8_t output_power = 0;
+			if(_db > 2) {}{
+				if(_db > 17) _db = 17;
+				output_power = static_cast<uint8_t>(_db - 2);
 			}
-			regs.write(RegPaConfig, data);
+			regs.write(RegPaConfig, static_cast<uint8_t>((1<<7) | output_power));  // Transmit through the PA_BOOST pin
 			return success;
 		}
 
@@ -186,7 +192,7 @@ class RFM9xLoRa
 
 			// Set payload length
 			regs.write(RegPayloadLength, N);
-			
+
 			// Trigger transmission
 			transmit();
 			return true;
@@ -194,14 +200,37 @@ class RFM9xLoRa
 
 		template<uint8_t N>
 		bool rx(uint8_t (&_msg)[N]) {
-			// DOWNLOAD THE MESSAGE
+			// Set FIFO Base Address
+			const uint8_t addr = regs.byte(RegFIFORxBaseAddr);
+			regs.write(RegFIFOAddrPtr, addr);
+
+			// Load FIFO
+			const auto message_size = regs.byte(RegRxPayloadBytes);
+			if(message_size > N) return false;
+			regs.bytes(RegFIFO, N, _msg);
+
 			return true;
+		}
+
+		int16_t snr() const {
+			return 4*static_cast<int8_t>(regs.byte(RegLastSNR));
+		}
+
+		int16_t rssi() const {
+			const int16_t rssi_offset(-157); // NOTE: THIS OFFSET IS FOR THE HF PORT (LF IS -164)
+			const uint8_t raw_rssi = regs.byte(RegLastRSSI);
+			const auto snr_val = snr();
+			if(snr_val > 0){
+				return rssi_offset + ((static_cast<int16_t>(15)*raw_rssi) / 16);
+			} else {
+				return rssi_offset + raw_rssi + (snr_val / 4);
+			}
 		}
 
 		void set_mode(const modes_t& _mode) {
 			const uint8_t data = regs.byte(RegOpMode);
-			regs.write(RegOpMode, static_cast<uint8_t>((0xF8&data)|uint8_t(_mode)));
-			// regs.update(RegOpMode, 0x07, static_cast<uint8_t>(_mode));
+			//regs.write(RegOpMode, static_cast<uint8_t>((0xF8&data)|uint8_t(_mode)));
+			 regs.update(RegOpMode, 0x07, static_cast<uint8_t>(_mode));
 			return;
 		}
 
@@ -266,10 +295,19 @@ class RFM9xLoRa
 			return (mode == Receive) | (mode == ReceiveContinuous) | (mode == ChannelActivityDetect);
 		}
 
-		bool check_irq(uint8_t _mask) {
-			const uint8_t interrupts = regs.byte(RegIrqFlag);
+		uint8_t get_irqs() {
+			return regs.byte(RegIrqFlag);
+		}
+
+		void clear_irqs(const uint8_t& _mask) {
 			regs.write(RegIrqFlag, _mask); // Clear the Interrupt
-			return bool(_mask&interrupts);
+		}
+
+		bool check_irq(const uint8_t& _mask, const bool& _auto_clear=true) {
+			const uint8_t interrupts = get_irqs();
+			if((_mask & interrupts) != _mask) return false;
+			if(_auto_clear) clear_irqs(_mask);
+			return true;
 		}
 
 		bool tx_done() {
