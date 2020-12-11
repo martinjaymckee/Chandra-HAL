@@ -79,7 +79,7 @@ namespace chandra
 			}
 	};
 
-	class GPIO
+	class GPIOImpl
 	{
 		public:
 			static constexpr uint8_t clkIndex(const uint8_t& _port) {

@@ -26,7 +26,7 @@ class PeripheralActivity
 class SystemClock
 {
 	public:
-        static bool enable(const uint8_t& /*_reg*/, const uint8_t& _bit, const bool& _state = true) {
+    static bool enable(const uint8_t& /*_reg*/, const uint8_t& _bit, const bool& _state = true) {
 			if(_bit > 31) return false;
 			if(_state) {
 				LPC_SYSCON->SYSAHBCLKCTRL |= (1<<_bit);
@@ -79,7 +79,7 @@ class FixedFunctionIO
 		}
 };
 
-class GPIO
+class GPIOImpl
 {
 	public:
         static constexpr uint8_t clkIndex(const uint8_t& /*_port*/) {

@@ -41,7 +41,12 @@ class frequency
 		static rep core() { return f_core_; }
 	#endif
 
+  #if defined(__LPC55XX__)
+	  static rep main() { return rep{SYSCON->AHBCLKDIV * core()}; }
+	#else
   	static rep main() { return rep{LPC_SYSCON->SYSAHBCLKDIV * core()}; }
+	#endif
+
     static rep tick() { return rep{0}; }
 		static rep timer(size_t) { return core(); }
     static rep usart(size_t) { return main(); }
@@ -50,7 +55,6 @@ class frequency
 		static rep adc(size_t) { return core(); }
 		static rep dac(size_t) { return core(); }
 
-		// TODO: MAKE THIS ONLY AVAILABLE FOR PROCESSORS THAT HAVE IT
 		#if defined(__LPC84X__)
 		static bool setFROClock(const rep& _f) {
 			// TODO: VALIDATE THE VALUE OF _F...
@@ -67,7 +71,7 @@ class frequency
 			return true;
 		}
 		#endif
-		
+
 	protected:
 		static rep f_core_;
 };
@@ -90,6 +94,8 @@ class timestamp_clock
 			return time_point{duration{LPC_SCT->COUNT}};
 		#elif defined(__LPC15XX__)
 			return time_point{duration{LPC_SCT3->COUNT_U}};
+		#elif defined(__LPC55XX__)
+			return time_point{duration{LPC_SCT0->COUNT}};
 		#else
 			return time_point{duration{LPC_SCT->COUNT_U}};
 		#endif
@@ -119,7 +125,16 @@ class timestamp_clock
 					LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
 					LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 					return;
-
+		#elif defined(__LPC55XX__)
+					#if defined(FRO_CLOCK)
+					frequency::setFROClock(frequency::rep{FRO_CLOCK});
+					#endif
+					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+					SystemClock::enable(0, 8, true);
+					PeripheralActivity::reset(0, 8);
+					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+					LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+					return;
 		#elif defined(__LPC84X__)
 					#if defined(FRO_CLOCK)
 					frequency::setFROClock(frequency::rep{FRO_CLOCK});
@@ -238,7 +253,6 @@ bool before(const std::chrono::time_point<Clock>& reference,
 } /*namespace chrono*/
 } /*namespace chandra*/
 
-// TODO: A CALL TO TIMESTAMP_CLOCK_IMPL SHOULD GO INTO CHANDRA_CORE.CPP
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 #define TIMESTAMP_CLOCK_IMPL
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)

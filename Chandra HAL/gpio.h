@@ -82,15 +82,15 @@ class IO
 
         void init() {
             // Enable AHB clock to the GPIO domain.
-            GPIO::enableClk(port_);
+            GPIOImpl::enableClk(port_);
         }
 
         bool output(bool _output) {
-            return GPIO::direction(port_, pin_, _output);
+            return GPIOImpl::direction(port_, pin_, _output);
         }
 
         bool output() const {
-            return GPIO::direction(port_, pin_);
+            return GPIOImpl::direction(port_, pin_);
         }
 
         bool inverted() const { return inverted_; }
@@ -115,6 +115,12 @@ class IO
             } else {
                 LPC_GPIO->CLR[port_] |= mask_;
             }
+    #elif defined(__LPC55XX__)
+            if(inverted_ ? !bool(_value) : bool(_value)){
+                GPIO->SET[port_] |= mask_;
+            } else {
+                GPIO->CLR[port_] |= mask_;
+            }
     #endif
             return *this;
         }
@@ -126,6 +132,8 @@ class IO
             LPC_GPIO_PORT->NOT[port_] |= mask_;
     #elif defined(__LPC15XX__)
             LPC_GPIO->NOT[port_] |= mask_;
+    #elif defined(__LPC55XX__)
+            GPIO->NOT[port_] |= mask_;
     #endif
             return *this;
         }
@@ -137,6 +145,8 @@ class IO
         const bool read = (LPC_GPIO_PORT->PIN[port_] & mask_);
     #elif defined(__LPC15XX__)
             const bool read = (LPC_GPIO->PIN[port_] & mask_);
+    #elif defined(__LPC55XX__)
+            const bool read = (GPIO->PIN[port_] & mask_);
     #endif
             return inverted_ ? !read : read;
         }
@@ -182,24 +192,24 @@ class IO
 //
 
 // TODO: THIS SHOULD BE PROTECTED WITH BETTER TYPES...
-template<typename GPIO, typename Clock = chandra::chrono::timestamp_clock>
-void pulseOut(GPIO& _io, auto _delay, const typename Clock::time_point& _start = Clock::now()) {
+template<typename IOType, typename Clock = chandra::chrono::timestamp_clock>
+void pulseOut(IOType& _io, auto _delay, const typename Clock::time_point& _start = Clock::now()) {
     ~_io;
     chandra::chrono::delay(_delay, _start);
     ~_io;
 }
 
 // TODO: TEST THE PULSEIN FUNCTIONS
-template<typename GPIO, typename Clock = chandra::chrono::timestamp_clock>
-typename Clock::duration pulseIn(GPIO& _io, const bool& _init) {
+template<typename IOType, typename Clock = chandra::chrono::timestamp_clock>
+typename Clock::duration pulseIn(IOType& _io, const bool& _init) {
     while(_io != _init) {}
     const auto start = Clock::now();
     while(_io == _init) {}
     return Clock::now() - start;
 }
 
-template<typename GPIO, typename Clock = chandra::chrono::timestamp_clock>
-typename Clock::duration pulseIn(GPIO& _io) {
+template<typename IOType, typename Clock = chandra::chrono::timestamp_clock>
+typename Clock::duration pulseIn(IOType& _io) {
     return pulseIn(_io, bool(_io));
 }
 

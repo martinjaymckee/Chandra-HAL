@@ -4,9 +4,18 @@
 % Example of the Memoir class, an alternative to the default LaTeX classes such as article and book, with many added features built into the class itself.
 
 %\documentclass[12pt,a4paper]{memoir} % for a long document
-\documentclass[12pt,letterpaper,article]{memoir} % for a short document
+\documentclass[12pt,letterpaper]{memoir} % for a short document
 
 \usepackage[utf8]{inputenc} % set input encoding to utf8
+
+\usepackage{colortbl}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{minted}
+\usepackage[section]{placeins}
+\usepackage{mdframed}
+\usepackage{geometry} % to change the page dimensions
+\geometry{letterpaper} % or letterpaper (US) or a5paper or....
+\geometry{margin=0.75in} % for example, change the margins to 2 inches all round
 
 % Don't forget to read the Memoir manual: memman.pdf
 
@@ -15,15 +24,15 @@
 
 %%% PAGE DIMENSIONS
 % Set up the paper to be as close as possible to both A4 & letter:
-\settrimmedsize{11in}{210mm}{*} % letter = 11in tall; a4 = 210mm wide
-\setlength{\trimtop}{0pt}
-\setlength{\trimedge}{\stockwidth}
-\addtolength{\trimedge}{-\paperwidth}
-\settypeblocksize{*}{\lxvchars}{1.618} % we want to the text block to have golden proportionals
-\setulmargins{50pt}{*}{*} % 50pt upper margins
-\setlrmargins{*}{*}{1.618} % golden ratio again for left/right margins
-\setheaderspaces{*}{*}{1.618}
-\checkandfixthelayout 
+%\settrimmedsize{11in}{210mm}{*} % letter = 11in tall; a4 = 210mm wide
+%\setlength{\trimtop}{0pt}
+%\setlength{\trimedge}{\stockwidth}
+%\addtolength{\trimedge}{-\paperwidth}
+%\settypeblocksize{*}{\lxvchars}{1.618} % we want to the text block to have golden proportionals
+%\setulmargins{50pt}{*}{*} % 50pt upper margins
+%\setlrmargins{*}{*}{1.618} % golden ratio again for left/right margins
+%\setheaderspaces{*}{*}{1.618}
+%\checkandfixthelayout 
 % This is from memman.pdf
 
 %%% \maketitle CUSTOMISATION
@@ -58,6 +67,12 @@
 \author{Martin Jay McKee}
 %\date{} % Delete this line to display the current date
 
+\colorlet{binarybg}{SeaGreen!20!White!80!}
+\colorlet{textbg}{Cyan!10!White!90!}
+\newcolumntype{g}{>{\columncolor[gray]{0.95}}c}
+\newcolumntype{B}{>{\columncolor{binarybg}}c}
+\newcolumntype{T}{>{\columncolor{textbg}}c}
+
 %%% BEGIN DOCUMENT
 \begin{document}
 %\begin{titlepage}
@@ -68,7 +83,7 @@
 \tableofcontents* % the asterisk means that the contents itself isn't put into the ToC
 
 \chapter{Overview}
-Chandra is a collection of almost entirely header-only libraries that are designed to support the development of real-time embedded control systems on microcontroller systems.  While Chandra supports running inside an RTOS, it does not require it nor is it specifically designed for it as the libraries are designed in such a way that functionality can easilby be called from an explicit event loop.  There is a single ``core'' .cpp file that defines the whole Chandra runtime\footprint{Currently there is only a single variable definition which could also be defined directly in the application code.  In future, however, additional values could be defined and, as such, it is cleaner to place them in the .cpp file.}.
+Chandra is a collection of almost entirely header-only libraries that are designed to support the development of real-time embedded control systems on microcontroller systems.  While Chandra supports running inside an RTOS, it does not require it nor is it specifically designed for it as the libraries are designed in such a way that functionality can easilby be called from an explicit event loop.  There is a single ``core'' .cpp file that defines the whole Chandra runtime\footnote{Currently there is only a single variable definition which could also be defined directly in the application code.  In future, however, additional values could be defined and, as such, it is cleaner to place them in the .cpp file.}.
 
 \section{Description}
 As they stand, the Chandra libraries consist of four sub-libraries: Chandra-Core, Chandra-HAL, Chandra-Control, and Chandra-Aero.  The Chandra Core libraries are functionality that is required for any of the other libraries but which is - otherwise - stand alone.  The core libraries could be used completely by themselves, though they do not provide enough functionality to implement a complete application because they do not contain features such as input and output.  The HAL libraries provide a hardware abstraction layer for the platform with a consistent API.  This is the only sub-library that requires explicit porting to new platforms\footnote{In future, it may make sense to optimized some of the core functionlaity based on the platform.  This might include chosing loop variable sizes or other microoptimizations.  The core functionality should work without requireing any porting, however.}.  The HAL includes things such as a system clock implementation, timing functionality, GPIO, serial peripherals, etc.  Some of the functionality in the HAL is platform independent as it is based directly on lower level functionality.  The porting documentation later in this guide describes what types and functions need to be implemented.  The third sub-library is Chandra-Control which provides observers, filters and control loop implementations.  Finally, Chandra-Aero provides special-purpose functions for aerodynamics related programs.  This includes functionality such as an atmosphere (~altitude, pressure, temperature, density~) model, basic air properties, lift and drag calculation, etc.
@@ -114,7 +129,17 @@ IT MAY MAKE SENSE TO USE EXPRESSION TEMPLATES TO SELECT THE IMPLEMENTATION OF OP
 
 \section{HAL}
 \subsection{Chandra::Chrono}
-\subsubsection{Sysbem Clock}
+\subsubsection{System Clock}
+To configure the timestamp clock, a preprocessor directive describing the onboard peripheral that will be used as the source. \\
+	\begin{centering}
+	\begin{tabular}{cgc}
+		\rowcolor[gray]{0.8}\textbf{Preprocessor Symbol}  & \textbf{Definition}\\
+		SCT\_HARDWARE\_TIMESTAMP\_MODE & Use an SCT clock as the timestamp generator\\
+		SYSTICK\_SOFTWARE\_TIMESTAMP\_MODE & Use the SysTick clock as the timestamp generator\\
+		
+	\end{tabular}
+	\end{centering}
+
 \subsubsection{System Frequencies}
 \subsubsection{Performance Timers}
 

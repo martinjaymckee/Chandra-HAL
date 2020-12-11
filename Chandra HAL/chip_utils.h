@@ -14,6 +14,8 @@
 #include "implementation/lpc84x_chip_utils.h"
 #elif defined(__LPC15XX__)
 #include "implementation/lpc15xx_chip_utils.h"
+#elif defined(__LPC55XX__)
+#include "implementation/lpc55xx_chip_utils.h"
 #elif defined(__CHANDRA_MOCK__)
 #include "implementation/mock_chip_utils.h"
 #endif

@@ -94,11 +94,10 @@ class FixedFunctionIO
 		}
 };
 
-class GPIO
+class GPIOImpl
 {
 	public:
 		static uint8_t clkIndex(const uint8_t& _port) {
-			(void) _port;
 			if(_port <=2 ) return 14 + _port;
 			return 0xFF; // INVALID PORT
 		}
@@ -109,7 +108,6 @@ class GPIO
 		}
 
 		static bool direction(const uint8_t& _port, const uint8_t& _pin, const bool& _output) {
-			(void) _port;
 			const uint32_t mask = 1UL<<_pin;
 			if( _output ){
 				LPC_GPIO->DIR[_port] |= mask;
@@ -121,7 +119,6 @@ class GPIO
 		}
 
 		static bool direction(const uint8_t& _port, const uint8_t& _pin) {
-			(void) _port;
 			const uint32_t mask = 1UL<<_pin;
 			return static_cast<bool>( LPC_GPIO->DIR[_port] & mask );
 		}

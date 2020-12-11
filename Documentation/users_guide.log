@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  12 JUL 2020 00:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  10 DEC 2020 17:15
 entering extended mode
 **./users_guide.tex
 (users_guide.tex
@@ -339,46 +339,589 @@ Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks22
 \inpenc@posthook=\toks23
 )
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/colortbl\colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 
-******************************************************
-Stock height and width: 794.96999pt by 614.295pt
-Top and edge trims: 0pt and 16.78712pt
-Page height and width: 794.96999pt by 597.50787pt
-Text height and width: 548.5pt by 336pt
-Spine and edge margins: 99.91455pt and 161.59332pt
-Upper and lower margins: 50pt and 196.46999pt
-Headheight and headsep: 14.5pt and 21.93494pt
-Footskip: 30pt
-Columnsep and columnseprule: 10pt and 0pt
-Marginparsep and marginparwidth: 7pt and 147.59332pt
-Sidecapsep and sidecapwidth: 7pt and 102pt
-Sidebarhsep and sidebarwidth: 7pt and 102pt
-Sidebarvsep and sidebartopsep: 14.5pt and 0pt
-Sidebarheight: 546.64995pt
-Sidefoothsep and sidefootwidth: 7pt and 102pt
-Sidefootvsep and sidefootheight: 14.5pt and 546.64995pt
-******************************************************
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\color.sty"
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\everycr=\toks24
+\minrowclearance=\skip185
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 709.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\dvipsnam.def"
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+))
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/minted\minted.sty
+Package: minted 2017/07/19 v2.5 Yet another Pygments shim for LaTeX
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks25
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ltxcmds.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\infwarerr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\etexcmds.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+))))
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/fvextra\fvextra.sty
+Package: fvextra 2019/02/04 v1.4 fvextra - extensions and patches for fancyvrb
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count138
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/fancyvrb\fancyvrb.sty
+Package: fancyvrb 2020/05/03 v3.6 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count139
+\FV@InFile=\read2
+\FV@TabBox=\box32
+\c@FancyVerbLine=\count140
+\FV@StepNumber=\count141
+\FV@OutFile=\write4
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/upquote\upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/lineno\lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count142
+\output=\toks26
+\linenoprevgraf=\count143
+\linenumbersep=\dimen147
+\linenumberwidth=\dimen148
+\c@linenumber=\count144
+\c@pagewiselinenumber=\count145
+\c@LN@truepage=\count146
+\c@internallinenumber=\count147
+\c@internallinenumbers=\count148
+\quotelinenumbersep=\dimen149
+\bframerule=\dimen150
+\bframesep=\dimen151
+\bframebox=\box33
+LaTeX Info: Redefining \\ on input line 3056.
+)
+\c@FV@TrueTabGroupLevel=\count149
+\c@FV@TrueTabCounter=\count150
+\FV@TabBox@Group=\box34
+\FV@TmpLength=\skip186
+\c@FV@HighlightLinesStart=\count151
+\c@FV@HighlightLinesStop=\count152
+\FV@LoopCount=\count153
+\FV@NCharsBox=\box35
+\FV@BreakIndent=\dimen152
+\FV@BreakIndentNChars=\count154
+\FV@BreakSymbolSepLeft=\dimen153
+\FV@BreakSymbolSepLeftNChars=\count155
+\FV@BreakSymbolSepRight=\dimen154
+\FV@BreakSymbolSepRightNChars=\count156
+\FV@BreakSymbolIndentLeft=\dimen155
+\FV@BreakSymbolIndentLeftNChars=\count157
+\FV@BreakSymbolIndentRight=\dimen156
+\FV@BreakSymbolIndentRightNChars=\count158
+\c@FancyVerbLineBreakLast=\count159
+\FV@LineBox=\box36
+\FV@LineIndentBox=\box37
+\FV@LineWidth=\dimen157
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/tools\calc.sty"
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count160
+\calc@Bcount=\count161
+\calc@Adimen=\dimen158
+\calc@Bdimen=\dimen159
+\calc@Askip=\skip187
+\calc@Bskip=\skip188
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count162
+\calc@Cskip=\skip189
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/tools\shellesc.sty"
+Package: shellesc 2016/06/07 v0.02a unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 67.
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/ifplatform\ifplatform.sty
+Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
+
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\catchfile.sty"
+Package: catchfile 2016/05/16 v1.7 Catch the contents of a file (HO)
+))
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/xstring\xstring.sty
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/xstring\xstring.tex
+\integerpart=\count163
+\decimalpart=\count164
+)
+Package: xstring 2019/02/06 v1.83 String manipulations (CT)
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/framed\framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip190
+\fb@frw=\dimen160
+\fb@frh=\dimen161
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count165
+\float@exts=\toks27
+\float@box=\box38
+\@float@everytoks=\toks28
+\@floatcapt=\box39
+)
+\minted@appexistsfile=\read3
+\minted@bgbox=\box40
+\minted@code=\write5
+\c@minted@FancyVerbLineTemp=\count166
+\c@minted@pygmentizecounter=\count167
+\@float@every@listing=\toks29
+\c@listing=\count168
+)
+runsystem(if not exist _minted-users_guide mkdir _minted-users_guide)...execute
+d.
+
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/placeins\placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/mdframed\mdframed.sty
+Package: mdframed 2013/07/01 1.9b: mdframed
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3packages/xparse\xparse.s
+ty (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\expl3.sty
+Package: expl3 2019-11-07 L3 programming layer (loader) 
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\expl3-code.tex
+Package: expl3 2019-11-07 L3 programming layer (code)
+\c_max_int=\count169
+\l_tmpa_int=\count170
+\l_tmpb_int=\count171
+\g_tmpa_int=\count172
+\g_tmpb_int=\count173
+\l__seq_internal_a_int=\count174
+\l__seq_internal_b_int=\count175
+\g__kernel_prg_map_int=\count176
+\c__ior_term_noprompt_ior=\count177
+\c_log_iow=\count178
+\l_iow_line_count_int=\count179
+\l__iow_line_target_int=\count180
+\l__iow_one_indent_int=\count181
+\l__iow_indent_int=\count182
+\c_zero_dim=\dimen162
+\c_max_dim=\dimen163
+\l_tmpa_dim=\dimen164
+\l_tmpb_dim=\dimen165
+\g_tmpa_dim=\dimen166
+\g_tmpb_dim=\dimen167
+\c_zero_skip=\skip191
+\c_max_skip=\skip192
+\l_tmpa_skip=\skip193
+\l_tmpb_skip=\skip194
+\g_tmpa_skip=\skip256
+\g_tmpb_skip=\skip257
+\c_zero_muskip=\muskip10
+\c_max_muskip=\muskip11
+\l_tmpa_muskip=\muskip12
+\l_tmpb_muskip=\muskip13
+\g_tmpa_muskip=\muskip14
+\g_tmpb_muskip=\muskip15
+\l_keys_choice_int=\count183
+\l__intarray_loop_int=\count184
+\c__intarray_sp_dim=\dimen168
+\g__intarray_font_int=\count185
+\c__fp_leading_shift_int=\count186
+\c__fp_middle_shift_int=\count187
+\c__fp_trailing_shift_int=\count188
+\c__fp_big_leading_shift_int=\count189
+\c__fp_big_middle_shift_int=\count190
+\c__fp_big_trailing_shift_int=\count191
+\c__fp_Bigg_leading_shift_int=\count192
+\c__fp_Bigg_middle_shift_int=\count193
+\c__fp_Bigg_trailing_shift_int=\count194
+\c__kernel_randint_max_int=\count266
+\g__fp_array_int=\count267
+\l__fp_array_loop_int=\count268
+\l__sort_length_int=\count269
+\l__sort_min_int=\count270
+\l__sort_top_int=\count271
+\l__sort_max_int=\count272
+\l__sort_true_max_int=\count273
+\l__sort_block_int=\count274
+\l__sort_begin_int=\count275
+\l__sort_end_int=\count276
+\l__sort_A_int=\count277
+\l__sort_B_int=\count278
+\l__sort_C_int=\count279
+\l__str_internal_int=\count280
+\c__str_replacement_char_int=\count281
+\l__tl_analysis_normal_int=\count282
+\l__tl_analysis_index_int=\count283
+\l__tl_analysis_nesting_int=\count284
+\l__tl_analysis_type_int=\count285
+\l__regex_internal_a_int=\count286
+\l__regex_internal_b_int=\count287
+\l__regex_internal_c_int=\count288
+\l__regex_balance_int=\count289
+\l__regex_group_level_int=\count290
+\l__regex_mode_int=\count291
+\c__regex_cs_in_class_mode_int=\count292
+\c__regex_cs_mode_int=\count293
+\l__regex_catcodes_int=\count294
+\l__regex_default_catcodes_int=\count295
+\c__regex_catcode_D_int=\count296
+\c__regex_catcode_S_int=\count297
+\c__regex_catcode_L_int=\count298
+\c__regex_catcode_O_int=\count299
+\c__regex_catcode_A_int=\count300
+\c__regex_all_catcodes_int=\count301
+\l__regex_show_lines_int=\count302
+\l__regex_min_state_int=\count303
+\l__regex_max_state_int=\count304
+\l__regex_left_state_int=\count305
+\l__regex_right_state_int=\count306
+\l__regex_capturing_group_int=\count307
+\l__regex_min_pos_int=\count308
+\l__regex_max_pos_int=\count309
+\l__regex_curr_pos_int=\count310
+\l__regex_start_pos_int=\count311
+\l__regex_success_pos_int=\count312
+\l__regex_curr_char_int=\count313
+\l__regex_curr_catcode_int=\count314
+\l__regex_last_char_int=\count315
+\l__regex_case_changed_char_int=\count316
+\l__regex_curr_state_int=\count317
+\l__regex_step_int=\count318
+\l__regex_min_active_int=\count319
+\l__regex_max_active_int=\count320
+\l__regex_replacement_csnames_int=\count321
+\l__regex_match_count_int=\count322
+\l__regex_min_submatch_int=\count323
+\l__regex_submatch_int=\count324
+\l__regex_zeroth_submatch_int=\count325
+\g__regex_trace_regex_int=\count326
+\c_empty_box=\box41
+\l_tmpa_box=\box42
+\l_tmpb_box=\box43
+\g_tmpa_box=\box44
+\g_tmpb_box=\box45
+\l__box_top_dim=\dimen169
+\l__box_bottom_dim=\dimen170
+\l__box_left_dim=\dimen171
+\l__box_right_dim=\dimen172
+\l__box_top_new_dim=\dimen173
+\l__box_bottom_new_dim=\dimen174
+\l__box_left_new_dim=\dimen175
+\l__box_right_new_dim=\dimen176
+\l__box_internal_box=\box46
+\l__coffin_internal_box=\box47
+\l__coffin_internal_dim=\dimen177
+\l__coffin_offset_x_dim=\dimen178
+\l__coffin_offset_y_dim=\dimen179
+\l__coffin_x_dim=\dimen180
+\l__coffin_y_dim=\dimen181
+\l__coffin_x_prime_dim=\dimen182
+\l__coffin_y_prime_dim=\dimen183
+\c_empty_coffin=\box48
+\l__coffin_aligned_coffin=\box49
+\l__coffin_aligned_internal_coffin=\box50
+\l_tmpa_coffin=\box51
+\l_tmpb_coffin=\box52
+\g_tmpa_coffin=\box53
+\g_tmpb_coffin=\box54
+\l__coffin_bounding_shift_dim=\dimen184
+\l__coffin_left_corner_dim=\dimen185
+\l__coffin_right_corner_dim=\dimen186
+\l__coffin_bottom_corner_dim=\dimen187
+\l__coffin_top_corner_dim=\dimen188
+\l__coffin_scaled_total_height_dim=\dimen189
+\l__coffin_scaled_width_dim=\dimen190
+\c__coffin_empty_coffin=\box55
+\l__coffin_display_coffin=\box56
+\l__coffin_display_coord_coffin=\box57
+\l__coffin_display_pole_coffin=\box58
+\l__coffin_display_offset_dim=\dimen191
+\l__coffin_display_x_dim=\dimen192
+\l__coffin_display_y_dim=\dimen193
+\g__char_data_ior=\read4
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\l3deprecation.def
+File: l3deprecation.def 2019-04-06 v L3 Deprecated functions
+))
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3backend\l3backend-pdfmod
+e.def
+File: l3backend-pdfmode.def 2019-04-06 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count327
+\l__pdf_internal_box=\box59
+))
+Package: xparse 2019-10-11 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count328
+\g__xparse_grabber_int=\count329
+\l__xparse_m_args_int=\count330
+\l__xparse_v_nesting_int=\count331
+) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\zref-abspage.sty"
+Package: zref-abspage 2018/11/21 v2.27 Module abspage for zref (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\zref-base.sty"
+Package: zref-base 2018/11/21 v2.27 Module base for zref (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\auxhook.sty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+Package zref Info: New property list: main on input line 759.
+Package zref Info: New property: default on input line 760.
+Package zref Info: New property: page on input line 761.
+)
+("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\atbegshi.sty"
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+)
+\c@abspage=\count332
+Package zref Info: New property: abspage on input line 62.
+)
+\mdf@templength=\skip258
+\c@mdf@globalstyle@cnt=\count333
+\mdf@skipabove@length=\skip259
+\mdf@skipbelow@length=\skip260
+\mdf@leftmargin@length=\skip261
+\mdf@rightmargin@length=\skip262
+\mdf@innerleftmargin@length=\skip263
+\mdf@innerrightmargin@length=\skip264
+\mdf@innertopmargin@length=\skip265
+\mdf@innerbottommargin@length=\skip266
+\mdf@splittopskip@length=\skip267
+\mdf@splitbottomskip@length=\skip268
+\mdf@outermargin@length=\skip269
+\mdf@innermargin@length=\skip270
+\mdf@linewidth@length=\skip271
+\mdf@innerlinewidth@length=\skip272
+\mdf@middlelinewidth@length=\skip273
+\mdf@outerlinewidth@length=\skip274
+\mdf@roundcorner@length=\skip275
+\mdf@footenotedistance@length=\skip276
+\mdf@userdefinedwidth@length=\skip277
+\mdf@needspace@length=\skip278
+\mdf@frametitleaboveskip@length=\skip279
+\mdf@frametitlebelowskip@length=\skip280
+\mdf@frametitlerulewidth@length=\skip281
+\mdf@frametitleleftmargin@length=\skip282
+\mdf@frametitlerightmargin@length=\skip283
+\mdf@shadowsize@length=\skip284
+\mdf@extratopheight@length=\skip285
+\mdf@subtitleabovelinewidth@length=\skip286
+\mdf@subtitlebelowlinewidth@length=\skip287
+\mdf@subtitleaboveskip@length=\skip288
+\mdf@subtitlebelowskip@length=\skip289
+\mdf@subtitleinneraboveskip@length=\skip290
+\mdf@subtitleinnerbelowskip@length=\skip291
+\mdf@subsubtitleabovelinewidth@length=\skip292
+\mdf@subsubtitlebelowlinewidth@length=\skip293
+\mdf@subsubtitleaboveskip@length=\skip294
+\mdf@subsubtitlebelowskip@length=\skip295
+\mdf@subsubtitleinneraboveskip@length=\skip296
+\mdf@subsubtitleinnerbelowskip@length=\skip297
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/mdframed\md-frame-0.mdf
+File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
+)
+\mdf@frametitlebox=\box60
+\mdf@footnotebox=\box61
+\mdf@splitbox@one=\box62
+\mdf@splitbox@two=\box63
+\mdf@splitbox@save=\box64
+\mdfsplitboxwidth=\skip298
+\mdfsplitboxtotalwidth=\skip299
+\mdfsplitboxheight=\skip300
+\mdfsplitboxdepth=\skip301
+\mdfsplitboxtotalheight=\skip302
+\mdfframetitleboxwidth=\skip303
+\mdfframetitleboxtotalwidth=\skip304
+\mdfframetitleboxheight=\skip305
+\mdfframetitleboxdepth=\skip306
+\mdfframetitleboxtotalheight=\skip307
+\mdffootnoteboxwidth=\skip308
+\mdffootnoteboxtotalwidth=\skip309
+\mdffootnoteboxheight=\skip310
+\mdffootnoteboxdepth=\skip311
+\mdffootnoteboxtotalheight=\skip312
+\mdftotallinewidth=\skip313
+\mdfboundingboxwidth=\skip314
+\mdfboundingboxtotalwidth=\skip315
+\mdfboundingboxheight=\skip316
+\mdfboundingboxdepth=\skip317
+\mdfboundingboxtotalheight=\skip318
+\mdf@freevspace@length=\skip319
+\mdf@horizontalwidthofbox@length=\skip320
+\mdf@verticalmarginwhole@length=\skip321
+\mdf@horizontalspaceofbox=\skip322
+\mdfsubtitleheight=\skip323
+\mdfsubsubtitleheight=\skip324
+\c@mdfcountframes=\count334
+
+****** mdframed patching \endmdf@trivlist
+
+****** -- success******
+
+\mdf@envdepth=\count335
+\c@mdf@env@i=\count336
+\c@mdf@env@ii=\count337
+\c@mdf@zref@counter=\count338
+Package zref Info: New property: mdf@pagevalue on input line 895.
+)
+("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.sty"
+Package: geometry 2018/04/16 v5.8 Page Geometry
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count339
+\Gm@cntv=\count340
+\c@Gm@tempcnt=\count341
+\Gm@bindingoffset=\dimen194
+\Gm@wd@mp=\dimen256
+\Gm@odd@mp=\dimen257
+\Gm@even@mp=\dimen258
+\Gm@layoutwidth=\dimen259
+\Gm@layoutheight=\dimen260
+\Gm@layouthoffset=\dimen261
+\Gm@layoutvoffset=\dimen262
+\Gm@dimlist=\toks30
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg"))
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > us
+ers_guide.aex <nul: /p x=^%~$PATH:i>> users_guide.aex)...executed.
+
+runsystem(del users_guide.aex)...executed.
+
 
 (users_guide.aux)
 \openout1 = `users_guide.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count342
+\scratchdimen=\dimen263
+\scratchbox=\box65
+\nofMPsegments=\count343
+\nofMParguments=\count344
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count345
+\MPscratchDim=\dimen264
+\MPnumerator=\count346
+\makeMPintoPDFobject=\count347
+\everyMPtoPDFconversion=\toks32
+)
+\AtBeginShipoutBox=\box66
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(54.2025pt, 505.89pt, 54.2025pt)
+* v-part:(T,H,B)=(54.2025pt, 686.56499pt, 54.2025pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=505.89pt
+* \textheight=686.56499pt
+* \oddsidemargin=-18.06749pt
+* \evensidemargin=-18.06749pt
+* \topmargin=-52.44128pt
+* \headheight=14.5pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=102.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=12.0pt plus 4.0pt minus 4.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 67.
+(Font)              <14.4> on input line 82.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 67.
- (users_guide.toc
+(Font)              <7> on input line 82.
+(users_guide.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -388,65 +931,61 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {C:/Users/marti/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Overfull \hbox (1.3752pt too wide) detected at line 46
+Overfull \hbox (1.3752pt too wide) detected at line 67
 \OT1/cmr/bx/n/14.4 III 
  []
 
-) [2]
+[2]) [3] [4
+
+]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 74.
- [3] [4] [5] [6
+(Font)              <5> on input line 86.
+ [5] [6] [7
 
-] [7] [8]
+] [8] [9
+
+] [10
+
+] [11] [12] [13
+
+] [14] [15
+
+] [16
+
+]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9]
-Overfull \hbox (10.19826pt too wide) in paragraph at lines 107--109
-\OT1/cmr/m/n/12 The ADD SYM-MET-RIC AND SKEW-SYMMETRIC MA-TRICIES.
+ [17]
+Overfull \vbox (56.2184pt too high) has occurred while \output is active []
+
+
+[18] [19
+
+] [20] [21
+
+] [22
+
+]
+Overfull \hbox (1.9141pt too wide) in paragraph at lines 215--216
+[]\OT1/cmr/m/n/12 ALL COM-PO-NENTS THAT RE-QUIRE PORT-ING NEED TO HAVE HEADER T
+EM-PLATES. 
  []
 
-
-Overfull \hbox (2.11818pt too wide) in paragraph at lines 107--109
-\OT1/cmr/m/n/12 THESE CAN HAVE OP-TI-MIED STOR-AGE AND MAY BE POS-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [10]
-Overfull \hbox (11.66525pt too wide) in paragraph at lines 123--124
-\OT1/cmr/m/n/12 CURRENTLY THERE IS NO API SPEC-I-FIED FOR DAC, THERE
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [11]
-Overfull \hbox (0.91609pt too wide) in paragraph at lines 144--145
-\OT1/cmr/m/n/12 (PRES-SURE, DEN-SITY, TEM-PER-A-TURE, AL-TI-TUDE, ETC.),
- []
-
-[12] [13
-
-] [14]
-Overfull \vbox (280.78339pt too high) has occurred while \output is active []
-
-
-[15] [16
-
-] [17] [18] [19]
-\tf@toc=\write4
-\openout4 = `users_guide.toc'.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17.28> on input line 223.
+[23]
+\tf@toc=\write6
+\openout6 = `users_guide.toc'.
 
  (users_guide.aux) ) 
 Here is how much of TeX's memory you used:
- 3653 strings out of 492453
- 49196 string characters out of 3129819
- 143755 words of memory out of 3000000
- 8056 multiletter control sequences out of 15000+200000
- 10708 words of font info for 37 fonts, out of 3000000 for 9000
+ 19618 strings out of 492453
+ 357545 string characters out of 3129819
+ 505356 words of memory out of 3000000
+ 23852 multiletter control sequences out of 15000+200000
+ 540021 words of font info for 49 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 25i,11n,26p,1640b,259s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 52i,12n,71p,1640b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:
@@ -457,9 +996,9 @@ onts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
 m/cmti12.pfb>
-Output written on users_guide.pdf (19 pages, 139481 bytes).
+Output written on users_guide.pdf (23 pages, 147170 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
+ 116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -86,10 +86,10 @@ class FixedFunctionIO
 		}
 };
 
-class GPIO
+class GPIOImpl
 {
 	public:
-        static constexpr uint8_t clkIndex(const uint8_t& /*_port*/) {
+    static constexpr uint8_t clkIndex(const uint8_t& /*_port*/) {
 			return 6;
 		}
 
