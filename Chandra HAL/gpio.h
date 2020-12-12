@@ -63,6 +63,7 @@ class IO
         : port_(_port), pin_(_pin), mask_(1UL<<_pin), inverted_(_inverted) {
             init();
             output(_is_output);
+            if(_is_output) this->operator = (false);
         }
 
         IO(const internal::IODef& _io, bool _is_output = false) : IO(_io.port, _io.pin, _is_output, _io.inverted) {}
