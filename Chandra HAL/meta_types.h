@@ -35,6 +35,17 @@ auto ratio_cast(const iamb::FixedPoint<S, F, C>& v) {
 }
 #endif
 
+template<size_t Idx, class Value>
+constexpr bool is_bit_set(const Value& _data){
+	constexpr auto mask = Value{1} << Value{Idx};
+	return (_data & mask) == mask;
+}
+
+template<size_t Idx, class Value>
+constexpr bool is_bit_clear(const Value& _data){
+	constexpr auto mask = Value{1} << Value{Idx};
+	return ((!_data) & mask) == mask;
+}
+
 } /*namespace chandra*/
 #endif /*CHANDRA_META_TYPES_H*/
-

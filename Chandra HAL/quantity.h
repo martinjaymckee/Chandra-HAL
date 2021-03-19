@@ -22,10 +22,11 @@ template<typename Value, class Units>
 class Quantity
 {
     protected:
-        constexpr bool match_quantity(auto) { return false; }
+        template<class T>
+        constexpr bool match_quantity(T) { return false; }
 
         template<typename V, typename U>
-        constexpr bool match_quantity(const Quantity&) { return true; }
+        constexpr bool match_quantity(const Quantity<V, U>&) { return true; }
 
     public:
         using value_t = Value;

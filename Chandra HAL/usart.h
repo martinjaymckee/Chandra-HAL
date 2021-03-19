@@ -55,7 +55,8 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
     using rx_value_t = decltype(encoder_t::encode('0'));
 
 	protected:
-    USART( const uint8_t& _num, const auto& _tx, const auto& _rx, auto /*hack to force delegation*/ )
+		template<class P1, class P2, class HACK>
+    USART( const uint8_t& _num, const P1& _tx, const P2& _rx, HACK /*hack to force delegation*/ )
         : num_(_num), irq_num_(getIRQNum(_num)), usart_(getUSART(_num)), tx_(_tx), rx_(_rx)
 		{
     #if defined(__LPC82X__)

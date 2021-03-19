@@ -186,13 +186,15 @@ class Inertial
         }
 
         //  Convert Rotation Object to Matrix
-        transform_t rotation(auto _r) {
+        template<class Rotation>
+        transform_t rotation(const Rotation& _r) {
             R = math::dcm(_r);
             return R;
         }
 
         //  Convert Tait-Bryan Angles to Matrix
-        transform_t rotation(auto roll, auto pitch, auto yaw) {
+        template<class A1, class A2, class A3>
+        transform_t rotation(const A1& roll, const A2& pitch, const A3& yaw) {
             R = math::dcm(roll, pitch, yaw);
             return R;
         }

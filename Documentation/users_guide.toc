@@ -1,12 +1,11 @@
 \contentsline {chapter}{\chapternumberline {1}Overview}{5}% 
 \contentsline {section}{\numberline {1.1}Description}{5}% 
 \contentsline {section}{\numberline {1.2}Dependencies}{5}% 
-\contentsline {section}{\numberline {1.3}Platform Indepedence}{6}% 
+\contentsline {section}{\numberline {1.3}Platform Indepedence}{5}% 
 \contentsline {section}{\numberline {1.4}User's Guide Organization}{6}% 
 \contentsline {part}{\partnumberline {I}Library Introduction}{7}% 
 \contentsline {chapter}{\chapternumberline {2}Getting Started}{9}% 
-\contentsline {section}{\numberline {2.1}}{9}% 
-\contentsline {subsection}{}{9}% 
+\contentsline {section}{\numberline {2.1}An Embedded Hello World}{9}% 
 \contentsline {chapter}{\chapternumberline {3}Library Architecture}{11}% 
 \contentsline {section}{\numberline {3.1}Overview}{11}% 
 \contentsline {section}{\numberline {3.2}Core}{11}% 
@@ -17,67 +16,109 @@
 \contentsline {section}{\numberline {3.3}HAL}{11}% 
 \contentsline {subsection}{Chandra::Chrono}{11}% 
 \contentsline {subsubsection}{System Clock}{11}% 
-\contentsline {subsubsection}{System Frequencies}{12}% 
-\contentsline {subsubsection}{Performance Timers}{12}% 
-\contentsline {subsection}{General Purpose Input/Output}{12}% 
-\contentsline {subsection}{Analog Input/Output}{12}% 
+\contentsline {subsubsection}{System Frequencies}{11}% 
+\contentsline {subsubsection}{Performance Timers}{11}% 
+\contentsline {subsection}{General Purpose Input/Output}{11}% 
+\contentsline {subsection}{Analog Input/Output}{11}% 
 \contentsline {subsection}{Communications}{12}% 
 \contentsline {subsubsection}{$I^{2}C$}{12}% 
 \contentsline {subsubsection}{SPI}{12}% 
 \contentsline {subsubsection}{USART}{12}% 
+\contentsline {section}{\numberline {3.4}Interface}{12}% 
 \contentsline {subsection}{Drivers}{12}% 
-\contentsline {subsubsection}{Barometric Pressure Sensors}{12}% 
+\contentsline {subsubsection}{Analog Input/Output}{12}% 
+\contentsline {subsubsection}{GPS}{12}% 
 \contentsline {subsubsection}{Inertia Measurement Sensors}{12}% 
 \contentsline {subsubsection}{Servo Drivers}{12}% 
-\contentsline {section}{\numberline {3.4}Control}{12}% 
+\contentsline {subsubsection}{RF Transceivers}{12}% 
+\contentsline {section}{\numberline {3.5}Control}{12}% 
 \contentsline {subsection}{Kalman Filtering}{12}% 
 \contentsline {subsubsection}{Code Generator}{12}% 
 \contentsline {subsection}{PID}{12}% 
-\contentsline {subsection}{Builtin Estimators}{12}% 
-\contentsline {subsubsection}{Madgwick's AHRS}{12}% 
-\contentsline {section}{\numberline {3.5}Aero}{12}% 
-\contentsline {part}{\partnumberline {II}Library Deep Dive}{13}% 
-\contentsline {chapter}{\chapternumberline {4}API}{15}% 
-\contentsline {section}{\numberline {4.1}}{15}% 
-\contentsline {subsection}{}{15}% 
-\contentsline {chapter}{\chapternumberline {5}Chandra Cookbook}{18}% 
-\contentsline {section}{\numberline {5.1}Clock and Timing}{18}% 
-\contentsline {subsection}{Performance Timers}{18}% 
-\contentsline {subsubsection}{Timing a function}{18}% 
-\contentsline {subsubsection}{Conditional timing of a function}{18}% 
-\contentsline {subsubsection}{Loop frequency measurement}{18}% 
-\contentsline {subsubsection}{Loop frequency statistics}{18}% 
-\contentsline {section}{\numberline {5.2}Digital I/O}{18}% 
-\contentsline {subsection}{Reading a digital pin}{18}% 
-\contentsline {subsection}{Writing to a digital pin}{18}% 
-\contentsline {subsection}{Reading a mechanical switch/button}{18}% 
-\contentsline {subsection}{Manual control of an LED}{18}% 
-\contentsline {subsection}{Automatic PWM of an LED}{18}% 
-\contentsline {subsection}{Automatic PWM of an LED with asynchronous update}{18}% 
-\contentsline {subsection}{Event on a pin falling (rising) edge}{18}% 
-\contentsline {subsection}{Reading a Quadrature Encoder}{18}% 
-\contentsline {section}{\numberline {5.3}Analog I/O}{18}% 
-\contentsline {subsection}{Raw reading of a single ADC channel}{18}% 
-\contentsline {subsection}{Scaled reading of a single ADC channel}{18}% 
-\contentsline {subsection}{Reading multiple ADC channels}{18}% 
-\contentsline {section}{\numberline {5.4}Math}{18}% 
-\contentsline {subsection}{Construct a matrix}{18}% 
-\contentsline {subsection}{Solve a system of equations}{18}% 
-\contentsline {subsection}{Invert a matrix}{18}% 
-\contentsline {part}{\partnumberline {III}Appendicies}{19}% 
-\contentsline {appendix}{\chapternumberline {A}Setting up MCUXpresso for LPC Series Microcontrollers}{21}% 
-\contentsline {section}{\numberline {A.1}Installation}{21}% 
-\contentsline {section}{\numberline {A.2}Optimization and Standards}{21}% 
-\contentsline {section}{\numberline {A.3}Include Paths}{21}% 
-\contentsline {section}{\numberline {A.4}Preprocessor Definitions}{21}% 
-\contentsline {appendix}{\chapternumberline {B}Porting Guide}{23}% 
-\contentsline {section}{\numberline {B.1}Low-Level Register Access}{23}% 
-\contentsline {section}{\numberline {B.2}Clock and Frequencies}{23}% 
-\contentsline {section}{\numberline {B.3}GPIO}{23}% 
-\contentsline {section}{\numberline {B.4}ADC}{23}% 
-\contentsline {section}{\numberline {B.5}Timers}{23}% 
-\contentsline {section}{\numberline {B.6}$I^2C$}{23}% 
-\contentsline {section}{\numberline {B.7}SPI}{23}% 
-\contentsline {section}{\numberline {B.8}USART}{23}% 
-\contentsline {section}{\numberline {B.9}(Optional) DAC}{23}% 
-\contentsline {section}{\numberline {B.10}(Optional) Special Peripherals}{23}% 
+\contentsline {subsection}{Static IMU Calibration}{12}% 
+\contentsline {subsection}{Builtin Estimators}{14}% 
+\contentsline {subsubsection}{Madgwick's AHRS}{14}% 
+\contentsline {subsubsection}{Alpha-Beta-(Gamma)-(Eta)}{14}% 
+\contentsline {section}{\numberline {3.6}Aero}{14}% 
+\contentsline {section}{\numberline {3.7}Aero}{14}% 
+\contentsline {subsection}{Atmosphere Calculations}{14}% 
+\contentsline {subsection}{Gravity Calculations}{14}% 
+\contentsline {part}{\partnumberline {II}Library Deep Dive}{15}% 
+\contentsline {chapter}{\chapternumberline {4}API}{17}% 
+\contentsline {section}{\numberline {4.1}Math}{17}% 
+\contentsline {subsection}{Linear Algebra}{17}% 
+\contentsline {subsection}{Quaternions}{17}% 
+\contentsline {subsection}{Rotations}{17}% 
+\contentsline {subsection}{Math Utilities}{17}% 
+\contentsline {section}{\numberline {4.2}Units}{17}% 
+\contentsline {section}{\numberline {4.3}Chrono}{17}% 
+\contentsline {subsection}{System Frequencies}{17}% 
+\contentsline {subsection}{Timestamp Clock}{17}% 
+\contentsline {subsection}{Conversions between std::chrono and chandra::units}{17}% 
+\contentsline {section}{\numberline {4.4}General Purpose Input/Output}{18}% 
+\contentsline {section}{\numberline {4.5}Analog Input/Output}{18}% 
+\contentsline {section}{\numberline {4.6}Communications}{18}% 
+\contentsline {subsection}{$I^{2}C$}{18}% 
+\contentsline {subsection}{SPI}{18}% 
+\contentsline {subsection}{USART}{18}% 
+\contentsline {section}{\numberline {4.7}External Analog Input/Output Drivers}{18}% 
+\contentsline {section}{\numberline {4.8}Temperature Sensor Drivers}{18}% 
+\contentsline {section}{\numberline {4.9}Pressure Sensor Drivers}{18}% 
+\contentsline {section}{\numberline {4.10}Inertial Motion Drivers}{18}% 
+\contentsline {section}{\numberline {4.11}Recursive Filters}{18}% 
+\contentsline {section}{\numberline {4.12}Alpha-Beta-(Gamma)-(Eta) Filtering}{18}% 
+\contentsline {section}{\numberline {4.13}Kalman Filtering}{18}% 
+\contentsline {section}{\numberline {4.14}PID Control}{18}% 
+\contentsline {section}{\numberline {4.15}Static IMU Calibration}{18}% 
+\contentsline {chapter}{\chapternumberline {5}Chandra Cookbook}{19}% 
+\contentsline {section}{\numberline {5.1}Clock and Timing}{19}% 
+\contentsline {subsection}{Performance Timers}{19}% 
+\contentsline {subsubsection}{Timing a function}{19}% 
+\contentsline {subsubsection}{Conditional timing of a function}{19}% 
+\contentsline {subsubsection}{Loop frequency measurement}{19}% 
+\contentsline {subsubsection}{Loop frequency statistics}{19}% 
+\contentsline {section}{\numberline {5.2}Digital I/O}{19}% 
+\contentsline {subsection}{Reading a digital pin}{19}% 
+\contentsline {subsection}{Writing to a digital pin}{19}% 
+\contentsline {subsection}{Reading a mechanical switch/button}{19}% 
+\contentsline {subsection}{Manual control of an LED}{19}% 
+\contentsline {subsection}{Automatic PWM of an LED}{19}% 
+\contentsline {subsection}{Automatic PWM of an LED with asynchronous update}{19}% 
+\contentsline {subsection}{Event on a pin falling (rising) edge}{19}% 
+\contentsline {subsection}{Reading a Quadrature Encoder}{19}% 
+\contentsline {section}{\numberline {5.3}Analog I/O}{19}% 
+\contentsline {subsection}{Raw reading of a single ADC channel}{19}% 
+\contentsline {subsection}{Scaled reading of a single ADC channel}{19}% 
+\contentsline {subsection}{Reading multiple ADC channels}{19}% 
+\contentsline {section}{\numberline {5.4}Math}{19}% 
+\contentsline {subsection}{Construct a matrix}{19}% 
+\contentsline {subsection}{Solve a system of equations}{19}% 
+\contentsline {subsection}{Invert a matrix}{19}% 
+\contentsline {section}{\numberline {5.5}Control}{19}% 
+\contentsline {subsection}{Kalman}{19}% 
+\contentsline {subsection}{PID}{19}% 
+\contentsline {subsection}{IMU Calibration}{19}% 
+\contentsline {part}{\partnumberline {III}Appendicies}{21}% 
+\contentsline {appendix}{\chapternumberline {A}Setting up MCUXpresso for LPC Series Microcontrollers}{23}% 
+\contentsline {section}{\numberline {A.1}Installation}{23}% 
+\contentsline {section}{\numberline {A.2}Optimization and Standards}{23}% 
+\contentsline {section}{\numberline {A.3}Include Paths}{23}% 
+\contentsline {section}{\numberline {A.4}Preprocessor Definitions}{23}% 
+\contentsline {appendix}{\chapternumberline {B}Porting Guide}{25}% 
+\contentsline {section}{\numberline {B.1}Low-Level Register Access}{25}% 
+\contentsline {section}{\numberline {B.2}Clock and Frequencies}{25}% 
+\contentsline {section}{\numberline {B.3}GPIO}{25}% 
+\contentsline {section}{\numberline {B.4}ADC}{25}% 
+\contentsline {section}{\numberline {B.5}Timers}{25}% 
+\contentsline {section}{\numberline {B.6}$I^{2}C$}{25}% 
+\contentsline {section}{\numberline {B.7}SPI}{25}% 
+\contentsline {section}{\numberline {B.8}USART}{25}% 
+\contentsline {section}{\numberline {B.9}(Optional) DAC}{25}% 
+\contentsline {section}{\numberline {B.10}(Optional) Special Peripherals}{25}% 
+\contentsline {appendix}{\chapternumberline {C}Notes on IMU Calibration and Errors}{27}% 
+\contentsline {section}{\numberline {C.1}Static Calibration}{27}% 
+\contentsline {section}{\numberline {C.2}Dynamic Errors}{27}% 
+\contentsline {section}{\numberline {C.3}Modified Calibration Forms}{28}% 
+\contentsline {subsection}{Three-Parameter (bias only) or Six-Parameter Calibration}{28}% 
+\contentsline {subsection}{Hardware Sensor Bias}{29}% 
+\contentsline {appendix}{\chapternumberline {D}References}{31}% 

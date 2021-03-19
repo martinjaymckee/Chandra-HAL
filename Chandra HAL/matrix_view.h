@@ -36,7 +36,8 @@ class ValueProxy
 
         explicit constexpr ValueProxy(value_t& _ref) : ref_(_ref) {}
 
-        constexpr ValueProxy& operator = (auto v) {
+        template<class V>
+        constexpr ValueProxy& operator = (const V& v) {
             ref_ = v;
             return *this;
         }
@@ -51,7 +52,8 @@ class ValueProxy
 template<typename Value>
 struct Vector2D : public internal::VectorWrapper<Value, 2, 1>
 {
-        using base_t = internal::VectorWrapper<Value, 2, 1>;
+        using value_t = Value;
+        using base_t = internal::VectorWrapper<value_t, 2, 1>;
         using matrix_t = typename base_t::matrix_t;
 
         constexpr Vector2D(const matrix_t& m)
@@ -59,14 +61,15 @@ struct Vector2D : public internal::VectorWrapper<Value, 2, 1>
               x(this->vec(0)),
               y(this->vec(1)) {}
 
-        internal::ValueProxy<Value> x;
-        internal::ValueProxy<Value> y;
+        internal::ValueProxy<value_t> x;
+        internal::ValueProxy<value_t> y;
 };
 
 template<typename Value>
 struct Vector3D : public internal::VectorWrapper<Value, 3, 1>
 {
-        using base_t = internal::VectorWrapper<Value, 3, 1>;
+        using value_t = Value;
+        using base_t = internal::VectorWrapper<value_t, 3, 1>;
         using matrix_t = typename base_t::matrix_t;
 
         constexpr Vector3D(const matrix_t& m)
@@ -75,15 +78,16 @@ struct Vector3D : public internal::VectorWrapper<Value, 3, 1>
               y(this->vec(1)),
               z(this->vec(2)) {}
 
-        internal::ValueProxy<Value> x;
-        internal::ValueProxy<Value> y;
-        internal::ValueProxy<Value> z;
+        internal::ValueProxy<value_t> x;
+        internal::ValueProxy<value_t> y;
+        internal::ValueProxy<value_t> z;
 };
 
 template<typename Value>
 struct Vector4D : public internal::VectorWrapper<Value, 4, 1>
 {
-        using base_t = internal::VectorWrapper<Value, 4, 1>;
+        using value_t = Value;
+        using base_t = internal::VectorWrapper<value_t, 4, 1>;
         using matrix_t = typename base_t::matrix_t;
 
         constexpr Vector4D(const matrix_t& m)
@@ -93,14 +97,13 @@ struct Vector4D : public internal::VectorWrapper<Value, 4, 1>
               y(this->vec(2)),
               z(this->vec(3)) {}
 
-        internal::ValueProxy<Value> w;
-        internal::ValueProxy<Value> x;
-        internal::ValueProxy<Value> y;
-        internal::ValueProxy<Value> z;
+        internal::ValueProxy<value_t> w;
+        internal::ValueProxy<value_t> x;
+        internal::ValueProxy<value_t> y;
+        internal::ValueProxy<value_t> z;
 };
 
 } /*namespace math*/
 } /*namespace chandra*/
 
 #endif /*CHANDRA_MATRIX_VIEW_H*/
-

@@ -247,7 +247,7 @@ class Gyroscope : public Inertial<Gyroscope<Derived, Value, N, GyroUnits>, Value
 // Declare Magnetometer baseclass
 
 // Declare AccelGyro baseclass
-template<    
+template<
     typename Derived,
     typename Value,
     size_t N,
@@ -303,5 +303,3 @@ class AccelGyro : public Inertial<AccelGyro<Derived, Value, N, AccelUnits, GyroU
 } /*namespace chandra*/
 
 #endif /*CHANDRA_INERTIAL_H*/
-
-

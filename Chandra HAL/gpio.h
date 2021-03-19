@@ -193,8 +193,8 @@ class IO
 //
 
 // TODO: THIS SHOULD BE PROTECTED WITH BETTER TYPES...
-template<typename IOType, typename Clock = chandra::chrono::timestamp_clock>
-void pulseOut(IOType& _io, auto _delay, const typename Clock::time_point& _start = Clock::now()) {
+template<typename IOType, typename Delay, typename Clock = chandra::chrono::timestamp_clock>
+void pulseOut(IOType& _io, Delay _delay, const typename Clock::time_point& _start = Clock::now()) {
     ~_io;
     chandra::chrono::delay(_delay, _start);
     ~_io;

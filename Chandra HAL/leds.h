@@ -304,11 +304,12 @@ class SequentialSequencer
       // TODO: FIGURE OUT HOW TO COMBINE THESE...
       // const uint32_t color_range = std::min(static_cast<uint32_t>(base_.color_max), (color.r + color.g + color.b));
       // const auto denom = base_.brightness_max * (color.r + color.g + color.b);
-      const auto denom = base_.brightness_max * base_.color_max * (
-        ((color.r > 0) ? 1 : 0) + ((color.g > 0) ? 1 : 0) + ((color.b > 0) ? 1 : 0)
-      );
+      // const auto denom = base_.brightness_max * base_.color_max * (
+      //   ((color.r > 0) ? 1 : 0) + ((color.g > 0) ? 1 : 0) + ((color.b > 0) ? 1 : 0)
+      // );
       // const uint32_t denom = base_.brightness_max * color_range;
-
+      const auto denom = 3 * base_.color_max * base_.brightness_max;
+      
       base_.red_period_ = duration_t{(color.r*C) / denom};
       base_.green_period_ = duration_t{(color.g*C) / denom};
       base_.blue_period_ = duration_t{(color.b*C) / denom};
@@ -453,7 +454,7 @@ class RGBLED
     using sequencer_t = typename internal::SequencerType<ref_t, Sequencing>::sequencer_t;
     friend class internal::SequencerType<ref_t, Sequencing>::sequencer_t;
 
-    RGBLED(IO& _red, IO& _green, IO& _blue)
+    RGBLED(const IO& _red, const IO& _green, const IO& _blue)
       : red_(_red), green_(_green), blue_(_blue), sequencer_(*this) {}
 
     template<class T>
@@ -495,7 +496,7 @@ class RGBLED
         inactive_period_ = ( _total_period <= _active_period ) ? duration_t(0) : _total_period - _active_period;
         mode_ = LED::Pulse;
         phase_ = PhaseA;
-        is_active_ = ~is_active_;
+        is_active_ = !is_active_;
         sequencer_.calcPeriods(is_active_ ? active_color_ : inactive_color_);
         timestamp_ = clock_t::now();
         sequencer_.reset();

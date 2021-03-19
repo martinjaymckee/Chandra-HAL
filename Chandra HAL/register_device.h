@@ -57,14 +57,14 @@ struct RegisterDeviceMixin
   //
 
   //  Single Byte
-  void update(const uint8_t reg, const auto mask, const uint8_t data) {
+  void update(const uint8_t& reg, const uint8_t& mask, const uint8_t& data) {
       const uint8_t init = static_cast<Derived*>(this)->byte(reg);
       const uint8_t new_data = (init&~mask)|(data&mask);
       return static_cast<Derived*>(this)->write(reg, new_data);
   }
 
   // 16-Bit Half Word
-  void update(const uint8_t reg, const auto mask, const uint16_t& data) {
+  void update(const uint8_t& reg, const uint16_t& mask, const uint16_t& data) {
       const uint16_t init = static_cast<Derived*>(this)->hword(reg);
       const uint16_t new_data = (init&~mask)|(data&mask);
       return static_cast<Derived*>(this)->write(reg, new_data);

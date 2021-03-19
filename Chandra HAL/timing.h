@@ -71,7 +71,8 @@ class Timer
 			return running_;
 		}
 
-    duration_t duration(const auto& _duration, const timer_control_t& _control = Reset) {
+		template<class D>
+    duration_t duration(duration_t _duration, const timer_control_t& _control = Reset) {
       duration_ = _duration;
       if(_control & Reset) reset();
       if(_control & Rebase) reset(clock_t::now());
@@ -80,7 +81,7 @@ class Timer
 
     duration_t duration() const { return duration_; }
 
-    time_point_t base(const auto& _base) {
+    time_point_t base(time_point_t _base) {
 			base_ = _base;
 			return base_;
 		}
@@ -89,11 +90,13 @@ class Timer
 
     time_point_t expiration() const { return expiration_; }
 
-    duration_t remaining(const auto& _base = clock_t::now()) const {
+		template<class T>
+    duration_t remaining(const T& _base = clock_t::now()) const {
       return expiration_ - _base;
 		}
 
-    time_point_t reset(const auto& _base) {
+		template<class T>
+    time_point_t reset(const T& _base) {
 			base_ = _base;
       expiration_ = base_ + duration_;
 			return base_;
@@ -102,7 +105,7 @@ class Timer
     time_point_t reset() { return reset(clock_t::now()); }
 
     ExpirationStatus operator() (
-			const auto& _check, const timer_control_t& _control = Reset)
+			time_point_t _check, const timer_control_t& _control = Reset)
 		{
       if(chandra::chrono::after(expiration_, _check)) {
         const auto expiration = expiration_;
@@ -165,7 +168,8 @@ class RetriggerableTimer
       : duration_(_duration), active_(false)
 		{}
 
-    duration_t duration(const auto& _duration, const timer_control_t& _control = Reset) {
+		template<class D>
+    duration_t duration(duration_t _duration, const timer_control_t& _control = Reset) {
       duration_ = _duration;
       if(_control & Reset) reset();
       if(_control & Rebase) reset(clock_t::now());
@@ -174,7 +178,7 @@ class RetriggerableTimer
 
     duration_t duration() const { return duration_; }
 
-    time_point_t base(const auto& _base) {
+    time_point_t base(time_point_t _base) {
 			base_ = _base;
 			return base_;
 		}
@@ -183,11 +187,12 @@ class RetriggerableTimer
 
     time_point_t expiration() const { return expiration_; }
 
-    duration_t remaining(const auto& _base = clock_t::now()) const {
+		template<class T>
+    duration_t remaining(const T& _base = clock_t::now()) const {
       return expiration_ - _base;
 		}
 
-    time_point_t reset(const auto& _base) {
+    time_point_t reset(time_point_t _base) {
 			base_ = _base;
       expiration_ = base_ + duration_;
 			return base_;
@@ -195,8 +200,8 @@ class RetriggerableTimer
 
     time_point_t reset() { return reset(clock_t::now()); }
 
-    ExpirationStatus operator() (
-			const auto& _check, const timer_control_t& _control = Reset)
+		ExpirationStatus operator() (
+			time_point_t _check, const timer_control_t& _control = Reset)
 		{
       if(chandra::chrono::after(expiration_, _check)) {
 				active_ = false;
