@@ -10,11 +10,11 @@ namespace chandra
 namespace drivers
 {
 
-using SST25VF080Configuration = FlashConfiguration<256, 8192, 4096, 512, 1>; // THIS IS NOT CORRECT
-using SST25VF080JEDECID = JEDECFlashID<0xBF, 0x25, 0xBE>;
+using SST25VF080BConfiguration = FlashConfiguration<256, 8192, 4096, 512, 1>; // THIS IS NOT CORRECT
+using SST25VF080BJEDECID = JEDECFlashID<0xBF, 0x25, 0xBE>;
 
-using SST25VF016Configuration = FlashConfiguration<256, 8192, 4096, 512, 1>; // THIS IS NOT CORRECT
-using SST25VF016JEDECID = JEDECFlashID<0xBF, 0x25, 0x41>;
+using SST25VF016BConfiguration = FlashConfiguration<256, 8192, 4096, 512, 1>; // THIS IS NOT CORRECT
+using SST25VF016BJEDECID = JEDECFlashID<0xBF, 0x25, 0x41>;
 
 template<class FlashConfiguration, class JEDECID>
 class SST25VF0xx : public SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID>, FlashConfiguration, JEDECID>
@@ -26,6 +26,9 @@ class SST25VF0xx : public SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECI
     protected:
 
 };
+
+using SST25VF080B = SST25VF0xx<SST25VF080BConfiguration, SST25VF080BJEDECID>;
+using SST25VF016B = SST25VF0xx<SST25VF016BConfiguration, SST25VF016BJEDECID>;
 
 } /*namespace drivers*/
 } /*namespace chandra*/

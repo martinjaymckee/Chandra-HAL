@@ -214,6 +214,9 @@ typename Clock::duration pulseIn(IOType& _io) {
     return pulseIn(_io, bool(_io));
 }
 
+static constexpr uint8_t ID(const chandra::io::IO& _pin) { return _pin.number(); }
+static constexpr uint8_t ID(const chandra::io::internal::NullIO&) { return 255; }
+
 } /*namespace io*/
 } /*namespace chandra*/
 

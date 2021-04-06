@@ -1,0 +1,126 @@
+\BOOKMARK [0][-]{chapter.1}{Overview}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Description}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Dependencies}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Platform Independence}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{User's Guide Organization}{chapter.1}% 5
+\BOOKMARK [-1][-]{part.1}{Library Introduction}{}% 6
+\BOOKMARK [0][-]{chapter.2}{Getting Started}{part.1}% 7
+\BOOKMARK [1][-]{section.2.1}{An Embedded Hello World}{chapter.2}% 8
+\BOOKMARK [0][-]{chapter.3}{Library Architecture}{part.1}% 9
+\BOOKMARK [1][-]{section.3.1}{Overview}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.2}{Core}{chapter.3}% 11
+\BOOKMARK [2][-]{section*.3}{Math}{section.3.2}% 12
+\BOOKMARK [2][-]{section*.7}{Units}{section.3.2}% 13
+\BOOKMARK [1][-]{section.3.3}{HAL}{chapter.3}% 14
+\BOOKMARK [2][-]{section*.8}{Chandra::Chrono}{section.3.3}% 15
+\BOOKMARK [2][-]{section*.12}{General Purpose Input/Output}{section.3.3}% 16
+\BOOKMARK [2][-]{section*.13}{Analog Input/Output}{section.3.3}% 17
+\BOOKMARK [2][-]{section*.14}{Communications}{section.3.3}% 18
+\BOOKMARK [1][-]{section.3.4}{Interface}{chapter.3}% 19
+\BOOKMARK [2][-]{section*.18}{Drivers}{section.3.4}% 20
+\BOOKMARK [1][-]{section.3.5}{Control}{chapter.3}% 21
+\BOOKMARK [2][-]{section*.24}{Kalman Filtering}{section.3.5}% 22
+\BOOKMARK [2][-]{section*.26}{PID}{section.3.5}% 23
+\BOOKMARK [2][-]{section*.27}{Static IMU Calibration}{section.3.5}% 24
+\BOOKMARK [2][-]{section*.28}{Builtin Estimators}{section.3.5}% 25
+\BOOKMARK [1][-]{section.3.6}{Aero}{chapter.3}% 26
+\BOOKMARK [2][-]{section*.31}{Atmosphere Calculations}{section.3.6}% 27
+\BOOKMARK [2][-]{section*.32}{Gravity Calculations}{section.3.6}% 28
+\BOOKMARK [-1][-]{part.2}{Library API}{}% 29
+\BOOKMARK [0][-]{chapter.4}{Math}{part.2}% 30
+\BOOKMARK [1][-]{section.4.1}{Linear Algebra}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.2}{Quaternions}{chapter.4}% 32
+\BOOKMARK [1][-]{section.4.3}{Rotations}{chapter.4}% 33
+\BOOKMARK [1][-]{section.4.4}{Math Utilities}{chapter.4}% 34
+\BOOKMARK [0][-]{chapter.5}{Units}{part.2}% 35
+\BOOKMARK [0][-]{chapter.6}{Chrono}{part.2}% 36
+\BOOKMARK [1][-]{section.6.1}{System Frequencies}{chapter.6}% 37
+\BOOKMARK [1][-]{section.6.2}{Timestamp Clock}{chapter.6}% 38
+\BOOKMARK [1][-]{section.6.3}{Conversions between std::chrono and chandra::units}{chapter.6}% 39
+\BOOKMARK [0][-]{chapter.7}{General Purpose Input/Output}{part.2}% 40
+\BOOKMARK [0][-]{chapter.8}{Analog Input/Output}{part.2}% 41
+\BOOKMARK [0][-]{chapter.9}{Communications}{part.2}% 42
+\BOOKMARK [1][-]{section.9.1}{I2C}{chapter.9}% 43
+\BOOKMARK [1][-]{section.9.2}{SPI}{chapter.9}% 44
+\BOOKMARK [1][-]{section.9.3}{USART}{chapter.9}% 45
+\BOOKMARK [0][-]{chapter.10}{Drivers}{part.2}% 46
+\BOOKMARK [1][-]{section.10.1}{External Analog Input/Output Drivers}{chapter.10}% 47
+\BOOKMARK [1][-]{section.10.2}{Temperature Sensor Drivers}{chapter.10}% 48
+\BOOKMARK [1][-]{section.10.3}{Pressure Sensor Drivers}{chapter.10}% 49
+\BOOKMARK [1][-]{section.10.4}{Inertial Motion Drivers}{chapter.10}% 50
+\BOOKMARK [0][-]{chapter.11}{Control}{part.2}% 51
+\BOOKMARK [1][-]{section.11.1}{Recursive Filters}{chapter.11}% 52
+\BOOKMARK [1][-]{section.11.2}{Alpha-Beta-\(Gamma\)-\(Eta\) Filtering}{chapter.11}% 53
+\BOOKMARK [1][-]{section.11.3}{Kalman Filtering}{chapter.11}% 54
+\BOOKMARK [1][-]{section.11.4}{PID Control}{chapter.11}% 55
+\BOOKMARK [1][-]{section.11.5}{Static IMU Calibration}{chapter.11}% 56
+\BOOKMARK [0][-]{chapter.12}{Aero}{part.2}% 57
+\BOOKMARK [1][-]{section.12.1}{Atmospheric Calculations \205 cppclass Atmosphere<>}{chapter.12}% 58
+\BOOKMARK [2][-]{section*.34}{Class Template Arguments}{section.12.1}% 59
+\BOOKMARK [2][-]{section*.35}{Type Aliases}{section.12.1}% 60
+\BOOKMARK [2][-]{section*.36}{Constructors}{section.12.1}% 61
+\BOOKMARK [2][-]{section*.37}{Accessors}{section.12.1}% 62
+\BOOKMARK [1][-]{section.12.2}{Gravity Calculations \205 cppclass Gravity<>}{chapter.12}% 63
+\BOOKMARK [2][-]{section*.38}{Class Template Arguments}{section.12.2}% 64
+\BOOKMARK [2][-]{section*.39}{Type Aliases}{section.12.2}% 65
+\BOOKMARK [2][-]{section*.40}{Constructors}{section.12.2}% 66
+\BOOKMARK [2][-]{section*.41}{Accessors}{section.12.2}% 67
+\BOOKMARK [-1][-]{part.3}{Chandra Cookbook}{}% 68
+\BOOKMARK [0][-]{chapter.13}{Clock and Timing}{part.3}% 69
+\BOOKMARK [1][-]{section.13.1}{Performance Timers}{chapter.13}% 70
+\BOOKMARK [2][-]{section*.43}{Timing a function}{section.13.1}% 71
+\BOOKMARK [2][-]{section*.44}{Conditional timing of a function}{section.13.1}% 72
+\BOOKMARK [2][-]{section*.45}{Loop frequency measurement}{section.13.1}% 73
+\BOOKMARK [2][-]{section*.46}{Loop frequency statistics}{section.13.1}% 74
+\BOOKMARK [0][-]{chapter.14}{Digital I/O}{part.3}% 75
+\BOOKMARK [1][-]{section.14.1}{Reading a digital pin}{chapter.14}% 76
+\BOOKMARK [1][-]{section.14.2}{Writing to a digital pin}{chapter.14}% 77
+\BOOKMARK [1][-]{section.14.3}{Reading a mechanical switch/button}{chapter.14}% 78
+\BOOKMARK [1][-]{section.14.4}{Manual control of an LED}{chapter.14}% 79
+\BOOKMARK [1][-]{section.14.5}{Automatic PWM of an LED}{chapter.14}% 80
+\BOOKMARK [1][-]{section.14.6}{Automatic PWM of an LED with asynchronous update}{chapter.14}% 81
+\BOOKMARK [1][-]{section.14.7}{Event on a pin falling \(rising\) edge}{chapter.14}% 82
+\BOOKMARK [1][-]{section.14.8}{Reading a Quadrature Encoder}{chapter.14}% 83
+\BOOKMARK [0][-]{chapter.15}{Analog I/O}{part.3}% 84
+\BOOKMARK [1][-]{section.15.1}{Raw reading of a single ADC channel}{chapter.15}% 85
+\BOOKMARK [1][-]{section.15.2}{Scaled reading of a single ADC channel}{chapter.15}% 86
+\BOOKMARK [1][-]{section.15.3}{Reading multiple ADC channels}{chapter.15}% 87
+\BOOKMARK [0][-]{chapter.16}{Math}{part.3}% 88
+\BOOKMARK [1][-]{section.16.1}{Conuct a matrix}{chapter.16}% 89
+\BOOKMARK [1][-]{section.16.2}{Solve a system of equations}{chapter.16}% 90
+\BOOKMARK [1][-]{section.16.3}{Invert a matrix}{chapter.16}% 91
+\BOOKMARK [0][-]{chapter.17}{Control}{part.3}% 92
+\BOOKMARK [1][-]{section.17.1}{Kalman}{chapter.17}% 93
+\BOOKMARK [1][-]{section.17.2}{PID}{chapter.17}% 94
+\BOOKMARK [1][-]{section.17.3}{IMU Calibration}{chapter.17}% 95
+\BOOKMARK [0][-]{chapter.18}{Aero}{part.3}% 96
+\BOOKMARK [1][-]{section.18.1}{Atmosphere}{chapter.18}% 97
+\BOOKMARK [2][-]{section*.47}{Pressure and density at a known altitude}{section.18.1}% 98
+\BOOKMARK [2][-]{section*.48}{Altitude from pressure}{section.18.1}% 99
+\BOOKMARK [1][-]{section.18.2}{Gravity}{chapter.18}% 100
+\BOOKMARK [2][-]{section*.49}{Acceleration due to gravity on the Earth's surface}{section.18.2}% 101
+\BOOKMARK [2][-]{section*.50}{Gravitational acceleration above Earth's surface}{section.18.2}% 102
+\BOOKMARK [-1][-]{part.4}{Appendicies}{}% 103
+\BOOKMARK [0][-]{appendix.A}{Setting up MCUXpresso for LPC Series Microcontrollers}{part.4}% 104
+\BOOKMARK [1][-]{section.A.1}{Installation}{appendix.A}% 105
+\BOOKMARK [1][-]{section.A.2}{Optimization and Standards}{appendix.A}% 106
+\BOOKMARK [1][-]{section.A.3}{Include Paths}{appendix.A}% 107
+\BOOKMARK [1][-]{section.A.4}{Preprocessor Definitions}{appendix.A}% 108
+\BOOKMARK [0][-]{appendix.B}{Porting Guide}{part.4}% 109
+\BOOKMARK [1][-]{section.B.1}{Low-Level Register Access}{appendix.B}% 110
+\BOOKMARK [1][-]{section.B.2}{Clock and Frequencies}{appendix.B}% 111
+\BOOKMARK [1][-]{section.B.3}{GPIO}{appendix.B}% 112
+\BOOKMARK [1][-]{section.B.4}{ADC}{appendix.B}% 113
+\BOOKMARK [1][-]{section.B.5}{Timers}{appendix.B}% 114
+\BOOKMARK [1][-]{section.B.6}{I2C}{appendix.B}% 115
+\BOOKMARK [1][-]{section.B.7}{SPI}{appendix.B}% 116
+\BOOKMARK [1][-]{section.B.8}{USART}{appendix.B}% 117
+\BOOKMARK [1][-]{section.B.9}{\(Optional\) DAC}{appendix.B}% 118
+\BOOKMARK [1][-]{section.B.10}{\(Optional\) Special Peripherals}{appendix.B}% 119
+\BOOKMARK [0][-]{appendix.C}{Notes on IMU Calibration and Errors}{part.4}% 120
+\BOOKMARK [1][-]{section.C.1}{Static Calibration}{appendix.C}% 121
+\BOOKMARK [1][-]{section.C.2}{Dynamic Errors}{appendix.C}% 122
+\BOOKMARK [1][-]{section.C.3}{Modified Calibration Forms}{appendix.C}% 123
+\BOOKMARK [2][-]{section*.52}{Three-Parameter \(bias only\) or Six-Parameter Calibration}{section.C.3}% 124
+\BOOKMARK [2][-]{section*.53}{Hardware Sensor Bias}{section.C.3}% 125
+\BOOKMARK [0][-]{appendix.D}{References}{part.4}% 126

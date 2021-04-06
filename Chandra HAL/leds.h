@@ -161,7 +161,7 @@ class LED
           return pulse(_active_period, _active_period, _blocking);
         }
 
-        LED& breathe(const duration_t& _cycle_period, const bool _reset=true, const duration_t& _pwm_period = std::chrono::milliseconds{10}) {
+        LED& breathe(const duration_t& _cycle_period, const bool _reset=true, const duration_t& _pwm_period = std::chrono::milliseconds{20}) {
           const uint32_t steps = (_cycle_period.count() + (_pwm_period.count()/2)) / _pwm_period.count();
           duty_cycle_step_ = (20000 + (steps/2)) / steps;
           update_period_ = duration_t{(_cycle_period.count() + (steps/2)) / steps};
@@ -309,7 +309,7 @@ class SequentialSequencer
       // );
       // const uint32_t denom = base_.brightness_max * color_range;
       const auto denom = 3 * base_.color_max * base_.brightness_max;
-      
+
       base_.red_period_ = duration_t{(color.r*C) / denom};
       base_.green_period_ = duration_t{(color.g*C) / denom};
       base_.blue_period_ = duration_t{(color.b*C) / denom};

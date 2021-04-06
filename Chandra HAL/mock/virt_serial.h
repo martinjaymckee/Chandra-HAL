@@ -6,7 +6,7 @@
  */
 
 #ifndef CHANDRA_VIRTUAL_SERIAL_H_
-#define CHANDRA_SERIAL_H_
+#define CHANDRA_VIRTUAL_SERIAL_H_
 
 #include <cstdio>
 #include <cmath>
@@ -162,4 +162,4 @@ class FlowthroughVirtualSerial
 } /*namespace io*/
 } /*namespace chandra*/
 
-#endif /*CHANDRA_virtualUAL_SERIAL_H*/
+#endif /*CHANDRA_VIRTUAL_SERIAL_H*/

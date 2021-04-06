@@ -269,22 +269,15 @@ class SPIMaster
             return nullptr;
         }
 
-
-        uint8_t ID(const chandra::io::IO& _pin) {
-            return (32*_pin.port()) + _pin.pin();
-        }
-
-        uint8_t ID(const chandra::io::internal::NullIO&) { return 255; }
-
         void setPins(const pin_t& _miso, const pin_t& _mosi, const pin_t& _sclk, const pin_t& _cs0,
                       const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3) {
-            const auto miso = ID(_miso);
-            const auto mosi = ID(_mosi);
-            const auto sclk = ID(_sclk);
-            const auto cs0 = ID(_cs0);
-            const auto cs1 = ID(_cs1);
-            const auto cs2 = ID(_cs2);
-            const auto cs3 = ID(_cs3);
+            const auto miso = chandra::io::ID(_miso);
+            const auto mosi = chandra::io::ID(_mosi);
+            const auto sclk = chandra::io::ID(_sclk);
+            const auto cs0 = chandra::io::ID(_cs0);
+            const auto cs1 = chandra::io::ID(_cs1);
+            const auto cs2 = chandra::io::ID(_cs2);
+            const auto cs3 = chandra::io::ID(_cs3);
 
 			//	Enable AHB clock domains for SWM
 #if defined(__LPC82X__)

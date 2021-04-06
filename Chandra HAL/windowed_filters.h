@@ -11,7 +11,7 @@ namespace chandra
 namespace signal
 {
 
-template<typename Value>
+template<typename Value, class Clock = void>
 class ExponentialWeightedAverage
 {
     public:

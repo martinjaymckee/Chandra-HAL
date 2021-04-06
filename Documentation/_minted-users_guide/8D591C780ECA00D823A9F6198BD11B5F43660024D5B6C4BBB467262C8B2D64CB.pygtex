@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{template}\PYG{o}{\PYGZlt{}}
+	\PYG{k}{class} \PYG{n+nc}{Value}\PYG{p}{,}
+	\PYG{n}{GeoidCoordinates} \PYG{n}{VectorCoordinates} \PYG{o}{=} \PYG{n}{None}\PYG{p}{,}
+	\PYG{k+kt}{uint32\PYGZus{}t} \PYG{n}{Flags} \PYG{o}{=} \PYG{n}{ApproxFreeAirCorrect}\PYG{p}{,}
+	\PYG{k}{class} \PYG{n+nc}{AngleUnits} \PYG{o}{=} \PYG{n}{rad}\PYG{p}{,}
+	\PYG{k}{class} \PYG{n+nc}{LengthUnits} \PYG{o}{=} \PYG{n}{m}\PYG{p}{,}
+	\PYG{k}{class} \PYG{n+nc}{AccelerationUnits} \PYG{o}{=} \PYG{n}{m\PYGZus{}per\PYGZus{}s2}
+\PYG{o}{\PYGZgt{}}
+\PYG{k}{class} \PYG{n+nc}{Gravity}\PYG{p}{;}	
+\end{Verbatim}

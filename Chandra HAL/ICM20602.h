@@ -1,5 +1,5 @@
-#ifndef CHANDRA_ICM42688_H
-#define CHANDRA_ICM42688_H
+#ifndef CHANDRA_ICM20602_H
+#define CHANDRA_ICM20602_H
 
 #include <cmath>
 #include "chrono.h"
@@ -24,7 +24,7 @@ namespace internal
 {
 
 template<class Value, class BaseUnits, class Comm>
-class ICM42688ImplBase : public chandra::drivers::internal::BaseInertialProxyImpl<Value, BaseUnits>
+class ICM20602ImplBase : public chandra::drivers::internal::BaseInertialProxyImpl<Value, BaseUnits>
 {
   public:
     using scalar_t = Value;
@@ -32,12 +32,11 @@ class ICM42688ImplBase : public chandra::drivers::internal::BaseInertialProxyImp
     // Register Access Type
     using register_access_t = chandra::drivers::RegisterDevice<Comm>;
 
-    ICM42688ImplBase(const register_access_t& _regs, const scalar_t& _scale)
+    ICM20602ImplBase(const register_access_t& _regs, const scalar_t& _scale)
       : regs_(_regs), scale_(_scale) {}
 
     // Register Addresses
-    //  Bank 0 Values
-    enum bank0_t {
+    enum register_t {
         DEVICE_CONFIG = 0x11,
         DRIVE_CONFIG = 0x13,
         INT_CONFIG = 0x14,
@@ -56,107 +55,11 @@ class ICM42688ImplBase : public chandra::drivers::internal::BaseInertialProxyImp
         GYRO_Y_L = 0x28,
         GYRO_Z_H = 0x29,
         GYRO_Z_L = 0x2A,
-        TMST_FSYNC_H = 0x2B,
-        TMST_FSYNC_L = 0x2C,
-        INT_STATUS1 = 0x2D,
-        FIFO_COUNT_H = 0x2E,
-        FIFO_COUNT_L = 0x2F,
-        FIFO_DATA = 0x30,
-        APEX_DATA0 = 0x31,
-        APEX_DATA1 = 0x32,
-        APEX_DATA2 = 0x33,
-        APEX_DATA3 = 0x34,
-        APEX_DATA4 = 0x35,
-        APEX_DATA5 = 0x36,
-        INT_STATUS2 = 0x37,
-        INT_STATUS3 = 0x38,
-        SIGNAL_PATH_RESET = 0x4B,
-        INTF_CONFIG0 = 0x4C,
-        INTF_CONFIG1 = 0x4D,
-        PWR_MGMT0 = 0x4E,
-        GYRO_CONFIG0 = 0x4F,
-        ACCEL_CONFIG0 = 0x50,
-        GYRO_CONFIG1 = 0x51,
-        GYRO_ACCEL_CONFIG0 = 0x52,
-        ACCEL_CONFIG1 = 0x53,
-        TMST_CONFIG = 0x54,
-        APEX_CONFIG0 = 0x56,
-        SMD_CONFIG = 0x57,
-        FIFO_CONFIG1 = 0x5F,
-        FIFO_CONFIG2 = 0x60,
-        FIFO_CONFIG3 = 0x61,
-        FSYNC_CONFIG = 0x62,
-        INT_CONFIG0 = 0x63,
-        INT_CONFIG1 = 0x64,
-        INT_SOURCE0 = 0x65,
-        INT_SOURCE1 = 0x66,
-        INT_SOURCE3 = 0x68,
-        INT_SOURCES = 0x69,
-        FIFO_LOST_PKT0 = 0x6C,
-        FIFO_LOST_PKT1 = 0x6D,
-        SELF_TEST_CONFIG = 0x70,
-        WHO_AM_I = 0x75,
-        BANK_SEL = 0x76
-    };
-
-    enum bank1_t {
-      SENSOR_CONFIG0 = 0x03,
-      GYRO_CONFIG_STATIC2 = 0x0B,
-      GYRO_CONFIG_STATIC3 = 0x0C,
-      GYRO_CONFIG_STATIC4 = 0x0D,
-      GYRO_CONFIG_STATIC5 = 0x0E,
-      GYRO_CONFIG_STATIC6 = 0x0F,
-      GYRO_CONFIG_STATIC7 = 0x10,
-      GYRO_CONFIG_STATIC8 = 0x11,
-      GYRO_CONFIG_STATIC9 = 0x12,
-      GYRO_CONFIG_STATIC10 = 0x13,
-      GYRO_SELF_TEST_X = 0x5F,
-      GYRO_SELF_TEST_Y = 0x60,
-      GYRO_SELF_TEST_Z = 0x61,
-      TMST_L = 0x62,
-      TMST_M = 0x63,
-      TMST_H = 0x64,
-      INTF_CONFIG4 = 0x7A,
-      INTF_CONFIG5 = 0x7B,
-      INTF_CONFIG6 = 0x7C,
-    };
-
-    enum bank2_t {
-      ACCEL_CONFIG_STATIC2 = 0x03,
-      ACCEL_CONFIG_STATIC3 = 0x04,
-      ACCEL_CONFIG_STATIC4 = 0x05,
-      ACCEL_SELF_TEST_X = 0x0E,
-      ACCEL_SELF_TEST_Y = 0x0F,
-      ACCEL_SELF_TEST_Z = 0x10,
-    };
-
-    enum bank4_t {
-      APEX_CONFIG1 = 0x40,
-      APEX_CONFIG2 = 0x41,
-      APEX_CONFIG3 = 0x42,
-      APEX_CONFIG4 = 0x43,
-      APEX_CONFIG5 = 0x44,
-      APEX_CONFIG6 = 0x45,
-      APEX_CONFIG7 = 0x46,
-      APEX_CONFIG8 = 0x47,
-      APEX_CONFIG9 = 0x48,
-      ACCEL_WOM_THRESH_X = 0x4A,
-      ACCEL_WOM_THRESH_Y = 0x4B,
-      ACCEL_WOM_THRESH_Z = 0x4C,
-      INT_SOURCE6 = 0x4D,
-      INT_SOURCE7 = 0x4E,
-      INT_SOURCE8 = 0x4F,
-      INT_SOURCE9 = 0x50,
-      INT_SOURCE10 = 0x51,
-      OFFSET0 = 0x77,
-      OFFSET1 = 0x78,
-      OFFSET2 = 0x79,
-      OFFSET3 = 0x7A,
-      OFFSET4 = 0x7B,
-      OFFSET5 = 0x7C,
-      OFFSET6 = 0x7D,
-      OFFSET7 = 0x7E,
-      OFFSET8 = 0x7F,
+        PWR_MGMT_1 = 0x6B,
+        PWR_MGMT_2 = 0x6C,
+        I2C_IF = 0x70,
+        WHO_AM_I = 0x75
+        // TODO: FILL IN THE REMAINDER OF THE REGISTERS
     };
 
     constexpr scalar_t scale() const { return scale_; }
@@ -192,15 +95,15 @@ class ICM42688ImplBase : public chandra::drivers::internal::BaseInertialProxyImp
 };
 
 template<class Value, class BaseUnits, class Comm>
-class ICM42688AccelImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
+class ICM20602AccelImpl : public ICM20602ImplBase<Value, BaseUnits, Comm>
 {
   public:
     using scalar_t = Value;
-    using base_t = ICM42688ImplBase<Value, BaseUnits, Comm>;
-    using bank0_t = typename base_t::bank0_t;
+    using base_t = ICM20602ImplBase<Value, BaseUnits, Comm>;
+    using register_t = typename base_t::register_t;
     using register_access_t = chandra::drivers::RegisterDevice<Comm>;
 
-    ICM42688AccelImpl(const register_access_t& _regs)
+    ICM20602AccelImpl(const register_access_t& _regs)
       : base_t(_regs, 4.788403e-3) {}
 
     scalar_t set_fs(scalar_t fs) {
@@ -226,7 +129,7 @@ class ICM42688AccelImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
         } else { // 2 gees
             this->scale_ = scalar_t(5.985504e-4);
         }
-        // this->regs_.update(bank0_t::CTRL1_XL, 0x03<<2, bits);
+        // this->regs_.update(register_t::CTRL1_XL, 0x03<<2, bits);
 
         return actual;
     }
@@ -236,7 +139,7 @@ class ICM42688AccelImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
         static constexpr scalar_t accel_4(4.363323);
         static constexpr scalar_t accel_8(8.726646);
         static constexpr scalar_t accel_16(17.453293);
-        // const uint8_t bits = uint8_t(this->regs_.byte(bank0_t::CTRL1_XL)>>2) & uint8_t(0x03);
+        // const uint8_t bits = uint8_t(this->regs_.byte(register_t::CTRL1_XL)>>2) & uint8_t(0x03);
         //
         // switch(bits) {
         //     case 0x00:
@@ -254,12 +157,12 @@ class ICM42688AccelImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
 
     scalar_t set_odr(scalar_t _freq) {
         const uint8_t bits = this->calcOdrBits(_freq);
-        // this->regs_.update(bank0_t::CTRL1_XL, 0xF0, static_cast<uint8_t>(bits<<4));
+        // this->regs_.update(register_t::CTRL1_XL, 0xF0, static_cast<uint8_t>(bits<<4));
         return this->calcOdrFreq(bits);
     }
 
     scalar_t get_odr() const {
-        // const uint8_t bits = uint8_t(this->regs_.byte(bank0_t::CTRL1_XL) >> 4) & 0x0F;
+        // const uint8_t bits = uint8_t(this->regs_.byte(register_t::CTRL1_XL) >> 4) & 0x0F;
         // return this->calcOdrFreq(bits);
         return 0;
     }
@@ -269,15 +172,15 @@ class ICM42688AccelImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
 };
 
 template<class Value, class BaseUnits, class Comm>
-class ICM42688GyroImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
+class ICM20602GyroImpl : public ICM20602ImplBase<Value, BaseUnits, Comm>
 {
   public:
     using scalar_t = Value;
-    using base_t = ICM42688ImplBase<Value, BaseUnits, Comm>;
-    using bank0_t = typename base_t::bank0_t;
+    using base_t = ICM20602ImplBase<Value, BaseUnits, Comm>;
+    using register_t = typename base_t::register_t;
     using register_access_t = chandra::drivers::RegisterDevice<Comm>;
 
-    ICM42688GyroImpl(const register_access_t& _regs)
+    ICM20602GyroImpl(const register_access_t& _regs)
       : base_t(_regs, 1.065264e-3) {}
 
     scalar_t set_fs(scalar_t fs) {
@@ -311,7 +214,7 @@ class ICM42688GyroImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
         } else { // 125 dps
             this->scale_ = scalar_t(6.657903e-5);
         }
-        // this->regs_.update(bank0_t::CTRL2_G, 0x07<<1, bits);
+        // this->regs_.update(register_t::CTRL2_G, 0x07<<1, bits);
         return actual;
     }
 
@@ -321,7 +224,7 @@ class ICM42688GyroImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
         static constexpr scalar_t gyro_500(8.726646);
         static constexpr scalar_t gyro_1000(17.453293);
         static constexpr scalar_t gyro_2000(34.906585);
-        // const uint8_t bits = uint8_t(this->regs_.byte(bank0_t::CTRL2_G)>>1) & uint8_t(0x07);
+        // const uint8_t bits = uint8_t(this->regs_.byte(register_t::CTRL2_G)>>1) & uint8_t(0x07);
         //
         // switch(bits) {
         //     case 0x00:
@@ -341,12 +244,12 @@ class ICM42688GyroImpl : public ICM42688ImplBase<Value, BaseUnits, Comm>
 
     scalar_t set_odr(scalar_t _freq) {
         const uint8_t bits = this->calcOdrBits(_freq);
-        // this->regs_.update(bank0_t::CTRL2_G, 0xF0, static_cast<uint8_t>(bits<<4));
+        // this->regs_.update(register_t::CTRL2_G, 0xF0, static_cast<uint8_t>(bits<<4));
         return this->calcOdrFreq(bits);
     }
 
     scalar_t get_odr() const {
-        // const uint8_t bits = uint8_t(this->regs_.byte(bank0_t::CTRL2_G) >> 4) & 0x0F;
+        // const uint8_t bits = uint8_t(this->regs_.byte(register_t::CTRL2_G) >> 4) & 0x0F;
         // return this->calcOdrFreq(bits);
         return 0;
     }
@@ -364,51 +267,53 @@ template<
   class GyroUnits = units::mks::rad_per_s,
   class TempUnits = units::mks::degC
 >
-class ICM42688
-        : public AccelGyro<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM42688AccelImpl<Value, AccelUnits, Comm>, internal::ICM42688GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>,
-          public Thermometer<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, TempUnits>
+class ICM20602
+        : public AccelGyro<ICM20602<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM20602AccelImpl<Value, AccelUnits, Comm>, internal::ICM20602GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>,
+          public Thermometer<ICM20602<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, TempUnits>
 {
     protected:
         using register_access_t = chandra::drivers::RegisterDevice<Comm>;
-        using bank0_t = typename internal::ICM42688AccelImpl<Value, AccelUnits, Comm>::bank0_t;
+        using register_t = typename internal::ICM20602AccelImpl<Value, AccelUnits, Comm>::register_t;
 
     public:
-        friend class AccelGyro<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM42688AccelImpl<Value, AccelUnits, Comm>, internal::ICM42688GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
-        using base_t = AccelGyro<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM42688AccelImpl<Value, AccelUnits, Comm>, internal::ICM42688GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
+        friend class AccelGyro<ICM20602<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM20602AccelImpl<Value, AccelUnits, Comm>, internal::ICM20602GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
+        using base_t = AccelGyro<ICM20602<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM20602AccelImpl<Value, AccelUnits, Comm>, internal::ICM20602GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
         using scalar_t = typename base_t::scalar_t;
         using value_t = typename base_t::value_t;
-        using ref_t = ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>;
+        using ref_t = ICM20602<Value, Comm, AccelUnits, GyroUnits, TempUnits>;
         using status_t = chandra::drivers::SensorUpdateStatus<>;
 
-        ICM42688(register_access_t _regs) : base_t(_regs), regs_(_regs) {}
+        ICM20602(register_access_t _regs) : base_t(_regs), regs_(_regs) {}
 
         bool init() {
+          chandra::chrono::delay(std::chrono::microseconds(2000)); // Wait for reset
+          regs_.write(register_t::I2C_IF, uint8_t{1<<6});
           return enable(true) and valid();
         }
 
         bool enable(bool _enable) {
-          constexpr static uint8_t mask{0x0F};
+          constexpr static uint8_t mask{1<<6};
           if(_enable) {
-            regs_.update(bank0_t::PWR_MGMT0, mask, uint8_t{0x0F});
+            regs_.update(register_t::PWR_MGMT_1, mask, mask);
             chandra::chrono::delay(std::chrono::microseconds(200));
           } else {
-            regs_.update(bank0_t::PWR_MGMT0, mask, uint8_t{0x00});
+            regs_.update(register_t::PWR_MGMT_1, mask, uint8_t{0x00});
           }
 
           return enabled();
         }
 
         bool enabled() {
-          constexpr static uint8_t mask{0x0F};
-          return (regs_.byte(bank0_t::PWR_MGMT0)&mask) != 0;
+          constexpr static uint8_t mask{1<<6};
+          return (regs_.byte(register_t::PWR_MGMT_1) & mask) != 0;
         }
 
         bool valid() {
           // TODO: CHECK FOR VALID ID AND RUN VALID SELF-TEST???
-          return id() == 0x47;
+          return id() == 0x12;
         }
 
-        uint8_t id() { return regs_.byte(bank0_t::WHO_AM_I); }
+        uint8_t id() { return regs_.byte(register_t::WHO_AM_I); }
 
         status_t update() {
             status_t status;
@@ -418,8 +323,8 @@ class ICM42688
             const auto gyro_scale = this->gyroscope.scale();
 
             // NOTE: THIS IS JUST CHECKING THE DATA READ BIT IN THE STATUS REGISTER
-            if(chandra::is_bit_set<3>(regs_.byte(bank0_t::INT_STATUS1))) {
-              regs_.bytes(bank0_t::TEMP_H, read_num, buffer);
+            if(chandra::is_bit_set<3>(regs_.byte(register_t::INT_STATUS1))) {
+              regs_.bytes(register_t::TEMP_H, read_num, buffer);
               this->temp_raw_= convertTemp(val16(buffer[0], buffer[1]));
               const auto ax = accel_scale * val16(buffer[2], buffer[3]);
               const auto ay = accel_scale * val16(buffer[4], buffer[5]);
@@ -437,11 +342,6 @@ class ICM42688
         }
 
     protected:
-        void setRegisterBank(const uint8_t& _bank) {
-          regs_.write(bank0_t::BANK_SEL, _bank);
-          return;
-        }
-
         static constexpr auto convertTemp(int16_t x) {
             constexpr scalar_t scale(1/132.48);
             constexpr scalar_t offset(25.0);
@@ -462,4 +362,4 @@ class ICM42688
 } /*namespace drivers*/
 } /*namespace chandra*/
 
-#endif /*CHANDRA_ICM42688_H*/
+#endif /*CHANDRA_ICM20602_H*/

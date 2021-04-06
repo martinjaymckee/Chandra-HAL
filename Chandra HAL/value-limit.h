@@ -16,7 +16,7 @@ namespace signal
 //
 // TODO: Add an Interpolation Flags type that can be used by the different Interpolation routines to return calculation data.
 
-//	There should be things like: Clipped, Overflow( calculation ), Underflow( calculation ), etc.  Very likely the best way 
+//	There should be things like: Clipped, Overflow( calculation ), Underflow( calculation ), etc.  Very likely the best way
 //	to do this would be to always return a class that has both the value and the flags included... e.g.
 enum class ValueStatus
 {
@@ -44,7 +44,7 @@ class Exclude
 {
 	public:
 		Exclude( range_t& _lower, range_t& _upper ) : lower_( _lower ), upper_( _upper ) {}
-		
+
 		//
 		// Apply exclusion processing to a value
 		//
@@ -54,33 +54,33 @@ class Exclude
 					return lower_;
 				}
 				else { // Clip toward Upper constraint
-					return upper_;	
+					return upper_;
 				}
 			}
 			else {
 				return _value;
 			}
 		}
-		
+
 		//
 		// Check if a value will be clipped
 		//
-		bool willClip( const value_t& _value ) const { 
-			return ( ( _value < static_cast< value_t >( upper_ ) ) && ( _value > static_cast< value_t >( lower_ ) ) ); 
+		bool willClip( const value_t& _value ) const {
+			return ( ( _value < static_cast< value_t >( upper_ ) ) && ( _value > static_cast< value_t >( lower_ ) ) );
 		}
-		
+
 		//
 		// Check Validity
 		//
 		bool valid() const { return upper_ <= lower_; }
-		
+
 		//
 		// Range Parameters
 		//
 		range_t lower() const { return lower_; }
 		range_t upper() const { return upper_; }
 		range_t exclude_range() const { return upper_ - lower_; }
-		
+
 	protected:
 		range_t& lower_;
 		range_t& upper_;
@@ -94,7 +94,7 @@ class Saturate
 		typedef range_type range_t;
 
 		Saturate( const range_t& _min, const range_t& _max ) : min_( _min ), max_( _max ) {}
-		
+
 		//
 		// Apply saturation processing to a value
 		//
@@ -107,29 +107,85 @@ class Saturate
 			}
 			return _value;
 		}
-		
+
 		//
 		// Check if a value will be clipped
 		//
-		bool willClip( const value_t& _value ) const { 
-			return ( ( _value > static_cast< value_t >( max_ ) ) || ( _value < static_cast< value_t >( min_ ) ) ); 
+		bool willClip( const value_t& _value ) const {
+			return ( ( _value > static_cast< value_t >( max_ ) ) || ( _value < static_cast< value_t >( min_ ) ) );
 		}
-		
+
 		//
 		// Check Validity
 		//
 		bool valid() const { return min_ <= max_; }
-		
+
 		//
 		// Range Parameters
 		//
 		range_t minimum() const { return min_; }
 		range_t maximum() const { return max_; }
 		range_t range() const { return max_ - min_; }
-		
+
 	protected:
 		const range_t& min_;
 		const range_t& max_;
+};
+
+template< class value_type, class range_type = value_type >
+class SaturateNonNegative
+{
+	public:
+		typedef value_type value_t;
+		typedef range_type range_t;
+
+		//
+		// Apply saturation processing to a value
+		//
+		value_t operator () ( const value_t& _value ) const {
+      if(_value < value_t{0}) return value_t{0};
+			return _value;
+		}
+
+		//
+		// Check if a value will be clipped
+		//
+		bool willClip( const value_t& _value ) const {
+			return ( _value < value_t{0} );
+		}
+
+		//
+		// Check Validity
+		//
+		bool valid() const { return true; }
+};
+
+template< class value_type, class range_type = value_type >
+class SaturateNegative
+{
+	public:
+		typedef value_type value_t;
+		typedef range_type range_t;
+
+		//
+		// Apply saturation processing to a value
+		//
+		value_t operator () ( const value_t& _value ) const {
+      if(_value >= value_t{0}) return value_t{0};
+			return _value;
+		}
+
+		//
+		// Check if a value will be clipped
+		//
+		bool willClip( const value_t& _value ) const {
+			return ( _value >= value_t{0} );
+		}
+
+		//
+		// Check Validity
+		//
+		bool valid() const { return true; }
 };
 
 } /*namespace signal*/

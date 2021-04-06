@@ -65,8 +65,17 @@
 
 \usepackage{graphicx}
 \graphicspath{{./Images/}}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+\urlstyle{same}
 
 \newcommand{\iic}[0]{$I^{2}C$}
+\newcommand{\apiheader}[2]{\noindent{}\textbf{Header \emph{#1}}\\\noindent{}\textbf{Namespace: \emph{#2}}}
 
 \title{Chandra Library User's Guide}
 \author{Martin Jay McKee}
@@ -100,7 +109,7 @@ To use the code generators bundled with Chandra, it is also necessary to have a 
 
 The documentation is built in LaTex and requires a number of packages including pygments (~which - in return - requires Python~) and graphicx.  In general, users should not need to rebuild the documentation as Chandra is distributed with the final built PDF of the documentation.
  
-\section{Platform Indepedence}
+\section{Platform Independence}
 The bulk of the Chandra libraries are platform independent.  The only portion of the libraries which are platform dependent are those within Chandra-HAL -- the \emph{H}ardware \emph{A}bstraction \emph{L}ayer.  Porting of the HAL functionality to new platforms is required but the remainder of the libraries can be used with no changes so long as a C++14 compiler and standard library are available.  If some standard library features are unavailable on the target platform, they can also be included externally.
 
 \section{User's Guide Organization}
@@ -191,10 +200,13 @@ The following sections provide an outline of the library facilities.  Each featu
 \subsection{Math}
 \subsubsection{Matrix Types}
 The 
-ADD SYMMETRIC AND SKEW-SYMMETRIC MATRICIES.  THESE CAN HAVE OPTIMIED STORAGE AND MAY BE POSSIBLE TO OPTIMIZE OPERATIONS FOR THESE SPECIFIC FORMS (I.E. ADDITION CAN BE OPTIMIZED, MULTIPLICATION THAT CREATES A SKEW-SYMMETRIC MATRIC MAY BE OPTIMIZABLE, ETC.
+ADD SYMMETRIC AND SKEW-SYMMETRIC MATRICIES.  THESE CAN HAVE OPTIMIZED STORAGE AND MAY BE POSSIBLE TO OPTIMIZE OPERATIONS FOR THESE SPECIFIC FORMS (I.E. ADDITION CAN BE OPTIMIZED, MULTIPLICATION THAT CREATES A SKEW-SYMMETRIC MATRICIES MAY BE OPTIMIZABLE, ETC.
 
 \subsubsection{Matrix Operations}
 IT MAY MAKE SENSE TO USE EXPRESSION TEMPLATES TO SELECT THE IMPLEMENTATION OF OPERATIONS.
+
+\subsubsection{Matrix Views}
+NEED TO MAKE SURE THAT THE MATRIX VIEWS ARE WORKING AS I WANT THEM TO AND THAT THEY ARE USED THROUGH THE DRIVERS WHERE APPROPRIATE.
 
 \subsection{Units}
 
@@ -279,96 +291,133 @@ The StaticIMUCalibrator object has member functions which access the parameters 
 
 \section{Aero}
 ATMOSPHERIC PROPERTIES, MODEL OF ATMOSPHERE (PRESSURE, DENSITY, TEMPERATURE, ALTITUDE, ETC.), BASIC AERODYNAMICS
-
-\section{Aero}
 \subsection{Atmosphere Calculations}
 \subsection{Gravity Calculations}
-http://walter.bislins.ch/bloge/index.asp?page=Earth+Gravity+Calculator
+The gravity library provides calculation of surface and airborne gravity calculations to moderate accuracy.  Both magnitude of effective gravity and vector results are available, depending upon configuration.  The library provides a single class \mintinline{cpp}{Gravity<>} which is a highly configurable object that takes a number of compile-time arguments to determine the gravity model being used, the corrections applied, and if a vector value is desired.  To account for simple usages, three aliases are also defined: \mintinline{cpp}{StandardGravity<>}, \mintinline{cpp}{StandardGravity<>}, and \mintinline{cpp}{StandardGravity<>}.  These aliases of the gravity class provide both the lower precision, low-cost options and the highest-accuracy options.  As such, they should be sufficient for most usages.  Of course, Section \ref{sec::gravity:calculation::api} of this manual (in the API reference) provides information about all the features of the gravity object, . 
 
-\part{Library Deep Dive}
-\chapter{API}
+Three models of gravity are available: a constant standard gravity, the 1980 IGF (Internaltional Gravity Formula), and WGS84 (\emph{W}orld \emph{G}ravity \emph{S}urvey).  The constant gravity model is intended for low-accuracy, performance and memory critical applications and just returns the international standard gravity value of $9.80665 ms^{-2}$.  The IGF and WGS84 approximations are much more accurate but have higher system requirements.
 
-\section{Math}
-\subsection{Linear Algebra}
-\subsection{Quaternions}
-\subsection{Rotations}
-\subsection{Math Utilities}
+The corrections available are two free-air correction approximations, a slab correction, and a centripetal correction.  Each of these corrections can be applied or ignored.  Generally they are fairly small corrections and, as such, ignoring them is reasonable in the case of a constrained system.  The low-precision approximation of the free-air correction, however, only costs a single multiplication and so should generally be included in all cases that airborne gravity estimates are needed.
 
-\section{Units}
+The gravity calculations are cross-checked and also compared to the values generated by the calculator at: \url{http://walter.bislins.ch/bloge/index.asp?page=Earth+Gravity+Calculator}.  It should be noted that the gravity vectors returned on this webpage are in ECEF (\emph{E}arth \emph{C}entered-\emph{E}arth \emph{F}ixed) coordinates.  The examples in this documentation, on the other hand, use a local tangent NEU (\emph{N}orth-\emph{E}ast-\emph{U}p) coordinate system.  The gravity object is also able to return vectors in ECEF coordinates if desired.
 
-\section{Chrono}
-\subsection{System Frequencies}
-\subsection{Timestamp Clock}
-\subsection{Conversions between std::chrono and chandra::units}
+\part{Library API}
+\chapter{Math}
+\section{Linear Algebra}
+\section{Quaternions}
+\section{Rotations}
+\section{Math Utilities}
+
+\chapter{Units}
+
+\chapter{Chrono}
+\section{System Frequencies}
+\section{Timestamp Clock}
+\section{Conversions between std::chrono and chandra::units}
 NONE.  THIS DOESN'T HAPPEN, AT THE MOMENT.  IT REALLY SHOULD THOUGH.
 
-\section{General Purpose Input/Output}
+\chapter{General Purpose Input/Output}
 
-\section{Analog Input/Output}
+\chapter{Analog Input/Output}
 
-\section{Communications}
-\subsection{\iic}
-\subsection{SPI}
-\subsection{USART}
+\chapter{Communications}
+\section{\iic}
+\section{SPI}
+\section{USART}
 
+\chapter{Drivers}
 \section{External Analog Input/Output Drivers}
 \section{Temperature Sensor Drivers}
 \section{Pressure Sensor Drivers}
 \section{Inertial Motion Drivers}
 
+\chapter{Control}
 \section{Recursive Filters}
-
 \section{Alpha-Beta-(Gamma)-(Eta) Filtering}
-
 \section{Kalman Filtering}
-
 \section{PID Control}
-
 \section{Static IMU Calibration}
 
-\section{Atmospheric Calculations}
+\chapter{Aero}
+\section{Atmospheric Calculations -- \mintinline{cpp}{class Atmosphere<>}}
+\label{sec::atmosphere:calculation::api}
+\apiheader{atmosphere.h}{chandra::aero}
+\subsection{Class Template Arguments}
+\subsection{Type Aliases}
+\subsection{Constructors}
+\subsection{Accessors}
 
-\section{Gravity Calculations}
+\section{Gravity Calculations -- \mintinline{cpp}{class Gravity<>}}
+\label{sec::gravity:calculation::api}
+\apiheader{gravity.h}{chandra::aero}
+\subsection{Class Template Arguments}
+\begin{minted}{cpp}
+template<
+	class Value,
+	GeoidCoordinates VectorCoordinates = None,
+	uint32_t Flags = ApproxFreeAirCorrect,
+	class AngleUnits = rad,
+	class LengthUnits = m,
+	class AccelerationUnits = m_per_s2
+>
+class Gravity;	
+\end{minted}
+The gravity class has six compile-time arguments, with the last five defaulted.  The first argument, \mintinline{cpp}{Value}, is the value type to be used.  For full accuracy of the WGS84 model, this should be either \mintinline{cpp}{double} or \mintinline{cpp}{long double}, but it can be \mintinline{cpp}{float} for less demanding applications or even user-defined types \footnote{The \textbf{Iamb}, fixed-point types will work as a type, though they require special implementations of the models and are less accurate.}.  
+
+The second argument, \mintinline{cpp}{VectorCoordinates}, is currently limited to \emph{None}, \emph{ECEF}, or \emph{NEU} with \emph{None} being the default.  If the vector coordinates are \emph{None}, the constructed gravity object will not even include the vector accessor methods and the additional code to generate vectors will not be included.  The code is added when a valid form of coordinates are selected.  In addition to defaulting to magnitude only mode in the class itself, the aliases function in the same way -- defaulting to magnitude only but allowing the passing of coordinates to \emph{turn on} vector support.  These valid coordinates are defined in the \emph{GeoidCoordinates} enumeration found in the \emph{geoid.h} header.
+
+The third argument, \mintinline{cpp}{Flags}, is an integer that contains all the implemented features such as the gravity model and enabled corrections.  These flag values are public static members of the \mintinline{cpp}{GravityConfig} class, also in the \mintinline{cpp}{chandra::aero} namespace of the \emph{gravity.h} header.   
+
+TALK ABOUT THE FEATURES AND WHAT THE VALID FLAGS.
+
+\subsection{Type Aliases}
+
+\subsection{Constructors}
+
+\subsection{Accessors}
 
 
-\chapter{Chandra Cookbook}
-\section{Clock and Timing}
-\subsection{Performance Timers}
-\subsubsection{Timing a function}
-\subsubsection{Conditional timing of a function}
-\subsubsection{Loop frequency measurement}
-\subsubsection{Loop frequency statistics}
 
-\section{Digital I/O}
-\subsection{Reading a digital pin}
-\subsection{Writing to a digital pin}
-\subsection{Reading a mechanical switch/button}
-\subsection{Manual control of an LED}
-\subsection{Automatic PWM of an LED}
-\subsection{Automatic PWM of an LED with asynchronous update}
-\subsection{Event on a pin falling (rising) edge}
-\subsection{Reading a Quadrature Encoder}
+\part{Chandra Cookbook}
+\chapter{Clock and Timing}
+\section{Performance Timers}
+\subsection{Timing a function}
+\subsection{Conditional timing of a function}
+\subsection{Loop frequency measurement}
+\subsection{Loop frequency statistics}
 
-\section{Analog I/O}
-\subsection{Raw reading of a single ADC channel}
-\subsection{Scaled reading of a single ADC channel}
-\subsection{Reading multiple ADC channels}
+\chapter{Digital I/O}
+\section{Reading a digital pin}
+\section{Writing to a digital pin}
+\section{Reading a mechanical switch/button}
+\section{Manual control of an LED}
+\section{Automatic PWM of an LED}
+\section{Automatic PWM of an LED with asynchronous update}
+\section{Event on a pin falling (rising) edge}
+\section{Reading a Quadrature Encoder}
 
-\section{Math}
-\subsection{Construct a matrix}
-\subsection{Solve a system of equations}
-\subsection{Invert a matrix}
+\chapter{Analog I/O}
+\section{Raw reading of a single ADC channel}
+\section{Scaled reading of a single ADC channel}
+\section{Reading multiple ADC channels}
 
-\section{Control}
-\subsection{Kalman}
-\subsection{PID}
-\subsection{IMU Calibration}
+\chapter{Math}
+\section{Conuct a matrix}
+\section{Solve a system of equations}
+\section{Invert a matrix}
 
-\section{Aero}
+\chapter{Control}
+\section{Kalman}
+\section{PID}
+\section{IMU Calibration}
+
+\chapter{Aero}
+\section{Atmosphere}
 \subsection{Pressure and density at a known altitude}
 \subsection{Altitude from pressure}
 TODO: do both in standard conditions and in non-standard conditions.
 
+\section{Gravity}
 \subsection{Acceleration due to gravity on the Earth's surface}
 \subsection{Gravitational acceleration above Earth's surface}
 
