@@ -49,7 +49,10 @@ class FixedCircularBuffer
 
         //	Directly read (peek) values from the buffer.  Index 0 is the oldest value (the first to be read)
         //		from the queue, and subsequent indicies are progressively newer.
-        constexpr value_t operator [] ( const size_t& _id ) const { return buffer_[id_idx(_id)]; }
+        constexpr value_t operator [] ( const size_t& _id ) const {
+          const auto idx = id_idx(_id);
+          return buffer_[idx];
+        }
 
         ref_t drop(uint8_t _num) {
         	_num = (_num>cnt_) ? cnt_ : _num;
@@ -82,12 +85,13 @@ class FixedCircularBuffer
         }
 
         constexpr size_t id_idx( const size_t& _id ) const {
+            (void) _id;
             return select_optimized() ?
                         ((idx_+_id) & (N-1UL)) :
                         ((idx_+_id) % N);
         }
 
-        constexpr static bool select_optimized() {
+        static constexpr bool select_optimized() {
             return meta::is_power_of_two<N>::value;
         }
 

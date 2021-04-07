@@ -16,7 +16,7 @@ class Array
         Array() {} // TODO: ADD UNIFORM INITIALIZATION OF THE ARRAY
 
         value_t& operator[] ( const size_t& _idx ) { return array_[_idx];}
-        const value_t& operator[] ( const size_t& _idx ) const { return array_[_idx];}
+        value_t operator[] ( const size_t& _idx ) const { return array_[_idx];}
 
         constexpr size_t size() const { return N; }
         constexpr size_t capacity() const { return N; }

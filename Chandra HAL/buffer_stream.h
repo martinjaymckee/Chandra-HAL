@@ -20,6 +20,7 @@ class BufferStream : public Stream< BufferStream<Value, Capacity> >
 {
 	public:
     using value_t = Value;
+    using buffer_t = chandra::FixedCircularBuffer<value_t, Capacity>;
     using ref_t = BufferStream<Value, Capacity>;
 
     BufferStream() {}
@@ -41,8 +42,10 @@ class BufferStream : public Stream< BufferStream<Value, Capacity> >
       return *this;
 		}
 
+    const buffer_t& buffer() const { return buffer_; }
+    
 	private:
-    chandra::FixedCircularBuffer<value_t, Capacity> buffer_;
+    buffer_t buffer_;
 };
 
 } /*namespace io*/
