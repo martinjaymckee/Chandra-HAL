@@ -3,7 +3,7 @@
 
 
 #include "chrono.h"
-#include "inertial_crtp.h"
+#include "inertial.h"
 #include "register_device.h"
 #include "sensor_utils.h"
 #include "spi.h"

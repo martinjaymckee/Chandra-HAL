@@ -3,7 +3,7 @@
 
 #include <cmath>
 #include "chrono.h"
-#include "inertial_crtp.h"
+#include "inertial.h"
 #include "math_conversions.h"
 #include "meta_types.h"
 #include "register_device.h"
