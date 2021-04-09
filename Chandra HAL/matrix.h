@@ -4,6 +4,6 @@
 #include "matrix_core.h"
 #include "matrix_ops.h"
 #include "matrix_vectors.h"
-#include "matrix_view.h"
+#include "matrix_vector_ops.h"
 
 #endif /*CHANDRA_MATRIX_H*/

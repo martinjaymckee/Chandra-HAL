@@ -355,6 +355,15 @@ class Matrix
             return *this;
         }
 
+        //  Matrix/Vector Subtraction
+        template<typename OtherValue>
+        constexpr matrix_t& operator -= (const Vector<OtherValue, Rows>& _other) {
+            for(index_t row = 0; row < Rows; ++row){
+              data_[row][0] -= _other.data_[row][0];
+            }
+            return *this;
+        }
+
         //  Scalar Subtraction
         template<typename ScalarValue>
         constexpr matrix_t& operator -= (const ScalarValue& v) {

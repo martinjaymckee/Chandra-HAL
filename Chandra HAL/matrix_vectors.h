@@ -44,11 +44,14 @@ struct Vector<Value, 2> : public Matrix<Value, 2, 1>
 {
         using value_t = Value;
         using base_t = Matrix<value_t, 2, 1>;
+        using ref_t = Vector<value_t, 2>;
 
         constexpr Vector(const base_t& m)
             : base_t(m),
               x(this->data_[0][0]),
               y(this->data_[1][0]) {}
+
+        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
 
         internal::ValueProxy<value_t> x;
         internal::ValueProxy<value_t> y;
@@ -59,12 +62,15 @@ struct Vector<Value, 3> : public Matrix<Value, 3, 1>
 {
         using value_t = Value;
         using base_t = Matrix<value_t, 3, 1>;
+        using ref_t = Vector<value_t, 3>;
 
         constexpr Vector(const base_t& m)
             : base_t(m),
               x(this->data_[0][0]),
               y(this->data_[1][0]),
               z(this->data_[2][0]) {}
+
+        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
 
         internal::ValueProxy<value_t> x;
         internal::ValueProxy<value_t> y;
@@ -76,6 +82,7 @@ struct Vector<Value, 4> : public Matrix<Value, 4, 1>
 {
         using value_t = Value;
         using base_t = Matrix<value_t, 4, 1>;
+        using ref_t = Vector<value_t, 4>;
 
         constexpr Vector(const base_t& m)
             : base_t(m),
@@ -83,6 +90,8 @@ struct Vector<Value, 4> : public Matrix<Value, 4, 1>
             x(this->data_[1][0]),
             y(this->data_[2][0]),
             z(this->data_[3][0]) {}
+
+        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
 
         internal::ValueProxy<value_t> w;
         internal::ValueProxy<value_t> x;
