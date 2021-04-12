@@ -2,8 +2,6 @@
 #define CHANDRA_INERTIAL_CRTP_H
 
 #include "matrix.h"
-#include "matrix_ops.h"
-#include "matrix_view.h"
 #include "quantity.h"
 #include "rotation.h"
 #include "units.h"

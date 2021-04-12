@@ -133,7 +133,7 @@ class Quantity
           typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
         >
         constexpr auto operator += (const Quantity<V, U>& _val) {
-            val_ += units::convert<Value, Units, U>(_val);
+            val_ += units::convert<Value, Units, U>(_val.value());
             return *this;
         }
 
@@ -144,7 +144,7 @@ class Quantity
           typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
         >
         constexpr auto operator -= (const Quantity<V, U>& _val) {
-            val_ -= units::convert<Value, Units, U>(_val);
+            val_ -= units::convert<Value, Units, U>(_val.value());
             return *this;
         }
 
