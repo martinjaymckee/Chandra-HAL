@@ -98,13 +98,13 @@ class Matrix
 		    Matrix() {}
 
         //  Single argument constructor initializes memory to the passed value
-        explicit constexpr Matrix(const value_t& v) {
-            for(index_t row = 0; row < Rows; ++row){
-                for(index_t column = 0; column < Columns; ++column){
-                    data_[row][column] = v;
-                }
-            }
-        }
+        // explicit constexpr Matrix(const value_t& v) {
+        //     for(index_t row = 0; row < Rows; ++row){
+        //         for(index_t column = 0; column < Columns; ++column){
+        //             data_[row][column] = v;
+        //         }
+        //     }
+        // }
 
         //  Initializer list constructor will initialize the matrix in row major order until the
         //      end of the initializer list is reached or all matrix values are full.  If the
@@ -139,15 +139,20 @@ class Matrix
     			}
     		}
 
-        //  Construct a zero matrix
-        static constexpr matrix_t Zeros() {
+        //  Construct a filled matrix
+        static constexpr matrix_t Filled( const value_t& _value) {
           matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
-                    matrix.data_[row][column] = 0;
+                    matrix.data_[row][column] = _value;
                 }
             }
           return matrix;
+        }
+
+        //  Construct a zero matrix
+        static constexpr matrix_t Zeros() {
+          return Filled(0);
         }
 
     		//  Construct an Identity matrix
@@ -197,7 +202,7 @@ class Matrix
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
-					const auto v = f(row, column);
+					          const auto v = f(row, column);
                     matrix.data_[row][column] = v;
                 }
             }
@@ -281,6 +286,19 @@ class Matrix
                 }
             }
             return *this;
+        }
+
+        //  Equality Operator
+        template<typename OtherValue>
+        constexpr bool operator == (const Matrix<OtherValue, Rows, Columns>& _other) const {
+          for(index_t row = 0; row < Rows; ++row){
+              for(index_t column = 0; column < Columns; ++column){
+                  if(data_[row][column] != _other.data_[row][column]) {
+                    return false;
+                  }
+              }
+          }
+          return true;
         }
 
         //  Shape data accessors
