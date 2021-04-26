@@ -161,18 +161,6 @@ class timestamp_clock
 	        SysTick_Config(top_);
 	        NVIC_EnableIRQ(SysTick_IRQn);
 	        return;
-//           __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
-//            {
-//              if ((ticks - 1) > SysTick_LOAD_RELOAD_Msk)  return (1);      /* Reload value impossible *///
-
-//              SysTick->LOAD  = ticks - 1;                                  /* set reload register */
-//              NVIC_SetPriority (SysTick_IRQn, (1<<__NVIC_PRIO_BITS) - 1);  /* set Priority for Systick Interrupt */
-//              SysTick->VAL   = 0;                                          /* Load the SysTick Counter Value */
-//              SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
-//                               SysTick_CTRL_TICKINT_Msk   |
-//                               SysTick_CTRL_ENABLE_Msk;                    /* Enable SysTick IRQ and SysTick Timer */
-//              return (0);                                                  /* Function successful */
-//            }            */
 #elif defined(__CHANDRA_MOCK__)
 #warning "Chandra clock init parsed as mock."
 #else
@@ -180,7 +168,7 @@ class timestamp_clock
 #endif
 		}
 
-        static void reset() noexcept {
+    static void reset() noexcept {
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 			#if defined(__LPC82X__)
         		LPC_SCT->COUNT_U = 0;
@@ -203,6 +191,31 @@ class timestamp_clock
 #error "No Timestamp Clock Mode Defined!"
 #endif
         }
+
+				template<class Clock>
+				static time_point set(const std::chrono::time_point<Clock>& _t) noexcept {
+					const duration us{std::chrono::duration_cast<duration>(_t.time_since_epoch()).count()};
+					#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
+								#if defined(__LPC82X__)
+					        		LPC_SCT->COUNT_U = us;
+								#elif defined(__LPC84X__)
+					          	LPC_SCT->COUNT = us;
+								#elif defined(__LPC15XX__)
+					          	LPC_SCT3->COUNT_U = us;
+
+								#else
+								#error "Chrono Reset is undefined for processor type!"
+								#endif
+					#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
+								SysTick->VAL = top_-1;
+					      high_bits_ = 0;
+					#elif defined(__CHANDRA_MOCK__)
+					#warning "Chandra clock set parsed as mock."
+					#else
+					#error "No Timestamp Clock Mode Defined!"
+					#endif
+					return now();
+				}
 		// Map to C API
 //		static time_t to_time_t(const timepoint_& t) noexcept;
 //		static time_point from_time_t(time_t t) noexcept;
@@ -213,6 +226,136 @@ class timestamp_clock
         static uint32_t top_;
         static uint32_t mult_;
 #endif
+};
+
+class mock_clock
+{
+	public:
+		using rep = uint32_t;
+		using period = std::micro;
+		using duration = std::chrono::duration<rep, period>;
+		using time_point = std::chrono::time_point<mock_clock>;
+		static constexpr bool is_steady = false;
+
+		static time_point now() noexcept {
+			return time_point(t_offset_);
+		}
+
+		static void init() noexcept {
+			reset();
+			return;
+		}
+
+		static void reset() noexcept {
+			t_offset_ = duration{0};
+			return;
+		}
+
+		template<class Clock>
+		static time_point set(const std::chrono::time_point<Clock>& _t) noexcept {
+			t_offset_ = std::chrono::duration_cast<duration>(_t.time_since_epoch());
+			return now();
+		}
+
+		template<class Rep, class Period>
+		static time_point advance(const std::chrono::duration<Rep, Period> _d) noexcept {
+			t_offset_ += std::chrono::duration_cast<duration>(_d);
+			return now();
+		}
+
+	protected:
+		static duration t_offset_;
+};
+
+#if defined(USE_MOCK_CLOCK)
+#define MOCK_CLOCK_IMPL	chandra::chrono::mock_clock::duration chandra::chrono::mock_clock::t_offset_{0};
+#else
+#define MOCK_CLOCK_IMPL #error "Attempting to instantiate chandra::chrono::mock_clock without preprocessor USE_MOCK_CLOCK"
+#endif
+
+template<class PrimaryClock, class SecondaryClock>
+class compound_clock
+{
+	public:
+		using primary_clock_t = PrimaryClock;
+		using secondary_clock_t = SecondaryClock;
+
+		using rep = typename std::common_type<typename primary_clock_t::duration::rep, typename secondary_clock_t::duration::rep>::type;
+		using period = std::micro;
+		using duration = std::chrono::duration<rep, period>;
+		using time_point = std::chrono::time_point<compound_clock>;
+		static constexpr bool is_steady = false;
+
+		static time_point now() noexcept {
+			if(primary_selected_) return time_point{primary_clock_t::now().time_since_epoch()};
+			return time_point{secondary_clock_t::now().time_since_epoch()};
+		}
+
+		static void init() noexcept {
+			primary_selected_ = true;
+			primary_clock_t::init();
+			secondary_clock_t::init();
+			return;
+		}
+
+		static void reset() noexcept {
+			primary_clock_t::reset();
+			secondary_clock_t::reset();
+			return;
+		}
+
+		template<class Clock>
+		static time_point set(const std::chrono::time_point<Clock>& _t) noexcept {
+			if(primary_selected_) return primary_clock_t::set(_t);
+			return secondary_clock_t::set(_t);
+		}
+
+		template<class Rep, class Period>
+		static time_point advance(const std::chrono::duration<Rep, Period> _d) noexcept {
+			if(primary_selected_) {
+				doAdvance<primary_clock_t>(_d);
+			} else {
+				doAdvance<secondary_clock_t>(_d);
+			}
+			return now();
+		}
+
+		static bool source(bool _primary) noexcept {
+			if(_primary) {
+				if(!primary_selected_) {
+					primary_selected_ = true;
+					const auto t = secondary_clock_t::now();
+					primary_clock_t::set(t);
+				}
+			} else {
+				if(primary_selected_) {
+					primary_selected_ = false;
+					const auto t = primary_clock_t::now();
+					secondary_clock_t::set(t);
+				}
+			}
+
+			return source();
+		}
+
+		static constexpr bool source() noexcept {
+			return primary_selected_;
+		}
+
+	protected:
+		template<class Rep, class Period, class Clock, class = decltype(Clock::advance(declval(duration{})))>
+		void doAdvance(const std::chrono::duration<Rep, Period>& _d) {
+			Clock::advance(_d);
+			return;
+		}
+
+		template<class Rep, class Period, class... Args>
+		void doAdvance(const std::chrono::duration<Rep, Period>&, Args...) {
+			return;
+		}
+
+		static bool primary_selected_;
+
 };
 
 template<class Clock = timestamp_clock>
