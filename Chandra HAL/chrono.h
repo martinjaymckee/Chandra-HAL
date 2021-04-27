@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cstddef>
 #include <ratio>
+#include <utility>
 
 #include "chip_utils.h"
 #include "units.h"
@@ -119,76 +120,78 @@ class timestamp_clock
 		static void init() noexcept {
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 		#if defined(__LPC15XX__)
-					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
-					SystemClock::enable(1, 5, true);
-					PeripheralActivity::reset(1, 5);
-					LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
-					LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
-					return;
+				const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+				SystemClock::enable(1, 5, true);
+				PeripheralActivity::reset(1, 5);
+				LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+				return;
 		#elif defined(__LPC55XX__)
-					#if defined(FRO_CLOCK)
+				#if defined(FRO_CLOCK)
 					frequency::setFROClock(frequency::rep{FRO_CLOCK});
-					#endif
-					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
-					SystemClock::enable(0, 8, true);
-					PeripheralActivity::reset(0, 8);
-					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
-					LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
-					return;
+				#endif
+				const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+				SystemClock::enable(0, 8, true);
+				PeripheralActivity::reset(0, 8);
+				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+				return;
 		#elif defined(__LPC84X__)
-					#if defined(FRO_CLOCK)
+				#if defined(FRO_CLOCK)
 					frequency::setFROClock(frequency::rep{FRO_CLOCK});
-					#endif
-					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
-					SystemClock::enable(0, 8, true);
-					PeripheralActivity::reset(0, 8);
-					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
-					LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
-					return;
+				#endif
+				const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+				SystemClock::enable(0, 8, true);
+				PeripheralActivity::reset(0, 8);
+				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+				return;
 		#else
-					const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
-		      SystemClock::enable(0, 8, true);
-		      PeripheralActivity::reset(0, 8);
-					LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
-					LPC_SCT->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
-					return;
+				const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
+	      SystemClock::enable(0, 8, true);
+	      PeripheralActivity::reset(0, 8);
+				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				LPC_SCT->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
+				return;
 		#endif
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-	        // TODO: THIS SHOULD BE BASED ON THE REFERENCE FREQUENCY, IN MOST CASES....
-	        // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
-	        top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
-	        mult_ = 0xFFFFFFFFUL / top_;
-	        SysTick_Config(top_);
-	        NVIC_EnableIRQ(SysTick_IRQn);
-	        return;
+	    // TODO: THIS SHOULD BE BASED ON THE REFERENCE FREQUENCY, IN MOST CASES....
+	    // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
+	    top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
+	    mult_ = 0xFFFFFFFFUL / top_;
+	    SysTick_Config(top_);
+	    NVIC_EnableIRQ(SysTick_IRQn);
+	    return;
 #elif defined(__CHANDRA_MOCK__)
-#warning "Chandra clock init parsed as mock."
+		#warning "Chandra clock init parsed as mock."
 #else
-#error "No Timestamp Clock Mode Defined!"
+		#error "No Timestamp Clock Mode Defined!"
 #endif
 		}
 
     static void reset() noexcept {
+			return;
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
+			// TODO: THIS WILL CAUSE A HARD-FAULT WITHOUT STOPPING THE CLOCK....
 			#if defined(__LPC82X__)
-        		LPC_SCT->COUNT_U = 0;
+        	LPC_SCT->COUNT_U = 0;
 			#elif defined(__LPC84X__)
-          	LPC_SCT->COUNT=0;
+          LPC_SCT->COUNT=0;
 			#elif defined(__LPC15XX__)
-          	LPC_SCT3->COUNT_U=0;
+          LPC_SCT3->COUNT_U=0;
 
 			#else
-			#error "Chrono Reset is undefined for processor type!"
+					#error "Chrono Reset is undefined for processor type!"
 			#endif
-            return;
+      return;
 #elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-            SysTick->VAL = top_-1;
-            high_bits_ = 0;
-            return;
+      SysTick->VAL = top_-1;
+      high_bits_ = 0;
+      return;
 #elif defined(__CHANDRA_MOCK__)
-#warning "Chandra clock reset parsed as mock."
+		#warning "Chandra clock reset parsed as mock."
 #else
-#error "No Timestamp Clock Mode Defined!"
+		#error "No Timestamp Clock Mode Defined!"
 #endif
         }
 
@@ -343,20 +346,29 @@ class compound_clock
 		}
 
 	protected:
-		template<class Rep, class Period, class Clock, class = decltype(Clock::advance(declval(duration{})))>
-		void doAdvance(const std::chrono::duration<Rep, Period>& _d) {
+		template<class Clock, class... Args>
+		static void doAdvance(Args...) {
+			return;
+		}
+
+		template<
+			class Clock,
+			class Rep,
+			class Period,
+			class = decltype(Clock::advance(std::chrono::duration<Rep, Period>{0}))
+		>
+		static void doAdvance(const std::chrono::duration<Rep, Period>& _d) {
 			Clock::advance(_d);
 			return;
 		}
 
-		template<class Rep, class Period, class... Args>
-		void doAdvance(const std::chrono::duration<Rep, Period>&, Args...) {
-			return;
-		}
 
 		static bool primary_selected_;
 
 };
+
+template<class PrimaryClock, class SecondaryClock>
+bool compound_clock<PrimaryClock, SecondaryClock>::primary_selected_ = true;
 
 template<class Clock = timestamp_clock>
 void delay(const std::chrono::duration<uint32_t, std::micro>& _us, const std::chrono::time_point<Clock>& start = Clock::now()) {
