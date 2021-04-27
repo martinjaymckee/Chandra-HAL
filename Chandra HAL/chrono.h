@@ -170,56 +170,51 @@ class timestamp_clock
 		}
 
     static void reset() noexcept {
+			updateTimerCounter(0);
 			return;
-#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
-			// TODO: THIS WILL CAUSE A HARD-FAULT WITHOUT STOPPING THE CLOCK....
-			#if defined(__LPC82X__)
-        	LPC_SCT->COUNT_U = 0;
-			#elif defined(__LPC84X__)
-          LPC_SCT->COUNT=0;
-			#elif defined(__LPC15XX__)
-          LPC_SCT3->COUNT_U=0;
+    }
 
-			#else
+		template<class Clock>
+		static time_point set(const std::chrono::time_point<Clock>& _t) noexcept {
+			const duration us{std::chrono::duration_cast<duration>(_t.time_since_epoch()).count()};
+			updateTimerCounter(us.count());
+			return now();
+		}
+
+	protected:
+		static void updateTimerCounter(uint32_t _counts) {
+			#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
+				#if defined(__LPC82X__)
+					LPC_SCT->CTRL_U |= (1<<2); // Set Halt Bit
+			    LPC_SCT->COUNT_U = _counts;
+					LPC_SCT->CTRL_U &= ~static_cast<uint32_t>(1<<2); // Clear Halt Bit
+				#elif defined(__LPC84X__)
+					LPC_SCT->CTRL |= (1<<2); // Set Halt Bit
+			    LPC_SCT->COUNT = _counts;
+					LPC_SCT->CTRL &= ~static_cast<uint32_t>(1<<2); // Clear Halt Bit
+				#elif defined(__LPC15XX__)
+					LPC_SCT3->CTRL_U |= (1<<2); // Set Halt Bit
+			    LPC_SCT3->COUNT_U = _counts;
+					LPC_SCT3->CTRL_U &= ~static_cast<uint32_t>(1<<2); // Clear Halt Bit
+				#elif defined(__LPC55XX__)
+					LPC_SCT->CTRL |= (1<<2); // Set Halt Bit
+					LPC_SCT->COUNT = _counts;
+					LPC_SCT->CTRL &= ~static_cast<uint32_t>(1<<2); // Clear Halt Bit
+				#else
 					#error "Chrono Reset is undefined for processor type!"
+				#endif
+			#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
+				// TODO: VALIDATE THAT THIS IS WORKING PROPERLY....
+				SysTick->VAL = top_- ((_counts & 0xFFFFFF) + 1);
+			  high_bits_ = (_counts>>24) & 0xFF;
+			#elif defined(__CHANDRA_MOCK__)
+				#warning "Chandra clock set parsed as mock."
+			#else
+				#error "No Timestamp Clock Mode Defined!"
 			#endif
-      return;
-#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-      SysTick->VAL = top_-1;
-      high_bits_ = 0;
-      return;
-#elif defined(__CHANDRA_MOCK__)
-		#warning "Chandra clock reset parsed as mock."
-#else
-		#error "No Timestamp Clock Mode Defined!"
-#endif
-        }
-
-				template<class Clock>
-				static time_point set(const std::chrono::time_point<Clock>& _t) noexcept {
-					const duration us{std::chrono::duration_cast<duration>(_t.time_since_epoch()).count()};
-					#if defined(SCT_HARDWARE_TIMESTAMP_MODE)
-								#if defined(__LPC82X__)
-					        		LPC_SCT->COUNT_U = us;
-								#elif defined(__LPC84X__)
-					          	LPC_SCT->COUNT = us;
-								#elif defined(__LPC15XX__)
-					          	LPC_SCT3->COUNT_U = us;
-
-								#else
-								#error "Chrono Reset is undefined for processor type!"
-								#endif
-					#elif defined(SYSTICK_SOFTWARE_TIMESTAMP_MODE)
-								SysTick->VAL = top_-1;
-					      high_bits_ = 0;
-					#elif defined(__CHANDRA_MOCK__)
-					#warning "Chandra clock set parsed as mock."
-					#else
-					#error "No Timestamp Clock Mode Defined!"
-					#endif
-					return now();
-				}
-		// Map to C API
+				return;
+		}
+// Map to C API
 //		static time_t to_time_t(const timepoint_& t) noexcept;
 //		static time_point from_time_t(time_t t) noexcept;
 
