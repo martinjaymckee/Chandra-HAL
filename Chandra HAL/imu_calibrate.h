@@ -49,6 +49,8 @@ class IMUCalibrator
 
     struct InitResult
     {
+      // Number of steps
+      // Number of samples
       // Initial target orientation
     };
 
@@ -61,13 +63,26 @@ class IMUCalibrator
       // mag mean / mag sd
     };
 
-    struct CalCompleteResult {};
+    struct CalCompleteResult
+    {
+      // accel calib
+      // accel sd
+      // gyro calib
+      // gyro sd
+      // mag calib
+      // mag sd
+    };
 
     // Constructor (imu, gravity, mag, Number of samples=10)
-    IMUCalibrator(imu_t& _imu, gravity_t& _gravity, const size_t& _N=10)
-      : imu_{_imu}, gravity_{_gravity}, N_{_N} {}
-    // Begin Calibration ()
-    InitResult init() {
+    IMUCalibrator(imu_t& _imu, gravity_t& _gravity)
+      : imu_{_imu}, gravity_{_gravity} {}
+
+    // Begin Calibration (samples)
+    InitResult init(const size_t& _N=10) {
+      N_ = _N;
+      // Set To First Step
+      // Initialize Step Storage
+      // Get First Target Orientation
       return {};
     }
 
@@ -75,7 +90,17 @@ class IMUCalibrator
     // PerSampleFunc(step, sample, accel, gyro, mag)
     template<class PerSampleFunc>
     CalStepResult step(const PerSampleFunc& _func) {
-      (void) _func;
+      // Create sample buffer
+      for(size_t idx = 0; idx < N_; ++idx) {
+        // measure IMU (accel/gyro/mag)
+        const auto accel = 0;
+        const auto gyro = 0;
+        const auto mag = 0;
+        _func(step_, idx, accel, gyro, mag);
+        // Add IMU measurements to sample buffer
+      }
+      // Store reference orientation
+      // Calculate mean and sd from sample buffer
       return {};
     }
 
@@ -84,7 +109,14 @@ class IMUCalibrator
     }
 
     // Complete Calibration ()
-    CalCompleteResult calibration() {
+    CalCompleteResult calibration(const bool& _apply=true) {
+      // ***using reference orientations and samples***
+      // Calculate the acceleration calibration
+      // Calculate the gyro calibration
+      // Calculate the magnetometer calibration
+      if(_apply) {
+        // Apply the calibration to the imu object
+      }
       return {};
     }
 
