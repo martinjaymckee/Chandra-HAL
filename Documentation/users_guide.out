@@ -47,7 +47,7 @@
 \BOOKMARK [1][-]{section.10.1}{External Analog Input/Output Drivers}{chapter.10}% 47
 \BOOKMARK [1][-]{section.10.2}{Temperature Sensor Drivers}{chapter.10}% 48
 \BOOKMARK [1][-]{section.10.3}{Pressure Sensor Drivers}{chapter.10}% 49
-\BOOKMARK [1][-]{section.10.4}{Inertial Motion Drivers}{chapter.10}% 50
+\BOOKMARK [1][-]{section.10.4}{Inertial Motion Sensor Drivers}{chapter.10}% 50
 \BOOKMARK [0][-]{chapter.11}{Control}{part.2}% 51
 \BOOKMARK [1][-]{section.11.1}{Recursive Filters}{chapter.11}% 52
 \BOOKMARK [1][-]{section.11.2}{Alpha-Beta-\(Gamma\)-\(Eta\) Filtering}{chapter.11}% 53
@@ -123,4 +123,8 @@
 \BOOKMARK [1][-]{section.C.3}{Modified Calibration Forms}{appendix.C}% 123
 \BOOKMARK [2][-]{section*.52}{Three-Parameter \(bias only\) or Six-Parameter Calibration}{section.C.3}% 124
 \BOOKMARK [2][-]{section*.53}{Hardware Sensor Bias}{section.C.3}% 125
-\BOOKMARK [0][-]{appendix.D}{References}{part.4}% 126
+\BOOKMARK [1][-]{section.C.4}{Calculation of Calibration Vectors}{appendix.C}% 126
+\BOOKMARK [2][-]{section*.54}{Orthogonal Cubic Vectors}{section.C.4}% 127
+\BOOKMARK [2][-]{section*.55}{Orthogonal Cubic/Octagonal Vectors}{section.C.4}% 128
+\BOOKMARK [2][-]{section*.56}{Tetrahedral Vectors}{section.C.4}% 129
+\BOOKMARK [0][-]{appendix.D}{References}{part.4}% 130

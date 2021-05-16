@@ -63,6 +63,7 @@
 
 %% END Memoir customization
 
+\usepackage{bm}
 \usepackage{graphicx}
 \graphicspath{{./Images/}}
 \usepackage{hyperref}
@@ -329,7 +330,7 @@ NONE.  THIS DOESN'T HAPPEN, AT THE MOMENT.  IT REALLY SHOULD THOUGH.
 \section{External Analog Input/Output Drivers}
 \section{Temperature Sensor Drivers}
 \section{Pressure Sensor Drivers}
-\section{Inertial Motion Drivers}
+\section{Inertial Motion Sensor Drivers}
 
 \chapter{Control}
 \section{Recursive Filters}
@@ -492,6 +493,7 @@ Finally, sensors produce random noise.  This may be the result of electrical noi
 There are a couple of possible modifications to the calculation of the calibration which may be used internally to an IMU driver.  These are, primarily intended to reduce the computational complexity of generating the corrected value $\vec{y_c}$.  They may be used individually or in combination though not all combinations are valid or implemented in any particular driver.'
 
 
+   
 \subsection{Three-Parameter (bias only) or Six-Parameter Calibration}
 If the IMU axes are known to be physically aligned with the body frame to be sensed, the rotation matrix $\mathbf{R}$ will be the identity matrix and some reduced complexity calibration options become reasonable to consider.  Firstly, the assumption that the sensor is perfectly aligned and orthogonal may be made and that reduces the calibration to six parameters.  Secondly, it may be assumed that three is no gain error whatsoever which will reduce the calibration to three parameters.  It should be understood, however, that due to the caching of calculating the matrix $\mathbf{W}$, these methods of calibration only reduce complexity in the case where it can be ensured that $\mathbf{R} = \mathbf{I}$.  If configured for three or six parameter calibration, the IMU driver loses the ability to set a rotation matrix and will cause a compile-time error if it is attempted.
 
@@ -530,6 +532,59 @@ and simplifying,
 	\vec{b_m} = \mathbf{W^{-1}}\vec{b}
 \end{equation}
 Thus, $\vec{b_m}$ can be calculated from the same gain and bias as calculated for the standard form.  In the Chandra driver for an IMU this modified form is used for sensors that have offset registers available onboard.  The API remains consistent regardless.
+
+\section{Calculation of Calibration Vectors}
+The calibration vectors for different forms of calibration are calculated from the known field strengths and the the reference orientation.  For static calibration, the known field strengths include the magnetic and gravitational fields.  The reference orientations depend upon the form of calibration as defined in the following sections.  The simplest method of calibration (from the standpoint of calculating vectors) is an orthogonal cubic vector system.  Using the same calibration frame, it is also possible to do an orthogonal cubic/octohedral calibration. Both of these options provides enough measurements to do a full 12-parameter calibration of each sensor.  For a minimal calibration (3-parameter), a tetrahedral calibration frame is sufficient.  As such, it would be good to provide that as an option.
+
+The vector orientations are described using yaw-pitch-roll Tait-Bryant angles in radians.  Within the code, these orientations should be calculated in a singularity-free method.  For ease of explaination, however, the Tait-Bryant angles are sufficient.
+
+\subsection{Orthogonal Cubic Vectors}
+	INSERT A DRAWING OF THE CALIBRATION FRAME WITH THE AXES MARKED.
+	
+	\begin{center}
+		\begin{tabular}{cgcg}
+			\rowcolor[gray]{0.8}\textbf{Sample} & \textbf{Yaw (rad)} & \textbf{Pitch (rad)} & \textbf{Roll (rad)} \\ 
+			0 & 0 & 0 & 0\\
+			1 & 0 & 0 & $\pi/2$\\
+			2 & 0 & $\pi/2$ & 0\\
+			3 & 0 & $-\pi/2$ & 0\\
+			4 & 0 & 0 & $-\pi/2$\\
+			5 & 0 & $\pi$ & 0\\			
+		\end{tabular} 
+	\end{center}
+
+
+\subsection{Orthogonal Cubic/Octagonal Vectors}
+	INSERT A DRAWING OF THE CALIBRATION FRAME WITH THE AXES MARKED.
+
+	\begin{center}
+	\begin{tabular}{cgcg}
+		\rowcolor[gray]{0.8}\textbf{Sample} & \textbf{Yaw (rad)} & \textbf{Pitch (rad)} & \textbf{Roll (rad)} \\ 
+		0 & $-\pi/4$ & $0.615479708671$ & 0\\
+		1 & $\pi/4$ & $0.615479708671$ & 0\\
+		2 & $3\pi/4$ & $0.615479708671$ & 0\\
+		3 & $-3\pi/4$ & $0.615479708671$ & 0\\
+		4 & $-3\pi/4$ & $3.75707236226$ & 0\\
+		5 & $3\pi/4$ & $3.75707236226$ & 0\\		
+		6 & $\pi/4$ & $3.75707236226$ & 0\\
+		7 & $-\pi/4$ & $3.75707236226$ & 0\\			
+	\end{tabular} 
+\end{center}
+
+The pitch rotation is based on placing the octagon corner vertical.  As such, the base rotation required can be calculated as,
+\begin{equation}
+	\alpha_{pitch} = atan(1 / \sqrt{2}) \bm{ + \pi}
+\end{equation}
+with, the y value ($1$) being the normalized height of the calibration frame and the x value ($sqrt{2}$) being the length of the frame diagonal.  For the upper corners, this value can be used directly while $\pi$ needs to be added to the value for the bottom corners.
+
+CHECK THIS!!!!
+	
+\subsection{Tetrahedral Vectors}
+NOTE: FOR THE MOST EFFICIENT CALIBRATION, THE IMU IS NOT PARALLEL TO ANY OF THE TETRAHEDRON'S FACES.  
+
+	INSERT A DRAWING OF THE CALIBRATION FRAME WITH THE AXES MARKED.
+
+INSERT THE TABLE OF VECTORS.
 
 \chapter{References}
 NEED TO GET THIS SET UP TO HANDLE REFERENCES AND START ADDING THEM.
