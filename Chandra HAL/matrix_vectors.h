@@ -1,125 +1,12 @@
 #ifndef CHANDRA_MATRIX_VIEW_H
 #define CHANDRA_MATRIX_VIEW_H
 
-#include "matrix.h"
+#include "matrix_core.h"
 
 namespace chandra
 {
 namespace math
 {
-/*
-namespace internal
-{
-
-template<typename Value>
-class ValueProxy
-{
-    public:
-        using value_t = Value;
-
-        explicit constexpr ValueProxy(value_t& _ref) : ref_(_ref) {}
-
-        template<class V>
-        constexpr ValueProxy& operator = (const V& v) {
-            ref_ = v;
-            return *this;
-        }
-
-        template<class V>
-        constexpr ValueProxy<Value>& operator = (const ValueProxy<V>& v) {
-            ref_ = v.value();
-            return *this;
-        }
-
-        constexpr operator value_t() { return ref_; }
-
-        constexpr value_t value() const { return ref_; }
-
-    private:
-        value_t& ref_;
-};
-
-template<class V1, class V2>
-constexpr bool operator == (const ValueProxy<V1>& _a, const ValueProxy<V2>& _b) {
-  return _a.value() == _b.value();
-}
-
-template<class V1, class V2>
-constexpr bool operator != (const ValueProxy<V1>& _a, const ValueProxy<V2>& _b) {
-  return _a.value() != _b.value();
-}
-
-} */ /*namespace internal*/
-
-/*
-template<typename Value, size_t N>
-struct Vector : public Matrix<Value, N, 1>
-{
-        using value_t = Value;
-        using base_t = Matrix<value_t, N, 1>;
-};
-
-template<typename Value>
-struct Vector<Value, 2> : public Matrix<Value, 2, 1>
-{
-        using value_t = Value;
-        using base_t = Matrix<value_t, 2, 1>;
-        using ref_t = Vector<value_t, 2>;
-
-        constexpr Vector(const base_t& m)
-            : base_t(m),
-              x(this->data_[0][0]),
-              y(this->data_[1][0]) {}
-
-        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
-
-        internal::ValueProxy<value_t> x;
-        internal::ValueProxy<value_t> y;
-};
-
-template<typename Value>
-struct Vector<Value, 3> : public Matrix<Value, 3, 1>
-{
-        using value_t = Value;
-        using base_t = Matrix<value_t, 3, 1>;
-        using ref_t = Vector<value_t, 3>;
-
-        constexpr Vector(const base_t& m)
-            : base_t(m),
-              x(this->data_[0][0]),
-              y(this->data_[1][0]),
-              z(this->data_[2][0]) {}
-
-        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
-
-        internal::ValueProxy<value_t> x;
-        internal::ValueProxy<value_t> y;
-        internal::ValueProxy<value_t> z;
-};
-
-template<typename Value>
-struct Vector<Value, 4> : public Matrix<Value, 4, 1>
-{
-        using value_t = Value;
-        using base_t = Matrix<value_t, 4, 1>;
-        using ref_t = Vector<value_t, 4>;
-
-        constexpr Vector(const base_t& m)
-            : base_t(m),
-            w(this->data_[0][0]),
-            x(this->data_[1][0]),
-            y(this->data_[2][0]),
-            z(this->data_[3][0]) {}
-
-        constexpr Vector(const ref_t& v) : Vector(static_cast<const base_t&>(v)) {}
-
-        internal::ValueProxy<value_t> w;
-        internal::ValueProxy<value_t> x;
-        internal::ValueProxy<value_t> y;
-        internal::ValueProxy<value_t> z;
-};
-*/
-
 namespace internal
 {
 template<class Value, size_t Rows, size_t Columns, bool IsColumn=true>
@@ -144,6 +31,9 @@ constexpr Value& vector_reference(Value (&_data)[Rows][Columns], const size_t& _
 }
 } /* namespace internal */
 
+//
+// Vector Implementations
+//
 template<class Value, size_t N, bool IsColumn = true>
 class Vector {};
 
@@ -185,23 +75,73 @@ class Vector<Value, 3, IsColumn> : public Matrix<Value, IsColumn ? 3 : 1, IsColu
     template<class V>
     Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
       : base_t{_other},
-		x(internal::vector_reference<IsColumn>(this->data_, 0)),
-		y(internal::vector_reference<IsColumn>(this->data_, 1)),
-		z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
+    		x(internal::vector_reference<IsColumn>(this->data_, 0)),
+    		y(internal::vector_reference<IsColumn>(this->data_, 1)),
+    		z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
 
     value_t& x;
     value_t& y;
     value_t& z;
 };
 
-template<class Value>
-using Vector2D = Vector<Value, 2, true>;
+template<class Value, bool IsColumn>
+class Vector<Value, 4, IsColumn> : public Matrix<Value, IsColumn ? 4 : 1, IsColumn ? 1 : 4>
+{
+  public:
+    using value_t = Value;
+    using base_t = Matrix<Value, IsColumn ? 4 : 1, IsColumn ? 1 : 4>;
+
+    Vector()
+      : base_t{},
+        w(internal::vector_reference<IsColumn>(this->data_, 0)),
+        x(internal::vector_reference<IsColumn>(this->data_, 1)),
+        y(internal::vector_reference<IsColumn>(this->data_, 2)),
+        z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
+
+    template<class V>
+    Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
+      : base_t{_other},
+        w(internal::vector_reference<IsColumn>(this->data_, 0)),
+        x(internal::vector_reference<IsColumn>(this->data_, 1)),
+        y(internal::vector_reference<IsColumn>(this->data_, 2)),
+        z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
+
+    value_t& w;
+    value_t& x;
+    value_t& y;
+    value_t& z;
+};
+
+
+//
+// Vector Aliases
+//
+template<class Value, bool IsColumn = true>
+using Vector2D = Vector<Value, 2, IsColumn>;
 
 template<class Value>
-using Vector3D = Vector<Value, 3, true>;
+using RowVector2D = Vector2D<Value, false>;
 
-// template<class Value>
-// using Vector4D = Vector<Value, 4>;
+template<class Value>
+using ColumnVector2D = Vector2D<Value, true>;
+
+template<class Value, bool IsColumn = true>
+using Vector3D = Vector<Value, 3, IsColumn>;
+
+template<class Value>
+using RowVector3D = Vector3D<Value, false>;
+
+template<class Value>
+using ColumnVector3D = Vector3D<Value, true>;
+
+template<class Value, bool IsColumn = true>
+using Vector4D = Vector<Value, 4, IsColumn>;
+
+template<class Value>
+using RowVector4D = Vector4D<Value, false>;
+
+template<class Value>
+using ColumnVector4D = Vector4D<Value, true>;
 
 } /*namespace math*/
 } /*namespace chandra*/

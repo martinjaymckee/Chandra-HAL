@@ -50,20 +50,7 @@ struct IndexData<1, Columns>
         }
 };
 
-//
-// Forward Declaration of the VectorWrapper Class
-//
-// template<typename Value, size_t Rows, size_t Columns>
-// class VectorWrapper;
-} /*namespace internal*/
-
-//
-// Forward Declaration of the VectorWrapper Class
-//
-// template<typename Value, size_t N>
-// class Vector;
-// template<class Value, size_t N, bool IsColumn = true>
-// class Vector;
+} /* namespace internal */
 
 // TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
 //        THE RANDOM NUMBERS (PASS IN A RANDOM GENERATOR)
@@ -84,9 +71,6 @@ class Matrix
     public:
         template<typename V, size_t R, size_t C>
         friend class Matrix;
-
-        //template<typename V1, typename V2, size_t M, size_t N1, size_t N2, size_t O>
-        //friend constexpr auto operator * (const Matrix<V1, M, N1>& a, const Matrix<V2, N2, O>& b);
 
         using value_t = Value;
         using index_t = size_t; // TODO: THIS SHOULD BE CALCULATED TO BE OPTIMAL
@@ -122,24 +106,15 @@ class Matrix
             }
         }
 
-    		//	Copy Constructor
-    		template<typename OtherValue>
-    		constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
-    			for (index_t row = 0; row < Rows; ++row) {
-    				for (index_t column = 0; column < Columns; ++column) {
-    					data_[row][column] = static_cast<Value>(_other.data_[row][column]);
-    				}
+    	//	Copy Constructor
+    	template<typename OtherValue>
+    	constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
+    		for (index_t row = 0; row < Rows; ++row) {
+    			for (index_t column = 0; column < Columns; ++column) {
+    				data_[row][column] = static_cast<Value>(_other.data_[row][column]);
     			}
     		}
-
-
-        //	Copy Constructor -- From Vector
-    		// template<typename OtherValue>
-    		// constexpr Matrix(const Vector<OtherValue, Rows>& _other) {
-    		// 	for (index_t row = 0; row < Rows; ++row) {
-    		// 	     data_[row][0] = static_cast<Value>(_other.data_[row][0]);
-    		// 	}
-    		// }
+    	}
 
         //  Construct a filled matrix
         static constexpr matrix_t Filled( const value_t& _value) {
@@ -304,8 +279,10 @@ class Matrix
         }
 
         //  Shape data accessors
-        constexpr static index_t rows = Rows;
-        constexpr static index_t columns = Columns;
+        static constexpr index_t rows = Rows;
+        static constexpr index_t columns = Columns;
+        static constexpr bool is_column_vector = (Rows > 1) && (Columns == 1);
+        static constexpr bool is_row_vector = (Rows == 1) && (Columns > 1);
 
         // TODO: ONLY VECTORS SHOULD HAVE A SINGLE ARGUMENT.  TWO DIMENSIONAL MATRICIES SHOULD HAVE
         //  AN OVERLOAD WHICH TAKES TWO INDICIES
@@ -342,15 +319,6 @@ class Matrix
             return *this;
         }
 
-        //  Matrix/Vector Addition
-        // template<typename OtherValue>
-        // constexpr matrix_t& operator += (const Vector<OtherValue, Rows>& _other) {
-        //     for(index_t row = 0; row < Rows; ++row){
-        //         data_[row][0] += _other.data_[row][0];
-        //     }
-        //     return *this;
-        // }
-
         //  Scalar Addition
         template<typename ScalarValue>
         constexpr matrix_t& operator += (const ScalarValue& v) {
@@ -374,15 +342,6 @@ class Matrix
             }
             return *this;
         }
-
-        //  Matrix/Vector Subtraction
-        // template<typename OtherValue>
-        // constexpr matrix_t& operator -= (const Vector<OtherValue, Rows>& _other) {
-        //     for(index_t row = 0; row < Rows; ++row){
-        //       data_[row][0] -= _other.data_[row][0];
-        //     }
-        //     return *this;
-        // }
 
         //  Scalar Subtraction
         template<typename ScalarValue>

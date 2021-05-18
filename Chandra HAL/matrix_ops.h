@@ -4,7 +4,7 @@
 #include <cmath>
 using namespace std;
 
-#include "matrix.h"
+#include "matrix_core.h"
 #include "matrix_vectors.h"
 
 namespace chandra
