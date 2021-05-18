@@ -25,11 +25,30 @@ class ValueProxy
             return *this;
         }
 
+        template<class V>
+        constexpr ValueProxy<Value>& operator = (const ValueProxy<V>& v) {
+            ref_ = v.value();
+            return *this;
+        }
+
         constexpr operator value_t() { return ref_; }
+
+        constexpr value_t value() const { return ref_; }
 
     private:
         value_t& ref_;
 };
+
+template<class V1, class V2>
+constexpr bool operator == (const ValueProxy<V1>& _a, const ValueProxy<V2>& _b) {
+  return _a.value() == _b.value();
+}
+
+template<class V1, class V2>
+constexpr bool operator != (const ValueProxy<V1>& _a, const ValueProxy<V2>& _b) {
+  return _a.value() != _b.value();
+}
+
 } /*namespace internal*/
 
 template<typename Value, size_t N>

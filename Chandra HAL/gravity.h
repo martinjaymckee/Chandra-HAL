@@ -6,6 +6,7 @@
 #include "geoid.h"
 #include "math_ops.h"
 #include "matrix.h"
+#include "matrix_vectors.h"
 #include "quantity.h"
 #include "units.h"
 
@@ -409,20 +410,21 @@ class VectorGravityImpl : public ScalarGravityImpl<Value, Flags, AngleUnits, Len
     using angle_t = typename base_t::angle_t;
     using length_t = typename base_t::length_t;
     using acceleration_t = typename base_t::acceleration_t;
-    using vector_t = chandra::math::Matrix<acceleration_t, 3, 1>;
+    using matrix_t = chandra::math::Matrix<acceleration_t, 3, 1>;
+    using vector_t = chandra::math::Vector<acceleration_t, 3>;
 
     using base_t::base_t; // Inherit the constructors
 
     auto vec_g0() const {
-      return vec_g_;
+      return vector_t{vec_g_};
     }
 
     auto vec_gh_asl(length_t _h_asl) const {
-      return vec_g_;
+      return vector_t{vec_g_};
     }
 
     auto vec_gh_agl(length_t _h_agl) const {
-      return vec_g_;
+      return vector_t{vec_g_};
     }
 
   protected:
