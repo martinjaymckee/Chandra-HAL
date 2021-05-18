@@ -53,15 +53,17 @@ struct IndexData<1, Columns>
 //
 // Forward Declaration of the VectorWrapper Class
 //
-template<typename Value, size_t Rows, size_t Columns>
-class VectorWrapper;
+// template<typename Value, size_t Rows, size_t Columns>
+// class VectorWrapper;
 } /*namespace internal*/
 
 //
 // Forward Declaration of the VectorWrapper Class
 //
-template<typename Value, size_t N>
-class Vector;
+// template<typename Value, size_t N>
+// class Vector;
+// template<class Value, size_t N, bool IsColumn = true>
+// class Vector;
 
 // TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
 //        THE RANDOM NUMBERS (PASS IN A RANDOM GENERATOR)
@@ -132,12 +134,12 @@ class Matrix
 
 
         //	Copy Constructor -- From Vector
-    		template<typename OtherValue>
-    		constexpr Matrix(const Vector<OtherValue, Rows>& _other) {
-    			for (index_t row = 0; row < Rows; ++row) {
-    			     data_[row][0] = static_cast<Value>(_other.data_[row][0]);
-    			}
-    		}
+    		// template<typename OtherValue>
+    		// constexpr Matrix(const Vector<OtherValue, Rows>& _other) {
+    		// 	for (index_t row = 0; row < Rows; ++row) {
+    		// 	     data_[row][0] = static_cast<Value>(_other.data_[row][0]);
+    		// 	}
+    		// }
 
         //  Construct a filled matrix
         static constexpr matrix_t Filled( const value_t& _value) {
@@ -341,13 +343,13 @@ class Matrix
         }
 
         //  Matrix/Vector Addition
-        template<typename OtherValue>
-        constexpr matrix_t& operator += (const Vector<OtherValue, Rows>& _other) {
-            for(index_t row = 0; row < Rows; ++row){
-                data_[row][0] += _other.data_[row][0];
-            }
-            return *this;
-        }
+        // template<typename OtherValue>
+        // constexpr matrix_t& operator += (const Vector<OtherValue, Rows>& _other) {
+        //     for(index_t row = 0; row < Rows; ++row){
+        //         data_[row][0] += _other.data_[row][0];
+        //     }
+        //     return *this;
+        // }
 
         //  Scalar Addition
         template<typename ScalarValue>
@@ -374,13 +376,13 @@ class Matrix
         }
 
         //  Matrix/Vector Subtraction
-        template<typename OtherValue>
-        constexpr matrix_t& operator -= (const Vector<OtherValue, Rows>& _other) {
-            for(index_t row = 0; row < Rows; ++row){
-              data_[row][0] -= _other.data_[row][0];
-            }
-            return *this;
-        }
+        // template<typename OtherValue>
+        // constexpr matrix_t& operator -= (const Vector<OtherValue, Rows>& _other) {
+        //     for(index_t row = 0; row < Rows; ++row){
+        //       data_[row][0] -= _other.data_[row][0];
+        //     }
+        //     return *this;
+        // }
 
         //  Scalar Subtraction
         template<typename ScalarValue>

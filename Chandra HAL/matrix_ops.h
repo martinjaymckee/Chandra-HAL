@@ -40,8 +40,8 @@ Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, M>& 
 
 	_stream << "[ ";
 
-    for(size_t row = 0; row < N; ++row){
-        for(size_t column = 0; column < M; ++column){
+    for(int row = 0; row < N; ++row){
+        for(int column = 0; column < M; ++column){
 			const auto v = _val(row, column);
 			_stream << ((abs(v) > epsilon) ? v : Value{ 0 });
             if(column != (M-1)) _stream << ", ";
@@ -55,7 +55,7 @@ Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, M>& 
 template<typename Stream, typename Value, size_t N>
 Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, 1, N>& _val) {
     _stream << "[ ";
-    for(size_t column = 0; column < N; ++column){
+    for(int column = 0; column < N; ++column){
         _stream << _val(column);
         if(column != (N-1)) _stream << ", ";
     }
@@ -66,7 +66,7 @@ Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, 1, N>& 
 template<typename Stream, typename Value, size_t N>
 Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, 1>& _val) {
     _stream << "[ ";
-    for(size_t column = 0; column < N; ++column){
+    for(int column = 0; column < N; ++column){
         _stream << _val(column);
         if(column != (N-1)) _stream << "; ";
     }
@@ -469,15 +469,15 @@ constexpr auto operator + (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
     return result;
 }
 
-// Matrix/Vector Addition
-template<typename V1, typename V2, size_t M, size_t N>
-constexpr auto operator + (const Matrix<V1, M, N>& a, const Vector<V2, M>& b) {
-    using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
-
-    return_t result(a);
-    result += b;
-    return result;
-}
+// // Matrix/Vector Addition
+// template<typename V1, typename V2, size_t M, size_t N>
+// constexpr auto operator + (const Matrix<V1, M, N>& a, const Vector<V2, M>& b) {
+//     using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
+//
+//     return_t result(a);
+//     result += b;
+//     return result;
+// }
 
 // Scalar Addition
 template<typename V1, typename V2, size_t M, size_t N>

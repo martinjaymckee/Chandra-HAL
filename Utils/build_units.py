@@ -51,7 +51,7 @@ unit_template = Template(
         static inline Q_${symbol}<long double> operator "" _${symbol}_ (long double _v) {
             return Q_${symbol}<long double>(_v); }
         static inline Q_${symbol}<long double> operator "" _${symbol}_ (unsigned long long int _v) {
-            return Q_${symbol}<long double>(_v); }
+            return Q_${symbol}<long double>(static_cast<long double>(_v)); }
     }
 """)
 

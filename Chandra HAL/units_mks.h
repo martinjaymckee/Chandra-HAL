@@ -36,7 +36,7 @@ namespace mks
         static inline Q_Eg<long double> operator "" _Eg_ (long double _v) {
             return Q_Eg<long double>(_v); }
         static inline Q_Eg<long double> operator "" _Eg_ (unsigned long long int _v) {
-            return Q_Eg<long double>(_v); }
+            return Q_Eg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -63,7 +63,7 @@ namespace mks
         static inline Q_Pg<long double> operator "" _Pg_ (long double _v) {
             return Q_Pg<long double>(_v); }
         static inline Q_Pg<long double> operator "" _Pg_ (unsigned long long int _v) {
-            return Q_Pg<long double>(_v); }
+            return Q_Pg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -90,7 +90,7 @@ namespace mks
         static inline Q_Tg<long double> operator "" _Tg_ (long double _v) {
             return Q_Tg<long double>(_v); }
         static inline Q_Tg<long double> operator "" _Tg_ (unsigned long long int _v) {
-            return Q_Tg<long double>(_v); }
+            return Q_Tg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -117,7 +117,7 @@ namespace mks
         static inline Q_Gg<long double> operator "" _Gg_ (long double _v) {
             return Q_Gg<long double>(_v); }
         static inline Q_Gg<long double> operator "" _Gg_ (unsigned long long int _v) {
-            return Q_Gg<long double>(_v); }
+            return Q_Gg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -144,7 +144,7 @@ namespace mks
         static inline Q_Mg<long double> operator "" _Mg_ (long double _v) {
             return Q_Mg<long double>(_v); }
         static inline Q_Mg<long double> operator "" _Mg_ (unsigned long long int _v) {
-            return Q_Mg<long double>(_v); }
+            return Q_Mg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -171,7 +171,7 @@ namespace mks
         static inline Q_kg<long double> operator "" _kg_ (long double _v) {
             return Q_kg<long double>(_v); }
         static inline Q_kg<long double> operator "" _kg_ (unsigned long long int _v) {
-            return Q_kg<long double>(_v); }
+            return Q_kg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -198,7 +198,7 @@ namespace mks
         static inline Q_hg<long double> operator "" _hg_ (long double _v) {
             return Q_hg<long double>(_v); }
         static inline Q_hg<long double> operator "" _hg_ (unsigned long long int _v) {
-            return Q_hg<long double>(_v); }
+            return Q_hg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -225,7 +225,7 @@ namespace mks
         static inline Q_dag<long double> operator "" _dag_ (long double _v) {
             return Q_dag<long double>(_v); }
         static inline Q_dag<long double> operator "" _dag_ (unsigned long long int _v) {
-            return Q_dag<long double>(_v); }
+            return Q_dag<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -252,7 +252,7 @@ namespace mks
         static inline Q_g<long double> operator "" _g_ (long double _v) {
             return Q_g<long double>(_v); }
         static inline Q_g<long double> operator "" _g_ (unsigned long long int _v) {
-            return Q_g<long double>(_v); }
+            return Q_g<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -279,7 +279,7 @@ namespace mks
         static inline Q_dg<long double> operator "" _dg_ (long double _v) {
             return Q_dg<long double>(_v); }
         static inline Q_dg<long double> operator "" _dg_ (unsigned long long int _v) {
-            return Q_dg<long double>(_v); }
+            return Q_dg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -306,7 +306,7 @@ namespace mks
         static inline Q_cg<long double> operator "" _cg_ (long double _v) {
             return Q_cg<long double>(_v); }
         static inline Q_cg<long double> operator "" _cg_ (unsigned long long int _v) {
-            return Q_cg<long double>(_v); }
+            return Q_cg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -333,7 +333,7 @@ namespace mks
         static inline Q_slug<long double> operator "" _slug_ (long double _v) {
             return Q_slug<long double>(_v); }
         static inline Q_slug<long double> operator "" _slug_ (unsigned long long int _v) {
-            return Q_slug<long double>(_v); }
+            return Q_slug<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -360,7 +360,7 @@ namespace mks
         static inline Q_EN<long double> operator "" _EN_ (long double _v) {
             return Q_EN<long double>(_v); }
         static inline Q_EN<long double> operator "" _EN_ (unsigned long long int _v) {
-            return Q_EN<long double>(_v); }
+            return Q_EN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -387,7 +387,7 @@ namespace mks
         static inline Q_PN<long double> operator "" _PN_ (long double _v) {
             return Q_PN<long double>(_v); }
         static inline Q_PN<long double> operator "" _PN_ (unsigned long long int _v) {
-            return Q_PN<long double>(_v); }
+            return Q_PN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -414,7 +414,7 @@ namespace mks
         static inline Q_TN<long double> operator "" _TN_ (long double _v) {
             return Q_TN<long double>(_v); }
         static inline Q_TN<long double> operator "" _TN_ (unsigned long long int _v) {
-            return Q_TN<long double>(_v); }
+            return Q_TN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -441,7 +441,7 @@ namespace mks
         static inline Q_GN<long double> operator "" _GN_ (long double _v) {
             return Q_GN<long double>(_v); }
         static inline Q_GN<long double> operator "" _GN_ (unsigned long long int _v) {
-            return Q_GN<long double>(_v); }
+            return Q_GN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -468,7 +468,7 @@ namespace mks
         static inline Q_MN<long double> operator "" _MN_ (long double _v) {
             return Q_MN<long double>(_v); }
         static inline Q_MN<long double> operator "" _MN_ (unsigned long long int _v) {
-            return Q_MN<long double>(_v); }
+            return Q_MN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -495,7 +495,7 @@ namespace mks
         static inline Q_kN<long double> operator "" _kN_ (long double _v) {
             return Q_kN<long double>(_v); }
         static inline Q_kN<long double> operator "" _kN_ (unsigned long long int _v) {
-            return Q_kN<long double>(_v); }
+            return Q_kN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -522,7 +522,7 @@ namespace mks
         static inline Q_hN<long double> operator "" _hN_ (long double _v) {
             return Q_hN<long double>(_v); }
         static inline Q_hN<long double> operator "" _hN_ (unsigned long long int _v) {
-            return Q_hN<long double>(_v); }
+            return Q_hN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -549,7 +549,7 @@ namespace mks
         static inline Q_daN<long double> operator "" _daN_ (long double _v) {
             return Q_daN<long double>(_v); }
         static inline Q_daN<long double> operator "" _daN_ (unsigned long long int _v) {
-            return Q_daN<long double>(_v); }
+            return Q_daN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -576,7 +576,7 @@ namespace mks
         static inline Q_N<long double> operator "" _N_ (long double _v) {
             return Q_N<long double>(_v); }
         static inline Q_N<long double> operator "" _N_ (unsigned long long int _v) {
-            return Q_N<long double>(_v); }
+            return Q_N<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -603,7 +603,7 @@ namespace mks
         static inline Q_dN<long double> operator "" _dN_ (long double _v) {
             return Q_dN<long double>(_v); }
         static inline Q_dN<long double> operator "" _dN_ (unsigned long long int _v) {
-            return Q_dN<long double>(_v); }
+            return Q_dN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -630,7 +630,7 @@ namespace mks
         static inline Q_cN<long double> operator "" _cN_ (long double _v) {
             return Q_cN<long double>(_v); }
         static inline Q_cN<long double> operator "" _cN_ (unsigned long long int _v) {
-            return Q_cN<long double>(_v); }
+            return Q_cN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -657,7 +657,7 @@ namespace mks
         static inline Q_mN<long double> operator "" _mN_ (long double _v) {
             return Q_mN<long double>(_v); }
         static inline Q_mN<long double> operator "" _mN_ (unsigned long long int _v) {
-            return Q_mN<long double>(_v); }
+            return Q_mN<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -684,7 +684,7 @@ namespace mks
         static inline Q_Egf<long double> operator "" _Egf_ (long double _v) {
             return Q_Egf<long double>(_v); }
         static inline Q_Egf<long double> operator "" _Egf_ (unsigned long long int _v) {
-            return Q_Egf<long double>(_v); }
+            return Q_Egf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -711,7 +711,7 @@ namespace mks
         static inline Q_Pgf<long double> operator "" _Pgf_ (long double _v) {
             return Q_Pgf<long double>(_v); }
         static inline Q_Pgf<long double> operator "" _Pgf_ (unsigned long long int _v) {
-            return Q_Pgf<long double>(_v); }
+            return Q_Pgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -738,7 +738,7 @@ namespace mks
         static inline Q_Tgf<long double> operator "" _Tgf_ (long double _v) {
             return Q_Tgf<long double>(_v); }
         static inline Q_Tgf<long double> operator "" _Tgf_ (unsigned long long int _v) {
-            return Q_Tgf<long double>(_v); }
+            return Q_Tgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -765,7 +765,7 @@ namespace mks
         static inline Q_Ggf<long double> operator "" _Ggf_ (long double _v) {
             return Q_Ggf<long double>(_v); }
         static inline Q_Ggf<long double> operator "" _Ggf_ (unsigned long long int _v) {
-            return Q_Ggf<long double>(_v); }
+            return Q_Ggf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -792,7 +792,7 @@ namespace mks
         static inline Q_Mgf<long double> operator "" _Mgf_ (long double _v) {
             return Q_Mgf<long double>(_v); }
         static inline Q_Mgf<long double> operator "" _Mgf_ (unsigned long long int _v) {
-            return Q_Mgf<long double>(_v); }
+            return Q_Mgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -819,7 +819,7 @@ namespace mks
         static inline Q_kgf<long double> operator "" _kgf_ (long double _v) {
             return Q_kgf<long double>(_v); }
         static inline Q_kgf<long double> operator "" _kgf_ (unsigned long long int _v) {
-            return Q_kgf<long double>(_v); }
+            return Q_kgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -846,7 +846,7 @@ namespace mks
         static inline Q_hgf<long double> operator "" _hgf_ (long double _v) {
             return Q_hgf<long double>(_v); }
         static inline Q_hgf<long double> operator "" _hgf_ (unsigned long long int _v) {
-            return Q_hgf<long double>(_v); }
+            return Q_hgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -873,7 +873,7 @@ namespace mks
         static inline Q_dagf<long double> operator "" _dagf_ (long double _v) {
             return Q_dagf<long double>(_v); }
         static inline Q_dagf<long double> operator "" _dagf_ (unsigned long long int _v) {
-            return Q_dagf<long double>(_v); }
+            return Q_dagf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -900,7 +900,7 @@ namespace mks
         static inline Q_gf<long double> operator "" _gf_ (long double _v) {
             return Q_gf<long double>(_v); }
         static inline Q_gf<long double> operator "" _gf_ (unsigned long long int _v) {
-            return Q_gf<long double>(_v); }
+            return Q_gf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -927,7 +927,7 @@ namespace mks
         static inline Q_dgf<long double> operator "" _dgf_ (long double _v) {
             return Q_dgf<long double>(_v); }
         static inline Q_dgf<long double> operator "" _dgf_ (unsigned long long int _v) {
-            return Q_dgf<long double>(_v); }
+            return Q_dgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -954,7 +954,7 @@ namespace mks
         static inline Q_cgf<long double> operator "" _cgf_ (long double _v) {
             return Q_cgf<long double>(_v); }
         static inline Q_cgf<long double> operator "" _cgf_ (unsigned long long int _v) {
-            return Q_cgf<long double>(_v); }
+            return Q_cgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -981,7 +981,7 @@ namespace mks
         static inline Q_mgf<long double> operator "" _mgf_ (long double _v) {
             return Q_mgf<long double>(_v); }
         static inline Q_mgf<long double> operator "" _mgf_ (unsigned long long int _v) {
-            return Q_mgf<long double>(_v); }
+            return Q_mgf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1008,7 +1008,7 @@ namespace mks
         static inline Q_lb<long double> operator "" _lb_ (long double _v) {
             return Q_lb<long double>(_v); }
         static inline Q_lb<long double> operator "" _lb_ (unsigned long long int _v) {
-            return Q_lb<long double>(_v); }
+            return Q_lb<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1035,7 +1035,7 @@ namespace mks
         static inline Q_pdl<long double> operator "" _pdl_ (long double _v) {
             return Q_pdl<long double>(_v); }
         static inline Q_pdl<long double> operator "" _pdl_ (unsigned long long int _v) {
-            return Q_pdl<long double>(_v); }
+            return Q_pdl<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1062,7 +1062,7 @@ namespace mks
         static inline Q_Em<long double> operator "" _Em_ (long double _v) {
             return Q_Em<long double>(_v); }
         static inline Q_Em<long double> operator "" _Em_ (unsigned long long int _v) {
-            return Q_Em<long double>(_v); }
+            return Q_Em<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1089,7 +1089,7 @@ namespace mks
         static inline Q_Pm<long double> operator "" _Pm_ (long double _v) {
             return Q_Pm<long double>(_v); }
         static inline Q_Pm<long double> operator "" _Pm_ (unsigned long long int _v) {
-            return Q_Pm<long double>(_v); }
+            return Q_Pm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1116,7 +1116,7 @@ namespace mks
         static inline Q_Tm<long double> operator "" _Tm_ (long double _v) {
             return Q_Tm<long double>(_v); }
         static inline Q_Tm<long double> operator "" _Tm_ (unsigned long long int _v) {
-            return Q_Tm<long double>(_v); }
+            return Q_Tm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1143,7 +1143,7 @@ namespace mks
         static inline Q_Gm<long double> operator "" _Gm_ (long double _v) {
             return Q_Gm<long double>(_v); }
         static inline Q_Gm<long double> operator "" _Gm_ (unsigned long long int _v) {
-            return Q_Gm<long double>(_v); }
+            return Q_Gm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1170,7 +1170,7 @@ namespace mks
         static inline Q_Mm<long double> operator "" _Mm_ (long double _v) {
             return Q_Mm<long double>(_v); }
         static inline Q_Mm<long double> operator "" _Mm_ (unsigned long long int _v) {
-            return Q_Mm<long double>(_v); }
+            return Q_Mm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1197,7 +1197,7 @@ namespace mks
         static inline Q_km<long double> operator "" _km_ (long double _v) {
             return Q_km<long double>(_v); }
         static inline Q_km<long double> operator "" _km_ (unsigned long long int _v) {
-            return Q_km<long double>(_v); }
+            return Q_km<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1224,7 +1224,7 @@ namespace mks
         static inline Q_hm<long double> operator "" _hm_ (long double _v) {
             return Q_hm<long double>(_v); }
         static inline Q_hm<long double> operator "" _hm_ (unsigned long long int _v) {
-            return Q_hm<long double>(_v); }
+            return Q_hm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1251,7 +1251,7 @@ namespace mks
         static inline Q_dam<long double> operator "" _dam_ (long double _v) {
             return Q_dam<long double>(_v); }
         static inline Q_dam<long double> operator "" _dam_ (unsigned long long int _v) {
-            return Q_dam<long double>(_v); }
+            return Q_dam<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1278,7 +1278,7 @@ namespace mks
         static inline Q_m<long double> operator "" _m_ (long double _v) {
             return Q_m<long double>(_v); }
         static inline Q_m<long double> operator "" _m_ (unsigned long long int _v) {
-            return Q_m<long double>(_v); }
+            return Q_m<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1305,7 +1305,7 @@ namespace mks
         static inline Q_dm<long double> operator "" _dm_ (long double _v) {
             return Q_dm<long double>(_v); }
         static inline Q_dm<long double> operator "" _dm_ (unsigned long long int _v) {
-            return Q_dm<long double>(_v); }
+            return Q_dm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1332,7 +1332,7 @@ namespace mks
         static inline Q_cm<long double> operator "" _cm_ (long double _v) {
             return Q_cm<long double>(_v); }
         static inline Q_cm<long double> operator "" _cm_ (unsigned long long int _v) {
-            return Q_cm<long double>(_v); }
+            return Q_cm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1359,7 +1359,7 @@ namespace mks
         static inline Q_mm<long double> operator "" _mm_ (long double _v) {
             return Q_mm<long double>(_v); }
         static inline Q_mm<long double> operator "" _mm_ (unsigned long long int _v) {
-            return Q_mm<long double>(_v); }
+            return Q_mm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1386,7 +1386,7 @@ namespace mks
         static inline Q_mi<long double> operator "" _mi_ (long double _v) {
             return Q_mi<long double>(_v); }
         static inline Q_mi<long double> operator "" _mi_ (unsigned long long int _v) {
-            return Q_mi<long double>(_v); }
+            return Q_mi<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1413,7 +1413,7 @@ namespace mks
         static inline Q_yd<long double> operator "" _yd_ (long double _v) {
             return Q_yd<long double>(_v); }
         static inline Q_yd<long double> operator "" _yd_ (unsigned long long int _v) {
-            return Q_yd<long double>(_v); }
+            return Q_yd<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1440,7 +1440,7 @@ namespace mks
         static inline Q_ft<long double> operator "" _ft_ (long double _v) {
             return Q_ft<long double>(_v); }
         static inline Q_ft<long double> operator "" _ft_ (unsigned long long int _v) {
-            return Q_ft<long double>(_v); }
+            return Q_ft<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1467,7 +1467,7 @@ namespace mks
         static inline Q_in<long double> operator "" _in_ (long double _v) {
             return Q_in<long double>(_v); }
         static inline Q_in<long double> operator "" _in_ (unsigned long long int _v) {
-            return Q_in<long double>(_v); }
+            return Q_in<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1494,7 +1494,7 @@ namespace mks
         static inline Q_Gm2<long double> operator "" _Gm2_ (long double _v) {
             return Q_Gm2<long double>(_v); }
         static inline Q_Gm2<long double> operator "" _Gm2_ (unsigned long long int _v) {
-            return Q_Gm2<long double>(_v); }
+            return Q_Gm2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1521,7 +1521,7 @@ namespace mks
         static inline Q_Mm2<long double> operator "" _Mm2_ (long double _v) {
             return Q_Mm2<long double>(_v); }
         static inline Q_Mm2<long double> operator "" _Mm2_ (unsigned long long int _v) {
-            return Q_Mm2<long double>(_v); }
+            return Q_Mm2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1548,7 +1548,7 @@ namespace mks
         static inline Q_km2<long double> operator "" _km2_ (long double _v) {
             return Q_km2<long double>(_v); }
         static inline Q_km2<long double> operator "" _km2_ (unsigned long long int _v) {
-            return Q_km2<long double>(_v); }
+            return Q_km2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1575,7 +1575,7 @@ namespace mks
         static inline Q_hm2<long double> operator "" _hm2_ (long double _v) {
             return Q_hm2<long double>(_v); }
         static inline Q_hm2<long double> operator "" _hm2_ (unsigned long long int _v) {
-            return Q_hm2<long double>(_v); }
+            return Q_hm2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1602,7 +1602,7 @@ namespace mks
         static inline Q_dam2<long double> operator "" _dam2_ (long double _v) {
             return Q_dam2<long double>(_v); }
         static inline Q_dam2<long double> operator "" _dam2_ (unsigned long long int _v) {
-            return Q_dam2<long double>(_v); }
+            return Q_dam2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1629,7 +1629,7 @@ namespace mks
         static inline Q_m2<long double> operator "" _m2_ (long double _v) {
             return Q_m2<long double>(_v); }
         static inline Q_m2<long double> operator "" _m2_ (unsigned long long int _v) {
-            return Q_m2<long double>(_v); }
+            return Q_m2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1656,7 +1656,7 @@ namespace mks
         static inline Q_dm2<long double> operator "" _dm2_ (long double _v) {
             return Q_dm2<long double>(_v); }
         static inline Q_dm2<long double> operator "" _dm2_ (unsigned long long int _v) {
-            return Q_dm2<long double>(_v); }
+            return Q_dm2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1683,7 +1683,7 @@ namespace mks
         static inline Q_cm2<long double> operator "" _cm2_ (long double _v) {
             return Q_cm2<long double>(_v); }
         static inline Q_cm2<long double> operator "" _cm2_ (unsigned long long int _v) {
-            return Q_cm2<long double>(_v); }
+            return Q_cm2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1710,7 +1710,7 @@ namespace mks
         static inline Q_mi2<long double> operator "" _mi2_ (long double _v) {
             return Q_mi2<long double>(_v); }
         static inline Q_mi2<long double> operator "" _mi2_ (unsigned long long int _v) {
-            return Q_mi2<long double>(_v); }
+            return Q_mi2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1737,7 +1737,7 @@ namespace mks
         static inline Q_yd2<long double> operator "" _yd2_ (long double _v) {
             return Q_yd2<long double>(_v); }
         static inline Q_yd2<long double> operator "" _yd2_ (unsigned long long int _v) {
-            return Q_yd2<long double>(_v); }
+            return Q_yd2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1764,7 +1764,7 @@ namespace mks
         static inline Q_ft2<long double> operator "" _ft2_ (long double _v) {
             return Q_ft2<long double>(_v); }
         static inline Q_ft2<long double> operator "" _ft2_ (unsigned long long int _v) {
-            return Q_ft2<long double>(_v); }
+            return Q_ft2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1791,7 +1791,7 @@ namespace mks
         static inline Q_in2<long double> operator "" _in2_ (long double _v) {
             return Q_in2<long double>(_v); }
         static inline Q_in2<long double> operator "" _in2_ (unsigned long long int _v) {
-            return Q_in2<long double>(_v); }
+            return Q_in2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1818,7 +1818,7 @@ namespace mks
         static inline Q_Mm3<long double> operator "" _Mm3_ (long double _v) {
             return Q_Mm3<long double>(_v); }
         static inline Q_Mm3<long double> operator "" _Mm3_ (unsigned long long int _v) {
-            return Q_Mm3<long double>(_v); }
+            return Q_Mm3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1845,7 +1845,7 @@ namespace mks
         static inline Q_km3<long double> operator "" _km3_ (long double _v) {
             return Q_km3<long double>(_v); }
         static inline Q_km3<long double> operator "" _km3_ (unsigned long long int _v) {
-            return Q_km3<long double>(_v); }
+            return Q_km3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1872,7 +1872,7 @@ namespace mks
         static inline Q_hm3<long double> operator "" _hm3_ (long double _v) {
             return Q_hm3<long double>(_v); }
         static inline Q_hm3<long double> operator "" _hm3_ (unsigned long long int _v) {
-            return Q_hm3<long double>(_v); }
+            return Q_hm3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1899,7 +1899,7 @@ namespace mks
         static inline Q_dam3<long double> operator "" _dam3_ (long double _v) {
             return Q_dam3<long double>(_v); }
         static inline Q_dam3<long double> operator "" _dam3_ (unsigned long long int _v) {
-            return Q_dam3<long double>(_v); }
+            return Q_dam3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1926,7 +1926,7 @@ namespace mks
         static inline Q_m3<long double> operator "" _m3_ (long double _v) {
             return Q_m3<long double>(_v); }
         static inline Q_m3<long double> operator "" _m3_ (unsigned long long int _v) {
-            return Q_m3<long double>(_v); }
+            return Q_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1953,7 +1953,7 @@ namespace mks
         static inline Q_dm3<long double> operator "" _dm3_ (long double _v) {
             return Q_dm3<long double>(_v); }
         static inline Q_dm3<long double> operator "" _dm3_ (unsigned long long int _v) {
-            return Q_dm3<long double>(_v); }
+            return Q_dm3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -1980,7 +1980,7 @@ namespace mks
         static inline Q_cm3<long double> operator "" _cm3_ (long double _v) {
             return Q_cm3<long double>(_v); }
         static inline Q_cm3<long double> operator "" _cm3_ (unsigned long long int _v) {
-            return Q_cm3<long double>(_v); }
+            return Q_cm3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2007,7 +2007,7 @@ namespace mks
         static inline Q_mi3<long double> operator "" _mi3_ (long double _v) {
             return Q_mi3<long double>(_v); }
         static inline Q_mi3<long double> operator "" _mi3_ (unsigned long long int _v) {
-            return Q_mi3<long double>(_v); }
+            return Q_mi3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2034,7 +2034,7 @@ namespace mks
         static inline Q_yd3<long double> operator "" _yd3_ (long double _v) {
             return Q_yd3<long double>(_v); }
         static inline Q_yd3<long double> operator "" _yd3_ (unsigned long long int _v) {
-            return Q_yd3<long double>(_v); }
+            return Q_yd3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2061,7 +2061,7 @@ namespace mks
         static inline Q_ft3<long double> operator "" _ft3_ (long double _v) {
             return Q_ft3<long double>(_v); }
         static inline Q_ft3<long double> operator "" _ft3_ (unsigned long long int _v) {
-            return Q_ft3<long double>(_v); }
+            return Q_ft3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2088,7 +2088,7 @@ namespace mks
         static inline Q_in3<long double> operator "" _in3_ (long double _v) {
             return Q_in3<long double>(_v); }
         static inline Q_in3<long double> operator "" _in3_ (unsigned long long int _v) {
-            return Q_in3<long double>(_v); }
+            return Q_in3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2115,7 +2115,7 @@ namespace mks
         static inline Q_mol<long double> operator "" _mol_ (long double _v) {
             return Q_mol<long double>(_v); }
         static inline Q_mol<long double> operator "" _mol_ (unsigned long long int _v) {
-            return Q_mol<long double>(_v); }
+            return Q_mol<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2142,7 +2142,7 @@ namespace mks
         static inline Q_Eg_per_m3<long double> operator "" _Eg_per_m3_ (long double _v) {
             return Q_Eg_per_m3<long double>(_v); }
         static inline Q_Eg_per_m3<long double> operator "" _Eg_per_m3_ (unsigned long long int _v) {
-            return Q_Eg_per_m3<long double>(_v); }
+            return Q_Eg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2169,7 +2169,7 @@ namespace mks
         static inline Q_Pg_per_m3<long double> operator "" _Pg_per_m3_ (long double _v) {
             return Q_Pg_per_m3<long double>(_v); }
         static inline Q_Pg_per_m3<long double> operator "" _Pg_per_m3_ (unsigned long long int _v) {
-            return Q_Pg_per_m3<long double>(_v); }
+            return Q_Pg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2196,7 +2196,7 @@ namespace mks
         static inline Q_Tg_per_m3<long double> operator "" _Tg_per_m3_ (long double _v) {
             return Q_Tg_per_m3<long double>(_v); }
         static inline Q_Tg_per_m3<long double> operator "" _Tg_per_m3_ (unsigned long long int _v) {
-            return Q_Tg_per_m3<long double>(_v); }
+            return Q_Tg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2223,7 +2223,7 @@ namespace mks
         static inline Q_Gg_per_m3<long double> operator "" _Gg_per_m3_ (long double _v) {
             return Q_Gg_per_m3<long double>(_v); }
         static inline Q_Gg_per_m3<long double> operator "" _Gg_per_m3_ (unsigned long long int _v) {
-            return Q_Gg_per_m3<long double>(_v); }
+            return Q_Gg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2250,7 +2250,7 @@ namespace mks
         static inline Q_Mg_per_m3<long double> operator "" _Mg_per_m3_ (long double _v) {
             return Q_Mg_per_m3<long double>(_v); }
         static inline Q_Mg_per_m3<long double> operator "" _Mg_per_m3_ (unsigned long long int _v) {
-            return Q_Mg_per_m3<long double>(_v); }
+            return Q_Mg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2277,7 +2277,7 @@ namespace mks
         static inline Q_kg_per_m3<long double> operator "" _kg_per_m3_ (long double _v) {
             return Q_kg_per_m3<long double>(_v); }
         static inline Q_kg_per_m3<long double> operator "" _kg_per_m3_ (unsigned long long int _v) {
-            return Q_kg_per_m3<long double>(_v); }
+            return Q_kg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2304,7 +2304,7 @@ namespace mks
         static inline Q_hg_per_m3<long double> operator "" _hg_per_m3_ (long double _v) {
             return Q_hg_per_m3<long double>(_v); }
         static inline Q_hg_per_m3<long double> operator "" _hg_per_m3_ (unsigned long long int _v) {
-            return Q_hg_per_m3<long double>(_v); }
+            return Q_hg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2331,7 +2331,7 @@ namespace mks
         static inline Q_dag_per_m3<long double> operator "" _dag_per_m3_ (long double _v) {
             return Q_dag_per_m3<long double>(_v); }
         static inline Q_dag_per_m3<long double> operator "" _dag_per_m3_ (unsigned long long int _v) {
-            return Q_dag_per_m3<long double>(_v); }
+            return Q_dag_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2358,7 +2358,7 @@ namespace mks
         static inline Q_g_per_m3<long double> operator "" _g_per_m3_ (long double _v) {
             return Q_g_per_m3<long double>(_v); }
         static inline Q_g_per_m3<long double> operator "" _g_per_m3_ (unsigned long long int _v) {
-            return Q_g_per_m3<long double>(_v); }
+            return Q_g_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2385,7 +2385,7 @@ namespace mks
         static inline Q_dg_per_m3<long double> operator "" _dg_per_m3_ (long double _v) {
             return Q_dg_per_m3<long double>(_v); }
         static inline Q_dg_per_m3<long double> operator "" _dg_per_m3_ (unsigned long long int _v) {
-            return Q_dg_per_m3<long double>(_v); }
+            return Q_dg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2412,7 +2412,7 @@ namespace mks
         static inline Q_cg_per_m3<long double> operator "" _cg_per_m3_ (long double _v) {
             return Q_cg_per_m3<long double>(_v); }
         static inline Q_cg_per_m3<long double> operator "" _cg_per_m3_ (unsigned long long int _v) {
-            return Q_cg_per_m3<long double>(_v); }
+            return Q_cg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2439,7 +2439,7 @@ namespace mks
         static inline Q_Pg_per_cc<long double> operator "" _Pg_per_cc_ (long double _v) {
             return Q_Pg_per_cc<long double>(_v); }
         static inline Q_Pg_per_cc<long double> operator "" _Pg_per_cc_ (unsigned long long int _v) {
-            return Q_Pg_per_cc<long double>(_v); }
+            return Q_Pg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2466,7 +2466,7 @@ namespace mks
         static inline Q_Tg_per_cc<long double> operator "" _Tg_per_cc_ (long double _v) {
             return Q_Tg_per_cc<long double>(_v); }
         static inline Q_Tg_per_cc<long double> operator "" _Tg_per_cc_ (unsigned long long int _v) {
-            return Q_Tg_per_cc<long double>(_v); }
+            return Q_Tg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2493,7 +2493,7 @@ namespace mks
         static inline Q_Gg_per_cc<long double> operator "" _Gg_per_cc_ (long double _v) {
             return Q_Gg_per_cc<long double>(_v); }
         static inline Q_Gg_per_cc<long double> operator "" _Gg_per_cc_ (unsigned long long int _v) {
-            return Q_Gg_per_cc<long double>(_v); }
+            return Q_Gg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2520,7 +2520,7 @@ namespace mks
         static inline Q_Mg_per_cc<long double> operator "" _Mg_per_cc_ (long double _v) {
             return Q_Mg_per_cc<long double>(_v); }
         static inline Q_Mg_per_cc<long double> operator "" _Mg_per_cc_ (unsigned long long int _v) {
-            return Q_Mg_per_cc<long double>(_v); }
+            return Q_Mg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2547,7 +2547,7 @@ namespace mks
         static inline Q_kg_per_cc<long double> operator "" _kg_per_cc_ (long double _v) {
             return Q_kg_per_cc<long double>(_v); }
         static inline Q_kg_per_cc<long double> operator "" _kg_per_cc_ (unsigned long long int _v) {
-            return Q_kg_per_cc<long double>(_v); }
+            return Q_kg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2574,7 +2574,7 @@ namespace mks
         static inline Q_hg_per_cc<long double> operator "" _hg_per_cc_ (long double _v) {
             return Q_hg_per_cc<long double>(_v); }
         static inline Q_hg_per_cc<long double> operator "" _hg_per_cc_ (unsigned long long int _v) {
-            return Q_hg_per_cc<long double>(_v); }
+            return Q_hg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2601,7 +2601,7 @@ namespace mks
         static inline Q_dag_per_cc<long double> operator "" _dag_per_cc_ (long double _v) {
             return Q_dag_per_cc<long double>(_v); }
         static inline Q_dag_per_cc<long double> operator "" _dag_per_cc_ (unsigned long long int _v) {
-            return Q_dag_per_cc<long double>(_v); }
+            return Q_dag_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2628,7 +2628,7 @@ namespace mks
         static inline Q_g_per_cc<long double> operator "" _g_per_cc_ (long double _v) {
             return Q_g_per_cc<long double>(_v); }
         static inline Q_g_per_cc<long double> operator "" _g_per_cc_ (unsigned long long int _v) {
-            return Q_g_per_cc<long double>(_v); }
+            return Q_g_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2655,7 +2655,7 @@ namespace mks
         static inline Q_dg_per_cc<long double> operator "" _dg_per_cc_ (long double _v) {
             return Q_dg_per_cc<long double>(_v); }
         static inline Q_dg_per_cc<long double> operator "" _dg_per_cc_ (unsigned long long int _v) {
-            return Q_dg_per_cc<long double>(_v); }
+            return Q_dg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2682,7 +2682,7 @@ namespace mks
         static inline Q_cg_per_cc<long double> operator "" _cg_per_cc_ (long double _v) {
             return Q_cg_per_cc<long double>(_v); }
         static inline Q_cg_per_cc<long double> operator "" _cg_per_cc_ (unsigned long long int _v) {
-            return Q_cg_per_cc<long double>(_v); }
+            return Q_cg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2709,7 +2709,7 @@ namespace mks
         static inline Q_mg_per_cc<long double> operator "" _mg_per_cc_ (long double _v) {
             return Q_mg_per_cc<long double>(_v); }
         static inline Q_mg_per_cc<long double> operator "" _mg_per_cc_ (unsigned long long int _v) {
-            return Q_mg_per_cc<long double>(_v); }
+            return Q_mg_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2736,7 +2736,7 @@ namespace mks
         static inline Q_ug_per_cc<long double> operator "" _ug_per_cc_ (long double _v) {
             return Q_ug_per_cc<long double>(_v); }
         static inline Q_ug_per_cc<long double> operator "" _ug_per_cc_ (unsigned long long int _v) {
-            return Q_ug_per_cc<long double>(_v); }
+            return Q_ug_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2763,7 +2763,7 @@ namespace mks
         static inline Q_ng_per_cc<long double> operator "" _ng_per_cc_ (long double _v) {
             return Q_ng_per_cc<long double>(_v); }
         static inline Q_ng_per_cc<long double> operator "" _ng_per_cc_ (unsigned long long int _v) {
-            return Q_ng_per_cc<long double>(_v); }
+            return Q_ng_per_cc<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2790,7 +2790,7 @@ namespace mks
         static inline Q_EJ<long double> operator "" _EJ_ (long double _v) {
             return Q_EJ<long double>(_v); }
         static inline Q_EJ<long double> operator "" _EJ_ (unsigned long long int _v) {
-            return Q_EJ<long double>(_v); }
+            return Q_EJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2817,7 +2817,7 @@ namespace mks
         static inline Q_PJ<long double> operator "" _PJ_ (long double _v) {
             return Q_PJ<long double>(_v); }
         static inline Q_PJ<long double> operator "" _PJ_ (unsigned long long int _v) {
-            return Q_PJ<long double>(_v); }
+            return Q_PJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2844,7 +2844,7 @@ namespace mks
         static inline Q_TJ<long double> operator "" _TJ_ (long double _v) {
             return Q_TJ<long double>(_v); }
         static inline Q_TJ<long double> operator "" _TJ_ (unsigned long long int _v) {
-            return Q_TJ<long double>(_v); }
+            return Q_TJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2871,7 +2871,7 @@ namespace mks
         static inline Q_GJ<long double> operator "" _GJ_ (long double _v) {
             return Q_GJ<long double>(_v); }
         static inline Q_GJ<long double> operator "" _GJ_ (unsigned long long int _v) {
-            return Q_GJ<long double>(_v); }
+            return Q_GJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2898,7 +2898,7 @@ namespace mks
         static inline Q_MJ<long double> operator "" _MJ_ (long double _v) {
             return Q_MJ<long double>(_v); }
         static inline Q_MJ<long double> operator "" _MJ_ (unsigned long long int _v) {
-            return Q_MJ<long double>(_v); }
+            return Q_MJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2925,7 +2925,7 @@ namespace mks
         static inline Q_kJ<long double> operator "" _kJ_ (long double _v) {
             return Q_kJ<long double>(_v); }
         static inline Q_kJ<long double> operator "" _kJ_ (unsigned long long int _v) {
-            return Q_kJ<long double>(_v); }
+            return Q_kJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2952,7 +2952,7 @@ namespace mks
         static inline Q_hJ<long double> operator "" _hJ_ (long double _v) {
             return Q_hJ<long double>(_v); }
         static inline Q_hJ<long double> operator "" _hJ_ (unsigned long long int _v) {
-            return Q_hJ<long double>(_v); }
+            return Q_hJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -2979,7 +2979,7 @@ namespace mks
         static inline Q_daJ<long double> operator "" _daJ_ (long double _v) {
             return Q_daJ<long double>(_v); }
         static inline Q_daJ<long double> operator "" _daJ_ (unsigned long long int _v) {
-            return Q_daJ<long double>(_v); }
+            return Q_daJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3006,7 +3006,7 @@ namespace mks
         static inline Q_J<long double> operator "" _J_ (long double _v) {
             return Q_J<long double>(_v); }
         static inline Q_J<long double> operator "" _J_ (unsigned long long int _v) {
-            return Q_J<long double>(_v); }
+            return Q_J<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3033,7 +3033,7 @@ namespace mks
         static inline Q_dJ<long double> operator "" _dJ_ (long double _v) {
             return Q_dJ<long double>(_v); }
         static inline Q_dJ<long double> operator "" _dJ_ (unsigned long long int _v) {
-            return Q_dJ<long double>(_v); }
+            return Q_dJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3060,7 +3060,7 @@ namespace mks
         static inline Q_cJ<long double> operator "" _cJ_ (long double _v) {
             return Q_cJ<long double>(_v); }
         static inline Q_cJ<long double> operator "" _cJ_ (unsigned long long int _v) {
-            return Q_cJ<long double>(_v); }
+            return Q_cJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3087,7 +3087,7 @@ namespace mks
         static inline Q_mJ<long double> operator "" _mJ_ (long double _v) {
             return Q_mJ<long double>(_v); }
         static inline Q_mJ<long double> operator "" _mJ_ (unsigned long long int _v) {
-            return Q_mJ<long double>(_v); }
+            return Q_mJ<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3114,7 +3114,7 @@ namespace mks
         static inline Q_eV<long double> operator "" _eV_ (long double _v) {
             return Q_eV<long double>(_v); }
         static inline Q_eV<long double> operator "" _eV_ (unsigned long long int _v) {
-            return Q_eV<long double>(_v); }
+            return Q_eV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3141,7 +3141,7 @@ namespace mks
         static inline Q_ft_lbf<long double> operator "" _ft_lbf_ (long double _v) {
             return Q_ft_lbf<long double>(_v); }
         static inline Q_ft_lbf<long double> operator "" _ft_lbf_ (unsigned long long int _v) {
-            return Q_ft_lbf<long double>(_v); }
+            return Q_ft_lbf<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3168,7 +3168,7 @@ namespace mks
         static inline Q_BTU<long double> operator "" _BTU_ (long double _v) {
             return Q_BTU<long double>(_v); }
         static inline Q_BTU<long double> operator "" _BTU_ (unsigned long long int _v) {
-            return Q_BTU<long double>(_v); }
+            return Q_BTU<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3195,7 +3195,7 @@ namespace mks
         static inline Q_kWh<long double> operator "" _kWh_ (long double _v) {
             return Q_kWh<long double>(_v); }
         static inline Q_kWh<long double> operator "" _kWh_ (unsigned long long int _v) {
-            return Q_kWh<long double>(_v); }
+            return Q_kWh<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3222,7 +3222,7 @@ namespace mks
         static inline Q_Ha<long double> operator "" _Ha_ (long double _v) {
             return Q_Ha<long double>(_v); }
         static inline Q_Ha<long double> operator "" _Ha_ (unsigned long long int _v) {
-            return Q_Ha<long double>(_v); }
+            return Q_Ha<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3249,7 +3249,7 @@ namespace mks
         static inline Q_Ry<long double> operator "" _Ry_ (long double _v) {
             return Q_Ry<long double>(_v); }
         static inline Q_Ry<long double> operator "" _Ry_ (unsigned long long int _v) {
-            return Q_Ry<long double>(_v); }
+            return Q_Ry<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3276,7 +3276,7 @@ namespace mks
         static inline Q_Es<long double> operator "" _Es_ (long double _v) {
             return Q_Es<long double>(_v); }
         static inline Q_Es<long double> operator "" _Es_ (unsigned long long int _v) {
-            return Q_Es<long double>(_v); }
+            return Q_Es<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3303,7 +3303,7 @@ namespace mks
         static inline Q_Ps<long double> operator "" _Ps_ (long double _v) {
             return Q_Ps<long double>(_v); }
         static inline Q_Ps<long double> operator "" _Ps_ (unsigned long long int _v) {
-            return Q_Ps<long double>(_v); }
+            return Q_Ps<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3330,7 +3330,7 @@ namespace mks
         static inline Q_Ts<long double> operator "" _Ts_ (long double _v) {
             return Q_Ts<long double>(_v); }
         static inline Q_Ts<long double> operator "" _Ts_ (unsigned long long int _v) {
-            return Q_Ts<long double>(_v); }
+            return Q_Ts<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3357,7 +3357,7 @@ namespace mks
         static inline Q_Gs<long double> operator "" _Gs_ (long double _v) {
             return Q_Gs<long double>(_v); }
         static inline Q_Gs<long double> operator "" _Gs_ (unsigned long long int _v) {
-            return Q_Gs<long double>(_v); }
+            return Q_Gs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3384,7 +3384,7 @@ namespace mks
         static inline Q_Ms<long double> operator "" _Ms_ (long double _v) {
             return Q_Ms<long double>(_v); }
         static inline Q_Ms<long double> operator "" _Ms_ (unsigned long long int _v) {
-            return Q_Ms<long double>(_v); }
+            return Q_Ms<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3411,7 +3411,7 @@ namespace mks
         static inline Q_ks<long double> operator "" _ks_ (long double _v) {
             return Q_ks<long double>(_v); }
         static inline Q_ks<long double> operator "" _ks_ (unsigned long long int _v) {
-            return Q_ks<long double>(_v); }
+            return Q_ks<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3438,7 +3438,7 @@ namespace mks
         static inline Q_hs<long double> operator "" _hs_ (long double _v) {
             return Q_hs<long double>(_v); }
         static inline Q_hs<long double> operator "" _hs_ (unsigned long long int _v) {
-            return Q_hs<long double>(_v); }
+            return Q_hs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3465,7 +3465,7 @@ namespace mks
         static inline Q_das<long double> operator "" _das_ (long double _v) {
             return Q_das<long double>(_v); }
         static inline Q_das<long double> operator "" _das_ (unsigned long long int _v) {
-            return Q_das<long double>(_v); }
+            return Q_das<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3492,7 +3492,7 @@ namespace mks
         static inline Q_s<long double> operator "" _s_ (long double _v) {
             return Q_s<long double>(_v); }
         static inline Q_s<long double> operator "" _s_ (unsigned long long int _v) {
-            return Q_s<long double>(_v); }
+            return Q_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3519,7 +3519,7 @@ namespace mks
         static inline Q_ds<long double> operator "" _ds_ (long double _v) {
             return Q_ds<long double>(_v); }
         static inline Q_ds<long double> operator "" _ds_ (unsigned long long int _v) {
-            return Q_ds<long double>(_v); }
+            return Q_ds<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3546,7 +3546,7 @@ namespace mks
         static inline Q_cs<long double> operator "" _cs_ (long double _v) {
             return Q_cs<long double>(_v); }
         static inline Q_cs<long double> operator "" _cs_ (unsigned long long int _v) {
-            return Q_cs<long double>(_v); }
+            return Q_cs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3573,7 +3573,7 @@ namespace mks
         static inline Q_ms<long double> operator "" _ms_ (long double _v) {
             return Q_ms<long double>(_v); }
         static inline Q_ms<long double> operator "" _ms_ (unsigned long long int _v) {
-            return Q_ms<long double>(_v); }
+            return Q_ms<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3600,7 +3600,7 @@ namespace mks
         static inline Q_min<long double> operator "" _min_ (long double _v) {
             return Q_min<long double>(_v); }
         static inline Q_min<long double> operator "" _min_ (unsigned long long int _v) {
-            return Q_min<long double>(_v); }
+            return Q_min<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3627,7 +3627,7 @@ namespace mks
         static inline Q_hr<long double> operator "" _hr_ (long double _v) {
             return Q_hr<long double>(_v); }
         static inline Q_hr<long double> operator "" _hr_ (unsigned long long int _v) {
-            return Q_hr<long double>(_v); }
+            return Q_hr<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3654,7 +3654,7 @@ namespace mks
         static inline Q_day<long double> operator "" _day_ (long double _v) {
             return Q_day<long double>(_v); }
         static inline Q_day<long double> operator "" _day_ (unsigned long long int _v) {
-            return Q_day<long double>(_v); }
+            return Q_day<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3681,7 +3681,7 @@ namespace mks
         static inline Q_EHz<long double> operator "" _EHz_ (long double _v) {
             return Q_EHz<long double>(_v); }
         static inline Q_EHz<long double> operator "" _EHz_ (unsigned long long int _v) {
-            return Q_EHz<long double>(_v); }
+            return Q_EHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3708,7 +3708,7 @@ namespace mks
         static inline Q_PHz<long double> operator "" _PHz_ (long double _v) {
             return Q_PHz<long double>(_v); }
         static inline Q_PHz<long double> operator "" _PHz_ (unsigned long long int _v) {
-            return Q_PHz<long double>(_v); }
+            return Q_PHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3735,7 +3735,7 @@ namespace mks
         static inline Q_THz<long double> operator "" _THz_ (long double _v) {
             return Q_THz<long double>(_v); }
         static inline Q_THz<long double> operator "" _THz_ (unsigned long long int _v) {
-            return Q_THz<long double>(_v); }
+            return Q_THz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3762,7 +3762,7 @@ namespace mks
         static inline Q_GHz<long double> operator "" _GHz_ (long double _v) {
             return Q_GHz<long double>(_v); }
         static inline Q_GHz<long double> operator "" _GHz_ (unsigned long long int _v) {
-            return Q_GHz<long double>(_v); }
+            return Q_GHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3789,7 +3789,7 @@ namespace mks
         static inline Q_MHz<long double> operator "" _MHz_ (long double _v) {
             return Q_MHz<long double>(_v); }
         static inline Q_MHz<long double> operator "" _MHz_ (unsigned long long int _v) {
-            return Q_MHz<long double>(_v); }
+            return Q_MHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3816,7 +3816,7 @@ namespace mks
         static inline Q_kHz<long double> operator "" _kHz_ (long double _v) {
             return Q_kHz<long double>(_v); }
         static inline Q_kHz<long double> operator "" _kHz_ (unsigned long long int _v) {
-            return Q_kHz<long double>(_v); }
+            return Q_kHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3843,7 +3843,7 @@ namespace mks
         static inline Q_hHz<long double> operator "" _hHz_ (long double _v) {
             return Q_hHz<long double>(_v); }
         static inline Q_hHz<long double> operator "" _hHz_ (unsigned long long int _v) {
-            return Q_hHz<long double>(_v); }
+            return Q_hHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3870,7 +3870,7 @@ namespace mks
         static inline Q_daHz<long double> operator "" _daHz_ (long double _v) {
             return Q_daHz<long double>(_v); }
         static inline Q_daHz<long double> operator "" _daHz_ (unsigned long long int _v) {
-            return Q_daHz<long double>(_v); }
+            return Q_daHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3897,7 +3897,7 @@ namespace mks
         static inline Q_Hz<long double> operator "" _Hz_ (long double _v) {
             return Q_Hz<long double>(_v); }
         static inline Q_Hz<long double> operator "" _Hz_ (unsigned long long int _v) {
-            return Q_Hz<long double>(_v); }
+            return Q_Hz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3924,7 +3924,7 @@ namespace mks
         static inline Q_dHz<long double> operator "" _dHz_ (long double _v) {
             return Q_dHz<long double>(_v); }
         static inline Q_dHz<long double> operator "" _dHz_ (unsigned long long int _v) {
-            return Q_dHz<long double>(_v); }
+            return Q_dHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3951,7 +3951,7 @@ namespace mks
         static inline Q_cHz<long double> operator "" _cHz_ (long double _v) {
             return Q_cHz<long double>(_v); }
         static inline Q_cHz<long double> operator "" _cHz_ (unsigned long long int _v) {
-            return Q_cHz<long double>(_v); }
+            return Q_cHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3978,7 +3978,7 @@ namespace mks
         static inline Q_mHz<long double> operator "" _mHz_ (long double _v) {
             return Q_mHz<long double>(_v); }
         static inline Q_mHz<long double> operator "" _mHz_ (unsigned long long int _v) {
-            return Q_mHz<long double>(_v); }
+            return Q_mHz<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4005,7 +4005,7 @@ namespace mks
         static inline Q_Em_per_s<long double> operator "" _Em_per_s_ (long double _v) {
             return Q_Em_per_s<long double>(_v); }
         static inline Q_Em_per_s<long double> operator "" _Em_per_s_ (unsigned long long int _v) {
-            return Q_Em_per_s<long double>(_v); }
+            return Q_Em_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4032,7 +4032,7 @@ namespace mks
         static inline Q_Pm_per_s<long double> operator "" _Pm_per_s_ (long double _v) {
             return Q_Pm_per_s<long double>(_v); }
         static inline Q_Pm_per_s<long double> operator "" _Pm_per_s_ (unsigned long long int _v) {
-            return Q_Pm_per_s<long double>(_v); }
+            return Q_Pm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4059,7 +4059,7 @@ namespace mks
         static inline Q_Tm_per_s<long double> operator "" _Tm_per_s_ (long double _v) {
             return Q_Tm_per_s<long double>(_v); }
         static inline Q_Tm_per_s<long double> operator "" _Tm_per_s_ (unsigned long long int _v) {
-            return Q_Tm_per_s<long double>(_v); }
+            return Q_Tm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4086,7 +4086,7 @@ namespace mks
         static inline Q_Gm_per_s<long double> operator "" _Gm_per_s_ (long double _v) {
             return Q_Gm_per_s<long double>(_v); }
         static inline Q_Gm_per_s<long double> operator "" _Gm_per_s_ (unsigned long long int _v) {
-            return Q_Gm_per_s<long double>(_v); }
+            return Q_Gm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4113,7 +4113,7 @@ namespace mks
         static inline Q_Mm_per_s<long double> operator "" _Mm_per_s_ (long double _v) {
             return Q_Mm_per_s<long double>(_v); }
         static inline Q_Mm_per_s<long double> operator "" _Mm_per_s_ (unsigned long long int _v) {
-            return Q_Mm_per_s<long double>(_v); }
+            return Q_Mm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4140,7 +4140,7 @@ namespace mks
         static inline Q_km_per_s<long double> operator "" _km_per_s_ (long double _v) {
             return Q_km_per_s<long double>(_v); }
         static inline Q_km_per_s<long double> operator "" _km_per_s_ (unsigned long long int _v) {
-            return Q_km_per_s<long double>(_v); }
+            return Q_km_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4167,7 +4167,7 @@ namespace mks
         static inline Q_hm_per_s<long double> operator "" _hm_per_s_ (long double _v) {
             return Q_hm_per_s<long double>(_v); }
         static inline Q_hm_per_s<long double> operator "" _hm_per_s_ (unsigned long long int _v) {
-            return Q_hm_per_s<long double>(_v); }
+            return Q_hm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4194,7 +4194,7 @@ namespace mks
         static inline Q_dam_per_s<long double> operator "" _dam_per_s_ (long double _v) {
             return Q_dam_per_s<long double>(_v); }
         static inline Q_dam_per_s<long double> operator "" _dam_per_s_ (unsigned long long int _v) {
-            return Q_dam_per_s<long double>(_v); }
+            return Q_dam_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4221,7 +4221,7 @@ namespace mks
         static inline Q_m_per_s<long double> operator "" _m_per_s_ (long double _v) {
             return Q_m_per_s<long double>(_v); }
         static inline Q_m_per_s<long double> operator "" _m_per_s_ (unsigned long long int _v) {
-            return Q_m_per_s<long double>(_v); }
+            return Q_m_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4248,7 +4248,7 @@ namespace mks
         static inline Q_dm_per_s<long double> operator "" _dm_per_s_ (long double _v) {
             return Q_dm_per_s<long double>(_v); }
         static inline Q_dm_per_s<long double> operator "" _dm_per_s_ (unsigned long long int _v) {
-            return Q_dm_per_s<long double>(_v); }
+            return Q_dm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4275,7 +4275,7 @@ namespace mks
         static inline Q_cm_per_s<long double> operator "" _cm_per_s_ (long double _v) {
             return Q_cm_per_s<long double>(_v); }
         static inline Q_cm_per_s<long double> operator "" _cm_per_s_ (unsigned long long int _v) {
-            return Q_cm_per_s<long double>(_v); }
+            return Q_cm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4302,7 +4302,7 @@ namespace mks
         static inline Q_mm_per_s<long double> operator "" _mm_per_s_ (long double _v) {
             return Q_mm_per_s<long double>(_v); }
         static inline Q_mm_per_s<long double> operator "" _mm_per_s_ (unsigned long long int _v) {
-            return Q_mm_per_s<long double>(_v); }
+            return Q_mm_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4329,7 +4329,7 @@ namespace mks
         static inline Q_kmph<long double> operator "" _kmph_ (long double _v) {
             return Q_kmph<long double>(_v); }
         static inline Q_kmph<long double> operator "" _kmph_ (unsigned long long int _v) {
-            return Q_kmph<long double>(_v); }
+            return Q_kmph<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4356,7 +4356,7 @@ namespace mks
         static inline Q_mph<long double> operator "" _mph_ (long double _v) {
             return Q_mph<long double>(_v); }
         static inline Q_mph<long double> operator "" _mph_ (unsigned long long int _v) {
-            return Q_mph<long double>(_v); }
+            return Q_mph<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4383,7 +4383,7 @@ namespace mks
         static inline Q_kt<long double> operator "" _kt_ (long double _v) {
             return Q_kt<long double>(_v); }
         static inline Q_kt<long double> operator "" _kt_ (unsigned long long int _v) {
-            return Q_kt<long double>(_v); }
+            return Q_kt<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4410,7 +4410,7 @@ namespace mks
         static inline Q_mi_per_s<long double> operator "" _mi_per_s_ (long double _v) {
             return Q_mi_per_s<long double>(_v); }
         static inline Q_mi_per_s<long double> operator "" _mi_per_s_ (unsigned long long int _v) {
-            return Q_mi_per_s<long double>(_v); }
+            return Q_mi_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4437,7 +4437,7 @@ namespace mks
         static inline Q_yd_per_s<long double> operator "" _yd_per_s_ (long double _v) {
             return Q_yd_per_s<long double>(_v); }
         static inline Q_yd_per_s<long double> operator "" _yd_per_s_ (unsigned long long int _v) {
-            return Q_yd_per_s<long double>(_v); }
+            return Q_yd_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4464,7 +4464,7 @@ namespace mks
         static inline Q_fps<long double> operator "" _fps_ (long double _v) {
             return Q_fps<long double>(_v); }
         static inline Q_fps<long double> operator "" _fps_ (unsigned long long int _v) {
-            return Q_fps<long double>(_v); }
+            return Q_fps<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4491,7 +4491,7 @@ namespace mks
         static inline Q_in_per_s<long double> operator "" _in_per_s_ (long double _v) {
             return Q_in_per_s<long double>(_v); }
         static inline Q_in_per_s<long double> operator "" _in_per_s_ (unsigned long long int _v) {
-            return Q_in_per_s<long double>(_v); }
+            return Q_in_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4518,7 +4518,7 @@ namespace mks
         static inline Q_Em_per_s2<long double> operator "" _Em_per_s2_ (long double _v) {
             return Q_Em_per_s2<long double>(_v); }
         static inline Q_Em_per_s2<long double> operator "" _Em_per_s2_ (unsigned long long int _v) {
-            return Q_Em_per_s2<long double>(_v); }
+            return Q_Em_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4545,7 +4545,7 @@ namespace mks
         static inline Q_Pm_per_s2<long double> operator "" _Pm_per_s2_ (long double _v) {
             return Q_Pm_per_s2<long double>(_v); }
         static inline Q_Pm_per_s2<long double> operator "" _Pm_per_s2_ (unsigned long long int _v) {
-            return Q_Pm_per_s2<long double>(_v); }
+            return Q_Pm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4572,7 +4572,7 @@ namespace mks
         static inline Q_Tm_per_s2<long double> operator "" _Tm_per_s2_ (long double _v) {
             return Q_Tm_per_s2<long double>(_v); }
         static inline Q_Tm_per_s2<long double> operator "" _Tm_per_s2_ (unsigned long long int _v) {
-            return Q_Tm_per_s2<long double>(_v); }
+            return Q_Tm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4599,7 +4599,7 @@ namespace mks
         static inline Q_Gm_per_s2<long double> operator "" _Gm_per_s2_ (long double _v) {
             return Q_Gm_per_s2<long double>(_v); }
         static inline Q_Gm_per_s2<long double> operator "" _Gm_per_s2_ (unsigned long long int _v) {
-            return Q_Gm_per_s2<long double>(_v); }
+            return Q_Gm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4626,7 +4626,7 @@ namespace mks
         static inline Q_Mm_per_s2<long double> operator "" _Mm_per_s2_ (long double _v) {
             return Q_Mm_per_s2<long double>(_v); }
         static inline Q_Mm_per_s2<long double> operator "" _Mm_per_s2_ (unsigned long long int _v) {
-            return Q_Mm_per_s2<long double>(_v); }
+            return Q_Mm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4653,7 +4653,7 @@ namespace mks
         static inline Q_km_per_s2<long double> operator "" _km_per_s2_ (long double _v) {
             return Q_km_per_s2<long double>(_v); }
         static inline Q_km_per_s2<long double> operator "" _km_per_s2_ (unsigned long long int _v) {
-            return Q_km_per_s2<long double>(_v); }
+            return Q_km_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4680,7 +4680,7 @@ namespace mks
         static inline Q_hm_per_s2<long double> operator "" _hm_per_s2_ (long double _v) {
             return Q_hm_per_s2<long double>(_v); }
         static inline Q_hm_per_s2<long double> operator "" _hm_per_s2_ (unsigned long long int _v) {
-            return Q_hm_per_s2<long double>(_v); }
+            return Q_hm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4707,7 +4707,7 @@ namespace mks
         static inline Q_dam_per_s2<long double> operator "" _dam_per_s2_ (long double _v) {
             return Q_dam_per_s2<long double>(_v); }
         static inline Q_dam_per_s2<long double> operator "" _dam_per_s2_ (unsigned long long int _v) {
-            return Q_dam_per_s2<long double>(_v); }
+            return Q_dam_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4734,7 +4734,7 @@ namespace mks
         static inline Q_m_per_s2<long double> operator "" _m_per_s2_ (long double _v) {
             return Q_m_per_s2<long double>(_v); }
         static inline Q_m_per_s2<long double> operator "" _m_per_s2_ (unsigned long long int _v) {
-            return Q_m_per_s2<long double>(_v); }
+            return Q_m_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4761,7 +4761,7 @@ namespace mks
         static inline Q_dm_per_s2<long double> operator "" _dm_per_s2_ (long double _v) {
             return Q_dm_per_s2<long double>(_v); }
         static inline Q_dm_per_s2<long double> operator "" _dm_per_s2_ (unsigned long long int _v) {
-            return Q_dm_per_s2<long double>(_v); }
+            return Q_dm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4788,7 +4788,7 @@ namespace mks
         static inline Q_cm_per_s2<long double> operator "" _cm_per_s2_ (long double _v) {
             return Q_cm_per_s2<long double>(_v); }
         static inline Q_cm_per_s2<long double> operator "" _cm_per_s2_ (unsigned long long int _v) {
-            return Q_cm_per_s2<long double>(_v); }
+            return Q_cm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4815,7 +4815,7 @@ namespace mks
         static inline Q_mm_per_s2<long double> operator "" _mm_per_s2_ (long double _v) {
             return Q_mm_per_s2<long double>(_v); }
         static inline Q_mm_per_s2<long double> operator "" _mm_per_s2_ (unsigned long long int _v) {
-            return Q_mm_per_s2<long double>(_v); }
+            return Q_mm_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4842,7 +4842,7 @@ namespace mks
         static inline Q_mi_per_s2<long double> operator "" _mi_per_s2_ (long double _v) {
             return Q_mi_per_s2<long double>(_v); }
         static inline Q_mi_per_s2<long double> operator "" _mi_per_s2_ (unsigned long long int _v) {
-            return Q_mi_per_s2<long double>(_v); }
+            return Q_mi_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4869,7 +4869,7 @@ namespace mks
         static inline Q_yd_per_s2<long double> operator "" _yd_per_s2_ (long double _v) {
             return Q_yd_per_s2<long double>(_v); }
         static inline Q_yd_per_s2<long double> operator "" _yd_per_s2_ (unsigned long long int _v) {
-            return Q_yd_per_s2<long double>(_v); }
+            return Q_yd_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4896,7 +4896,7 @@ namespace mks
         static inline Q_ft_per_s2<long double> operator "" _ft_per_s2_ (long double _v) {
             return Q_ft_per_s2<long double>(_v); }
         static inline Q_ft_per_s2<long double> operator "" _ft_per_s2_ (unsigned long long int _v) {
-            return Q_ft_per_s2<long double>(_v); }
+            return Q_ft_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4923,7 +4923,7 @@ namespace mks
         static inline Q_in_per_s2<long double> operator "" _in_per_s2_ (long double _v) {
             return Q_in_per_s2<long double>(_v); }
         static inline Q_in_per_s2<long double> operator "" _in_per_s2_ (unsigned long long int _v) {
-            return Q_in_per_s2<long double>(_v); }
+            return Q_in_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4950,7 +4950,7 @@ namespace mks
         static inline Q_Pgees<long double> operator "" _Pgees_ (long double _v) {
             return Q_Pgees<long double>(_v); }
         static inline Q_Pgees<long double> operator "" _Pgees_ (unsigned long long int _v) {
-            return Q_Pgees<long double>(_v); }
+            return Q_Pgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -4977,7 +4977,7 @@ namespace mks
         static inline Q_Tgees<long double> operator "" _Tgees_ (long double _v) {
             return Q_Tgees<long double>(_v); }
         static inline Q_Tgees<long double> operator "" _Tgees_ (unsigned long long int _v) {
-            return Q_Tgees<long double>(_v); }
+            return Q_Tgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5004,7 +5004,7 @@ namespace mks
         static inline Q_Ggees<long double> operator "" _Ggees_ (long double _v) {
             return Q_Ggees<long double>(_v); }
         static inline Q_Ggees<long double> operator "" _Ggees_ (unsigned long long int _v) {
-            return Q_Ggees<long double>(_v); }
+            return Q_Ggees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5031,7 +5031,7 @@ namespace mks
         static inline Q_Mgees<long double> operator "" _Mgees_ (long double _v) {
             return Q_Mgees<long double>(_v); }
         static inline Q_Mgees<long double> operator "" _Mgees_ (unsigned long long int _v) {
-            return Q_Mgees<long double>(_v); }
+            return Q_Mgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5058,7 +5058,7 @@ namespace mks
         static inline Q_kgees<long double> operator "" _kgees_ (long double _v) {
             return Q_kgees<long double>(_v); }
         static inline Q_kgees<long double> operator "" _kgees_ (unsigned long long int _v) {
-            return Q_kgees<long double>(_v); }
+            return Q_kgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5085,7 +5085,7 @@ namespace mks
         static inline Q_hgees<long double> operator "" _hgees_ (long double _v) {
             return Q_hgees<long double>(_v); }
         static inline Q_hgees<long double> operator "" _hgees_ (unsigned long long int _v) {
-            return Q_hgees<long double>(_v); }
+            return Q_hgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5112,7 +5112,7 @@ namespace mks
         static inline Q_dagees<long double> operator "" _dagees_ (long double _v) {
             return Q_dagees<long double>(_v); }
         static inline Q_dagees<long double> operator "" _dagees_ (unsigned long long int _v) {
-            return Q_dagees<long double>(_v); }
+            return Q_dagees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5139,7 +5139,7 @@ namespace mks
         static inline Q_gees<long double> operator "" _gees_ (long double _v) {
             return Q_gees<long double>(_v); }
         static inline Q_gees<long double> operator "" _gees_ (unsigned long long int _v) {
-            return Q_gees<long double>(_v); }
+            return Q_gees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5166,7 +5166,7 @@ namespace mks
         static inline Q_dgees<long double> operator "" _dgees_ (long double _v) {
             return Q_dgees<long double>(_v); }
         static inline Q_dgees<long double> operator "" _dgees_ (unsigned long long int _v) {
-            return Q_dgees<long double>(_v); }
+            return Q_dgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5193,7 +5193,7 @@ namespace mks
         static inline Q_cgees<long double> operator "" _cgees_ (long double _v) {
             return Q_cgees<long double>(_v); }
         static inline Q_cgees<long double> operator "" _cgees_ (unsigned long long int _v) {
-            return Q_cgees<long double>(_v); }
+            return Q_cgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5220,7 +5220,7 @@ namespace mks
         static inline Q_mgees<long double> operator "" _mgees_ (long double _v) {
             return Q_mgees<long double>(_v); }
         static inline Q_mgees<long double> operator "" _mgees_ (unsigned long long int _v) {
-            return Q_mgees<long double>(_v); }
+            return Q_mgees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5247,7 +5247,7 @@ namespace mks
         static inline Q_ugees<long double> operator "" _ugees_ (long double _v) {
             return Q_ugees<long double>(_v); }
         static inline Q_ugees<long double> operator "" _ugees_ (unsigned long long int _v) {
-            return Q_ugees<long double>(_v); }
+            return Q_ugees<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5274,7 +5274,7 @@ namespace mks
         static inline Q_Em_per_s3<long double> operator "" _Em_per_s3_ (long double _v) {
             return Q_Em_per_s3<long double>(_v); }
         static inline Q_Em_per_s3<long double> operator "" _Em_per_s3_ (unsigned long long int _v) {
-            return Q_Em_per_s3<long double>(_v); }
+            return Q_Em_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5301,7 +5301,7 @@ namespace mks
         static inline Q_Pm_per_s3<long double> operator "" _Pm_per_s3_ (long double _v) {
             return Q_Pm_per_s3<long double>(_v); }
         static inline Q_Pm_per_s3<long double> operator "" _Pm_per_s3_ (unsigned long long int _v) {
-            return Q_Pm_per_s3<long double>(_v); }
+            return Q_Pm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5328,7 +5328,7 @@ namespace mks
         static inline Q_Tm_per_s3<long double> operator "" _Tm_per_s3_ (long double _v) {
             return Q_Tm_per_s3<long double>(_v); }
         static inline Q_Tm_per_s3<long double> operator "" _Tm_per_s3_ (unsigned long long int _v) {
-            return Q_Tm_per_s3<long double>(_v); }
+            return Q_Tm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5355,7 +5355,7 @@ namespace mks
         static inline Q_Gm_per_s3<long double> operator "" _Gm_per_s3_ (long double _v) {
             return Q_Gm_per_s3<long double>(_v); }
         static inline Q_Gm_per_s3<long double> operator "" _Gm_per_s3_ (unsigned long long int _v) {
-            return Q_Gm_per_s3<long double>(_v); }
+            return Q_Gm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5382,7 +5382,7 @@ namespace mks
         static inline Q_Mm_per_s3<long double> operator "" _Mm_per_s3_ (long double _v) {
             return Q_Mm_per_s3<long double>(_v); }
         static inline Q_Mm_per_s3<long double> operator "" _Mm_per_s3_ (unsigned long long int _v) {
-            return Q_Mm_per_s3<long double>(_v); }
+            return Q_Mm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5409,7 +5409,7 @@ namespace mks
         static inline Q_km_per_s3<long double> operator "" _km_per_s3_ (long double _v) {
             return Q_km_per_s3<long double>(_v); }
         static inline Q_km_per_s3<long double> operator "" _km_per_s3_ (unsigned long long int _v) {
-            return Q_km_per_s3<long double>(_v); }
+            return Q_km_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5436,7 +5436,7 @@ namespace mks
         static inline Q_hm_per_s3<long double> operator "" _hm_per_s3_ (long double _v) {
             return Q_hm_per_s3<long double>(_v); }
         static inline Q_hm_per_s3<long double> operator "" _hm_per_s3_ (unsigned long long int _v) {
-            return Q_hm_per_s3<long double>(_v); }
+            return Q_hm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5463,7 +5463,7 @@ namespace mks
         static inline Q_dam_per_s3<long double> operator "" _dam_per_s3_ (long double _v) {
             return Q_dam_per_s3<long double>(_v); }
         static inline Q_dam_per_s3<long double> operator "" _dam_per_s3_ (unsigned long long int _v) {
-            return Q_dam_per_s3<long double>(_v); }
+            return Q_dam_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5490,7 +5490,7 @@ namespace mks
         static inline Q_m_per_s3<long double> operator "" _m_per_s3_ (long double _v) {
             return Q_m_per_s3<long double>(_v); }
         static inline Q_m_per_s3<long double> operator "" _m_per_s3_ (unsigned long long int _v) {
-            return Q_m_per_s3<long double>(_v); }
+            return Q_m_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5517,7 +5517,7 @@ namespace mks
         static inline Q_dm_per_s3<long double> operator "" _dm_per_s3_ (long double _v) {
             return Q_dm_per_s3<long double>(_v); }
         static inline Q_dm_per_s3<long double> operator "" _dm_per_s3_ (unsigned long long int _v) {
-            return Q_dm_per_s3<long double>(_v); }
+            return Q_dm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5544,7 +5544,7 @@ namespace mks
         static inline Q_cm_per_s3<long double> operator "" _cm_per_s3_ (long double _v) {
             return Q_cm_per_s3<long double>(_v); }
         static inline Q_cm_per_s3<long double> operator "" _cm_per_s3_ (unsigned long long int _v) {
-            return Q_cm_per_s3<long double>(_v); }
+            return Q_cm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5571,7 +5571,7 @@ namespace mks
         static inline Q_mm_per_s3<long double> operator "" _mm_per_s3_ (long double _v) {
             return Q_mm_per_s3<long double>(_v); }
         static inline Q_mm_per_s3<long double> operator "" _mm_per_s3_ (unsigned long long int _v) {
-            return Q_mm_per_s3<long double>(_v); }
+            return Q_mm_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5598,7 +5598,7 @@ namespace mks
         static inline Q_mi_per_s3<long double> operator "" _mi_per_s3_ (long double _v) {
             return Q_mi_per_s3<long double>(_v); }
         static inline Q_mi_per_s3<long double> operator "" _mi_per_s3_ (unsigned long long int _v) {
-            return Q_mi_per_s3<long double>(_v); }
+            return Q_mi_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5625,7 +5625,7 @@ namespace mks
         static inline Q_yd_per_s3<long double> operator "" _yd_per_s3_ (long double _v) {
             return Q_yd_per_s3<long double>(_v); }
         static inline Q_yd_per_s3<long double> operator "" _yd_per_s3_ (unsigned long long int _v) {
-            return Q_yd_per_s3<long double>(_v); }
+            return Q_yd_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5652,7 +5652,7 @@ namespace mks
         static inline Q_ft_per_s3<long double> operator "" _ft_per_s3_ (long double _v) {
             return Q_ft_per_s3<long double>(_v); }
         static inline Q_ft_per_s3<long double> operator "" _ft_per_s3_ (unsigned long long int _v) {
-            return Q_ft_per_s3<long double>(_v); }
+            return Q_ft_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5679,7 +5679,7 @@ namespace mks
         static inline Q_in_per_s3<long double> operator "" _in_per_s3_ (long double _v) {
             return Q_in_per_s3<long double>(_v); }
         static inline Q_in_per_s3<long double> operator "" _in_per_s3_ (unsigned long long int _v) {
-            return Q_in_per_s3<long double>(_v); }
+            return Q_in_per_s3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5706,7 +5706,7 @@ namespace mks
         static inline Q_Pgees_per_s<long double> operator "" _Pgees_per_s_ (long double _v) {
             return Q_Pgees_per_s<long double>(_v); }
         static inline Q_Pgees_per_s<long double> operator "" _Pgees_per_s_ (unsigned long long int _v) {
-            return Q_Pgees_per_s<long double>(_v); }
+            return Q_Pgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5733,7 +5733,7 @@ namespace mks
         static inline Q_Tgees_per_s<long double> operator "" _Tgees_per_s_ (long double _v) {
             return Q_Tgees_per_s<long double>(_v); }
         static inline Q_Tgees_per_s<long double> operator "" _Tgees_per_s_ (unsigned long long int _v) {
-            return Q_Tgees_per_s<long double>(_v); }
+            return Q_Tgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5760,7 +5760,7 @@ namespace mks
         static inline Q_Ggees_per_s<long double> operator "" _Ggees_per_s_ (long double _v) {
             return Q_Ggees_per_s<long double>(_v); }
         static inline Q_Ggees_per_s<long double> operator "" _Ggees_per_s_ (unsigned long long int _v) {
-            return Q_Ggees_per_s<long double>(_v); }
+            return Q_Ggees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5787,7 +5787,7 @@ namespace mks
         static inline Q_Mgees_per_s<long double> operator "" _Mgees_per_s_ (long double _v) {
             return Q_Mgees_per_s<long double>(_v); }
         static inline Q_Mgees_per_s<long double> operator "" _Mgees_per_s_ (unsigned long long int _v) {
-            return Q_Mgees_per_s<long double>(_v); }
+            return Q_Mgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5814,7 +5814,7 @@ namespace mks
         static inline Q_kgees_per_s<long double> operator "" _kgees_per_s_ (long double _v) {
             return Q_kgees_per_s<long double>(_v); }
         static inline Q_kgees_per_s<long double> operator "" _kgees_per_s_ (unsigned long long int _v) {
-            return Q_kgees_per_s<long double>(_v); }
+            return Q_kgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5841,7 +5841,7 @@ namespace mks
         static inline Q_hgees_per_s<long double> operator "" _hgees_per_s_ (long double _v) {
             return Q_hgees_per_s<long double>(_v); }
         static inline Q_hgees_per_s<long double> operator "" _hgees_per_s_ (unsigned long long int _v) {
-            return Q_hgees_per_s<long double>(_v); }
+            return Q_hgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5868,7 +5868,7 @@ namespace mks
         static inline Q_dagees_per_s<long double> operator "" _dagees_per_s_ (long double _v) {
             return Q_dagees_per_s<long double>(_v); }
         static inline Q_dagees_per_s<long double> operator "" _dagees_per_s_ (unsigned long long int _v) {
-            return Q_dagees_per_s<long double>(_v); }
+            return Q_dagees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5895,7 +5895,7 @@ namespace mks
         static inline Q_gees_per_s<long double> operator "" _gees_per_s_ (long double _v) {
             return Q_gees_per_s<long double>(_v); }
         static inline Q_gees_per_s<long double> operator "" _gees_per_s_ (unsigned long long int _v) {
-            return Q_gees_per_s<long double>(_v); }
+            return Q_gees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5922,7 +5922,7 @@ namespace mks
         static inline Q_dgees_per_s<long double> operator "" _dgees_per_s_ (long double _v) {
             return Q_dgees_per_s<long double>(_v); }
         static inline Q_dgees_per_s<long double> operator "" _dgees_per_s_ (unsigned long long int _v) {
-            return Q_dgees_per_s<long double>(_v); }
+            return Q_dgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5949,7 +5949,7 @@ namespace mks
         static inline Q_cgees_per_s<long double> operator "" _cgees_per_s_ (long double _v) {
             return Q_cgees_per_s<long double>(_v); }
         static inline Q_cgees_per_s<long double> operator "" _cgees_per_s_ (unsigned long long int _v) {
-            return Q_cgees_per_s<long double>(_v); }
+            return Q_cgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -5976,7 +5976,7 @@ namespace mks
         static inline Q_mgees_per_s<long double> operator "" _mgees_per_s_ (long double _v) {
             return Q_mgees_per_s<long double>(_v); }
         static inline Q_mgees_per_s<long double> operator "" _mgees_per_s_ (unsigned long long int _v) {
-            return Q_mgees_per_s<long double>(_v); }
+            return Q_mgees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6003,7 +6003,7 @@ namespace mks
         static inline Q_ugees_per_s<long double> operator "" _ugees_per_s_ (long double _v) {
             return Q_ugees_per_s<long double>(_v); }
         static inline Q_ugees_per_s<long double> operator "" _ugees_per_s_ (unsigned long long int _v) {
-            return Q_ugees_per_s<long double>(_v); }
+            return Q_ugees_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6030,7 +6030,7 @@ namespace mks
         static inline Q_rad<long double> operator "" _rad_ (long double _v) {
             return Q_rad<long double>(_v); }
         static inline Q_rad<long double> operator "" _rad_ (unsigned long long int _v) {
-            return Q_rad<long double>(_v); }
+            return Q_rad<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6057,7 +6057,7 @@ namespace mks
         static inline Q_rev<long double> operator "" _rev_ (long double _v) {
             return Q_rev<long double>(_v); }
         static inline Q_rev<long double> operator "" _rev_ (unsigned long long int _v) {
-            return Q_rev<long double>(_v); }
+            return Q_rev<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6084,7 +6084,7 @@ namespace mks
         static inline Q_deg<long double> operator "" _deg_ (long double _v) {
             return Q_deg<long double>(_v); }
         static inline Q_deg<long double> operator "" _deg_ (unsigned long long int _v) {
-            return Q_deg<long double>(_v); }
+            return Q_deg<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6111,7 +6111,7 @@ namespace mks
         static inline Q_grad<long double> operator "" _grad_ (long double _v) {
             return Q_grad<long double>(_v); }
         static inline Q_grad<long double> operator "" _grad_ (unsigned long long int _v) {
-            return Q_grad<long double>(_v); }
+            return Q_grad<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6138,7 +6138,7 @@ namespace mks
         static inline Q_rad_per_s<long double> operator "" _rad_per_s_ (long double _v) {
             return Q_rad_per_s<long double>(_v); }
         static inline Q_rad_per_s<long double> operator "" _rad_per_s_ (unsigned long long int _v) {
-            return Q_rad_per_s<long double>(_v); }
+            return Q_rad_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6165,7 +6165,7 @@ namespace mks
         static inline Q_rev_per_s<long double> operator "" _rev_per_s_ (long double _v) {
             return Q_rev_per_s<long double>(_v); }
         static inline Q_rev_per_s<long double> operator "" _rev_per_s_ (unsigned long long int _v) {
-            return Q_rev_per_s<long double>(_v); }
+            return Q_rev_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6192,7 +6192,7 @@ namespace mks
         static inline Q_deg_per_s<long double> operator "" _deg_per_s_ (long double _v) {
             return Q_deg_per_s<long double>(_v); }
         static inline Q_deg_per_s<long double> operator "" _deg_per_s_ (unsigned long long int _v) {
-            return Q_deg_per_s<long double>(_v); }
+            return Q_deg_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6219,7 +6219,7 @@ namespace mks
         static inline Q_grad_per_s<long double> operator "" _grad_per_s_ (long double _v) {
             return Q_grad_per_s<long double>(_v); }
         static inline Q_grad_per_s<long double> operator "" _grad_per_s_ (unsigned long long int _v) {
-            return Q_grad_per_s<long double>(_v); }
+            return Q_grad_per_s<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6246,7 +6246,7 @@ namespace mks
         static inline Q_rpm<long double> operator "" _rpm_ (long double _v) {
             return Q_rpm<long double>(_v); }
         static inline Q_rpm<long double> operator "" _rpm_ (unsigned long long int _v) {
-            return Q_rpm<long double>(_v); }
+            return Q_rpm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6273,7 +6273,7 @@ namespace mks
         static inline Q_rad_per_s2<long double> operator "" _rad_per_s2_ (long double _v) {
             return Q_rad_per_s2<long double>(_v); }
         static inline Q_rad_per_s2<long double> operator "" _rad_per_s2_ (unsigned long long int _v) {
-            return Q_rad_per_s2<long double>(_v); }
+            return Q_rad_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6300,7 +6300,7 @@ namespace mks
         static inline Q_rev_per_s2<long double> operator "" _rev_per_s2_ (long double _v) {
             return Q_rev_per_s2<long double>(_v); }
         static inline Q_rev_per_s2<long double> operator "" _rev_per_s2_ (unsigned long long int _v) {
-            return Q_rev_per_s2<long double>(_v); }
+            return Q_rev_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6327,7 +6327,7 @@ namespace mks
         static inline Q_deg_per_s2<long double> operator "" _deg_per_s2_ (long double _v) {
             return Q_deg_per_s2<long double>(_v); }
         static inline Q_deg_per_s2<long double> operator "" _deg_per_s2_ (unsigned long long int _v) {
-            return Q_deg_per_s2<long double>(_v); }
+            return Q_deg_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6354,7 +6354,7 @@ namespace mks
         static inline Q_grad_per_s2<long double> operator "" _grad_per_s2_ (long double _v) {
             return Q_grad_per_s2<long double>(_v); }
         static inline Q_grad_per_s2<long double> operator "" _grad_per_s2_ (unsigned long long int _v) {
-            return Q_grad_per_s2<long double>(_v); }
+            return Q_grad_per_s2<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6381,7 +6381,7 @@ namespace mks
         static inline Q_EdegC<long double> operator "" _EdegC_ (long double _v) {
             return Q_EdegC<long double>(_v); }
         static inline Q_EdegC<long double> operator "" _EdegC_ (unsigned long long int _v) {
-            return Q_EdegC<long double>(_v); }
+            return Q_EdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6408,7 +6408,7 @@ namespace mks
         static inline Q_EdegC_abs<long double> operator "" _EdegC_abs_ (long double _v) {
             return Q_EdegC_abs<long double>(_v); }
         static inline Q_EdegC_abs<long double> operator "" _EdegC_abs_ (unsigned long long int _v) {
-            return Q_EdegC_abs<long double>(_v); }
+            return Q_EdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6435,7 +6435,7 @@ namespace mks
         static inline Q_PdegC<long double> operator "" _PdegC_ (long double _v) {
             return Q_PdegC<long double>(_v); }
         static inline Q_PdegC<long double> operator "" _PdegC_ (unsigned long long int _v) {
-            return Q_PdegC<long double>(_v); }
+            return Q_PdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6462,7 +6462,7 @@ namespace mks
         static inline Q_PdegC_abs<long double> operator "" _PdegC_abs_ (long double _v) {
             return Q_PdegC_abs<long double>(_v); }
         static inline Q_PdegC_abs<long double> operator "" _PdegC_abs_ (unsigned long long int _v) {
-            return Q_PdegC_abs<long double>(_v); }
+            return Q_PdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6489,7 +6489,7 @@ namespace mks
         static inline Q_TdegC<long double> operator "" _TdegC_ (long double _v) {
             return Q_TdegC<long double>(_v); }
         static inline Q_TdegC<long double> operator "" _TdegC_ (unsigned long long int _v) {
-            return Q_TdegC<long double>(_v); }
+            return Q_TdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6516,7 +6516,7 @@ namespace mks
         static inline Q_TdegC_abs<long double> operator "" _TdegC_abs_ (long double _v) {
             return Q_TdegC_abs<long double>(_v); }
         static inline Q_TdegC_abs<long double> operator "" _TdegC_abs_ (unsigned long long int _v) {
-            return Q_TdegC_abs<long double>(_v); }
+            return Q_TdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6543,7 +6543,7 @@ namespace mks
         static inline Q_GdegC<long double> operator "" _GdegC_ (long double _v) {
             return Q_GdegC<long double>(_v); }
         static inline Q_GdegC<long double> operator "" _GdegC_ (unsigned long long int _v) {
-            return Q_GdegC<long double>(_v); }
+            return Q_GdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6570,7 +6570,7 @@ namespace mks
         static inline Q_GdegC_abs<long double> operator "" _GdegC_abs_ (long double _v) {
             return Q_GdegC_abs<long double>(_v); }
         static inline Q_GdegC_abs<long double> operator "" _GdegC_abs_ (unsigned long long int _v) {
-            return Q_GdegC_abs<long double>(_v); }
+            return Q_GdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6597,7 +6597,7 @@ namespace mks
         static inline Q_MdegC<long double> operator "" _MdegC_ (long double _v) {
             return Q_MdegC<long double>(_v); }
         static inline Q_MdegC<long double> operator "" _MdegC_ (unsigned long long int _v) {
-            return Q_MdegC<long double>(_v); }
+            return Q_MdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6624,7 +6624,7 @@ namespace mks
         static inline Q_MdegC_abs<long double> operator "" _MdegC_abs_ (long double _v) {
             return Q_MdegC_abs<long double>(_v); }
         static inline Q_MdegC_abs<long double> operator "" _MdegC_abs_ (unsigned long long int _v) {
-            return Q_MdegC_abs<long double>(_v); }
+            return Q_MdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6651,7 +6651,7 @@ namespace mks
         static inline Q_kdegC<long double> operator "" _kdegC_ (long double _v) {
             return Q_kdegC<long double>(_v); }
         static inline Q_kdegC<long double> operator "" _kdegC_ (unsigned long long int _v) {
-            return Q_kdegC<long double>(_v); }
+            return Q_kdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6678,7 +6678,7 @@ namespace mks
         static inline Q_kdegC_abs<long double> operator "" _kdegC_abs_ (long double _v) {
             return Q_kdegC_abs<long double>(_v); }
         static inline Q_kdegC_abs<long double> operator "" _kdegC_abs_ (unsigned long long int _v) {
-            return Q_kdegC_abs<long double>(_v); }
+            return Q_kdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6705,7 +6705,7 @@ namespace mks
         static inline Q_hdegC<long double> operator "" _hdegC_ (long double _v) {
             return Q_hdegC<long double>(_v); }
         static inline Q_hdegC<long double> operator "" _hdegC_ (unsigned long long int _v) {
-            return Q_hdegC<long double>(_v); }
+            return Q_hdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6732,7 +6732,7 @@ namespace mks
         static inline Q_hdegC_abs<long double> operator "" _hdegC_abs_ (long double _v) {
             return Q_hdegC_abs<long double>(_v); }
         static inline Q_hdegC_abs<long double> operator "" _hdegC_abs_ (unsigned long long int _v) {
-            return Q_hdegC_abs<long double>(_v); }
+            return Q_hdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6759,7 +6759,7 @@ namespace mks
         static inline Q_dadegC<long double> operator "" _dadegC_ (long double _v) {
             return Q_dadegC<long double>(_v); }
         static inline Q_dadegC<long double> operator "" _dadegC_ (unsigned long long int _v) {
-            return Q_dadegC<long double>(_v); }
+            return Q_dadegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6786,7 +6786,7 @@ namespace mks
         static inline Q_dadegC_abs<long double> operator "" _dadegC_abs_ (long double _v) {
             return Q_dadegC_abs<long double>(_v); }
         static inline Q_dadegC_abs<long double> operator "" _dadegC_abs_ (unsigned long long int _v) {
-            return Q_dadegC_abs<long double>(_v); }
+            return Q_dadegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6813,7 +6813,7 @@ namespace mks
         static inline Q_degC<long double> operator "" _degC_ (long double _v) {
             return Q_degC<long double>(_v); }
         static inline Q_degC<long double> operator "" _degC_ (unsigned long long int _v) {
-            return Q_degC<long double>(_v); }
+            return Q_degC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6840,7 +6840,7 @@ namespace mks
         static inline Q_degC_abs<long double> operator "" _degC_abs_ (long double _v) {
             return Q_degC_abs<long double>(_v); }
         static inline Q_degC_abs<long double> operator "" _degC_abs_ (unsigned long long int _v) {
-            return Q_degC_abs<long double>(_v); }
+            return Q_degC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6867,7 +6867,7 @@ namespace mks
         static inline Q_ddegC<long double> operator "" _ddegC_ (long double _v) {
             return Q_ddegC<long double>(_v); }
         static inline Q_ddegC<long double> operator "" _ddegC_ (unsigned long long int _v) {
-            return Q_ddegC<long double>(_v); }
+            return Q_ddegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6894,7 +6894,7 @@ namespace mks
         static inline Q_ddegC_abs<long double> operator "" _ddegC_abs_ (long double _v) {
             return Q_ddegC_abs<long double>(_v); }
         static inline Q_ddegC_abs<long double> operator "" _ddegC_abs_ (unsigned long long int _v) {
-            return Q_ddegC_abs<long double>(_v); }
+            return Q_ddegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6921,7 +6921,7 @@ namespace mks
         static inline Q_cdegC<long double> operator "" _cdegC_ (long double _v) {
             return Q_cdegC<long double>(_v); }
         static inline Q_cdegC<long double> operator "" _cdegC_ (unsigned long long int _v) {
-            return Q_cdegC<long double>(_v); }
+            return Q_cdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6948,7 +6948,7 @@ namespace mks
         static inline Q_cdegC_abs<long double> operator "" _cdegC_abs_ (long double _v) {
             return Q_cdegC_abs<long double>(_v); }
         static inline Q_cdegC_abs<long double> operator "" _cdegC_abs_ (unsigned long long int _v) {
-            return Q_cdegC_abs<long double>(_v); }
+            return Q_cdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -6975,7 +6975,7 @@ namespace mks
         static inline Q_mdegC<long double> operator "" _mdegC_ (long double _v) {
             return Q_mdegC<long double>(_v); }
         static inline Q_mdegC<long double> operator "" _mdegC_ (unsigned long long int _v) {
-            return Q_mdegC<long double>(_v); }
+            return Q_mdegC<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7002,7 +7002,7 @@ namespace mks
         static inline Q_mdegC_abs<long double> operator "" _mdegC_abs_ (long double _v) {
             return Q_mdegC_abs<long double>(_v); }
         static inline Q_mdegC_abs<long double> operator "" _mdegC_abs_ (unsigned long long int _v) {
-            return Q_mdegC_abs<long double>(_v); }
+            return Q_mdegC_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7029,7 +7029,7 @@ namespace mks
         static inline Q_EK<long double> operator "" _EK_ (long double _v) {
             return Q_EK<long double>(_v); }
         static inline Q_EK<long double> operator "" _EK_ (unsigned long long int _v) {
-            return Q_EK<long double>(_v); }
+            return Q_EK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7056,7 +7056,7 @@ namespace mks
         static inline Q_EK_abs<long double> operator "" _EK_abs_ (long double _v) {
             return Q_EK_abs<long double>(_v); }
         static inline Q_EK_abs<long double> operator "" _EK_abs_ (unsigned long long int _v) {
-            return Q_EK_abs<long double>(_v); }
+            return Q_EK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7083,7 +7083,7 @@ namespace mks
         static inline Q_PK<long double> operator "" _PK_ (long double _v) {
             return Q_PK<long double>(_v); }
         static inline Q_PK<long double> operator "" _PK_ (unsigned long long int _v) {
-            return Q_PK<long double>(_v); }
+            return Q_PK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7110,7 +7110,7 @@ namespace mks
         static inline Q_PK_abs<long double> operator "" _PK_abs_ (long double _v) {
             return Q_PK_abs<long double>(_v); }
         static inline Q_PK_abs<long double> operator "" _PK_abs_ (unsigned long long int _v) {
-            return Q_PK_abs<long double>(_v); }
+            return Q_PK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7137,7 +7137,7 @@ namespace mks
         static inline Q_TK<long double> operator "" _TK_ (long double _v) {
             return Q_TK<long double>(_v); }
         static inline Q_TK<long double> operator "" _TK_ (unsigned long long int _v) {
-            return Q_TK<long double>(_v); }
+            return Q_TK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7164,7 +7164,7 @@ namespace mks
         static inline Q_TK_abs<long double> operator "" _TK_abs_ (long double _v) {
             return Q_TK_abs<long double>(_v); }
         static inline Q_TK_abs<long double> operator "" _TK_abs_ (unsigned long long int _v) {
-            return Q_TK_abs<long double>(_v); }
+            return Q_TK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7191,7 +7191,7 @@ namespace mks
         static inline Q_GK<long double> operator "" _GK_ (long double _v) {
             return Q_GK<long double>(_v); }
         static inline Q_GK<long double> operator "" _GK_ (unsigned long long int _v) {
-            return Q_GK<long double>(_v); }
+            return Q_GK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7218,7 +7218,7 @@ namespace mks
         static inline Q_GK_abs<long double> operator "" _GK_abs_ (long double _v) {
             return Q_GK_abs<long double>(_v); }
         static inline Q_GK_abs<long double> operator "" _GK_abs_ (unsigned long long int _v) {
-            return Q_GK_abs<long double>(_v); }
+            return Q_GK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7245,7 +7245,7 @@ namespace mks
         static inline Q_MK<long double> operator "" _MK_ (long double _v) {
             return Q_MK<long double>(_v); }
         static inline Q_MK<long double> operator "" _MK_ (unsigned long long int _v) {
-            return Q_MK<long double>(_v); }
+            return Q_MK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7272,7 +7272,7 @@ namespace mks
         static inline Q_MK_abs<long double> operator "" _MK_abs_ (long double _v) {
             return Q_MK_abs<long double>(_v); }
         static inline Q_MK_abs<long double> operator "" _MK_abs_ (unsigned long long int _v) {
-            return Q_MK_abs<long double>(_v); }
+            return Q_MK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7299,7 +7299,7 @@ namespace mks
         static inline Q_kK<long double> operator "" _kK_ (long double _v) {
             return Q_kK<long double>(_v); }
         static inline Q_kK<long double> operator "" _kK_ (unsigned long long int _v) {
-            return Q_kK<long double>(_v); }
+            return Q_kK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7326,7 +7326,7 @@ namespace mks
         static inline Q_kK_abs<long double> operator "" _kK_abs_ (long double _v) {
             return Q_kK_abs<long double>(_v); }
         static inline Q_kK_abs<long double> operator "" _kK_abs_ (unsigned long long int _v) {
-            return Q_kK_abs<long double>(_v); }
+            return Q_kK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7353,7 +7353,7 @@ namespace mks
         static inline Q_hK<long double> operator "" _hK_ (long double _v) {
             return Q_hK<long double>(_v); }
         static inline Q_hK<long double> operator "" _hK_ (unsigned long long int _v) {
-            return Q_hK<long double>(_v); }
+            return Q_hK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7380,7 +7380,7 @@ namespace mks
         static inline Q_hK_abs<long double> operator "" _hK_abs_ (long double _v) {
             return Q_hK_abs<long double>(_v); }
         static inline Q_hK_abs<long double> operator "" _hK_abs_ (unsigned long long int _v) {
-            return Q_hK_abs<long double>(_v); }
+            return Q_hK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7407,7 +7407,7 @@ namespace mks
         static inline Q_daK<long double> operator "" _daK_ (long double _v) {
             return Q_daK<long double>(_v); }
         static inline Q_daK<long double> operator "" _daK_ (unsigned long long int _v) {
-            return Q_daK<long double>(_v); }
+            return Q_daK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7434,7 +7434,7 @@ namespace mks
         static inline Q_daK_abs<long double> operator "" _daK_abs_ (long double _v) {
             return Q_daK_abs<long double>(_v); }
         static inline Q_daK_abs<long double> operator "" _daK_abs_ (unsigned long long int _v) {
-            return Q_daK_abs<long double>(_v); }
+            return Q_daK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7461,7 +7461,7 @@ namespace mks
         static inline Q_K<long double> operator "" _K_ (long double _v) {
             return Q_K<long double>(_v); }
         static inline Q_K<long double> operator "" _K_ (unsigned long long int _v) {
-            return Q_K<long double>(_v); }
+            return Q_K<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7488,7 +7488,7 @@ namespace mks
         static inline Q_K_abs<long double> operator "" _K_abs_ (long double _v) {
             return Q_K_abs<long double>(_v); }
         static inline Q_K_abs<long double> operator "" _K_abs_ (unsigned long long int _v) {
-            return Q_K_abs<long double>(_v); }
+            return Q_K_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7515,7 +7515,7 @@ namespace mks
         static inline Q_dK<long double> operator "" _dK_ (long double _v) {
             return Q_dK<long double>(_v); }
         static inline Q_dK<long double> operator "" _dK_ (unsigned long long int _v) {
-            return Q_dK<long double>(_v); }
+            return Q_dK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7542,7 +7542,7 @@ namespace mks
         static inline Q_dK_abs<long double> operator "" _dK_abs_ (long double _v) {
             return Q_dK_abs<long double>(_v); }
         static inline Q_dK_abs<long double> operator "" _dK_abs_ (unsigned long long int _v) {
-            return Q_dK_abs<long double>(_v); }
+            return Q_dK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7569,7 +7569,7 @@ namespace mks
         static inline Q_cK<long double> operator "" _cK_ (long double _v) {
             return Q_cK<long double>(_v); }
         static inline Q_cK<long double> operator "" _cK_ (unsigned long long int _v) {
-            return Q_cK<long double>(_v); }
+            return Q_cK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7596,7 +7596,7 @@ namespace mks
         static inline Q_cK_abs<long double> operator "" _cK_abs_ (long double _v) {
             return Q_cK_abs<long double>(_v); }
         static inline Q_cK_abs<long double> operator "" _cK_abs_ (unsigned long long int _v) {
-            return Q_cK_abs<long double>(_v); }
+            return Q_cK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7623,7 +7623,7 @@ namespace mks
         static inline Q_mK<long double> operator "" _mK_ (long double _v) {
             return Q_mK<long double>(_v); }
         static inline Q_mK<long double> operator "" _mK_ (unsigned long long int _v) {
-            return Q_mK<long double>(_v); }
+            return Q_mK<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7650,7 +7650,7 @@ namespace mks
         static inline Q_mK_abs<long double> operator "" _mK_abs_ (long double _v) {
             return Q_mK_abs<long double>(_v); }
         static inline Q_mK_abs<long double> operator "" _mK_abs_ (unsigned long long int _v) {
-            return Q_mK_abs<long double>(_v); }
+            return Q_mK_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7677,7 +7677,7 @@ namespace mks
         static inline Q_EdegF<long double> operator "" _EdegF_ (long double _v) {
             return Q_EdegF<long double>(_v); }
         static inline Q_EdegF<long double> operator "" _EdegF_ (unsigned long long int _v) {
-            return Q_EdegF<long double>(_v); }
+            return Q_EdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7704,7 +7704,7 @@ namespace mks
         static inline Q_EdegF_abs<long double> operator "" _EdegF_abs_ (long double _v) {
             return Q_EdegF_abs<long double>(_v); }
         static inline Q_EdegF_abs<long double> operator "" _EdegF_abs_ (unsigned long long int _v) {
-            return Q_EdegF_abs<long double>(_v); }
+            return Q_EdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7731,7 +7731,7 @@ namespace mks
         static inline Q_PdegF<long double> operator "" _PdegF_ (long double _v) {
             return Q_PdegF<long double>(_v); }
         static inline Q_PdegF<long double> operator "" _PdegF_ (unsigned long long int _v) {
-            return Q_PdegF<long double>(_v); }
+            return Q_PdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7758,7 +7758,7 @@ namespace mks
         static inline Q_PdegF_abs<long double> operator "" _PdegF_abs_ (long double _v) {
             return Q_PdegF_abs<long double>(_v); }
         static inline Q_PdegF_abs<long double> operator "" _PdegF_abs_ (unsigned long long int _v) {
-            return Q_PdegF_abs<long double>(_v); }
+            return Q_PdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7785,7 +7785,7 @@ namespace mks
         static inline Q_TdegF<long double> operator "" _TdegF_ (long double _v) {
             return Q_TdegF<long double>(_v); }
         static inline Q_TdegF<long double> operator "" _TdegF_ (unsigned long long int _v) {
-            return Q_TdegF<long double>(_v); }
+            return Q_TdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7812,7 +7812,7 @@ namespace mks
         static inline Q_TdegF_abs<long double> operator "" _TdegF_abs_ (long double _v) {
             return Q_TdegF_abs<long double>(_v); }
         static inline Q_TdegF_abs<long double> operator "" _TdegF_abs_ (unsigned long long int _v) {
-            return Q_TdegF_abs<long double>(_v); }
+            return Q_TdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7839,7 +7839,7 @@ namespace mks
         static inline Q_GdegF<long double> operator "" _GdegF_ (long double _v) {
             return Q_GdegF<long double>(_v); }
         static inline Q_GdegF<long double> operator "" _GdegF_ (unsigned long long int _v) {
-            return Q_GdegF<long double>(_v); }
+            return Q_GdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7866,7 +7866,7 @@ namespace mks
         static inline Q_GdegF_abs<long double> operator "" _GdegF_abs_ (long double _v) {
             return Q_GdegF_abs<long double>(_v); }
         static inline Q_GdegF_abs<long double> operator "" _GdegF_abs_ (unsigned long long int _v) {
-            return Q_GdegF_abs<long double>(_v); }
+            return Q_GdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7893,7 +7893,7 @@ namespace mks
         static inline Q_MdegF<long double> operator "" _MdegF_ (long double _v) {
             return Q_MdegF<long double>(_v); }
         static inline Q_MdegF<long double> operator "" _MdegF_ (unsigned long long int _v) {
-            return Q_MdegF<long double>(_v); }
+            return Q_MdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7920,7 +7920,7 @@ namespace mks
         static inline Q_MdegF_abs<long double> operator "" _MdegF_abs_ (long double _v) {
             return Q_MdegF_abs<long double>(_v); }
         static inline Q_MdegF_abs<long double> operator "" _MdegF_abs_ (unsigned long long int _v) {
-            return Q_MdegF_abs<long double>(_v); }
+            return Q_MdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7947,7 +7947,7 @@ namespace mks
         static inline Q_kdegF<long double> operator "" _kdegF_ (long double _v) {
             return Q_kdegF<long double>(_v); }
         static inline Q_kdegF<long double> operator "" _kdegF_ (unsigned long long int _v) {
-            return Q_kdegF<long double>(_v); }
+            return Q_kdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -7974,7 +7974,7 @@ namespace mks
         static inline Q_kdegF_abs<long double> operator "" _kdegF_abs_ (long double _v) {
             return Q_kdegF_abs<long double>(_v); }
         static inline Q_kdegF_abs<long double> operator "" _kdegF_abs_ (unsigned long long int _v) {
-            return Q_kdegF_abs<long double>(_v); }
+            return Q_kdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8001,7 +8001,7 @@ namespace mks
         static inline Q_hdegF<long double> operator "" _hdegF_ (long double _v) {
             return Q_hdegF<long double>(_v); }
         static inline Q_hdegF<long double> operator "" _hdegF_ (unsigned long long int _v) {
-            return Q_hdegF<long double>(_v); }
+            return Q_hdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8028,7 +8028,7 @@ namespace mks
         static inline Q_hdegF_abs<long double> operator "" _hdegF_abs_ (long double _v) {
             return Q_hdegF_abs<long double>(_v); }
         static inline Q_hdegF_abs<long double> operator "" _hdegF_abs_ (unsigned long long int _v) {
-            return Q_hdegF_abs<long double>(_v); }
+            return Q_hdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8055,7 +8055,7 @@ namespace mks
         static inline Q_dadegF<long double> operator "" _dadegF_ (long double _v) {
             return Q_dadegF<long double>(_v); }
         static inline Q_dadegF<long double> operator "" _dadegF_ (unsigned long long int _v) {
-            return Q_dadegF<long double>(_v); }
+            return Q_dadegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8082,7 +8082,7 @@ namespace mks
         static inline Q_dadegF_abs<long double> operator "" _dadegF_abs_ (long double _v) {
             return Q_dadegF_abs<long double>(_v); }
         static inline Q_dadegF_abs<long double> operator "" _dadegF_abs_ (unsigned long long int _v) {
-            return Q_dadegF_abs<long double>(_v); }
+            return Q_dadegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8109,7 +8109,7 @@ namespace mks
         static inline Q_degF<long double> operator "" _degF_ (long double _v) {
             return Q_degF<long double>(_v); }
         static inline Q_degF<long double> operator "" _degF_ (unsigned long long int _v) {
-            return Q_degF<long double>(_v); }
+            return Q_degF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8136,7 +8136,7 @@ namespace mks
         static inline Q_degF_abs<long double> operator "" _degF_abs_ (long double _v) {
             return Q_degF_abs<long double>(_v); }
         static inline Q_degF_abs<long double> operator "" _degF_abs_ (unsigned long long int _v) {
-            return Q_degF_abs<long double>(_v); }
+            return Q_degF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8163,7 +8163,7 @@ namespace mks
         static inline Q_ddegF<long double> operator "" _ddegF_ (long double _v) {
             return Q_ddegF<long double>(_v); }
         static inline Q_ddegF<long double> operator "" _ddegF_ (unsigned long long int _v) {
-            return Q_ddegF<long double>(_v); }
+            return Q_ddegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8190,7 +8190,7 @@ namespace mks
         static inline Q_ddegF_abs<long double> operator "" _ddegF_abs_ (long double _v) {
             return Q_ddegF_abs<long double>(_v); }
         static inline Q_ddegF_abs<long double> operator "" _ddegF_abs_ (unsigned long long int _v) {
-            return Q_ddegF_abs<long double>(_v); }
+            return Q_ddegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8217,7 +8217,7 @@ namespace mks
         static inline Q_cdegF<long double> operator "" _cdegF_ (long double _v) {
             return Q_cdegF<long double>(_v); }
         static inline Q_cdegF<long double> operator "" _cdegF_ (unsigned long long int _v) {
-            return Q_cdegF<long double>(_v); }
+            return Q_cdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8244,7 +8244,7 @@ namespace mks
         static inline Q_cdegF_abs<long double> operator "" _cdegF_abs_ (long double _v) {
             return Q_cdegF_abs<long double>(_v); }
         static inline Q_cdegF_abs<long double> operator "" _cdegF_abs_ (unsigned long long int _v) {
-            return Q_cdegF_abs<long double>(_v); }
+            return Q_cdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8271,7 +8271,7 @@ namespace mks
         static inline Q_mdegF<long double> operator "" _mdegF_ (long double _v) {
             return Q_mdegF<long double>(_v); }
         static inline Q_mdegF<long double> operator "" _mdegF_ (unsigned long long int _v) {
-            return Q_mdegF<long double>(_v); }
+            return Q_mdegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8298,7 +8298,7 @@ namespace mks
         static inline Q_mdegF_abs<long double> operator "" _mdegF_abs_ (long double _v) {
             return Q_mdegF_abs<long double>(_v); }
         static inline Q_mdegF_abs<long double> operator "" _mdegF_abs_ (unsigned long long int _v) {
-            return Q_mdegF_abs<long double>(_v); }
+            return Q_mdegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8325,7 +8325,7 @@ namespace mks
         static inline Q_udegF<long double> operator "" _udegF_ (long double _v) {
             return Q_udegF<long double>(_v); }
         static inline Q_udegF<long double> operator "" _udegF_ (unsigned long long int _v) {
-            return Q_udegF<long double>(_v); }
+            return Q_udegF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8352,7 +8352,7 @@ namespace mks
         static inline Q_udegF_abs<long double> operator "" _udegF_abs_ (long double _v) {
             return Q_udegF_abs<long double>(_v); }
         static inline Q_udegF_abs<long double> operator "" _udegF_abs_ (unsigned long long int _v) {
-            return Q_udegF_abs<long double>(_v); }
+            return Q_udegF_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8379,7 +8379,7 @@ namespace mks
         static inline Q_EdegRa<long double> operator "" _EdegRa_ (long double _v) {
             return Q_EdegRa<long double>(_v); }
         static inline Q_EdegRa<long double> operator "" _EdegRa_ (unsigned long long int _v) {
-            return Q_EdegRa<long double>(_v); }
+            return Q_EdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8406,7 +8406,7 @@ namespace mks
         static inline Q_EdegRa_abs<long double> operator "" _EdegRa_abs_ (long double _v) {
             return Q_EdegRa_abs<long double>(_v); }
         static inline Q_EdegRa_abs<long double> operator "" _EdegRa_abs_ (unsigned long long int _v) {
-            return Q_EdegRa_abs<long double>(_v); }
+            return Q_EdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8433,7 +8433,7 @@ namespace mks
         static inline Q_PdegRa<long double> operator "" _PdegRa_ (long double _v) {
             return Q_PdegRa<long double>(_v); }
         static inline Q_PdegRa<long double> operator "" _PdegRa_ (unsigned long long int _v) {
-            return Q_PdegRa<long double>(_v); }
+            return Q_PdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8460,7 +8460,7 @@ namespace mks
         static inline Q_PdegRa_abs<long double> operator "" _PdegRa_abs_ (long double _v) {
             return Q_PdegRa_abs<long double>(_v); }
         static inline Q_PdegRa_abs<long double> operator "" _PdegRa_abs_ (unsigned long long int _v) {
-            return Q_PdegRa_abs<long double>(_v); }
+            return Q_PdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8487,7 +8487,7 @@ namespace mks
         static inline Q_TdegRa<long double> operator "" _TdegRa_ (long double _v) {
             return Q_TdegRa<long double>(_v); }
         static inline Q_TdegRa<long double> operator "" _TdegRa_ (unsigned long long int _v) {
-            return Q_TdegRa<long double>(_v); }
+            return Q_TdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8514,7 +8514,7 @@ namespace mks
         static inline Q_TdegRa_abs<long double> operator "" _TdegRa_abs_ (long double _v) {
             return Q_TdegRa_abs<long double>(_v); }
         static inline Q_TdegRa_abs<long double> operator "" _TdegRa_abs_ (unsigned long long int _v) {
-            return Q_TdegRa_abs<long double>(_v); }
+            return Q_TdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8541,7 +8541,7 @@ namespace mks
         static inline Q_GdegRa<long double> operator "" _GdegRa_ (long double _v) {
             return Q_GdegRa<long double>(_v); }
         static inline Q_GdegRa<long double> operator "" _GdegRa_ (unsigned long long int _v) {
-            return Q_GdegRa<long double>(_v); }
+            return Q_GdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8568,7 +8568,7 @@ namespace mks
         static inline Q_GdegRa_abs<long double> operator "" _GdegRa_abs_ (long double _v) {
             return Q_GdegRa_abs<long double>(_v); }
         static inline Q_GdegRa_abs<long double> operator "" _GdegRa_abs_ (unsigned long long int _v) {
-            return Q_GdegRa_abs<long double>(_v); }
+            return Q_GdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8595,7 +8595,7 @@ namespace mks
         static inline Q_MdegRa<long double> operator "" _MdegRa_ (long double _v) {
             return Q_MdegRa<long double>(_v); }
         static inline Q_MdegRa<long double> operator "" _MdegRa_ (unsigned long long int _v) {
-            return Q_MdegRa<long double>(_v); }
+            return Q_MdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8622,7 +8622,7 @@ namespace mks
         static inline Q_MdegRa_abs<long double> operator "" _MdegRa_abs_ (long double _v) {
             return Q_MdegRa_abs<long double>(_v); }
         static inline Q_MdegRa_abs<long double> operator "" _MdegRa_abs_ (unsigned long long int _v) {
-            return Q_MdegRa_abs<long double>(_v); }
+            return Q_MdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8649,7 +8649,7 @@ namespace mks
         static inline Q_kdegRa<long double> operator "" _kdegRa_ (long double _v) {
             return Q_kdegRa<long double>(_v); }
         static inline Q_kdegRa<long double> operator "" _kdegRa_ (unsigned long long int _v) {
-            return Q_kdegRa<long double>(_v); }
+            return Q_kdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8676,7 +8676,7 @@ namespace mks
         static inline Q_kdegRa_abs<long double> operator "" _kdegRa_abs_ (long double _v) {
             return Q_kdegRa_abs<long double>(_v); }
         static inline Q_kdegRa_abs<long double> operator "" _kdegRa_abs_ (unsigned long long int _v) {
-            return Q_kdegRa_abs<long double>(_v); }
+            return Q_kdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8703,7 +8703,7 @@ namespace mks
         static inline Q_hdegRa<long double> operator "" _hdegRa_ (long double _v) {
             return Q_hdegRa<long double>(_v); }
         static inline Q_hdegRa<long double> operator "" _hdegRa_ (unsigned long long int _v) {
-            return Q_hdegRa<long double>(_v); }
+            return Q_hdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8730,7 +8730,7 @@ namespace mks
         static inline Q_hdegRa_abs<long double> operator "" _hdegRa_abs_ (long double _v) {
             return Q_hdegRa_abs<long double>(_v); }
         static inline Q_hdegRa_abs<long double> operator "" _hdegRa_abs_ (unsigned long long int _v) {
-            return Q_hdegRa_abs<long double>(_v); }
+            return Q_hdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8757,7 +8757,7 @@ namespace mks
         static inline Q_dadegRa<long double> operator "" _dadegRa_ (long double _v) {
             return Q_dadegRa<long double>(_v); }
         static inline Q_dadegRa<long double> operator "" _dadegRa_ (unsigned long long int _v) {
-            return Q_dadegRa<long double>(_v); }
+            return Q_dadegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8784,7 +8784,7 @@ namespace mks
         static inline Q_dadegRa_abs<long double> operator "" _dadegRa_abs_ (long double _v) {
             return Q_dadegRa_abs<long double>(_v); }
         static inline Q_dadegRa_abs<long double> operator "" _dadegRa_abs_ (unsigned long long int _v) {
-            return Q_dadegRa_abs<long double>(_v); }
+            return Q_dadegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8811,7 +8811,7 @@ namespace mks
         static inline Q_degRa<long double> operator "" _degRa_ (long double _v) {
             return Q_degRa<long double>(_v); }
         static inline Q_degRa<long double> operator "" _degRa_ (unsigned long long int _v) {
-            return Q_degRa<long double>(_v); }
+            return Q_degRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8838,7 +8838,7 @@ namespace mks
         static inline Q_degRa_abs<long double> operator "" _degRa_abs_ (long double _v) {
             return Q_degRa_abs<long double>(_v); }
         static inline Q_degRa_abs<long double> operator "" _degRa_abs_ (unsigned long long int _v) {
-            return Q_degRa_abs<long double>(_v); }
+            return Q_degRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8865,7 +8865,7 @@ namespace mks
         static inline Q_ddegRa<long double> operator "" _ddegRa_ (long double _v) {
             return Q_ddegRa<long double>(_v); }
         static inline Q_ddegRa<long double> operator "" _ddegRa_ (unsigned long long int _v) {
-            return Q_ddegRa<long double>(_v); }
+            return Q_ddegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8892,7 +8892,7 @@ namespace mks
         static inline Q_ddegRa_abs<long double> operator "" _ddegRa_abs_ (long double _v) {
             return Q_ddegRa_abs<long double>(_v); }
         static inline Q_ddegRa_abs<long double> operator "" _ddegRa_abs_ (unsigned long long int _v) {
-            return Q_ddegRa_abs<long double>(_v); }
+            return Q_ddegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8919,7 +8919,7 @@ namespace mks
         static inline Q_cdegRa<long double> operator "" _cdegRa_ (long double _v) {
             return Q_cdegRa<long double>(_v); }
         static inline Q_cdegRa<long double> operator "" _cdegRa_ (unsigned long long int _v) {
-            return Q_cdegRa<long double>(_v); }
+            return Q_cdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8946,7 +8946,7 @@ namespace mks
         static inline Q_cdegRa_abs<long double> operator "" _cdegRa_abs_ (long double _v) {
             return Q_cdegRa_abs<long double>(_v); }
         static inline Q_cdegRa_abs<long double> operator "" _cdegRa_abs_ (unsigned long long int _v) {
-            return Q_cdegRa_abs<long double>(_v); }
+            return Q_cdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -8973,7 +8973,7 @@ namespace mks
         static inline Q_mdegRa<long double> operator "" _mdegRa_ (long double _v) {
             return Q_mdegRa<long double>(_v); }
         static inline Q_mdegRa<long double> operator "" _mdegRa_ (unsigned long long int _v) {
-            return Q_mdegRa<long double>(_v); }
+            return Q_mdegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9000,7 +9000,7 @@ namespace mks
         static inline Q_mdegRa_abs<long double> operator "" _mdegRa_abs_ (long double _v) {
             return Q_mdegRa_abs<long double>(_v); }
         static inline Q_mdegRa_abs<long double> operator "" _mdegRa_abs_ (unsigned long long int _v) {
-            return Q_mdegRa_abs<long double>(_v); }
+            return Q_mdegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9027,7 +9027,7 @@ namespace mks
         static inline Q_udegRa<long double> operator "" _udegRa_ (long double _v) {
             return Q_udegRa<long double>(_v); }
         static inline Q_udegRa<long double> operator "" _udegRa_ (unsigned long long int _v) {
-            return Q_udegRa<long double>(_v); }
+            return Q_udegRa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9054,7 +9054,7 @@ namespace mks
         static inline Q_udegRa_abs<long double> operator "" _udegRa_abs_ (long double _v) {
             return Q_udegRa_abs<long double>(_v); }
         static inline Q_udegRa_abs<long double> operator "" _udegRa_abs_ (unsigned long long int _v) {
-            return Q_udegRa_abs<long double>(_v); }
+            return Q_udegRa_abs<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9081,7 +9081,7 @@ namespace mks
         static inline Q_ET<long double> operator "" _ET_ (long double _v) {
             return Q_ET<long double>(_v); }
         static inline Q_ET<long double> operator "" _ET_ (unsigned long long int _v) {
-            return Q_ET<long double>(_v); }
+            return Q_ET<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9108,7 +9108,7 @@ namespace mks
         static inline Q_PT<long double> operator "" _PT_ (long double _v) {
             return Q_PT<long double>(_v); }
         static inline Q_PT<long double> operator "" _PT_ (unsigned long long int _v) {
-            return Q_PT<long double>(_v); }
+            return Q_PT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9135,7 +9135,7 @@ namespace mks
         static inline Q_TT<long double> operator "" _TT_ (long double _v) {
             return Q_TT<long double>(_v); }
         static inline Q_TT<long double> operator "" _TT_ (unsigned long long int _v) {
-            return Q_TT<long double>(_v); }
+            return Q_TT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9162,7 +9162,7 @@ namespace mks
         static inline Q_GT<long double> operator "" _GT_ (long double _v) {
             return Q_GT<long double>(_v); }
         static inline Q_GT<long double> operator "" _GT_ (unsigned long long int _v) {
-            return Q_GT<long double>(_v); }
+            return Q_GT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9189,7 +9189,7 @@ namespace mks
         static inline Q_MT<long double> operator "" _MT_ (long double _v) {
             return Q_MT<long double>(_v); }
         static inline Q_MT<long double> operator "" _MT_ (unsigned long long int _v) {
-            return Q_MT<long double>(_v); }
+            return Q_MT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9216,7 +9216,7 @@ namespace mks
         static inline Q_kT<long double> operator "" _kT_ (long double _v) {
             return Q_kT<long double>(_v); }
         static inline Q_kT<long double> operator "" _kT_ (unsigned long long int _v) {
-            return Q_kT<long double>(_v); }
+            return Q_kT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9243,7 +9243,7 @@ namespace mks
         static inline Q_hT<long double> operator "" _hT_ (long double _v) {
             return Q_hT<long double>(_v); }
         static inline Q_hT<long double> operator "" _hT_ (unsigned long long int _v) {
-            return Q_hT<long double>(_v); }
+            return Q_hT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9270,7 +9270,7 @@ namespace mks
         static inline Q_daT<long double> operator "" _daT_ (long double _v) {
             return Q_daT<long double>(_v); }
         static inline Q_daT<long double> operator "" _daT_ (unsigned long long int _v) {
-            return Q_daT<long double>(_v); }
+            return Q_daT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9297,7 +9297,7 @@ namespace mks
         static inline Q_T<long double> operator "" _T_ (long double _v) {
             return Q_T<long double>(_v); }
         static inline Q_T<long double> operator "" _T_ (unsigned long long int _v) {
-            return Q_T<long double>(_v); }
+            return Q_T<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9324,7 +9324,7 @@ namespace mks
         static inline Q_dT<long double> operator "" _dT_ (long double _v) {
             return Q_dT<long double>(_v); }
         static inline Q_dT<long double> operator "" _dT_ (unsigned long long int _v) {
-            return Q_dT<long double>(_v); }
+            return Q_dT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9351,7 +9351,7 @@ namespace mks
         static inline Q_cT<long double> operator "" _cT_ (long double _v) {
             return Q_cT<long double>(_v); }
         static inline Q_cT<long double> operator "" _cT_ (unsigned long long int _v) {
-            return Q_cT<long double>(_v); }
+            return Q_cT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9378,7 +9378,7 @@ namespace mks
         static inline Q_mT<long double> operator "" _mT_ (long double _v) {
             return Q_mT<long double>(_v); }
         static inline Q_mT<long double> operator "" _mT_ (unsigned long long int _v) {
-            return Q_mT<long double>(_v); }
+            return Q_mT<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9405,7 +9405,7 @@ namespace mks
         static inline Q_EG<long double> operator "" _EG_ (long double _v) {
             return Q_EG<long double>(_v); }
         static inline Q_EG<long double> operator "" _EG_ (unsigned long long int _v) {
-            return Q_EG<long double>(_v); }
+            return Q_EG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9432,7 +9432,7 @@ namespace mks
         static inline Q_PG<long double> operator "" _PG_ (long double _v) {
             return Q_PG<long double>(_v); }
         static inline Q_PG<long double> operator "" _PG_ (unsigned long long int _v) {
-            return Q_PG<long double>(_v); }
+            return Q_PG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9459,7 +9459,7 @@ namespace mks
         static inline Q_TG<long double> operator "" _TG_ (long double _v) {
             return Q_TG<long double>(_v); }
         static inline Q_TG<long double> operator "" _TG_ (unsigned long long int _v) {
-            return Q_TG<long double>(_v); }
+            return Q_TG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9486,7 +9486,7 @@ namespace mks
         static inline Q_GG<long double> operator "" _GG_ (long double _v) {
             return Q_GG<long double>(_v); }
         static inline Q_GG<long double> operator "" _GG_ (unsigned long long int _v) {
-            return Q_GG<long double>(_v); }
+            return Q_GG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9513,7 +9513,7 @@ namespace mks
         static inline Q_MG<long double> operator "" _MG_ (long double _v) {
             return Q_MG<long double>(_v); }
         static inline Q_MG<long double> operator "" _MG_ (unsigned long long int _v) {
-            return Q_MG<long double>(_v); }
+            return Q_MG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9540,7 +9540,7 @@ namespace mks
         static inline Q_kG<long double> operator "" _kG_ (long double _v) {
             return Q_kG<long double>(_v); }
         static inline Q_kG<long double> operator "" _kG_ (unsigned long long int _v) {
-            return Q_kG<long double>(_v); }
+            return Q_kG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9567,7 +9567,7 @@ namespace mks
         static inline Q_hG<long double> operator "" _hG_ (long double _v) {
             return Q_hG<long double>(_v); }
         static inline Q_hG<long double> operator "" _hG_ (unsigned long long int _v) {
-            return Q_hG<long double>(_v); }
+            return Q_hG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9594,7 +9594,7 @@ namespace mks
         static inline Q_daG<long double> operator "" _daG_ (long double _v) {
             return Q_daG<long double>(_v); }
         static inline Q_daG<long double> operator "" _daG_ (unsigned long long int _v) {
-            return Q_daG<long double>(_v); }
+            return Q_daG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9621,7 +9621,7 @@ namespace mks
         static inline Q_G<long double> operator "" _G_ (long double _v) {
             return Q_G<long double>(_v); }
         static inline Q_G<long double> operator "" _G_ (unsigned long long int _v) {
-            return Q_G<long double>(_v); }
+            return Q_G<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9648,7 +9648,7 @@ namespace mks
         static inline Q_dG<long double> operator "" _dG_ (long double _v) {
             return Q_dG<long double>(_v); }
         static inline Q_dG<long double> operator "" _dG_ (unsigned long long int _v) {
-            return Q_dG<long double>(_v); }
+            return Q_dG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9675,7 +9675,7 @@ namespace mks
         static inline Q_cG<long double> operator "" _cG_ (long double _v) {
             return Q_cG<long double>(_v); }
         static inline Q_cG<long double> operator "" _cG_ (unsigned long long int _v) {
-            return Q_cG<long double>(_v); }
+            return Q_cG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9702,7 +9702,7 @@ namespace mks
         static inline Q_EPa<long double> operator "" _EPa_ (long double _v) {
             return Q_EPa<long double>(_v); }
         static inline Q_EPa<long double> operator "" _EPa_ (unsigned long long int _v) {
-            return Q_EPa<long double>(_v); }
+            return Q_EPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9729,7 +9729,7 @@ namespace mks
         static inline Q_PPa<long double> operator "" _PPa_ (long double _v) {
             return Q_PPa<long double>(_v); }
         static inline Q_PPa<long double> operator "" _PPa_ (unsigned long long int _v) {
-            return Q_PPa<long double>(_v); }
+            return Q_PPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9756,7 +9756,7 @@ namespace mks
         static inline Q_TPa<long double> operator "" _TPa_ (long double _v) {
             return Q_TPa<long double>(_v); }
         static inline Q_TPa<long double> operator "" _TPa_ (unsigned long long int _v) {
-            return Q_TPa<long double>(_v); }
+            return Q_TPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9783,7 +9783,7 @@ namespace mks
         static inline Q_GPa<long double> operator "" _GPa_ (long double _v) {
             return Q_GPa<long double>(_v); }
         static inline Q_GPa<long double> operator "" _GPa_ (unsigned long long int _v) {
-            return Q_GPa<long double>(_v); }
+            return Q_GPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9810,7 +9810,7 @@ namespace mks
         static inline Q_MPa<long double> operator "" _MPa_ (long double _v) {
             return Q_MPa<long double>(_v); }
         static inline Q_MPa<long double> operator "" _MPa_ (unsigned long long int _v) {
-            return Q_MPa<long double>(_v); }
+            return Q_MPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9837,7 +9837,7 @@ namespace mks
         static inline Q_kPa<long double> operator "" _kPa_ (long double _v) {
             return Q_kPa<long double>(_v); }
         static inline Q_kPa<long double> operator "" _kPa_ (unsigned long long int _v) {
-            return Q_kPa<long double>(_v); }
+            return Q_kPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9864,7 +9864,7 @@ namespace mks
         static inline Q_hPa<long double> operator "" _hPa_ (long double _v) {
             return Q_hPa<long double>(_v); }
         static inline Q_hPa<long double> operator "" _hPa_ (unsigned long long int _v) {
-            return Q_hPa<long double>(_v); }
+            return Q_hPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9891,7 +9891,7 @@ namespace mks
         static inline Q_daPa<long double> operator "" _daPa_ (long double _v) {
             return Q_daPa<long double>(_v); }
         static inline Q_daPa<long double> operator "" _daPa_ (unsigned long long int _v) {
-            return Q_daPa<long double>(_v); }
+            return Q_daPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9918,7 +9918,7 @@ namespace mks
         static inline Q_Pa<long double> operator "" _Pa_ (long double _v) {
             return Q_Pa<long double>(_v); }
         static inline Q_Pa<long double> operator "" _Pa_ (unsigned long long int _v) {
-            return Q_Pa<long double>(_v); }
+            return Q_Pa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9945,7 +9945,7 @@ namespace mks
         static inline Q_dPa<long double> operator "" _dPa_ (long double _v) {
             return Q_dPa<long double>(_v); }
         static inline Q_dPa<long double> operator "" _dPa_ (unsigned long long int _v) {
-            return Q_dPa<long double>(_v); }
+            return Q_dPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9972,7 +9972,7 @@ namespace mks
         static inline Q_cPa<long double> operator "" _cPa_ (long double _v) {
             return Q_cPa<long double>(_v); }
         static inline Q_cPa<long double> operator "" _cPa_ (unsigned long long int _v) {
-            return Q_cPa<long double>(_v); }
+            return Q_cPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -9999,7 +9999,7 @@ namespace mks
         static inline Q_mPa<long double> operator "" _mPa_ (long double _v) {
             return Q_mPa<long double>(_v); }
         static inline Q_mPa<long double> operator "" _mPa_ (unsigned long long int _v) {
-            return Q_mPa<long double>(_v); }
+            return Q_mPa<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10026,7 +10026,7 @@ namespace mks
         static inline Q_Tbar<long double> operator "" _Tbar_ (long double _v) {
             return Q_Tbar<long double>(_v); }
         static inline Q_Tbar<long double> operator "" _Tbar_ (unsigned long long int _v) {
-            return Q_Tbar<long double>(_v); }
+            return Q_Tbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10053,7 +10053,7 @@ namespace mks
         static inline Q_Gbar<long double> operator "" _Gbar_ (long double _v) {
             return Q_Gbar<long double>(_v); }
         static inline Q_Gbar<long double> operator "" _Gbar_ (unsigned long long int _v) {
-            return Q_Gbar<long double>(_v); }
+            return Q_Gbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10080,7 +10080,7 @@ namespace mks
         static inline Q_Mbar<long double> operator "" _Mbar_ (long double _v) {
             return Q_Mbar<long double>(_v); }
         static inline Q_Mbar<long double> operator "" _Mbar_ (unsigned long long int _v) {
-            return Q_Mbar<long double>(_v); }
+            return Q_Mbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10107,7 +10107,7 @@ namespace mks
         static inline Q_kbar<long double> operator "" _kbar_ (long double _v) {
             return Q_kbar<long double>(_v); }
         static inline Q_kbar<long double> operator "" _kbar_ (unsigned long long int _v) {
-            return Q_kbar<long double>(_v); }
+            return Q_kbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10134,7 +10134,7 @@ namespace mks
         static inline Q_hbar<long double> operator "" _hbar_ (long double _v) {
             return Q_hbar<long double>(_v); }
         static inline Q_hbar<long double> operator "" _hbar_ (unsigned long long int _v) {
-            return Q_hbar<long double>(_v); }
+            return Q_hbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10161,7 +10161,7 @@ namespace mks
         static inline Q_dabar<long double> operator "" _dabar_ (long double _v) {
             return Q_dabar<long double>(_v); }
         static inline Q_dabar<long double> operator "" _dabar_ (unsigned long long int _v) {
-            return Q_dabar<long double>(_v); }
+            return Q_dabar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10188,7 +10188,7 @@ namespace mks
         static inline Q_bar<long double> operator "" _bar_ (long double _v) {
             return Q_bar<long double>(_v); }
         static inline Q_bar<long double> operator "" _bar_ (unsigned long long int _v) {
-            return Q_bar<long double>(_v); }
+            return Q_bar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10215,7 +10215,7 @@ namespace mks
         static inline Q_dbar<long double> operator "" _dbar_ (long double _v) {
             return Q_dbar<long double>(_v); }
         static inline Q_dbar<long double> operator "" _dbar_ (unsigned long long int _v) {
-            return Q_dbar<long double>(_v); }
+            return Q_dbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10242,7 +10242,7 @@ namespace mks
         static inline Q_cbar<long double> operator "" _cbar_ (long double _v) {
             return Q_cbar<long double>(_v); }
         static inline Q_cbar<long double> operator "" _cbar_ (unsigned long long int _v) {
-            return Q_cbar<long double>(_v); }
+            return Q_cbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10269,7 +10269,7 @@ namespace mks
         static inline Q_mbar<long double> operator "" _mbar_ (long double _v) {
             return Q_mbar<long double>(_v); }
         static inline Q_mbar<long double> operator "" _mbar_ (unsigned long long int _v) {
-            return Q_mbar<long double>(_v); }
+            return Q_mbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10296,7 +10296,7 @@ namespace mks
         static inline Q_ubar<long double> operator "" _ubar_ (long double _v) {
             return Q_ubar<long double>(_v); }
         static inline Q_ubar<long double> operator "" _ubar_ (unsigned long long int _v) {
-            return Q_ubar<long double>(_v); }
+            return Q_ubar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10323,7 +10323,7 @@ namespace mks
         static inline Q_nbar<long double> operator "" _nbar_ (long double _v) {
             return Q_nbar<long double>(_v); }
         static inline Q_nbar<long double> operator "" _nbar_ (unsigned long long int _v) {
-            return Q_nbar<long double>(_v); }
+            return Q_nbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10350,7 +10350,7 @@ namespace mks
         static inline Q_psi<long double> operator "" _psi_ (long double _v) {
             return Q_psi<long double>(_v); }
         static inline Q_psi<long double> operator "" _psi_ (unsigned long long int _v) {
-            return Q_psi<long double>(_v); }
+            return Q_psi<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10377,7 +10377,7 @@ namespace mks
         static inline Q_atm<long double> operator "" _atm_ (long double _v) {
             return Q_atm<long double>(_v); }
         static inline Q_atm<long double> operator "" _atm_ (unsigned long long int _v) {
-            return Q_atm<long double>(_v); }
+            return Q_atm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10404,7 +10404,7 @@ namespace mks
         static inline Q_torr<long double> operator "" _torr_ (long double _v) {
             return Q_torr<long double>(_v); }
         static inline Q_torr<long double> operator "" _torr_ (unsigned long long int _v) {
-            return Q_torr<long double>(_v); }
+            return Q_torr<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10431,7 +10431,7 @@ namespace mks
         static inline Q_EV<long double> operator "" _EV_ (long double _v) {
             return Q_EV<long double>(_v); }
         static inline Q_EV<long double> operator "" _EV_ (unsigned long long int _v) {
-            return Q_EV<long double>(_v); }
+            return Q_EV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10458,7 +10458,7 @@ namespace mks
         static inline Q_PV<long double> operator "" _PV_ (long double _v) {
             return Q_PV<long double>(_v); }
         static inline Q_PV<long double> operator "" _PV_ (unsigned long long int _v) {
-            return Q_PV<long double>(_v); }
+            return Q_PV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10485,7 +10485,7 @@ namespace mks
         static inline Q_TV<long double> operator "" _TV_ (long double _v) {
             return Q_TV<long double>(_v); }
         static inline Q_TV<long double> operator "" _TV_ (unsigned long long int _v) {
-            return Q_TV<long double>(_v); }
+            return Q_TV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10512,7 +10512,7 @@ namespace mks
         static inline Q_GV<long double> operator "" _GV_ (long double _v) {
             return Q_GV<long double>(_v); }
         static inline Q_GV<long double> operator "" _GV_ (unsigned long long int _v) {
-            return Q_GV<long double>(_v); }
+            return Q_GV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10539,7 +10539,7 @@ namespace mks
         static inline Q_MV<long double> operator "" _MV_ (long double _v) {
             return Q_MV<long double>(_v); }
         static inline Q_MV<long double> operator "" _MV_ (unsigned long long int _v) {
-            return Q_MV<long double>(_v); }
+            return Q_MV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10566,7 +10566,7 @@ namespace mks
         static inline Q_kV<long double> operator "" _kV_ (long double _v) {
             return Q_kV<long double>(_v); }
         static inline Q_kV<long double> operator "" _kV_ (unsigned long long int _v) {
-            return Q_kV<long double>(_v); }
+            return Q_kV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10593,7 +10593,7 @@ namespace mks
         static inline Q_hV<long double> operator "" _hV_ (long double _v) {
             return Q_hV<long double>(_v); }
         static inline Q_hV<long double> operator "" _hV_ (unsigned long long int _v) {
-            return Q_hV<long double>(_v); }
+            return Q_hV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10620,7 +10620,7 @@ namespace mks
         static inline Q_daV<long double> operator "" _daV_ (long double _v) {
             return Q_daV<long double>(_v); }
         static inline Q_daV<long double> operator "" _daV_ (unsigned long long int _v) {
-            return Q_daV<long double>(_v); }
+            return Q_daV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10647,7 +10647,7 @@ namespace mks
         static inline Q_V<long double> operator "" _V_ (long double _v) {
             return Q_V<long double>(_v); }
         static inline Q_V<long double> operator "" _V_ (unsigned long long int _v) {
-            return Q_V<long double>(_v); }
+            return Q_V<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10674,7 +10674,7 @@ namespace mks
         static inline Q_dV<long double> operator "" _dV_ (long double _v) {
             return Q_dV<long double>(_v); }
         static inline Q_dV<long double> operator "" _dV_ (unsigned long long int _v) {
-            return Q_dV<long double>(_v); }
+            return Q_dV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10701,7 +10701,7 @@ namespace mks
         static inline Q_cV<long double> operator "" _cV_ (long double _v) {
             return Q_cV<long double>(_v); }
         static inline Q_cV<long double> operator "" _cV_ (unsigned long long int _v) {
-            return Q_cV<long double>(_v); }
+            return Q_cV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10728,7 +10728,7 @@ namespace mks
         static inline Q_mV<long double> operator "" _mV_ (long double _v) {
             return Q_mV<long double>(_v); }
         static inline Q_mV<long double> operator "" _mV_ (unsigned long long int _v) {
-            return Q_mV<long double>(_v); }
+            return Q_mV<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10755,7 +10755,7 @@ namespace mks
         static inline Q_EA<long double> operator "" _EA_ (long double _v) {
             return Q_EA<long double>(_v); }
         static inline Q_EA<long double> operator "" _EA_ (unsigned long long int _v) {
-            return Q_EA<long double>(_v); }
+            return Q_EA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10782,7 +10782,7 @@ namespace mks
         static inline Q_PA<long double> operator "" _PA_ (long double _v) {
             return Q_PA<long double>(_v); }
         static inline Q_PA<long double> operator "" _PA_ (unsigned long long int _v) {
-            return Q_PA<long double>(_v); }
+            return Q_PA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10809,7 +10809,7 @@ namespace mks
         static inline Q_TA<long double> operator "" _TA_ (long double _v) {
             return Q_TA<long double>(_v); }
         static inline Q_TA<long double> operator "" _TA_ (unsigned long long int _v) {
-            return Q_TA<long double>(_v); }
+            return Q_TA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10836,7 +10836,7 @@ namespace mks
         static inline Q_GA<long double> operator "" _GA_ (long double _v) {
             return Q_GA<long double>(_v); }
         static inline Q_GA<long double> operator "" _GA_ (unsigned long long int _v) {
-            return Q_GA<long double>(_v); }
+            return Q_GA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10863,7 +10863,7 @@ namespace mks
         static inline Q_MA<long double> operator "" _MA_ (long double _v) {
             return Q_MA<long double>(_v); }
         static inline Q_MA<long double> operator "" _MA_ (unsigned long long int _v) {
-            return Q_MA<long double>(_v); }
+            return Q_MA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10890,7 +10890,7 @@ namespace mks
         static inline Q_kA<long double> operator "" _kA_ (long double _v) {
             return Q_kA<long double>(_v); }
         static inline Q_kA<long double> operator "" _kA_ (unsigned long long int _v) {
-            return Q_kA<long double>(_v); }
+            return Q_kA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10917,7 +10917,7 @@ namespace mks
         static inline Q_hA<long double> operator "" _hA_ (long double _v) {
             return Q_hA<long double>(_v); }
         static inline Q_hA<long double> operator "" _hA_ (unsigned long long int _v) {
-            return Q_hA<long double>(_v); }
+            return Q_hA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10944,7 +10944,7 @@ namespace mks
         static inline Q_daA<long double> operator "" _daA_ (long double _v) {
             return Q_daA<long double>(_v); }
         static inline Q_daA<long double> operator "" _daA_ (unsigned long long int _v) {
-            return Q_daA<long double>(_v); }
+            return Q_daA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10971,7 +10971,7 @@ namespace mks
         static inline Q_A<long double> operator "" _A_ (long double _v) {
             return Q_A<long double>(_v); }
         static inline Q_A<long double> operator "" _A_ (unsigned long long int _v) {
-            return Q_A<long double>(_v); }
+            return Q_A<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10998,7 +10998,7 @@ namespace mks
         static inline Q_dA<long double> operator "" _dA_ (long double _v) {
             return Q_dA<long double>(_v); }
         static inline Q_dA<long double> operator "" _dA_ (unsigned long long int _v) {
-            return Q_dA<long double>(_v); }
+            return Q_dA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11025,7 +11025,7 @@ namespace mks
         static inline Q_cA<long double> operator "" _cA_ (long double _v) {
             return Q_cA<long double>(_v); }
         static inline Q_cA<long double> operator "" _cA_ (unsigned long long int _v) {
-            return Q_cA<long double>(_v); }
+            return Q_cA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11052,7 +11052,7 @@ namespace mks
         static inline Q_mA<long double> operator "" _mA_ (long double _v) {
             return Q_mA<long double>(_v); }
         static inline Q_mA<long double> operator "" _mA_ (unsigned long long int _v) {
-            return Q_mA<long double>(_v); }
+            return Q_mA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11079,7 +11079,7 @@ namespace mks
         static inline Q_Eohm<long double> operator "" _Eohm_ (long double _v) {
             return Q_Eohm<long double>(_v); }
         static inline Q_Eohm<long double> operator "" _Eohm_ (unsigned long long int _v) {
-            return Q_Eohm<long double>(_v); }
+            return Q_Eohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11106,7 +11106,7 @@ namespace mks
         static inline Q_Pohm<long double> operator "" _Pohm_ (long double _v) {
             return Q_Pohm<long double>(_v); }
         static inline Q_Pohm<long double> operator "" _Pohm_ (unsigned long long int _v) {
-            return Q_Pohm<long double>(_v); }
+            return Q_Pohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11133,7 +11133,7 @@ namespace mks
         static inline Q_Tohm<long double> operator "" _Tohm_ (long double _v) {
             return Q_Tohm<long double>(_v); }
         static inline Q_Tohm<long double> operator "" _Tohm_ (unsigned long long int _v) {
-            return Q_Tohm<long double>(_v); }
+            return Q_Tohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11160,7 +11160,7 @@ namespace mks
         static inline Q_Gohm<long double> operator "" _Gohm_ (long double _v) {
             return Q_Gohm<long double>(_v); }
         static inline Q_Gohm<long double> operator "" _Gohm_ (unsigned long long int _v) {
-            return Q_Gohm<long double>(_v); }
+            return Q_Gohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11187,7 +11187,7 @@ namespace mks
         static inline Q_Mohm<long double> operator "" _Mohm_ (long double _v) {
             return Q_Mohm<long double>(_v); }
         static inline Q_Mohm<long double> operator "" _Mohm_ (unsigned long long int _v) {
-            return Q_Mohm<long double>(_v); }
+            return Q_Mohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11214,7 +11214,7 @@ namespace mks
         static inline Q_kohm<long double> operator "" _kohm_ (long double _v) {
             return Q_kohm<long double>(_v); }
         static inline Q_kohm<long double> operator "" _kohm_ (unsigned long long int _v) {
-            return Q_kohm<long double>(_v); }
+            return Q_kohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11241,7 +11241,7 @@ namespace mks
         static inline Q_hohm<long double> operator "" _hohm_ (long double _v) {
             return Q_hohm<long double>(_v); }
         static inline Q_hohm<long double> operator "" _hohm_ (unsigned long long int _v) {
-            return Q_hohm<long double>(_v); }
+            return Q_hohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11268,7 +11268,7 @@ namespace mks
         static inline Q_daohm<long double> operator "" _daohm_ (long double _v) {
             return Q_daohm<long double>(_v); }
         static inline Q_daohm<long double> operator "" _daohm_ (unsigned long long int _v) {
-            return Q_daohm<long double>(_v); }
+            return Q_daohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11295,7 +11295,7 @@ namespace mks
         static inline Q_ohm<long double> operator "" _ohm_ (long double _v) {
             return Q_ohm<long double>(_v); }
         static inline Q_ohm<long double> operator "" _ohm_ (unsigned long long int _v) {
-            return Q_ohm<long double>(_v); }
+            return Q_ohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11322,7 +11322,7 @@ namespace mks
         static inline Q_dohm<long double> operator "" _dohm_ (long double _v) {
             return Q_dohm<long double>(_v); }
         static inline Q_dohm<long double> operator "" _dohm_ (unsigned long long int _v) {
-            return Q_dohm<long double>(_v); }
+            return Q_dohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11349,7 +11349,7 @@ namespace mks
         static inline Q_cohm<long double> operator "" _cohm_ (long double _v) {
             return Q_cohm<long double>(_v); }
         static inline Q_cohm<long double> operator "" _cohm_ (unsigned long long int _v) {
-            return Q_cohm<long double>(_v); }
+            return Q_cohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11376,7 +11376,7 @@ namespace mks
         static inline Q_mohm<long double> operator "" _mohm_ (long double _v) {
             return Q_mohm<long double>(_v); }
         static inline Q_mohm<long double> operator "" _mohm_ (unsigned long long int _v) {
-            return Q_mohm<long double>(_v); }
+            return Q_mohm<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11403,7 +11403,7 @@ namespace mks
         static inline Q_ES<long double> operator "" _ES_ (long double _v) {
             return Q_ES<long double>(_v); }
         static inline Q_ES<long double> operator "" _ES_ (unsigned long long int _v) {
-            return Q_ES<long double>(_v); }
+            return Q_ES<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11430,7 +11430,7 @@ namespace mks
         static inline Q_PS<long double> operator "" _PS_ (long double _v) {
             return Q_PS<long double>(_v); }
         static inline Q_PS<long double> operator "" _PS_ (unsigned long long int _v) {
-            return Q_PS<long double>(_v); }
+            return Q_PS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11457,7 +11457,7 @@ namespace mks
         static inline Q_TS<long double> operator "" _TS_ (long double _v) {
             return Q_TS<long double>(_v); }
         static inline Q_TS<long double> operator "" _TS_ (unsigned long long int _v) {
-            return Q_TS<long double>(_v); }
+            return Q_TS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11484,7 +11484,7 @@ namespace mks
         static inline Q_GS<long double> operator "" _GS_ (long double _v) {
             return Q_GS<long double>(_v); }
         static inline Q_GS<long double> operator "" _GS_ (unsigned long long int _v) {
-            return Q_GS<long double>(_v); }
+            return Q_GS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11511,7 +11511,7 @@ namespace mks
         static inline Q_MS<long double> operator "" _MS_ (long double _v) {
             return Q_MS<long double>(_v); }
         static inline Q_MS<long double> operator "" _MS_ (unsigned long long int _v) {
-            return Q_MS<long double>(_v); }
+            return Q_MS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11538,7 +11538,7 @@ namespace mks
         static inline Q_kS<long double> operator "" _kS_ (long double _v) {
             return Q_kS<long double>(_v); }
         static inline Q_kS<long double> operator "" _kS_ (unsigned long long int _v) {
-            return Q_kS<long double>(_v); }
+            return Q_kS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11565,7 +11565,7 @@ namespace mks
         static inline Q_hS<long double> operator "" _hS_ (long double _v) {
             return Q_hS<long double>(_v); }
         static inline Q_hS<long double> operator "" _hS_ (unsigned long long int _v) {
-            return Q_hS<long double>(_v); }
+            return Q_hS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11592,7 +11592,7 @@ namespace mks
         static inline Q_daS<long double> operator "" _daS_ (long double _v) {
             return Q_daS<long double>(_v); }
         static inline Q_daS<long double> operator "" _daS_ (unsigned long long int _v) {
-            return Q_daS<long double>(_v); }
+            return Q_daS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11619,7 +11619,7 @@ namespace mks
         static inline Q_S<long double> operator "" _S_ (long double _v) {
             return Q_S<long double>(_v); }
         static inline Q_S<long double> operator "" _S_ (unsigned long long int _v) {
-            return Q_S<long double>(_v); }
+            return Q_S<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11646,7 +11646,7 @@ namespace mks
         static inline Q_dS<long double> operator "" _dS_ (long double _v) {
             return Q_dS<long double>(_v); }
         static inline Q_dS<long double> operator "" _dS_ (unsigned long long int _v) {
-            return Q_dS<long double>(_v); }
+            return Q_dS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11673,7 +11673,7 @@ namespace mks
         static inline Q_cS<long double> operator "" _cS_ (long double _v) {
             return Q_cS<long double>(_v); }
         static inline Q_cS<long double> operator "" _cS_ (unsigned long long int _v) {
-            return Q_cS<long double>(_v); }
+            return Q_cS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11700,7 +11700,7 @@ namespace mks
         static inline Q_mS<long double> operator "" _mS_ (long double _v) {
             return Q_mS<long double>(_v); }
         static inline Q_mS<long double> operator "" _mS_ (unsigned long long int _v) {
-            return Q_mS<long double>(_v); }
+            return Q_mS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11727,7 +11727,7 @@ namespace mks
         static inline Q_EF<long double> operator "" _EF_ (long double _v) {
             return Q_EF<long double>(_v); }
         static inline Q_EF<long double> operator "" _EF_ (unsigned long long int _v) {
-            return Q_EF<long double>(_v); }
+            return Q_EF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11754,7 +11754,7 @@ namespace mks
         static inline Q_PF<long double> operator "" _PF_ (long double _v) {
             return Q_PF<long double>(_v); }
         static inline Q_PF<long double> operator "" _PF_ (unsigned long long int _v) {
-            return Q_PF<long double>(_v); }
+            return Q_PF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11781,7 +11781,7 @@ namespace mks
         static inline Q_TF<long double> operator "" _TF_ (long double _v) {
             return Q_TF<long double>(_v); }
         static inline Q_TF<long double> operator "" _TF_ (unsigned long long int _v) {
-            return Q_TF<long double>(_v); }
+            return Q_TF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11808,7 +11808,7 @@ namespace mks
         static inline Q_GF<long double> operator "" _GF_ (long double _v) {
             return Q_GF<long double>(_v); }
         static inline Q_GF<long double> operator "" _GF_ (unsigned long long int _v) {
-            return Q_GF<long double>(_v); }
+            return Q_GF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11835,7 +11835,7 @@ namespace mks
         static inline Q_MF<long double> operator "" _MF_ (long double _v) {
             return Q_MF<long double>(_v); }
         static inline Q_MF<long double> operator "" _MF_ (unsigned long long int _v) {
-            return Q_MF<long double>(_v); }
+            return Q_MF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11862,7 +11862,7 @@ namespace mks
         static inline Q_kF<long double> operator "" _kF_ (long double _v) {
             return Q_kF<long double>(_v); }
         static inline Q_kF<long double> operator "" _kF_ (unsigned long long int _v) {
-            return Q_kF<long double>(_v); }
+            return Q_kF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11889,7 +11889,7 @@ namespace mks
         static inline Q_hF<long double> operator "" _hF_ (long double _v) {
             return Q_hF<long double>(_v); }
         static inline Q_hF<long double> operator "" _hF_ (unsigned long long int _v) {
-            return Q_hF<long double>(_v); }
+            return Q_hF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11916,7 +11916,7 @@ namespace mks
         static inline Q_daF<long double> operator "" _daF_ (long double _v) {
             return Q_daF<long double>(_v); }
         static inline Q_daF<long double> operator "" _daF_ (unsigned long long int _v) {
-            return Q_daF<long double>(_v); }
+            return Q_daF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11943,7 +11943,7 @@ namespace mks
         static inline Q_F<long double> operator "" _F_ (long double _v) {
             return Q_F<long double>(_v); }
         static inline Q_F<long double> operator "" _F_ (unsigned long long int _v) {
-            return Q_F<long double>(_v); }
+            return Q_F<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11970,7 +11970,7 @@ namespace mks
         static inline Q_dF<long double> operator "" _dF_ (long double _v) {
             return Q_dF<long double>(_v); }
         static inline Q_dF<long double> operator "" _dF_ (unsigned long long int _v) {
-            return Q_dF<long double>(_v); }
+            return Q_dF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11997,7 +11997,7 @@ namespace mks
         static inline Q_cF<long double> operator "" _cF_ (long double _v) {
             return Q_cF<long double>(_v); }
         static inline Q_cF<long double> operator "" _cF_ (unsigned long long int _v) {
-            return Q_cF<long double>(_v); }
+            return Q_cF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12024,7 +12024,7 @@ namespace mks
         static inline Q_mF<long double> operator "" _mF_ (long double _v) {
             return Q_mF<long double>(_v); }
         static inline Q_mF<long double> operator "" _mF_ (unsigned long long int _v) {
-            return Q_mF<long double>(_v); }
+            return Q_mF<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12051,7 +12051,7 @@ namespace mks
         static inline Q_EH<long double> operator "" _EH_ (long double _v) {
             return Q_EH<long double>(_v); }
         static inline Q_EH<long double> operator "" _EH_ (unsigned long long int _v) {
-            return Q_EH<long double>(_v); }
+            return Q_EH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12078,7 +12078,7 @@ namespace mks
         static inline Q_PH<long double> operator "" _PH_ (long double _v) {
             return Q_PH<long double>(_v); }
         static inline Q_PH<long double> operator "" _PH_ (unsigned long long int _v) {
-            return Q_PH<long double>(_v); }
+            return Q_PH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12105,7 +12105,7 @@ namespace mks
         static inline Q_TH<long double> operator "" _TH_ (long double _v) {
             return Q_TH<long double>(_v); }
         static inline Q_TH<long double> operator "" _TH_ (unsigned long long int _v) {
-            return Q_TH<long double>(_v); }
+            return Q_TH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12132,7 +12132,7 @@ namespace mks
         static inline Q_GH<long double> operator "" _GH_ (long double _v) {
             return Q_GH<long double>(_v); }
         static inline Q_GH<long double> operator "" _GH_ (unsigned long long int _v) {
-            return Q_GH<long double>(_v); }
+            return Q_GH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12159,7 +12159,7 @@ namespace mks
         static inline Q_MH<long double> operator "" _MH_ (long double _v) {
             return Q_MH<long double>(_v); }
         static inline Q_MH<long double> operator "" _MH_ (unsigned long long int _v) {
-            return Q_MH<long double>(_v); }
+            return Q_MH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12186,7 +12186,7 @@ namespace mks
         static inline Q_kH<long double> operator "" _kH_ (long double _v) {
             return Q_kH<long double>(_v); }
         static inline Q_kH<long double> operator "" _kH_ (unsigned long long int _v) {
-            return Q_kH<long double>(_v); }
+            return Q_kH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12213,7 +12213,7 @@ namespace mks
         static inline Q_hH<long double> operator "" _hH_ (long double _v) {
             return Q_hH<long double>(_v); }
         static inline Q_hH<long double> operator "" _hH_ (unsigned long long int _v) {
-            return Q_hH<long double>(_v); }
+            return Q_hH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12240,7 +12240,7 @@ namespace mks
         static inline Q_daH<long double> operator "" _daH_ (long double _v) {
             return Q_daH<long double>(_v); }
         static inline Q_daH<long double> operator "" _daH_ (unsigned long long int _v) {
-            return Q_daH<long double>(_v); }
+            return Q_daH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12267,7 +12267,7 @@ namespace mks
         static inline Q_H<long double> operator "" _H_ (long double _v) {
             return Q_H<long double>(_v); }
         static inline Q_H<long double> operator "" _H_ (unsigned long long int _v) {
-            return Q_H<long double>(_v); }
+            return Q_H<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12294,7 +12294,7 @@ namespace mks
         static inline Q_dH<long double> operator "" _dH_ (long double _v) {
             return Q_dH<long double>(_v); }
         static inline Q_dH<long double> operator "" _dH_ (unsigned long long int _v) {
-            return Q_dH<long double>(_v); }
+            return Q_dH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12321,7 +12321,7 @@ namespace mks
         static inline Q_cH<long double> operator "" _cH_ (long double _v) {
             return Q_cH<long double>(_v); }
         static inline Q_cH<long double> operator "" _cH_ (unsigned long long int _v) {
-            return Q_cH<long double>(_v); }
+            return Q_cH<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12348,7 +12348,7 @@ namespace mks
         static inline Q_mH<long double> operator "" _mH_ (long double _v) {
             return Q_mH<long double>(_v); }
         static inline Q_mH<long double> operator "" _mH_ (unsigned long long int _v) {
-            return Q_mH<long double>(_v); }
+            return Q_mH<long double>(static_cast<long double>(_v)); }
     }
 
 } /*namespace mks*/
