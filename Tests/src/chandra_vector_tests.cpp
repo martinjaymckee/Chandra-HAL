@@ -88,13 +88,12 @@ TEST_CASE("4D vectors are constructed", "[vector]") {
 		const vector_t a{ m_a };
 		const vector_t b{ m_b };
 		const vector_t c{ b };
-
 		REQUIRE(a == c);
 	};
 
 	SECTION("Static Construction objects of vectors") {
 		const vector_t a = vector_t::Count();
-		CAPTURE(a.w, a.x, a.y, a.z);
+		//CAPTURE(a.w, a.x, a.y, a.z);
 		REQUIRE(((a.w == 0) && (a.x == 1) && (a.y == 2) && (a.z == 3)));
 	};
 }
@@ -110,14 +109,12 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 	SECTION("Assign-Add Test") {
 		vector_t a = vector_t::Count();
 		a += 1;
-		CAPTURE(a.w, a.x, a.y, a.z);
 		REQUIRE( ((a.w == 1) && (a.x == 2) && (a.y == 3) && (a.z == 4)) );
 	};
 
 	SECTION("Scalar Addition Test - Value check") {
 		const vector_t a = vector_t::Count();
 		const auto c = a + value_t(1);
-		CAPTURE(a, c, c.w, c.x, c.y, c.z);
 		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 
@@ -133,7 +130,6 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 		const matrix_t one = matrix_t::Filled(1);
 		const vector_t b{ a };
 		const auto c = a + one;
-		CAPTURE(a, one, c, &c, &c.w, &a, &a.w, c.w, c.x, c.y, c.z);
 		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 

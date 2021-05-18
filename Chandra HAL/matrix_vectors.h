@@ -49,6 +49,11 @@ class Vector<Value, 2, IsColumn> : public Matrix<Value, IsColumn ? 2 : 1, IsColu
 		x(internal::vector_reference<IsColumn>(this->data_, 0)),
 		y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
 
+    Vector(const Vector& _other)
+      : base_t{_other},
+        x(internal::vector_reference<IsColumn>(this->data_, 0)),
+        y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
+
     template<class V>
     Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
       : base_t{_other},
@@ -71,6 +76,12 @@ class Vector<Value, 3, IsColumn> : public Matrix<Value, IsColumn ? 3 : 1, IsColu
         x(internal::vector_reference<IsColumn>(this->data_, 0)),
         y(internal::vector_reference<IsColumn>(this->data_, 1)),
         z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
+
+    Vector(const Vector& _other)
+      : base_t{_other},
+    		x(internal::vector_reference<IsColumn>(this->data_, 0)),
+    		y(internal::vector_reference<IsColumn>(this->data_, 1)),
+    		z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
 
     template<class V>
     Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
@@ -98,6 +109,13 @@ class Vector<Value, 4, IsColumn> : public Matrix<Value, IsColumn ? 4 : 1, IsColu
         y(internal::vector_reference<IsColumn>(this->data_, 2)),
         z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
 
+    Vector(const Vector& _other)
+      : base_t{_other},
+        w(internal::vector_reference<IsColumn>(this->data_, 0)),
+        x(internal::vector_reference<IsColumn>(this->data_, 1)),
+        y(internal::vector_reference<IsColumn>(this->data_, 2)),
+        z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
+
     template<class V>
     Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
       : base_t{_other},
@@ -106,13 +124,7 @@ class Vector<Value, 4, IsColumn> : public Matrix<Value, IsColumn ? 4 : 1, IsColu
         y(internal::vector_reference<IsColumn>(this->data_, 2)),
         z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
 
-    template<class V>
-    Vector(const Vector<V, 4, IsColumn>& _other)
-      : base_t{_other},
-        w(internal::vector_reference<IsColumn>(this->data_, 0)),
-        x(internal::vector_reference<IsColumn>(this->data_, 1)),
-        y(internal::vector_reference<IsColumn>(this->data_, 2)),
-        z(internal::vector_reference<IsColumn>(this->data_, 3)) { static_assert(false, "Called!" ); }
+
 
     value_t& w;
     value_t& x;

@@ -89,7 +89,7 @@ constexpr auto operator * (const Vector<V, M>& A, const Scalar& s) {
 // Scalar/Vector Addition
 template<typename Scalar, typename V, size_t M, bool IsColumn>
 constexpr auto operator + (const Scalar& s, const Vector<V, M, IsColumn>& A) {
-    using return_t = Vector<V, M, IsColumn>;
+    using return_t = Vector<decltype(s + V()), M, IsColumn>;
     return_t r(A);
     r += s;
     return r;
@@ -97,7 +97,7 @@ constexpr auto operator + (const Scalar& s, const Vector<V, M, IsColumn>& A) {
 
 template<typename Scalar, typename V, size_t M, bool IsColumn>
 constexpr auto operator + (const Vector<V, M, IsColumn>& A, const Scalar& s) {
-    using return_t = Vector<V, M, IsColumn>;
+    using return_t = Vector<decltype(s + V()), M, IsColumn>;
     return_t r(A);
     r += s;
     return r;
