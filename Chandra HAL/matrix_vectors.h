@@ -13,7 +13,7 @@ template<class Value, size_t Rows, size_t Columns, bool IsColumn=true>
 struct VectorReferenceImpl
 {
   static constexpr Value& exec(Value (&_data)[Rows][Columns], const size_t& _idx) {
-    return _data[_idx][1];
+    return _data[_idx][0];
   }
 };
 
@@ -21,7 +21,7 @@ template<class Value, size_t Rows, size_t Columns>
 struct VectorReferenceImpl<Value, Rows, Columns, false>
 {
   static constexpr Value& exec(Value (&_data)[Rows][Columns], const size_t& _idx) {
-    return _data[1][_idx];
+    return _data[0][_idx];
   }
 };
 
@@ -105,6 +105,14 @@ class Vector<Value, 4, IsColumn> : public Matrix<Value, IsColumn ? 4 : 1, IsColu
         x(internal::vector_reference<IsColumn>(this->data_, 1)),
         y(internal::vector_reference<IsColumn>(this->data_, 2)),
         z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
+
+    template<class V>
+    Vector(const Vector<V, 4, IsColumn>& _other)
+      : base_t{_other},
+        w(internal::vector_reference<IsColumn>(this->data_, 0)),
+        x(internal::vector_reference<IsColumn>(this->data_, 1)),
+        y(internal::vector_reference<IsColumn>(this->data_, 2)),
+        z(internal::vector_reference<IsColumn>(this->data_, 3)) { static_assert(false, "Called!" ); }
 
     value_t& w;
     value_t& x;

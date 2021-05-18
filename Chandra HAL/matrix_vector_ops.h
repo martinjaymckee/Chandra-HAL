@@ -86,10 +86,27 @@ constexpr auto operator * (const Vector<V, M>& A, const Scalar& s) {
     return r;
 }
 
+// Scalar/Vector Addition
+template<typename Scalar, typename V, size_t M, bool IsColumn>
+constexpr auto operator + (const Scalar& s, const Vector<V, M, IsColumn>& A) {
+    using return_t = Vector<V, M, IsColumn>;
+    return_t r(A);
+    r += s;
+    return r;
+}
+
+template<typename Scalar, typename V, size_t M, bool IsColumn>
+constexpr auto operator + (const Vector<V, M, IsColumn>& A, const Scalar& s) {
+    using return_t = Vector<V, M, IsColumn>;
+    return_t r(A);
+    r += s;
+    return r;
+}
+
 // Matrix/Vector Addition
 template<typename V1, typename V2, size_t M>
-constexpr auto operator + (const Matrix<V1, M, 1>& a, const Vector<V2, M>& b) {
-    using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
+constexpr auto operator + (const Matrix<V1, M, 1>& a, const Vector<V2, M, true>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, true>;
 
     return_t result(a);
     result += b;
@@ -97,8 +114,8 @@ constexpr auto operator + (const Matrix<V1, M, 1>& a, const Vector<V2, M>& b) {
 }
 
 template<typename V1, typename V2, size_t M>
-constexpr auto operator + (const Vector<V1, M>& a, const Matrix<V2, M, 1>& b) {
-    using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
+constexpr auto operator + (const Matrix<V1, 1, M>& a, const Vector<V2, M, false>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, false>;
 
     return_t result(a);
     result += b;
@@ -106,8 +123,26 @@ constexpr auto operator + (const Vector<V1, M>& a, const Matrix<V2, M, 1>& b) {
 }
 
 template<typename V1, typename V2, size_t M>
-constexpr auto operator + (const Vector<V1, M>& a, const Vector<V2, M>& b) {
-    using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
+constexpr auto operator + (const Vector<V1, M, true>& a, const Matrix<V2, M, 1>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, true>;
+
+    return_t result(a);
+    result += b;
+    return result;
+}
+
+template<typename V1, typename V2, size_t M>
+constexpr auto operator + (const Vector<V1, M, false>& a, const Matrix<V2, 1, M>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, false>;
+
+    return_t result(a);
+    result += b;
+    return result;
+}
+
+template<typename V1, typename V2, size_t M, bool IsColumn>
+constexpr auto operator + (const Vector<V1, M, IsColumn>& a, const Vector<V2, M, IsColumn>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, IsColumn>;
 
     return_t result(a);
     result += b;

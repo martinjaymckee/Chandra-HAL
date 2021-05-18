@@ -469,16 +469,6 @@ constexpr auto operator + (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
     return result;
 }
 
-// // Matrix/Vector Addition
-// template<typename V1, typename V2, size_t M, size_t N>
-// constexpr auto operator + (const Matrix<V1, M, N>& a, const Vector<V2, M>& b) {
-//     using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
-//
-//     return_t result(a);
-//     result += b;
-//     return result;
-// }
-
 // Scalar Addition
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto operator + (const Matrix<V1, M, N>& a, const V2& b) {
