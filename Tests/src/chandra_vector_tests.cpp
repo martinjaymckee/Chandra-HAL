@@ -134,6 +134,9 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 
+	// TODO: THE NEXT TWO DO NOT WORK BECAUSE THEY ARE NOT FINDING THE CORRECT OVERLOADS....  THEY ARE TRYING TO USE THE
+	//	SCALAR OVERLOAD BECAUSE IT'S NOT SEEING A VECTOR AS A REFERENCE TO A (TEMPLATED) MATRIX.  IDEALLY, IT COULD USE
+	//	THE SAME FORM AS MATRIX + MATRIX AND JUST USE SOME TEMPLATE MAGIC TO MAKE IT WORK.
 	SECTION("Matrix Addition Test - 2") {
 		const vector_t a = vector_t::Count();
 		const matrix_t one = matrix_t::Filled(1);

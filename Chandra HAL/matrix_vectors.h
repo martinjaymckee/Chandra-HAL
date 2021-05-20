@@ -48,7 +48,12 @@ using VectorMatrixStorage = Matrix<Value, IsColumn ? N : 1, IsColumn ? 1 : N>;
 // Vector Implementations
 //
 template<class Value, size_t N, bool IsColumn = true>
-class Vector {};
+class Vector {
+  public:
+    Vector() {
+      static_assert(false, "This size vector is undefined.")
+    }
+};
 
 template<class Value, bool IsColumn>
 class Vector<Value, 2, IsColumn> : public internal::VectorMatrixStorage<Value, 2, IsColumn>
@@ -177,6 +182,22 @@ using RowVector4D = Vector4D<Value, false>;
 
 template<class Value>
 using ColumnVector4D = Vector4D<Value, true>;
+
+//
+// Conversion to vector type
+//
+template<class Value, size_t Rows, size_t Columns>
+auto as_vector(const Matrix<Value, Rows, Columns>& _m) {
+  static constexpr bool is_column = (Columns == 1);
+  static constexpr size_t N = is_column ? Rows : Columns;
+  static_assert((Rows == 1) || (Columns == 1), "Matrix is not shaped as a vector");
+  return Vector<Value, N, is_column>{_m};
+}
+
+template<class Value, size_t N, bool IsColumn>
+auto as_vector(const Vector<Value, N, IsColumn>& _v) {
+  return Vector<Value, N, IsColumn>{_v};
+}
 
 } /*namespace math*/
 } /*namespace chandra*/

@@ -8,6 +8,7 @@
 
 \usepackage[utf8]{inputenc} % set input encoding to utf8
 
+\usepackage{amsmath}
 \usepackage{colortbl}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{minted}
@@ -76,7 +77,7 @@
 \urlstyle{same}
 
 \newcommand{\iic}[0]{$I^{2}C$}
-\newcommand{\apiheader}[2]{\noindent{}\textbf{Header \emph{#1}}\\\noindent{}\textbf{Namespace: \emph{#2}}}
+\newcommand{\apiheader}[2]{\noindent{}\textbf{\emph{\#include $<$#1$>$}}\\\noindent{}\textbf{Namespace: \emph{#2}}}
 
 \title{Chandra Library User's Guide}
 \author{Martin Jay McKee}
@@ -305,6 +306,65 @@ The gravity calculations are cross-checked and also compared to the values gener
 \part{Library API}
 \chapter{Math}
 \section{Linear Algebra}
+\subsection{Matricies}
+\label{sec:math:matricies}
+\apiheader{matrix\_core.h}{chandra::math}
+
+The matricies implemented by Chandra are fixed-size and optimized for small controls and geometry systems.  The main class template definition is
+\begin{minted}{cpp}
+	template<class Value, class Rows, class Columns>
+	class Matrix;	
+\end{minted}
+where the value type defines a single value in the matrix and the \mintinline{cpp}{Rows} and \mintinline{cpp}{Columns} parameters define the shape of the matrix.
+
+\subsubsection{Types and Constant Members}
+THIS HAS A DESCRIPTION OF THE AVAILABLE TYPE DEFINES AND CONSTANT MEMBER VARIABLES. FOR INSTANCE, IS VECTOR, IS SQUARE, ETC.
+ 
+\subsubsection{Construction}
+Given a 3x3 matrix type defined as follows,
+\begin{minted}{cpp}
+	using matrix_t = chandra::math::Matrix<double, 3, 3>;	
+\end{minted}
+we explore the available constructors.  To begin with, the default constructor,
+\begin{minted}{cpp}
+	 matrix_t m;	
+\end{minted}
+simply reserves the matrix memory for \mintinline{cpp}{m}.  It does not initialize that memory.  As a result, a default constructed matrix should be treated as containing random values.  If known values are required, then another construction method with explicit initialization should be used instead.   
+
+One such constructor is the initializer-list constructor which takes an arbitrary list of elements to use in constructing the matrix.  The signature of this constructor is,
+\begin{minted}{cpp}
+	Matrix(std::initializer_list<value_t> _values, const bool& _row_major = true);	
+\end{minted}
+The \mintinline{cpp}{_values}, initializer-list contains an arbitrary number of values while the second parameter selects if the matrix is to be initialized in row-major (the default) or column-major order.  This constructor is safe with an initialization list of any length.  If the list is shorter than the number of elements, some elements will simply not be initialized while a list that is longer than the number of elements will fully initialize the matrix and exit.  A few examples are in order.  First, initialization of our 3x3 matrix with a short list using the initializer-list constructor.
+\begin{minted}{cpp}
+	matrix_t m1{ {1, 2, 3, 4, 5} }; // Initialize in row-major order
+	matrix_t m2{ {1, 2, 3, 4, 5}, false }; // Initialize in column-major order
+\end{minted}
+Here both row- and column-major examples are shown.  The results are that,
+\begin{align}
+	m_1 &= \begin{bmatrix} 1 2 3 \\ 4 5 ? \\ ? ? ? \end{bmatrix} \\  
+	m_2 &= \begin{bmatrix} 1 4 ? \\ 2 5 ? \\ 3 ? ? \end{bmatrix} 
+\end{align} 
+As can be seen, the default row-major order fills the rows -- left to right -- first and runs out at the end of the list.  The remainder of the values in the matrix are uninitialized and are -- thus -- unknown in the general case.  Column-major construction works similarly but fills down the columns first, running out in a similar fashion.  With an initalizer list at least as long as the final matrix, the matrix will be fully initialized.  For example,
+\begin{minted}{cpp}
+	matrix_t m1{ {1, 2, 3, 4, 5, 6, 7, 8, 9} };
+	matrix_t m2{ {1, 2, 3, 4, 5, 6, 7, 8, 9}, false };
+\end{minted}
+with,
+\begin{align}
+	m_1 &= \begin{bmatrix} 1 2 3 \\ 4 5 6 \\ 7 8 9 \end{bmatrix} \\  
+	m_2 &= \begin{bmatrix} 1 4 7 \\ 2 5 8 \\ 3 6 9 \end{bmatrix} 
+\end{align} 
+
+COPY CONSTRUCTOR
+
+\subsection{Vectors}
+\label{sec:math:vectors}
+\apiheader{matrix\_vectors.h}{chandra::math}
+
+\subsubsection{Construction}
+The vector constructors are a subset of the matrix constructors as a result of vectors being a subclass of matricies.  As a result, the static construction methods are inherited and are, therefore, still available for vectors.
+
 \section{Quaternions}
 \section{Rotations}
 \section{Math Utilities}
@@ -341,7 +401,7 @@ NONE.  THIS DOESN'T HAPPEN, AT THE MOMENT.  IT REALLY SHOULD THOUGH.
 
 \chapter{Aero}
 \section{Atmospheric Calculations -- \mintinline{cpp}{class Atmosphere<>}}
-\label{sec::atmosphere:calculation::api}
+\label{sec:atmosphere:calculation:api}
 \apiheader{atmosphere.h}{chandra::aero}
 \subsection{Class Template Arguments}
 \subsection{Type Aliases}
@@ -349,7 +409,7 @@ NONE.  THIS DOESN'T HAPPEN, AT THE MOMENT.  IT REALLY SHOULD THOUGH.
 \subsection{Accessors}
 
 \section{Gravity Calculations -- \mintinline{cpp}{class Gravity<>}}
-\label{sec::gravity:calculation::api}
+\label{sec:gravity:calculation:api}
 \apiheader{gravity.h}{chandra::aero}
 \subsection{Class Template Arguments}
 \begin{minted}{cpp}

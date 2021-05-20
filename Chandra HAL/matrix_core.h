@@ -133,6 +133,11 @@ class Matrix
           return Filled(0);
         }
 
+        //  Construct a ones matrix
+        static constexpr matrix_t Ones() {
+          return Filled(1);
+        }
+
     		//  Construct an Identity matrix
         static constexpr matrix_t Eye() {
             matrix_t matrix;

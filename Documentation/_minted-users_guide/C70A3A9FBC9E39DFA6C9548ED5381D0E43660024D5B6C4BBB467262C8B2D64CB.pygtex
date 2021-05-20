@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{class} \PYG{n+nc}{Value}\PYG{p}{,} \PYG{k}{class} \PYG{n+nc}{Rows}\PYG{p}{,} \PYG{k}{class} \PYG{n+nc}{Columns}\PYG{o}{\PYGZgt{}}
+	\PYG{k}{class} \PYG{n+nc}{Matrix}\PYG{p}{;}	
+\end{Verbatim}
