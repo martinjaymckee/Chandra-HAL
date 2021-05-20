@@ -19,6 +19,16 @@ TEST_CASE( "Matricies are constructed", "[matrix]" ) {
 		const matrix_t a;
 	};
 
+	SECTION("Initializer List Construction - Row-Major") {
+		const matrix_t a{ {1, 1, 2, 2} };
+		REQUIRE( ((a(0, 0) == 1) && (a(0, 1) == 1) && (a(1, 0) == 2) && (a(1, 1) == 2)) );
+	}
+
+	SECTION("Initializer List Construction - Column-Major") {
+		const matrix_t a{ {1, 1, 2, 2}, false };
+		REQUIRE( ((a(0, 0) == 1) && (a(0, 1) == 2) && (a(1, 0) == 1) && (a(1, 1) == 2)) );
+	}
+
 	SECTION("Fill Constructor") {
 		const matrix_t filled = matrix_t::Filled(1);
 		REQUIRE( ((filled(0, 0) == 1) && (filled(0, 1) == 1) && (filled(1, 0) == 1) && (filled(1, 1) == 1)) );

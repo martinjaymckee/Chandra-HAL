@@ -95,27 +95,38 @@ class Matrix
         //  Initializer list constructor will initialize the matrix in row major order until the
         //      end of the initializer list is reached or all matrix values are full.  If the
         //      initializer list is depleted, the remaining values in the matrix will remain
-        //      uninitialized.
-        constexpr Matrix(std::initializer_list<value_t> _values) {
+        //      uninitialized.  This initialization can be done in either row-major or
+        //      column-major order.
+        //  TODO: OPTIMIZE THE IMPLEMENTATION HERE TO USE THE _ROW_MAJOR PARAMETER BETTER
+        constexpr Matrix(std::initializer_list<value_t> _values, const bool& _row_major=true) {
             auto vs = _values.begin();
-            for(index_t row = 0; row < Rows; ++row){
-                for(index_t column = 0; column < Columns; ++column){
-                    data_[row][column] = *(vs++);
-                }
-                if(vs == _values.end()) break;
+			if (_row_major) {
+				for (index_t row = 0; row < Rows; ++row) {
+					for (index_t column = 0; column < Columns; ++column) {
+						data_[row][column] = *(vs++);
+					}
+					if (vs == _values.end()) break;
+				}
+			} else {
+              for(index_t column = 0; column < Columns; ++column){
+                  for(index_t row = 0; row < Rows; ++row){
+                      data_[row][column] = *(vs++);
+                  }
+                  if(vs == _values.end()) break;
+              }
             }
         }
 
-    	//	Copy Constructor -- TODO: CHECK THAT THIS IS BEING CALLED CORRECTLY
-    	template<typename OtherValue>
-    	constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
-        // TODO: THIS NEEDS TO DO A STATIC_ASSERT TO CHECK THAT OTHERVALUE IS CONVERTIBLE TO VALUE_T
-    		for (index_t row = 0; row < Rows; ++row) {
-    			for (index_t column = 0; column < Columns; ++column) {
-    				data_[row][column] = static_cast<Value>(_other.data_[row][column]);
-    			}
-    		}
-    	}
+      	//	Copy Constructor -- TODO: CHECK THAT THIS IS BEING CALLED CORRECTLY
+      	template<typename OtherValue>
+      	constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
+          // TODO: THIS NEEDS TO DO A STATIC_ASSERT TO CHECK THAT OTHERVALUE IS CONVERTIBLE TO VALUE_T
+      		for (index_t row = 0; row < Rows; ++row) {
+      			for (index_t column = 0; column < Columns; ++column) {
+      				data_[row][column] = static_cast<Value>(_other.data_[row][column]);
+      			}
+      		}
+      	}
 
         //  Construct a filled matrix
         static constexpr matrix_t Filled( const value_t& _value) {
