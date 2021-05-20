@@ -29,6 +29,19 @@ template<bool IsColumn, class Value, size_t Rows, size_t Columns>
 constexpr Value& vector_reference(Value (&_data)[Rows][Columns], const size_t& _idx) {
   return VectorReferenceImpl<Value, Rows, Columns, IsColumn>::exec(_data, _idx);
 }
+
+template<class Value, size_t N, bool IsColumn = true>
+class VectorBase : public Matrix<Value, IsColumn ? N : 1, IsColumn ? 1 : N>
+{
+  public:
+    using value_t = Value;
+    using matrix_t = Matrix<Value, IsColumn ? N : 1, IsColumn ? 1 : N>;
+
+};
+
+template<class Value, size_t N, bool IsColumn>
+using VectorMatrixStorage = Matrix<Value, IsColumn ? N : 1, IsColumn ? 1 : N>;
+
 } /* namespace internal */
 
 //
@@ -38,11 +51,11 @@ template<class Value, size_t N, bool IsColumn = true>
 class Vector {};
 
 template<class Value, bool IsColumn>
-class Vector<Value, 2, IsColumn> : public Matrix<Value, IsColumn ? 2 : 1, IsColumn ? 1 : 2>
+class Vector<Value, 2, IsColumn> : public internal::VectorMatrixStorage<Value, 2, IsColumn>
 {
   public:
     using value_t = Value;
-    using base_t = Matrix<Value, IsColumn ? 2 : 1, IsColumn ? 1 : 2>;
+    using base_t = internal::VectorMatrixStorage<Value, 2, IsColumn>;
 
     Vector()
       : base_t{},
@@ -55,7 +68,7 @@ class Vector<Value, 2, IsColumn> : public Matrix<Value, IsColumn ? 2 : 1, IsColu
         y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
 
     template<class V>
-    Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
+    Vector(const Matrix<V, matrix_t::rows, matrix_t::columns>& _other)
       : base_t{_other},
         x(internal::vector_reference<IsColumn>(this->data_, 0)),
         y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
@@ -65,11 +78,11 @@ class Vector<Value, 2, IsColumn> : public Matrix<Value, IsColumn ? 2 : 1, IsColu
 };
 
 template<class Value, bool IsColumn>
-class Vector<Value, 3, IsColumn> : public Matrix<Value, IsColumn ? 3 : 1, IsColumn ? 1 : 3>
+class Vector<Value, 3, IsColumn> : public internal::VectorMatrixStorage<Value, 3, IsColumn>
 {
   public:
     using value_t = Value;
-    using base_t = Matrix<Value, IsColumn ? 3 : 1, IsColumn ? 1 : 3>;
+    using base_t = internal::VectorMatrixStorage<Value, 3, IsColumn>;
 
     Vector()
       : base_t{},
@@ -84,11 +97,12 @@ class Vector<Value, 3, IsColumn> : public Matrix<Value, IsColumn ? 3 : 1, IsColu
     		z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
 
     template<class V>
-    Vector(const Matrix<V, base_t::rows, base_t::columns>& _other)
+    Vector(const Matrix<V, matrix_t::rows, matrix_t::columns>& _other)
       : base_t{_other},
     		x(internal::vector_reference<IsColumn>(this->data_, 0)),
     		y(internal::vector_reference<IsColumn>(this->data_, 1)),
-    		z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
+    		z(internal::vector_reference<IsColumn>(this->data_, 2)) {
+        }
 
     value_t& x;
     value_t& y;
@@ -96,11 +110,12 @@ class Vector<Value, 3, IsColumn> : public Matrix<Value, IsColumn ? 3 : 1, IsColu
 };
 
 template<class Value, bool IsColumn>
-class Vector<Value, 4, IsColumn> : public Matrix<Value, IsColumn ? 4 : 1, IsColumn ? 1 : 4>
+class Vector<Value, 4, IsColumn> : public internal::VectorMatrixStorage<Value, 4, IsColumn>
 {
   public:
     using value_t = Value;
-    using base_t = Matrix<Value, IsColumn ? 4 : 1, IsColumn ? 1 : 4>;
+	using base_t = internal::VectorMatrixStorage<Value, 4, IsColumn>;
+
 
     Vector()
       : base_t{},

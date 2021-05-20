@@ -112,31 +112,41 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 		REQUIRE( ((a.w == 1) && (a.x == 2) && (a.y == 3) && (a.z == 4)) );
 	};
 
-	SECTION("Scalar Addition Test - Value check") {
+	SECTION("Scalar Addition Test - 1") {
 		const vector_t a = vector_t::Count();
-		const auto c = a + value_t(1);
+		const auto c = vector_t{ a + 1 };
+		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
 		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 
-	SECTION("Scalar Addition Test - Type check") {
+	SECTION("Scalar Addition Test - 2") {
 		const vector_t a = vector_t::Count();
-		const auto c = a + value_t(1);
-		CAPTURE(a, c);
+		const auto c = vector_t{ 1 + a };
 		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
-	};
-
-	SECTION("Matrix Addition Test - Value check") {
-		const vector_t a = vector_t::Count();
-		const matrix_t one = matrix_t::Filled(1);
-		const vector_t b{ a };
-		const auto c = a + one;
 		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 
-	SECTION("Matrix Addition Test - Type check") {
+	SECTION("Matrix Addition Test - 1") {
 		const vector_t a = vector_t::Count();
 		const matrix_t one = matrix_t::Filled(1);
-		const auto c = a + one;
+		const auto c = vector_t{ a + one };
 		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
+		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
+	};
+
+	SECTION("Matrix Addition Test - 2") {
+		const vector_t a = vector_t::Count();
+		const matrix_t one = matrix_t::Filled(1);
+//		const auto c = vector_t{ one + a };
+//		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
+//		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
+	};
+
+	SECTION("Matrix Addition Test - 3") {
+		const vector_t a = vector_t::Count();
+		const vector_t one = vector_t::Filled(1);
+//		const auto c = vector_t{ one + a };
+//		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
+//		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
 }

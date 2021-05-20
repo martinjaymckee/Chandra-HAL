@@ -106,9 +106,10 @@ class Matrix
             }
         }
 
-    	//	Copy Constructor
+    	//	Copy Constructor -- TODO: CHECK THAT THIS IS BEING CALLED CORRECTLY
     	template<typename OtherValue>
     	constexpr Matrix(const Matrix<OtherValue, Rows, Columns>& _other) {
+        // TODO: THIS NEEDS TO DO A STATIC_ASSERT TO CHECK THAT OTHERVALUE IS CONVERTIBLE TO VALUE_T
     		for (index_t row = 0; row < Rows; ++row) {
     			for (index_t column = 0; column < Columns; ++column) {
     				data_[row][column] = static_cast<Value>(_other.data_[row][column]);
@@ -322,6 +323,9 @@ class Matrix
         //  Scalar Addition
         template<typename ScalarValue>
         constexpr matrix_t& operator += (const ScalarValue& v) {
+			//TD<ScalarValue> a;
+			//TD<value_t> b;
+
             static_assert(std::is_convertible<ScalarValue, value_t>::value,
                           "Unable to convert type to matrix value type in scalar addition.");
             for(index_t row = 0; row < Rows; ++row){
