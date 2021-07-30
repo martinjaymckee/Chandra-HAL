@@ -17,17 +17,39 @@ TEST_CASE( "Matricies are constructed", "[matrix]" ) {
 
 	SECTION("Default Construction") {
 		const matrix_t a;
+		(void) a;
 	};
 
 	SECTION("Initializer List Construction - Row-Major") {
 		const matrix_t a{ {1, 1, 2, 2} };
+		const matrix_t b = { 1, 1, 2, 2 };
 		REQUIRE( ((a(0, 0) == 1) && (a(0, 1) == 1) && (a(1, 0) == 2) && (a(1, 1) == 2)) );
+		REQUIRE(a == b);
 	}
 
 	SECTION("Initializer List Construction - Column-Major") {
 		const matrix_t a{ {1, 1, 2, 2}, false };
 		REQUIRE( ((a(0, 0) == 1) && (a(0, 1) == 2) && (a(1, 0) == 1) && (a(1, 1) == 2)) );
 	}
+
+	SECTION("Copy-Constructor") {
+		const matrix_t a = { 1, 1, 2, 2 };
+		const matrix_t b{ a };
+		REQUIRE(((b(0, 0) == 1) && (b(0, 1) == 1) && (b(1, 0) == 2) && (b(1, 1) == 2)));
+
+	}
+
+	SECTION("Conversion Constructor") {
+		const chandra::math::Matrix<int, 2, 2> a = { 1, 1, 2, 2 };
+		const matrix_t b{ a };
+		REQUIRE(((b(0, 0) == 1) && (b(0, 1) == 1) && (b(1, 0) == 2) && (b(1, 1) == 2)));
+
+	}
+
+	SECTION("Single-Value Constructor") {
+		const matrix_t filled = matrix_t(1);
+		REQUIRE(((filled(0, 0) == 1) && (filled(0, 1) == 1) && (filled(1, 0) == 1) && (filled(1, 1) == 1)));
+	};
 
 	SECTION("Fill Constructor") {
 		const matrix_t filled = matrix_t::Filled(1);
@@ -49,12 +71,6 @@ TEST_CASE( "Matricies are constructed", "[matrix]" ) {
 		REQUIRE(((count(0, 0) == 0) && (count(0, 1) == 1) && (count(1, 0) == 2) && (count(1, 1) == 3)));
 		const matrix_t count2 = matrix_t::Count(1);
 		REQUIRE(((count2(0, 0) == 1) && (count2(0, 1) == 2) && (count2(1, 0) == 3) && (count2(1, 1) == 4)));
-	};
-
-	SECTION("List Constructor") {
-		const matrix_t list{1, 2, 3, 4};
-		const matrix_t count = matrix_t::Count(1);
-		REQUIRE((list == count));
 	};
 }
 

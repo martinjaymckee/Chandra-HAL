@@ -51,7 +51,7 @@ template<class Value, size_t N, bool IsColumn = true>
 class Vector {
   public:
     Vector() {
-      static_assert(false, "This size vector is undefined.")
+      static_assert((N == 1) or (N >= 5), "This size vector is undefined.");
     }
 };
 
@@ -61,6 +61,7 @@ class Vector<Value, 2, IsColumn> : public internal::VectorMatrixStorage<Value, 2
   public:
     using value_t = Value;
     using base_t = internal::VectorMatrixStorage<Value, 2, IsColumn>;
+    using matrix_t = internal::VectorMatrixStorage<Value, 2, IsColumn>;
 
     Vector()
       : base_t{},
@@ -88,6 +89,7 @@ class Vector<Value, 3, IsColumn> : public internal::VectorMatrixStorage<Value, 3
   public:
     using value_t = Value;
     using base_t = internal::VectorMatrixStorage<Value, 3, IsColumn>;
+    using matrix_t = internal::VectorMatrixStorage<Value, 3, IsColumn>;
 
     Vector()
       : base_t{},
@@ -119,8 +121,8 @@ class Vector<Value, 4, IsColumn> : public internal::VectorMatrixStorage<Value, 4
 {
   public:
     using value_t = Value;
-	using base_t = internal::VectorMatrixStorage<Value, 4, IsColumn>;
-
+	  using base_t = internal::VectorMatrixStorage<Value, 4, IsColumn>;
+    using matrix_t = internal::VectorMatrixStorage<Value, 4, IsColumn>;
 
     Vector()
       : base_t{},
@@ -143,8 +145,6 @@ class Vector<Value, 4, IsColumn> : public internal::VectorMatrixStorage<Value, 4
         x(internal::vector_reference<IsColumn>(this->data_, 1)),
         y(internal::vector_reference<IsColumn>(this->data_, 2)),
         z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
-
-
 
     value_t& w;
     value_t& x;

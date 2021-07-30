@@ -14,9 +14,8 @@
 \usepackage{minted}
 \usepackage[section]{placeins}
 \usepackage{mdframed}
-\usepackage{geometry} % to change the page dimensions
-\geometry{letterpaper} % or letterpaper (US) or a5paper or....
-\geometry{margin=0.75in} % for example, change the margins to 2 inches all round
+\usepackage[inner=0.75in, outer=1.75in, top=0.75in, bottom=0.75in, marginparwidth=1.375in, marginparsep=0.1875in]{geometry} % to change the page dimensions
+\usepackage{marginnote}
 
 % Don't forget to read the Memoir manual: memman.pdf
 
@@ -78,6 +77,8 @@
 
 \newcommand{\iic}[0]{$I^{2}C$}
 \newcommand{\apiheader}[2]{\noindent{}\textbf{\emph{\#include $<$#1$>$}}\\\noindent{}\textbf{Namespace: \emph{#2}}}
+
+\newcommand{\sidenote}[1]{\marginpar{\scriptsize{#1}}}
 
 \title{Chandra Library User's Guide}
 \author{Martin Jay McKee}
@@ -295,7 +296,7 @@ The StaticIMUCalibrator object has member functions which access the parameters 
 ATMOSPHERIC PROPERTIES, MODEL OF ATMOSPHERE (PRESSURE, DENSITY, TEMPERATURE, ALTITUDE, ETC.), BASIC AERODYNAMICS
 \subsection{Atmosphere Calculations}
 \subsection{Gravity Calculations}
-The gravity library provides calculation of surface and airborne gravity calculations to moderate accuracy.  Both magnitude of effective gravity and vector results are available, depending upon configuration.  The library provides a single class \mintinline{cpp}{Gravity<>} which is a highly configurable object that takes a number of compile-time arguments to determine the gravity model being used, the corrections applied, and if a vector value is desired.  To account for simple usages, three aliases are also defined: \mintinline{cpp}{StandardGravity<>}, \mintinline{cpp}{StandardGravity<>}, and \mintinline{cpp}{StandardGravity<>}.  These aliases of the gravity class provide both the lower precision, low-cost options and the highest-accuracy options.  As such, they should be sufficient for most usages.  Of course, Section \ref{sec::gravity:calculation::api} of this manual (in the API reference) provides information about all the features of the gravity object, . 
+The gravity library provides calculation of surface and airborne gravity calculations to moderate accuracy.  Both magnitude of effective gravity and vector results are available, depending upon configuration.  The library provides a single class \mintinline{cpp}{Gravity<>} which is a highly configurable object that takes a number of compile-time arguments to determine the gravity model being used, the corrections applied, and if a vector value is desired.  To account for simple usages, three aliases are also defined: \mintinline{cpp}{StandardGravity<>}, \mintinline{cpp}{StandardGravity<>}, and \mintinline{cpp}{StandardGravity<>}.  These aliases of the gravity class provide both the lower precision, low-cost options and the highest-accuracy options.  As such, they should be sufficient for most usages.  Of course, Section \ref{sec:gravity:calculation:api} of this manual (in the API reference) provides information about all the features of the gravity object, . 
 
 Three models of gravity are available: a constant standard gravity, the 1980 IGF (Internaltional Gravity Formula), and WGS84 (\emph{W}orld \emph{G}ravity \emph{S}urvey).  The constant gravity model is intended for low-accuracy, performance and memory critical applications and just returns the international standard gravity value of $9.80665 ms^{-2}$.  The IGF and WGS84 approximations are much more accurate but have higher system requirements.
 
@@ -325,7 +326,7 @@ Given a 3x3 matrix type defined as follows,
 \begin{minted}{cpp}
 	using matrix_t = chandra::math::Matrix<double, 3, 3>;	
 \end{minted}
-we explore the available constructors.  To begin with, the default constructor,
+we explore the available constructors.  To begin with, the default constructor, \sidenote{The zero-argument constructor is defaulted as is the copy-constructor.}
 \begin{minted}{cpp}
 	 matrix_t m;	
 \end{minted}
@@ -356,7 +357,31 @@ with,
 	m_2 &= \begin{bmatrix} 1 4 7 \\ 2 5 8 \\ 3 6 9 \end{bmatrix} 
 \end{align} 
 
-COPY CONSTRUCTOR
+DEFAULT COPY-CONSTRUCTOR
+
+The final basic constructor is a converting constructor to allow conversion of size-matched matricies with different value types.  Here, the \mintinline{cpp}{Rows} and \mintinline{cpp}{Columns} parameters come from the type that is being constructed while \mintinline{cpp}{V} is the type of the matrix to construct from.
+\begin{minted}{cpp}
+	template<class V>
+	constexpr Matrix<const Matrix<V, Rows, Columns>& _other);
+\end{minted}
+Internally, the converting constructor uses a \mintinline{cpp}{static_assert} to check that the source datatype is convertible to the destination datatype.
+
+In addition to the standard constructors, there are a number of static methods that construct specific types of matricies.  The simplest are single-value filled matricies.  The three implemented construction methods in this class have the signatures,
+\begin{minted}{cpp}
+	static constexpr matrix_t Filled(const value_t& _value);
+	static constexpr matrix_t Zeros();
+	static constexpr matrix_t Ones();
+\end{minted}
+The first of these will fill the matrix with an arbitrary value.  For instance, with our previously defined 3x3 matrix type \mintinline{cpp}{matrix_t},
+\begin{minted}{cpp}
+	auto m = matrix_t::Filled(42);
+\end{minted}
+The matrix ends up as,
+\begin{align}
+	m &= \begin{bmatrix} 42 42 42 \\ 42 42 42 \\ 42 42 42 \end{bmatrix} 
+\end{align}
+As the names imply, \mintinline{cpp}{Zeros} and \mintinline{cpp}{Ones} result in matricies filled with the value 0 and 1 respectively.
+
 
 \subsection{Vectors}
 \label{sec:math:vectors}

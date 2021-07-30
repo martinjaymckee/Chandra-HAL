@@ -81,17 +81,16 @@ class Matrix
         //
 
         //  Default constructor does not initialize memory
-		    Matrix() {}
+    		Matrix() = default;
 
-        //  Single argument constructor initializes memory to the passed value
-        // explicit constexpr Matrix(const value_t& v) {
-        //     for(index_t row = 0; row < Rows; ++row){
-        //         for(index_t column = 0; column < Columns; ++column){
-        //             data_[row][column] = v;
-        //         }
-        //     }
-        // }
-
+        constexpr Matrix(value_t _val) {
+          for (index_t row = 0; row < Rows; ++row) {
+            for (index_t column = 0; column < Columns; ++column) {
+              data_[row][column] = _val;
+            }
+          }
+        }
+        
         //  Initializer list constructor will initialize the matrix in row major order until the
         //      end of the initializer list is reached or all matrix values are full.  If the
         //      initializer list is depleted, the remaining values in the matrix will remain
@@ -99,22 +98,22 @@ class Matrix
         //      column-major order.
         //  TODO: OPTIMIZE THE IMPLEMENTATION HERE TO USE THE _ROW_MAJOR PARAMETER BETTER
         constexpr Matrix(std::initializer_list<value_t> _values, const bool& _row_major=true) {
-            auto vs = _values.begin();
-			if (_row_major) {
-				for (index_t row = 0; row < Rows; ++row) {
-					for (index_t column = 0; column < Columns; ++column) {
-						data_[row][column] = *(vs++);
-					}
-					if (vs == _values.end()) break;
-				}
-			} else {
-              for(index_t column = 0; column < Columns; ++column){
-                  for(index_t row = 0; row < Rows; ++row){
-                      data_[row][column] = *(vs++);
-                  }
-                  if(vs == _values.end()) break;
-              }
+          auto vs = _values.begin();
+    			if (_row_major) {
+    				for (index_t row = 0; row < Rows; ++row) {
+    					for (index_t column = 0; column < Columns; ++column) {
+    						data_[row][column] = *(vs++);
+    					}
+    					if (vs == _values.end()) break;
+    				}
+    			} else {
+            for(index_t column = 0; column < Columns; ++column){
+                for(index_t row = 0; row < Rows; ++row){
+                    data_[row][column] = *(vs++);
+                }
+                if(vs == _values.end()) break;
             }
+          }
         }
 
       	//	Copy Constructor -- TODO: CHECK THAT THIS IS BEING CALLED CORRECTLY

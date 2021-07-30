@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{static} \PYG{k}{constexpr} \PYG{n}{matrix\PYGZus{}t} \PYG{n}{Filled}\PYG{p}{(}\PYG{k}{const} \PYG{n}{value\PYGZus{}t}\PYG{o}{\PYGZam{}} \PYG{n}{\PYGZus{}value}\PYG{p}{);}
+	\PYG{k}{static} \PYG{k}{constexpr} \PYG{n}{matrix\PYGZus{}t} \PYG{n}{Zeros}\PYG{p}{();}
+	\PYG{k}{static} \PYG{k}{constexpr} \PYG{n}{matrix\PYGZus{}t} \PYG{n}{Ones}\PYG{p}{();}
+\end{Verbatim}
