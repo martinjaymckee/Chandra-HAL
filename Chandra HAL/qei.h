@@ -1,0 +1,23 @@
+#ifndef CHANDRA_QEI_H
+#define CHANDRA_QEI_H
+
+#include <chrono>
+
+#include "gpio.h"
+
+namespace chandra
+{
+namespace io
+{
+
+// TODO: IMPLEMENT A QUADRATURE ENCODER DECODER WITH POSITION AND VELOCITY DETECTION
+//  -- THIS SHOULD HANDLE 1X, 2X, AND 4X MODE
+//  -- THE BASIC VERSION SHOULD
+//  -- EVENTS INCLUDE INCREMENT / DECREMENT / ERROR
+//  -- THERE SHOULD ALSO BE A SUBCLASS FOR PANEL QUADRATURE ENCODERS WHICH DOES VELOCITY CONTROL
+
+
+} /*namespace io*/
+} /*namespace chandra*/
+
+#endif /*CHANDRA_QEI_H*/
