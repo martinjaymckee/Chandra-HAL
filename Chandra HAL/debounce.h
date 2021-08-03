@@ -36,6 +36,12 @@ class LogicWrapper : public LogicWrapperBase<LogicWrapper<Source>>
         LogicWrapper(Source& _src)
             : src_(_src), last_{bool(_src)} {}
 
+        constexpr bool reset() const { return true; }
+        
+        constexpr operator bool() const {
+          return last_;
+        }
+
         Logic operator() () {
             if(last_) { // Currently reading as High
                 if(bool(src_) == false) {
@@ -53,6 +59,8 @@ class LogicWrapper : public LogicWrapperBase<LogicWrapper<Source>>
 
             return Logic::Undefined;
         }
+
+        constexpr bool valid() const { return true; }
 
     protected:
         Source& src_;
@@ -73,6 +81,22 @@ class DebounceWrapper : public LogicWrapperBase<DebounceWrapper<Source, Clock>>
               last_{bool(_src)},
               timestamp_(_timestamp) {}
 
+        bool reset(const time_point_t& _t) {
+          last_ = bool(src_);
+          buffer_ = 0;
+          timestamp_ = clock_t::now();
+          return true;
+
+        }
+
+        bool reset() {
+          return reset(clock_t::now());
+        }
+
+        constexpr operator bool() const {
+          return last_;
+        }
+
         Logic operator() () {
             static const auto delay = std::chrono::duration<uint32_t, std::micro>(2500);
             const auto current = clock_t::now();
@@ -80,6 +104,7 @@ class DebounceWrapper : public LogicWrapperBase<DebounceWrapper<Source, Clock>>
                 buffer_ <<= 1;
                 buffer_ |= bool(src_) ? 0x1 : 0x0;
                 timestamp_ += delay;
+                if(samples_ < 8) ++samples_;
             }
 
             if(last_) { // Currently reading as High
@@ -99,9 +124,12 @@ class DebounceWrapper : public LogicWrapperBase<DebounceWrapper<Source, Clock>>
             return Logic::Undefined;
         }
 
+        constexpr bool valid() const { return samples_ >= 8; }
+
     protected:
         Source& src_;
         uint8_t buffer_;
+        uint8_t samples_;
         bool last_;
         time_point_t timestamp_;
 };

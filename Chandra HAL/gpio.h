@@ -68,6 +68,8 @@ class IO
 
         IO(const internal::IODef& _io, bool _is_output = false) : IO(_io.port, _io.pin, _is_output, _io.inverted) {}
 
+        IO(const internal::NullIO&) : IO() {}
+
         IO( const IO& _other ) : port_(_other.port_), pin_(_other.pin_), mask_(_other.mask_), inverted_(_other.inverted_) {
             const bool is_output = _other.output(); // TODO: FIGURE OUT IF THIS ACUTALLY NEEDS TO BE REDONE ON COPY....
             output(is_output);
