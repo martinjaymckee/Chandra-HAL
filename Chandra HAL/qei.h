@@ -12,6 +12,10 @@ namespace chandra
 namespace io
 {
 
+// TODO: NEED TO ADD A "TIME SOURCE" PARAMETER TO THE QEI BASE IMPLEMENTATION
+
+// TODO: NEED TO ADD A "VELOCITY OBSERVER" PARAMETER TO THE QEI BASE IMPLEMENTATION
+
 // TODO: IMPLEMENT A QUADRATURE ENCODER DECODER WITH POSITION AND VELOCITY DETECTION
 //  -- THIS SHOULD HANDLE 1X, 2X, AND 4X MODE
 //  -- THE BASIC VERSION SHOULD
@@ -98,6 +102,12 @@ class BaseIncrementalEncoderImplementation
       return IDX_;
     }
 
+    bool init() {
+      // initialize the time source
+      // initialize the velocity observer
+      return reset();
+    }
+
     bool reset() {
       auto A_debounce = chandra::io::debounce(A_);
       auto B_debounce = chandra::io::debounce(B_);
@@ -105,8 +115,8 @@ class BaseIncrementalEncoderImplementation
         A_debounce();
         B_debounce();
       }
-      A_ = bool(A_debounce);
-      B_ = bool(B_debounce);
+      A_last_ = bool(A_debounce);
+      B_last_ = bool(B_debounce);
       counts_ = 0;
       return true;
     }
@@ -120,8 +130,72 @@ class BaseIncrementalEncoderImplementation
       return ppr_;
     }
 
-    QEI::Event update() {
+    //
+    // TODO: THE IMPLEMENTATION OF THE UPDATE METHODS NEEDS TO GO INTO THE DERIVED IMPLEMENTATIONS
+    //    TODO: TAKE A TIMESTAMP PASSED IN....
+    QEI::Event update(bool _A_state, bool _A_rising, bool _A_falling, bool _B_state, bool _B_rising, bool _B_falling) {
+      QEI::Event event = QEI::Event::None;
+
+      // NOTE: Only ONE edge can be processed at a time.... how should this be checked???
+
+      if(_A_rising){
+        if(!_B_state and _A_state) {
+          event = QEI::Event::CW;
+          A_last_ = _A_state;
+        } else if (_B_state and _A_state) {
+          event = QEI::Event::CCW;
+          A_last_ = _A_state;
+        } else {
+          // This is an error
+        }
+      } else if(_A_falling) {
+        if(!_B_state and !_A_state) {
+          event = QEI::Event::CW;
+          A_last_ = _A_state;
+        } else if (_B_state and !_A_state) {
+          event = QEI::Event::CCW;
+          A_last_ = _A_state;
+        } else {
+          // This is an error
+        }
+      } else if(_B_rising) {
+        if(!_A_state and _B_state) {
+          event = QEI::Event::CW;
+          B_last_ = _B_state;
+        } else if (_A_state and _B_state) {
+          event = QEI::Event::CCW;
+          B_last_ = _B_state;
+        } else {
+          // This is an error
+        }
+      } else if(_B_falling) {
+        if(!_A_state and !_B_state) {
+          event = QEI::Event::CW;
+          B_last_ = _B_state;
+        } else if (_A_state and !_B_state) {
+          event = QEI::Event::CCW;
+          B_last_ = _B_state;
+        } else {
+          // This is an error
+        }
+      }
+
       return QEI::Event::None;
+    }
+
+    QEI::Event update() {
+      // t = time_src_.now()
+      // read edges
+      const bool A_state = bool(A_);
+      const bool B_state = bool(B_);
+
+      const bool A_rising = (!A_last_ and A_state);
+      const bool A_falling = (A_last_ and !A_state);
+      const bool B_rising = (!B_last_ and B_state);
+      const bool B_falling = (B_last_ and !B_state);
+
+      // TODO: PASS IN THE TIMESTAMP
+      return update(A_state, A_rising, A_falling, B_state, B_rising, B_falling);
     }
 
   protected:
