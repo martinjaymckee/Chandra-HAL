@@ -86,9 +86,7 @@ class BaseIncrementalEncoderImplementation
     )
       : ppr_{_ppr},
         A_{_A}, B_{_B}, IDX_{_IDX}
-      {
-        reset();
-      }
+      {}
 
     constexpr chandra::io::IO A() const {
       return A_;
@@ -130,6 +128,10 @@ class BaseIncrementalEncoderImplementation
       return ppr_;
     }
 
+    constexpr count_t raw_counts() const {
+      return counts_;
+    }
+
     //
     // TODO: THE IMPLEMENTATION OF THE UPDATE METHODS NEEDS TO GO INTO THE DERIVED IMPLEMENTATIONS
     //    TODO: TAKE A TIMESTAMP PASSED IN....
@@ -150,20 +152,20 @@ class BaseIncrementalEncoderImplementation
         }
       } else if(_A_falling) {
         if(!_B_state and !_A_state) {
-          event = QEI::Event::CW;
+          event = QEI::Event::CCW;
           A_last_ = _A_state;
         } else if (_B_state and !_A_state) {
-          event = QEI::Event::CCW;
+          event = QEI::Event::CW;
           A_last_ = _A_state;
         } else {
           // This is an error
         }
       } else if(_B_rising) {
         if(!_A_state and _B_state) {
-          event = QEI::Event::CW;
+          event = QEI::Event::CCW;
           B_last_ = _B_state;
         } else if (_A_state and _B_state) {
-          event = QEI::Event::CCW;
+          event = QEI::Event::CW;
           B_last_ = _B_state;
         } else {
           // This is an error
@@ -180,7 +182,13 @@ class BaseIncrementalEncoderImplementation
         }
       }
 
-      return QEI::Event::None;
+      if(event == QEI::Event::CW) {
+        counts_ += 1;
+      } else if(event == QEI::Event::CCW) {
+        counts_ -= 1;
+      }
+
+      return event;
     }
 
     QEI::Event update() {

@@ -122,24 +122,24 @@ class LED
             return *this;
         }
 
-        template<typename Scalar = uint32_t>
+        template<uint32_t DutyCycleMultiplier = 100, typename Scalar = uint32_t>
         LED& pwm( const duration_t& _period, const Scalar& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ){
             duty_cycle_ = _duty_cycle;
-            active_period_ = calcActivePeriod(_period, 100*_duty_cycle);
+            active_period_ = calcActivePeriod(_period, DutyCycleMultiplier*_duty_cycle);
             inactive_period_ = _period - active_period_;
             cycle_period_ = active_period_ + inactive_period_;
             mode_ = PWM;
             if(_reset) {
-                pin_ = !_inverted;
+                if(active_period_.count() > 0) pin_ = !_inverted;
                 state_ = !_inverted;
                 timestamp_ = clock_t::now();
             }
             return *this;
         }
 
-        template<typename Scalar = uint32_t>
+        template<uint32_t DutyCycleMultiplier = 100, typename Scalar = uint32_t>
         LED& pwmUpdate(const duration_t& _period, const Scalar& _duty_cycle = 50, const bool& _inverted = false, const bool& _reset = true ) {
-            return pwm(_period, _duty_cycle, _inverted, false);
+            return pwm<DutyCycleMultiplier, Scalar>(_period, _duty_cycle, _inverted, false);
         }
 
         LED& pulse(const duration_t& _active_period, const duration_t& _total_period = duration_t{0}, const bool& _blocking = false ) {
@@ -225,13 +225,13 @@ class LED
 
                 if( state_ ) {
                     if( chandra::chrono::after(active_period_, timestamp_, current) ) {
-                        ~pin_;
+                      if(active_period_.count() > 0) ~pin_;
                         state_ = !state_;
                         timestamp_ += active_period_;
                     }
                 } else {
                     if( chandra::chrono::after(inactive_period_, timestamp_, current) ) {
-                        ~pin_;
+                        if(active_period_.count() > 0) ~pin_;
                         state_ = !state_;
                         timestamp_ += inactive_period_;
                         updated = true;
