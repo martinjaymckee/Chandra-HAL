@@ -10,6 +10,7 @@
 
 #include <chrono>
 
+#include "color.h"
 #include "gpio.h"
 
 namespace chandra
@@ -23,52 +24,7 @@ namespace io
 //  THE SAME WAY AS A SINGLE LED ONLY ALLOWS YOU TO USE "ACTIVE" AND "INACTIVE" COLORS
 //  AND THEREFORE "BLINK" BETWEEN COLORS.
 
-template<class T=uint8_t>
-struct Color
-{
-  Color(const T& gray=0) : r(gray), g(gray), b(gray) {}
 
-  Color(const T& _r, const T& _g, const T& _b)
-    : r(_r), g(_g), b(_b) {}
-
-  template<class T2>
-  Color(const Color<T2>& _other)
-    : r(static_cast<T>(_other.r)),
-    g(static_cast<T>(_other.g)),
-    b(static_cast<T>(_other.b)) {}
-
-  template<class T2>
-  Color<T>& operator = (const T2& _gray) {
-    r = static_cast<T>(_gray);
-    g = static_cast<T>(_gray);
-    b = static_cast<T>(_gray);
-    return *this;
-  }
-
-  template<class T2>
-  Color<T>& operator = (const Color<T2>& _other) {
-    r = static_cast<T>(_other.r);
-    g = static_cast<T>(_other.g);
-    b = static_cast<T>(_other.b);
-    return *this;
-  }
-
-  T r;
-  T g;
-  T b;
-};
-
-// struct LEDColors {
-//   using color_t = Color<uint8_t>;
-//   constexpr static color_t Off = color_t{0, 0, 0};
-//   constexpr static color_t Red = color_t{255, 0, 0};
-//   constexpr static color_t Yellow = color_t{255, 255, 0};
-//   constexpr static color_t Green = color_t{0, 255, 0};
-//   constexpr static color_t Cyan = color_t{0, 255, 255};
-//   constexpr static color_t Blue = color_t{0, 0, 255};
-//   constexpr static color_t Magenta = color_t{255, 0, 255};
-//   constexpr static color_t White = color_t{255, 255, 255};
-// };
 
 class LED
 {
@@ -306,11 +262,11 @@ class SequentialSequencer
     SequentialSequencer(RGBBase& _base) : base_(_base) {}
 
     template<class T>
-    void calcPeriods(Color<T> _color) {
+    void calcPeriods(chandra::color::Color<T> _color) {
       const uint32_t period = base_.total_period_.count();
       const uint32_t duty_cycle = base_.brightness_;
       const uint32_t C = period * duty_cycle;
-      const Color<uint32_t> color{_color};
+      const chandra::color::Color<uint32_t> color{_color};
       // TODO: FIGURE OUT HOW TO COMBINE THESE...
       // const uint32_t color_range = std::min(static_cast<uint32_t>(base_.color_max), (color.r + color.g + color.b));
       // const auto denom = base_.brightness_max * (color.r + color.g + color.b);
@@ -398,7 +354,7 @@ class SimultaneousSequencer
     SimultaneousSequencer(RGBBase& _base) : base_(_base) {}
 
     template<class T>
-    void calcPeriods(Color<T> _color) {
+    void calcPeriods(chandra::color::Color<T> _color) {
       const uint32_t period = base_.total_period_.count();
       const uint32_t duty_cycle = base_.brightness_;
       const uint32_t C = period * duty_cycle;
@@ -459,7 +415,7 @@ class RGBLED
     using clock_t = chandra::chrono::timestamp_clock; // TODO: SHOULD THIS BE PASSED IN?
     using duration_t = clock_t::duration;
     using time_point_t = clock_t::time_point;
-    using color_t = Color<uint8_t>;
+    using color_t = chandra::color::Color<uint8_t>;
     using ref_t = RGBLED<Sequencing>;
     using sequencer_t = typename internal::SequencerType<ref_t, Sequencing>::sequencer_t;
     friend class internal::SequencerType<ref_t, Sequencing>::sequencer_t;
@@ -468,7 +424,7 @@ class RGBLED
       : red_(_red), green_(_green), blue_(_blue), sequencer_(*this) {}
 
     template<class T>
-    ref_t& operator = (const Color<T>& _color){
+    ref_t& operator = (const chandra::color::Color<T>& _color){
       mode_ = LED::Fixed;
       sequencer_.calcPeriods(_color);
       return *this;
@@ -486,13 +442,13 @@ class RGBLED
     }
 
     template<class T>
-    ref_t& setActiveColor(const Color<T>& _color) {
+    ref_t& setActiveColor(const chandra::color::Color<T>& _color) {
       active_color_ = _color;
       return *this;
     }
 
     template<class T>
-    ref_t& setInactiveColor(const Color<T>& _color) {
+    ref_t& setInactiveColor(const chandra::color::Color<T>& _color) {
       inactive_color_ = _color;
       return *this;
     }
