@@ -84,6 +84,13 @@ class LED
         using duration_t = clock_t::duration;
         using time_point_t = clock_t::time_point;
 
+        struct LEDStatus
+        {
+          constexpr operator bool() const { return updated; }
+          bool updated = false;
+          bool cycle_end = false;
+        };
+
     public:
         LED( uint8_t _port, uint8_t _pin, bool _inverted = false ) : pin_(_port, _pin, true, _inverted ), mode_(Fixed) {
             init();
@@ -180,8 +187,8 @@ class LED
           return *this;
         }
 
-        bool update() {
-            bool updated = false;
+        LEDStatus update() {
+            LEDStatus status;
 
             auto current = clock_t::now();
 
@@ -191,11 +198,13 @@ class LED
                         ~pin_;
                         state_ = false;
                         timestamp_ += active_period_;
+                        status.updated = true;
                     }
                 } else {
                     if( chandra::chrono::after(inactive_period_, timestamp_, current) ) {
                         mode_ = Fixed;
-                        updated = true;
+                        status.updated = true;
+                        status.cycle_end = true;
                     }
                 }
             } else if ( (mode_ == PWM) or (mode_ == Breathe) ) {
@@ -213,6 +222,7 @@ class LED
                       if(duty_cycle_ < duty_cycle_step_) {
                         duty_cycle_ = 0;
                         increasing_ = true;
+                        status.cycle_end = true;
                       } else {
                         duty_cycle_ -= duty_cycle_step_;
                       }
@@ -234,12 +244,12 @@ class LED
                         if(active_period_.count() > 0) ~pin_;
                         state_ = !state_;
                         timestamp_ += inactive_period_;
-                        updated = true;
+                        status.updated = true;
                     }
                 }
             }
 
-            return updated;
+            return status;
         }
 
     protected:

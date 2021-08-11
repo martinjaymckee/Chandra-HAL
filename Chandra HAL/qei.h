@@ -67,19 +67,22 @@ struct EncoderVelocity<Value, void>
 
 // Base QEI Implementation
 template<
-  class Counts,
   class Value,
-  class PositionUnits = void
+  class PositionUnits = void,
+  class Counter = int32_t,
+  class Clock = chandra::chrono::timestamp_clock
 >
 class BaseIncrementalEncoderImplementation
 {
   public:
-    using count_t = Counts;
+    using clock_t = Clock;
+    using time_point_t = typename clock_t::time_point;
+    using counter_t = Counter;
     using position_t = typename EncoderPosition<Value, PositionUnits>::type;
     using velocity_t = typename EncoderVelocity<Value, PositionUnits>::type;
 
     BaseIncrementalEncoderImplementation(
-      const count_t _ppr,
+      const uint32_t _ppr,
       const chandra::io::IO& _A,
       const chandra::io::IO& _B,
       const chandra::io::IO& _IDX = chandra::io::NC
@@ -128,14 +131,14 @@ class BaseIncrementalEncoderImplementation
       return ppr_;
     }
 
-    constexpr count_t raw_counts() const {
+    constexpr counter_t raw_counts() const {
       return counts_;
     }
 
     //
     // TODO: THE IMPLEMENTATION OF THE UPDATE METHODS NEEDS TO GO INTO THE DERIVED IMPLEMENTATIONS
     //    TODO: TAKE A TIMESTAMP PASSED IN....
-    QEI::Event update(bool _A_state, bool _A_rising, bool _A_falling, bool _B_state, bool _B_rising, bool _B_falling) {
+    QEI::Event update(time_point_t _t, bool _A_state, bool _A_rising, bool _A_falling, bool _B_state, bool _B_rising, bool _B_falling) {
       QEI::Event event = QEI::Event::None;
 
       // NOTE: Only ONE edge can be processed at a time.... how should this be checked???
@@ -182,10 +185,19 @@ class BaseIncrementalEncoderImplementation
         }
       }
 
-      if(event == QEI::Event::CW) {
-        counts_ += 1;
-      } else if(event == QEI::Event::CCW) {
-        counts_ -= 1;
+      if(event != QEI::Event::None) {
+        const counter_t step_counts = (
+          (event == QEI::Event::CW) ? +1 : (
+            (event == QEI::Event::CCW) ? -1 : 0
+          )
+        );
+        const auto count_multiplier = 1; // TODO: THIS SHOULD BE BASED ON THE THE CURRENT ROTATION VELOCITY
+        const counter_t delta_counts = static_cast<counter_t>(step_counts * count_multiplier);
+
+        counts_ += delta_counts;
+
+        update_velocity_estimate(_t, 0);
+
       }
 
       return event;
@@ -193,6 +205,8 @@ class BaseIncrementalEncoderImplementation
 
     QEI::Event update() {
       // t = time_src_.now()
+      const time_point_t _t = clock_t::now();
+
       // read edges
       const bool A_state = bool(A_);
       const bool B_state = bool(B_);
@@ -202,15 +216,25 @@ class BaseIncrementalEncoderImplementation
       const bool B_rising = (!B_last_ and B_state);
       const bool B_falling = (B_last_ and !B_state);
 
-      // TODO: PASS IN THE TIMESTAMP
-      return update(A_state, A_rising, A_falling, B_state, B_rising, B_falling);
+      return update(_t, A_state, A_rising, A_falling, B_state, B_rising, B_falling);
+    }
+
+    QEI::Event update(const time_point_t& _t) {
+      update_velocity_estimate(_t, 0);
+      return QEI::Event::None;
     }
 
   protected:
+    void update_velocity_estimate(const time_point_t& _t, const counter_t& _step) {
+      // TODO: IMPLEMENT THE PROCESSING OF VELOCITY UPDATES
+        return;
+    }
+
     uint32_t ppr_;
-    count_t counts_ = 0;
+    counter_t counts_ = 0;
     bool A_last_;
     bool B_last_;
+    time_point_t t_last_;
     chandra::io::IO A_;
     chandra::io::IO B_;
     chandra::io::IO IDX_;
@@ -230,16 +254,16 @@ template<
   class Counter = int32_t,
   class Clock = chandra::chrono::timestamp_clock
 >
-class SoftwareIncrementalEncoderImplementation : public detail::BaseIncrementalEncoderImplementation<Counter, Value, PositionUnits>
+class SoftwareIncrementalEncoderImplementation : public detail::BaseIncrementalEncoderImplementation<Value, PositionUnits, Counter, Clock>
 {
   public:
-    using base_t = detail::BaseIncrementalEncoderImplementation<Counter, Value, PositionUnits>;
-    using count_t = typename base_t::count_t;
+    using base_t = detail::BaseIncrementalEncoderImplementation<Value, PositionUnits, Counter, Clock>;
+    using counter_t = typename base_t::counter_t;
     using position_t = typename base_t::position_t;
     using velocity_t = typename base_t::velocity_t;
 
     SoftwareIncrementalEncoderImplementation(
-      const count_t _ppr,
+      const uint32_t _ppr,
       const chandra::io::IO& _A,
       const chandra::io::IO& _B,
       const chandra::io::IO& _IDX = chandra::io::NC
@@ -262,18 +286,20 @@ template<
   class Value,
   class PositionUnits = void,
   class Counter = int32_t,
+  class Clock = chandra::chrono::timestamp_clock,
   class... Params
 >
-class HIDEncoder : public SoftwareIncrementalEncoderImplementation<HIDEncoder<Value, PositionUnits, Params...>, Value, PositionUnits, Counter, Params...>
+class HIDEncoder : public SoftwareIncrementalEncoderImplementation<HIDEncoder<Value, PositionUnits, Counter, Clock, Params...>, Value, PositionUnits, Counter, Clock>
 {
   public:
-    using base_t = SoftwareIncrementalEncoderImplementation<HIDEncoder<Value, PositionUnits, Params...>, Value, PositionUnits, Counter, Params...>;
-    using count_t = typename base_t::count_t;
+    using base_t = SoftwareIncrementalEncoderImplementation<HIDEncoder<Value, PositionUnits, Counter, Clock, Params...>, Value, PositionUnits, Counter, Clock>;
+    using clock_t = typename base_t::clock_t;
+    using counter_t = typename base_t::counter_t;
     using position_t = typename base_t::position_t;
     using velocity_t = typename base_t::velocity_t;
 
     HIDEncoder(
-      const count_t _ppr,
+      const uint32_t _ppr,
       const chandra::io::IO& _A,
       const chandra::io::IO& _B,
       const chandra::io::IO& _IDX = chandra::io::NC

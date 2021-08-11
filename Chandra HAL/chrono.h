@@ -117,13 +117,15 @@ class timestamp_clock
 	#endif
 		}
 
-		static void init() noexcept {
+		template<class Func>
+		static void init(Func _func) noexcept {
 #if defined(SCT_HARDWARE_TIMESTAMP_MODE)
 		#if defined(__LPC15XX__)
 				const uint32_t counts = static_cast<uint32_t>((frequency::core().value() / 1000000UL)) - 1UL;
 				SystemClock::enable(1, 5, true);
 				PeripheralActivity::reset(1, 5);
 				LPC_SCT3->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				_func();
 				LPC_SCT3->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 				return;
 		#elif defined(__LPC55XX__)
@@ -134,6 +136,7 @@ class timestamp_clock
 				SystemClock::enable(0, 8, true);
 				PeripheralActivity::reset(0, 8);
 				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				_func();
 				LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 				return;
 		#elif defined(__LPC84X__)
@@ -144,6 +147,7 @@ class timestamp_clock
 				SystemClock::enable(0, 8, true);
 				PeripheralActivity::reset(0, 8);
 				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				_func();
 				LPC_SCT->CTRL = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 				return;
 		#else
@@ -151,6 +155,7 @@ class timestamp_clock
 	      SystemClock::enable(0, 8, true);
 	      PeripheralActivity::reset(0, 8);
 				LPC_SCT->CONFIG = (1<<0); // Configure as a unified 32-bit counter
+				_func();
 				LPC_SCT->CTRL_U = (counts<<5) | (1<<3); // Set Prescaler, clear counter and start counting
 				return;
 		#endif
@@ -159,6 +164,7 @@ class timestamp_clock
 	    // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
 	    top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
 	    mult_ = 0xFFFFFFFFUL / top_;
+			_func();			
 	    SysTick_Config(top_);
 	    NVIC_EnableIRQ(SysTick_IRQn);
 	    return;
@@ -167,6 +173,10 @@ class timestamp_clock
 #else
 		#error "No Timestamp Clock Mode Defined!"
 #endif
+		}
+
+		static void init() noexcept {
+			init([](){});
 		}
 
     static void reset() noexcept {
