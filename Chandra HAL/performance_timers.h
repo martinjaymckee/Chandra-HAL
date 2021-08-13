@@ -35,7 +35,8 @@ class ActivityTimer
     using time_point_t = typename timer_t::time_point_t;
     using statistics_t = detail::BasicPerformanceStatistics<uint8_t, duration_t>;
 
-    ActivityTimer(auto _period) : timer_(_period) {}
+    template<class Period>
+    ActivityTimer(const Period& _period) : timer_(_period) {}
 
     ActivityTimer& reset() {
       activity_time_ = duration_t{0};

@@ -227,7 +227,10 @@ class BaseIncrementalEncoderImplementation
   protected:
     void update_velocity_estimate(const time_point_t& _t, const counter_t& _step) {
       // TODO: IMPLEMENT THE PROCESSING OF VELOCITY UPDATES
-        return;
+      using period_t = typename clock_t::duration::period;
+      const float dt = (_t.time_since_epoch().count() * float(period_t::num)) / period_t::den;
+      vel_ = _step / dt;    // Simple Velocity Estimate
+      return;
     }
 
     uint32_t ppr_;
@@ -238,6 +241,7 @@ class BaseIncrementalEncoderImplementation
     chandra::io::IO A_;
     chandra::io::IO B_;
     chandra::io::IO IDX_;
+    float vel_;
 };
 
 } /* namespace detail */

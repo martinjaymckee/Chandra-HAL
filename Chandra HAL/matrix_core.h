@@ -50,6 +50,18 @@ struct IndexData<1, Columns>
         }
 };
 
+template<>
+struct IndexData<1, 1>
+{
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[1][1], int, int) {
+            return data[0][0];
+        }
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[1][1], int, int) {
+            return data[0][0];
+        }
+};
 } /* namespace internal */
 
 // TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
@@ -90,7 +102,7 @@ class Matrix
             }
           }
         }
-        
+
         //  Initializer list constructor will initialize the matrix in row major order until the
         //      end of the initializer list is reached or all matrix values are full.  If the
         //      initializer list is depleted, the remaining values in the matrix will remain
