@@ -211,7 +211,7 @@ class ADC
                         PeripheralActivity::reset(0, 24);
                         PowerConfiguration::enable(0, 4);
 												LPC_SYSCON->ADCCLKDIV = 1;                 // Enable clock, and divide-by-1 at this clock divider
-											  LPC_SYSCON->ADCCLKSEL = 0; // Use fro_clk as source for ADC async clock												
+											  LPC_SYSCON->ADCCLKSEL = 0; // Use fro_clk as source for ADC async clock
                         break;
                 #elif defined(__LPC15XX__)
                     case 0:
@@ -238,7 +238,7 @@ class ADC
             adc_->SEQ_CTRL[0] |= (0b11<<30); // Enable the Sequence and Set to "End-Of-Sequence" Mode
             #elif defined(__LPC84X__)
             adc_->SEQA_CTRL |= (0b11<<30);
-						adc_->CTRL = (1<<31);
+						adc_->CTRL |= (1<<31);
             #endif
 
             calibrate();
@@ -256,8 +256,9 @@ class ADC
         bool calibrate(bool _blocking = true) {
             const uint32_t ctrl = adc_->CTRL;
             const uint32_t div = calcADCClockDiv(
-            	500000UL,
-                chandra::chrono::frequency::adc(num_).value()) - 1UL;
+							500000UL,
+							chandra::chrono::frequency::adc(num_).value()
+						) - 1UL;
 
             adc_->CTRL = (1<<31) | (1<<30) | div;
 
@@ -337,8 +338,8 @@ class ADC
 
     private:
         volatile adc_peripheral_t* adc_;
-				value_t vref_;
         uint8_t num_;
+				value_t vref_;
 };
 
 } /*namespace io*/

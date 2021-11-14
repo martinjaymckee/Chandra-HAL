@@ -163,6 +163,7 @@ class CTimer
       SystemClock::enable(0, 25);
       PeripheralActivity::reset(0, 25);
       const bool enabled = enable();
+      reset();
       if(enabled) {
         timer_.CTCR = 0x00; // Set in Timer Mode
         prescalar(1);

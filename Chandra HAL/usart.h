@@ -1,4 +1,4 @@
-/*
+t/*
  * usart.h
  *
  *  Created on: Apr 9, 2016
@@ -219,7 +219,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		}
 
     bool sending() const { // not buffer empty or transmit active
-      return !tx_buffer_.empty() or (usart_->STAT & (1<<3));
+      return !tx_buffer_.empty() or ((usart_->STAT & (1<<3)) == 0);
     }
 
 		//

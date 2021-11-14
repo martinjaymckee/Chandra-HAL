@@ -123,11 +123,11 @@ public:
 	}
 
 	void gain_update() {
-		//const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
-		//this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
-		const auto b = (this->H * this->P_prior);
-		const auto S = (b * this->H.T() + this->R);
-		this->K = (chandra::math::solve<chandra::math::method::LDL>(S, b)).T();
+		const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
+		this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
+		// const auto b = (this->H * this->P_prior);
+		// const auto S = (b * this->H.T() + this->R);
+		// this->K = (chandra::math::solve<chandra::math::method::LDL>(S, b)).T();
 		return;
 	}
 
