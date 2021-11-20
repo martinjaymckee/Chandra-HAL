@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Standard Includes}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}chrono\PYGZgt{}}\PYG{c+c1}{ // std::chrono}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{o}{::}\PYG{n}{literals}\PYG{o}{::}\PYG{n}{chrono\PYGZus{}literals}\PYG{p}{;} \PYG{c+c1}{// Use chrono UDL suffixes}
+
+\PYG{c+c1}{// Chandra Includes}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}chrono.h\PYGZgt{}}\PYG{c+c1}{ // Chandra\PYGZhy{}Core clock functions}
+
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZdq{}hw.h\PYGZdq{}}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)\PYGZob{}}
+	\PYG{n}{chandra}\PYG{o}{::}\PYG{n}{chrono}\PYG{o}{::}\PYG{n}{timestamp\PYGZus{}clock}\PYG{o}{::}\PYG{n}{init}\PYG{p}{();} \PYG{c+c1}{// Initialze the processor clock}
+	
+	\PYG{n}{led}\PYG{p}{.}\PYG{n}{breathe}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{n}{s}\PYG{p}{);} \PYG{c+c1}{// Configure the LED to breathe over 1 second}
+	
+	\PYG{k}{while}\PYG{p}{(}\PYG{n+nb}{true}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+		\PYG{n}{led}\PYG{p}{.}\PYG{n}{update}\PYG{p}{();} \PYG{c+c1}{// Update the LED as needed}
+	\PYG{p}{\PYGZcb{}}
+	
+	\PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Create the calibrator object with default parameters (orthagonal cubic calibration)}
+\PYG{k}{auto} \PYG{n}{imu\PYGZus{}calibrator} \PYG{o}{=} \PYG{n}{StaticIMUCalibrator}\PYG{o}{\PYGZlt{}\PYGZgt{}}\PYG{p}{(}\PYG{n}{imu}\PYG{p}{);}
+\PYG{k}{auto} \PYG{n}{cal\PYGZus{}start\PYGZus{}result} \PYG{o}{=} \PYG{n}{imu\PYGZus{}calibrator}\PYG{p}{.}\PYG{n}{init}\PYG{p}{();}
+\PYG{c+c1}{// ... reposition to cal\PYGZus{}start\PYGZus{}result.next\PYGZus{}orientation}
+\PYG{k+kt}{bool} \PYG{n}{done} \PYG{o}{=} \PYG{n+nb}{false}\PYG{p}{;}
+\PYG{k}{while}\PYG{p}{(}\PYG{o}{!}\PYG{n}{done}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+	\PYG{c+c1}{// Take a measurement step at the default orientation}
+	\PYG{k}{auto} \PYG{n}{cal\PYGZus{}step\PYGZus{}result} \PYG{o}{=} \PYG{n}{imu\PYGZus{}calibrator}\PYG{p}{.}\PYG{n}{measure}\PYG{p}{();}
+	\PYG{n}{done} \PYG{o}{=} \PYG{n}{cal\PYGZus{}step\PYGZus{}result}\PYG{p}{.}\PYG{n}{complete}\PYG{p}{;}
+	\PYG{c+c1}{// ... reposition to cal\PYGZus{}step\PYGZus{}result.next\PYGZus{}orientation}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{// Calculate the calibration and apply to the IMU}
+\PYG{k}{auto} \PYG{n}{cal\PYGZus{}final\PYGZus{}result} \PYG{o}{=} \PYG{n}{imu\PYGZus{}calibrator}\PYG{p}{.}\PYG{n}{calibrate}\PYG{p}{();}
+\end{Verbatim}

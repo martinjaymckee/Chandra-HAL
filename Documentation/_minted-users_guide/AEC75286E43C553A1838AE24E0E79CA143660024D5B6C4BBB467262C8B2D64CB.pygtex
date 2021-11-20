@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}ifndef HW\PYGZus{}H}
+\PYG{c+cp}{\PYGZsh{}define HW\PYGZus{}H}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}leds.h\PYGZgt{}}\PYG{c+c1}{ // LED object definitions}
+
+\PYG{k}{extern} \PYG{n}{chandra}\PYG{o}{::}\PYG{n}{io}\PYG{o}{::}\PYG{n}{LED} \PYG{n}{led}\PYG{p}{;} \PYG{c+c1}{// Define the LED object}
+\PYG{c+cp}{\PYGZsh{}endif}
+\end{Verbatim}

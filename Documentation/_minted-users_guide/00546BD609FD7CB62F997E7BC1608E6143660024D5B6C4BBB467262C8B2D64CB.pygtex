@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{class} \PYG{n+nc}{V}\PYG{o}{\PYGZgt{}}
+	\PYG{k}{constexpr} \PYG{n}{Matrix}\PYG{o}{\PYGZlt{}}\PYG{k}{const} \PYG{n}{Matrix}\PYG{o}{\PYGZlt{}}\PYG{n}{V}\PYG{p}{,} \PYG{n}{Rows}\PYG{p}{,} \PYG{n}{Columns}\PYG{o}{\PYGZgt{}\PYGZam{}} \PYG{n}{\PYGZus{}other}\PYG{p}{);}
+\end{Verbatim}

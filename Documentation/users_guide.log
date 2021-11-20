@@ -1,307 +1,309 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.10.29)  20 MAY 2021 22:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.10) (preloaded format=pdflatex 2021.11.18)  20 NOV 2021 13:47
 entering extended mode
 **./users_guide.tex
 (users_guide.tex
-LaTeX2e <2019-10-01> patch level 1
+LaTeX2e <2021-11-15>
+L3 programming layer <2021-11-12>
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/memoir\memoir.cls
-Document Class: memoir 2020/03/25 v3.7k configurable book, report, article docu
+Document Class: memoir 2021/06/16 v3.7p configurable book, report, article docu
 ment class
-\onelineskip=\skip41
-\lxvchars=\skip42
-\xlvchars=\skip43
-\@memcnta=\count80
-\c@@memmarkcntra=\count81
-LaTeX Info: Redefining \InputIfFileExists on input line 140.
+\onelineskip=\skip47
+\lxvchars=\skip48
+\xlvchars=\skip49
+\@memcnta=\count183
+\c@@memmarkcntra=\count184
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 )
-\stockheight=\skip44
-\stockwidth=\skip45
-\trimtop=\skip46
-\trimedge=\skip47
+\stockheight=\skip50
+\stockwidth=\skip51
+\trimtop=\skip52
+\trimedge=\skip53
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/memoir\mem10.clo
 File: mem10.clo 2008/01/30 v0.3 memoir class 10pt size option
 )
-\binding=\skip48
-\spinemargin=\skip49
-\foremargin=\skip50
-\uppermargin=\skip51
-\lowermargin=\skip52
-\headdrop=\skip53
-\normalrulethickness=\skip54
-\mem@maxheadheight=\skip55
-\mem@maxfootheight=\skip56
-\headwidth=\skip57
-\c@storedpagenumber=\count82
-\memPD=\dimen102
-\m@mabparskip=\skip58
-\thanksmarkwidth=\skip59
-\thanksmarksep=\skip60
-\droptitle=\skip61
-\c@book=\count83
-\c@part=\count84
-\c@chapter=\count85
-\c@section=\count86
-\c@subsection=\count87
-\c@subsubsection=\count88
-\c@paragraph=\count89
-\c@subparagraph=\count90
-\beforechapskip=\skip62
-\midchapskip=\skip63
-\afterchapskip=\skip64
-\chapindent=\skip65
-\bottomsectionskip=\skip66
-\secindent=\skip67
-\beforesecskip=\skip68
-\aftersecskip=\skip69
-\subsecindent=\skip70
-\beforesubsecskip=\skip71
-\aftersubsecskip=\skip72
-\subsubsecindent=\skip73
-\beforesubsubsecskip=\skip74
-\aftersubsubsecskip=\skip75
-\paraindent=\skip76
-\beforeparaskip=\skip77
-\afterparaskip=\skip78
-\subparaindent=\skip79
-\beforesubparaskip=\skip80
-\aftersubparaskip=\skip81
-\pfbreakskip=\skip82
-\c@@ppsavesec=\count91
-\c@@ppsaveapp=\count92
-\ragrparindent=\dimen103
-\everylistparindent=\dimen104
-\parsepi=\skip83
-\topsepi=\skip84
-\itemsepi=\skip85
-\parsepii=\skip86
-\topsepii=\skip87
-\topsepiii=\skip88
-\itemsepii=\skip89
-\itemsepiii=\skip90
-\partopsepii=\skip91
-\partopsepiii=\skip92
-\m@msavetopsep=\skip93
-\m@msavepartopsep=\skip94
-\@enLab=\toks14
-\abstitleskip=\skip95
-\absleftindent=\skip96
-\abs@leftindent=\dimen105
-\absrightindent=\skip97
-\absparindent=\skip98
-\absparsep=\skip99
-\c@vslineno=\count93
-\c@poemline=\count94
-\c@modulo@vs=\count95
-\c@memfvsline=\count96
-\vleftskip=\skip100
-\vrightskip=\skip101
-\stanzaskip=\skip102
-\versewidth=\skip103
-\vgap=\skip104
-\vindent=\skip105
-\vleftmargin=\dimen106
-\c@verse=\count97
-\c@chrsinstr=\count98
-\beforepoemtitleskip=\skip106
-\afterpoemtitleskip=\skip107
-\c@poem=\count99
-\beforePoemTitleskip=\skip108
-\midPoemTitleskip=\skip109
-\afterPoemTitleskip=\skip110
+\binding=\skip54
+\spinemargin=\skip55
+\foremargin=\skip56
+\uppermargin=\skip57
+\lowermargin=\skip58
+\headdrop=\skip59
+\normalrulethickness=\skip60
+\mem@maxheadheight=\skip61
+\mem@maxfootheight=\skip62
+\headwidth=\skip63
+\c@storedpagenumber=\count185
+\memPD=\dimen138
+\m@mabparskip=\skip64
+\thanksmarkwidth=\skip65
+\thanksmarksep=\skip66
+\droptitle=\skip67
+\c@book=\count186
+\c@part=\count187
+\c@chapter=\count188
+\c@section=\count189
+\c@subsection=\count190
+\c@subsubsection=\count191
+\c@paragraph=\count192
+\c@subparagraph=\count193
+\beforechapskip=\skip68
+\midchapskip=\skip69
+\afterchapskip=\skip70
+\chapindent=\skip71
+\bottomsectionskip=\skip72
+\secindent=\skip73
+\beforesecskip=\skip74
+\aftersecskip=\skip75
+\subsecindent=\skip76
+\beforesubsecskip=\skip77
+\aftersubsecskip=\skip78
+\subsubsecindent=\skip79
+\beforesubsubsecskip=\skip80
+\aftersubsubsecskip=\skip81
+\paraindent=\skip82
+\beforeparaskip=\skip83
+\afterparaskip=\skip84
+\subparaindent=\skip85
+\beforesubparaskip=\skip86
+\aftersubparaskip=\skip87
+\pfbreakskip=\skip88
+\c@@ppsavesec=\count194
+\c@@ppsaveapp=\count195
+\ragrparindent=\dimen139
+\everylistparindent=\dimen140
+\parsepi=\skip89
+\topsepi=\skip90
+\itemsepi=\skip91
+\parsepii=\skip92
+\topsepii=\skip93
+\topsepiii=\skip94
+\itemsepii=\skip95
+\itemsepiii=\skip96
+\partopsepii=\skip97
+\partopsepiii=\skip98
+\m@msavetopsep=\skip99
+\m@msavepartopsep=\skip100
+\@enLab=\toks16
+\abstitleskip=\skip101
+\absleftindent=\skip102
+\abs@leftindent=\dimen141
+\absrightindent=\skip103
+\absparindent=\skip104
+\absparsep=\skip105
+\c@vslineno=\count196
+\c@poemline=\count197
+\c@modulo@vs=\count198
+\c@memfvsline=\count199
+\vleftskip=\skip106
+\vrightskip=\skip107
+\stanzaskip=\skip108
+\versewidth=\skip109
+\vgap=\skip110
+\vindent=\skip111
+\vleftmargin=\dimen142
+\c@verse=\count266
+\c@chrsinstr=\count267
+\beforepoemtitleskip=\skip112
+\afterpoemtitleskip=\skip113
+\c@poem=\count268
+\beforePoemTitleskip=\skip114
+\midPoemTitleskip=\skip115
+\afterPoemTitleskip=\skip116
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\array.sty"
-Package: array 2018/12/30 v2.4k Tabular extension package (FMi)
-\col@sep=\dimen107
-\ar@mcellbox=\box27
-\extrarowheight=\dimen108
-\NC@list=\toks15
-\extratabsurround=\skip111
-\backup@length=\skip112
-\ar@cellbox=\box28
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen143
+\ar@mcellbox=\box50
+\extrarowheight=\dimen144
+\NC@list=\toks17
+\extratabsurround=\skip117
+\backup@length=\skip118
+\ar@cellbox=\box51
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\dcolumn.sty"
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\dcolumn.sty
 Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\delarray.sty"
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\delarray.sty
 Package: delarray 2014/10/28 v1.01 array delimiter package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\tabularx.sty"
-Package: tabularx 2016/02/03 v2.11b `tabularx' package (DPC)
-\TX@col@width=\dimen109
-\TX@old@table=\dimen110
-\TX@old@col=\dimen111
-\TX@target=\dimen112
-\TX@delta=\dimen113
-\TX@cols=\count100
-\TX@ftn=\toks16
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+\TX@col@width=\dimen145
+\TX@old@table=\dimen146
+\TX@old@col=\dimen147
+\TX@target=\dimen148
+\TX@delta=\dimen149
+\TX@cols=\count269
+\TX@ftn=\toks18
 )
-\heavyrulewidth=\dimen114
-\lightrulewidth=\dimen115
-\cmidrulewidth=\dimen116
-\belowrulesep=\dimen117
-\belowbottomsep=\dimen118
-\aboverulesep=\dimen119
-\abovetopsep=\dimen120
-\cmidrulesep=\dimen121
-\cmidrulekern=\dimen122
-\defaultaddspace=\dimen123
-\@cmidla=\count101
-\@cmidlb=\count102
-\@aboverulesep=\dimen124
-\@belowrulesep=\dimen125
-\@thisruleclass=\count103
-\@lastruleclass=\count104
-\@thisrulewidth=\dimen126
-\ctableftskip=\skip113
-\ctabrightskip=\skip114
-\abovecolumnspenalty=\count105
-\@linestogo=\count106
-\@cellstogo=\count107
-\@cellsincolumn=\count108
-\crtok=\toks17
-\@mincolumnwidth=\dimen127
-\c@newflo@tctr=\count109
-\mem@margin@floatbox=\box29
-\@contcwidth=\skip115
-\@contindw=\skip116
-\abovecaptionskip=\skip117
-\belowcaptionskip=\skip118
-\subfloattopskip=\skip119
-\subfloatcapskip=\skip120
-\subfloatcaptopadj=\skip121
-\subfloatbottomskip=\skip122
-\subfloatlabelskip=\skip123
-\subfloatcapmargin=\dimen128
-\c@@contsubnum=\count110
-\m@mscap@capbox=\box30
-\m@mscap@fbox=\box31
-\sidecapsep=\dimen129
-\sidecapwidth=\dimen130
-\m@m@tempdima=\dimen131
-\m@mscapraise=\dimen132
-\sidecapraise=\dimen133
-\m@mscapmainwidth=\dimen134
-\m@mscaplkern=\dimen135
-\beforeepigraphskip=\skip124
-\afterepigraphskip=\skip125
-\epigraphwidth=\skip126
-\epigraphrule=\skip127
-LaTeX Info: Redefining \em on input line 7664.
-LaTeX Info: Redefining \emph on input line 7672.
-\tocentryskip=\skip128
-\tocbaseline=\skip129
-\cftparskip=\skip130
-\cftbeforebookskip=\skip131
-\cftbookindent=\dimen136
-\cftbooknumwidth=\dimen137
-\cftbeforepartskip=\skip132
-\cftpartindent=\skip133
-\cftpartnumwidth=\skip134
-\cftbeforechapterskip=\skip135
-\cftchapterindent=\skip136
-\cftchapternumwidth=\skip137
-\cftbeforesectionskip=\skip138
-\cftsectionindent=\skip139
-\cftsectionnumwidth=\skip140
-\cftbeforesubsectionskip=\skip141
-\cftsubsectionindent=\skip142
-\cftsubsectionnumwidth=\skip143
-\cftbeforesubsubsectionskip=\skip144
-\cftsubsubsectionindent=\skip145
-\cftsubsubsectionnumwidth=\skip146
-\cftbeforeparagraphskip=\skip147
-\cftparagraphindent=\skip148
-\cftparagraphnumwidth=\skip149
-\cftbeforesubparagraphskip=\skip150
-\cftsubparagraphindent=\skip151
-\cftsubparagraphnumwidth=\skip152
-\prechapterprecisshift=\dimen138
-\c@maxsecnumdepth=\count111
-\bibindent=\dimen139
-\bibitemsep=\skip153
-\indexcolsep=\skip154
-\indexrule=\skip155
-\indexmarkstyle=\toks18
-\@indexbox=\insert199
-\glossarycolsep=\dimen140
-\glossaryrule=\dimen141
-\sideparvshift=\skip156
-\sideins=\insert198
-\sidebartopsep=\skip157
-\sidebarhsep=\skip158
-\sidebarvsep=\skip159
-\sidebarwidth=\skip160
-\footmarkwidth=\skip161
-\footmarksep=\skip162
-\footparindent=\skip163
-\footinsdim=\skip164
-\footinsv@r=\insert197
-\@mpfootinsv@r=\insert196
-\m@m@k=\count112
-\m@m@h=\dimen142
-\m@mipn@skip=\skip165
-\sidefootins=\insert195
-\sidefootadjust=\skip166
-\sidefootheight=\skip167
-\sidefoothsep=\skip168
-\sidefootvsep=\skip169
-\sidefootwidth=\skip170
-\m@mdownsf=\skip171
-\c@sidefootnote=\count113
-\sidefootmarkwidth=\skip172
-\sidefootmarksep=\skip173
-\sidefootparindent=\skip174
-\c@pagenote=\count114
-\c@pagenoteshadow=\count115
-\mem@pn@lastkern=\skip175
-\every@verbatim=\toks19
-\afterevery@verbatim=\toks20
-\verbatim@line=\toks21
-\tab@position=\count116
-\verbatim@in@stream=\read1
-\verbatimindent=\skip176
+\heavyrulewidth=\dimen150
+\lightrulewidth=\dimen151
+\cmidrulewidth=\dimen152
+\belowrulesep=\dimen153
+\belowbottomsep=\dimen154
+\aboverulesep=\dimen155
+\abovetopsep=\dimen156
+\cmidrulesep=\dimen157
+\cmidrulekern=\dimen158
+\defaultaddspace=\dimen159
+\@cmidla=\count270
+\@cmidlb=\count271
+\@aboverulesep=\dimen160
+\@belowrulesep=\dimen161
+\@thisruleclass=\count272
+\@lastruleclass=\count273
+\@thisrulewidth=\dimen162
+\ctableftskip=\skip119
+\ctabrightskip=\skip120
+\abovecolumnspenalty=\count274
+\@linestogo=\count275
+\@cellstogo=\count276
+\@cellsincolumn=\count277
+\crtok=\toks19
+\@mincolumnwidth=\dimen163
+\c@newflo@tctr=\count278
+\mem@margin@floatbox=\box52
+\@contcwidth=\skip121
+\@contindw=\skip122
+\abovecaptionskip=\skip123
+\belowcaptionskip=\skip124
+\subfloattopskip=\skip125
+\subfloatcapskip=\skip126
+\subfloatcaptopadj=\skip127
+\subfloatbottomskip=\skip128
+\subfloatlabelskip=\skip129
+\subfloatcapmargin=\dimen164
+\c@@contsubnum=\count279
+\m@mscap@capbox=\box53
+\m@mscap@fbox=\box54
+\sidecapsep=\dimen165
+\sidecapwidth=\dimen166
+\m@m@tempdima=\dimen167
+\m@mscapraise=\dimen168
+\sidecapraise=\dimen169
+\m@mscapmainwidth=\dimen170
+\m@mscaplkern=\dimen171
+\beforeepigraphskip=\skip130
+\afterepigraphskip=\skip131
+\epigraphwidth=\skip132
+\epigraphrule=\skip133
+LaTeX Info: Redefining \em on input line 7654.
+LaTeX Info: Redefining \emph on input line 7662.
+\tocentryskip=\skip134
+\tocbaseline=\skip135
+\cftparskip=\skip136
+\cftbeforebookskip=\skip137
+\cftbookindent=\dimen172
+\cftbooknumwidth=\dimen173
+\cftbeforepartskip=\skip138
+\cftpartindent=\skip139
+\cftpartnumwidth=\skip140
+\cftbeforechapterskip=\skip141
+\cftchapterindent=\skip142
+\cftchapternumwidth=\skip143
+\cftbeforesectionskip=\skip144
+\cftsectionindent=\skip145
+\cftsectionnumwidth=\skip146
+\cftbeforesubsectionskip=\skip147
+\cftsubsectionindent=\skip148
+\cftsubsectionnumwidth=\skip149
+\cftbeforesubsubsectionskip=\skip150
+\cftsubsubsectionindent=\skip151
+\cftsubsubsectionnumwidth=\skip152
+\cftbeforeparagraphskip=\skip153
+\cftparagraphindent=\skip154
+\cftparagraphnumwidth=\skip155
+\cftbeforesubparagraphskip=\skip156
+\cftsubparagraphindent=\skip157
+\cftsubparagraphnumwidth=\skip158
+\prechapterprecisshift=\dimen174
+\c@maxsecnumdepth=\count280
+\bibindent=\dimen175
+\bibitemsep=\skip159
+\indexcolsep=\skip160
+\indexrule=\skip161
+\indexmarkstyle=\toks20
+\@indexbox=\insert252
+\glossarycolsep=\dimen176
+\glossaryrule=\dimen177
+\sideparvshift=\skip162
+\sideins=\insert251
+\sidebartopsep=\skip163
+\sidebarhsep=\skip164
+\sidebarvsep=\skip165
+\sidebarwidth=\skip166
+\footmarkwidth=\skip167
+\footmarksep=\skip168
+\footparindent=\skip169
+\footinsdim=\skip170
+\footinsv@r=\insert250
+\@mpfootinsv@r=\insert249
+\m@m@k=\count281
+\m@m@h=\dimen178
+\m@mipn@skip=\skip171
+\sidefootins=\insert248
+\sidefootadjust=\skip172
+\sidefootheight=\skip173
+\sidefoothsep=\skip174
+\sidefootvsep=\skip175
+\sidefootwidth=\skip176
+\m@mdownsf=\skip177
+\c@sidefootnote=\count282
+\sidefootmarkwidth=\skip178
+\sidefootmarksep=\skip179
+\sidefootparindent=\skip180
+\c@pagenote=\count283
+\c@pagenoteshadow=\count284
+\mem@pn@lastkern=\skip181
+\every@verbatim=\toks21
+\afterevery@verbatim=\toks22
+\verbatim@line=\toks23
+\tab@position=\count285
+\verbatim@in@stream=\read2
+\verbatimindent=\skip182
 \verbatim@out=\write3
-\bvboxsep=\skip177
-\c@memfbvline=\count117
-\c@bvlinectr=\count118
-\bvnumlength=\skip178
-\fb@frw=\dimen143
-\fb@frh=\dimen144
-\FrameRule=\dimen145
-\FrameSep=\dimen146
-\c@cp@cntr=\count119
-LaTeX Info: Redefining \: on input line 12191.
-LaTeX Info: Redefining \! on input line 12193.
-\c@ism@mctr=\count120
-\c@xsm@mctr=\count121
-\c@csm@mctr=\count122
-\c@ksm@mctr=\count123
-\c@xksm@mctr=\count124
-\c@cksm@mctr=\count125
-\c@msm@mctr=\count126
-\c@xmsm@mctr=\count127
-\c@cmsm@mctr=\count128
-\c@bsm@mctr=\count129
-\c@workm@mctr=\count130
-\c@sheetsequence=\count131
-\c@lastsheet=\count132
-\c@lastpage=\count133
+\bvboxsep=\skip183
+\c@memfbvline=\count286
+\c@bvlinectr=\count287
+\bvnumlength=\skip184
+\fb@frw=\dimen179
+\fb@frh=\dimen180
+\FrameRule=\dimen181
+\FrameSep=\dimen182
 
+
+LaTeX hooks Warning: Generic hook 'package/before/framed' is deprecated.
+(hooks)              Use hook 'package/framed/before' instead.
+
+\c@cp@cntr=\count288
+\c@ism@mctr=\count289
+\c@xsm@mctr=\count290
+\c@csm@mctr=\count291
+\c@ksm@mctr=\count292
+\c@xksm@mctr=\count293
+\c@cksm@mctr=\count294
+\c@msm@mctr=\count295
+\c@xmsm@mctr=\count296
+\c@cmsm@mctr=\count297
+\c@bsm@mctr=\count298
+\c@workm@mctr=\count299
+\c@sheetsequence=\count300
+\c@lastsheet=\count301
+\c@lastpage=\count302
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/textcase\textcase.sty
 Package: textcase 2019/09/14 v1.00 Text only upper/lower case changing (DPC)
 )
-\c@figure=\count134
-\c@lofdepth=\count135
-\cftbeforefigureskip=\skip179
-\cftfigureindent=\skip180
-\cftfigurenumwidth=\skip181
-\c@table=\count136
-\c@lotdepth=\count137
-\cftbeforetableskip=\skip182
-\cfttableindent=\skip183
-\cfttablenumwidth=\skip184
+\c@figure=\count303
+\c@lofdepth=\count304
+\cftbeforefigureskip=\skip185
+\cftfigureindent=\skip186
+\cftfigurenumwidth=\skip187
+\c@table=\count305
+\c@lotdepth=\count306
+\cftbeforetableskip=\skip188
+\cfttableindent=\skip189
+\cfttablenumwidth=\skip190
 Package abstract [2008/07/23] emulated by memoir.
 Package appendix [2008/07/23] emulated by memoir.
 Package booktabs [2016/05/16] emulated by memoir.
@@ -316,7 +318,6 @@ Package ifmtarg [2008/07/23] emulated by memoir.
 Package index [2008/07/23] emulated by memoir.
 Package makeidx [2008/07/23] emulated by memoir.
 Package moreverb [2008/07/23] emulated by memoir.
-Package mparhack [2008/07/23] emulated by memoir.
 Package needspace [2008/07/23] emulated by memoir.
 Package newfile [2008/07/23] emulated by memoir.
 Package nextpage [2008/07/23] emulated by memoir.
@@ -333,150 +334,144 @@ Package tocloft [2008/07/23] emulated by memoir.
 Package tocvsec2 [2008/07/23] emulated by memoir.
 Package verbatim [2008/07/23] emulated by memoir.
 Package verse [2008/07/23] emulated by memoir.
+
+
+LaTeX hooks Warning: Generic hook 'package/before/float' is deprecated.
+(hooks)              Use hook 'package/float/before' instead.
+
+) (C:\Program Files\MiKTeX 2.9\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks24
+\inpenc@posthook=\toks25
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\inputenc.sty"
-Package: inputenc 2018/08/11 v1.3c Input encoding file
-\inpenc@prehook=\toks22
-\inpenc@posthook=\toks23
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsmath.sty"
-Package: amsmath 2019/04/01 v2.17c AMS math features
-\@mathmargin=\skip185
+(C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip191
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amstext.sty"
-Package: amstext 2000/06/29 v2.01 AMS text
+(C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsgen.sty"
+(C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks24
-\ex@=\dimen147
+\@emptytoks=\toks26
+\ex@=\dimen183
 ))
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsbsy.sty"
+(C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen148
+\pmbraise@=\dimen184
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsopn.sty"
-Package: amsopn 2016/03/08 v2.02 operator names
+(C:\Program Files\MiKTeX 2.9\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
 )
-\inf@bad=\count138
-LaTeX Info: Redefining \frac on input line 227.
-\uproot@=\count139
-\leftroot@=\count140
-LaTeX Info: Redefining \overline on input line 389.
-\classnum@=\count141
-\DOTSCASE@=\count142
-LaTeX Info: Redefining \ldots on input line 486.
-LaTeX Info: Redefining \dots on input line 489.
-LaTeX Info: Redefining \cdots on input line 610.
-\Mathstrutbox@=\box32
-\strutbox@=\box33
-\big@size=\dimen149
-LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
-\macc@depth=\count143
-\c@MaxMatrixCols=\count144
-\dotsspace@=\muskip10
-\c@parentequation=\count145
-\dspbrk@lvl=\count146
-\tag@help=\toks25
-\row@=\count147
-\column@=\count148
-\maxfields@=\count149
-\andhelp@=\toks26
-\eqnshift@=\dimen150
-\alignsep@=\dimen151
-\tagshift@=\dimen152
-\tagwidth@=\dimen153
-\totwidth@=\dimen154
-\lineht@=\dimen155
-\@envbody=\toks27
-\multlinegap=\skip186
-\multlinetaggap=\skip187
-\mathdisplay@stack=\toks28
-LaTeX Info: Redefining \[ on input line 2855.
-LaTeX Info: Redefining \] on input line 2856.
+\inf@bad=\count307
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count308
+\leftroot@=\count309
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count310
+\DOTSCASE@=\count311
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box55
+\strutbox@=\box56
+\big@size=\dimen185
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count312
+\c@MaxMatrixCols=\count313
+\dotsspace@=\muskip16
+\c@parentequation=\count314
+\dspbrk@lvl=\count315
+\tag@help=\toks27
+\row@=\count316
+\column@=\count317
+\maxfields@=\count318
+\andhelp@=\toks28
+\eqnshift@=\dimen186
+\alignsep@=\dimen187
+\tagshift@=\dimen188
+\tagwidth@=\dimen189
+\totwidth@=\dimen190
+\lineht@=\dimen191
+\@envbody=\toks29
+\multlinegap=\skip192
+\multlinetaggap=\skip193
+\mathdisplay@stack=\toks30
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/colortbl\colortbl.sty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\color.sty"
-Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\color.sty
+Package: color 2021/10/11 v1.3b Standard LaTeX Color (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package color Info: Driver file: pdftex.def on input line 147.
+Package color Info: Driver file: pdftex.def on input line 149.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
-\everycr=\toks29
-\minrowclearance=\skip188
+\everycr=\toks31
+\minrowclearance=\skip194
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/xcolor\xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg"
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-LaTeX Info: Redefining \color on input line 709.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+LaTeX Info: Redefining \color on input line 711.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\dvipsnam.def"
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ))
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/minted\minted.sty
 Package: minted 2017/07/19 v2.5 Yet another Pygments shim for LaTeX
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\keyval.sty"
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks30
+\KV@toks@=\toks32
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\kvoptions.sty"
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\ltxcmds.sty"
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvsetkeys.sty"
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\infwarerr.sty"
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-)
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\etexcmds.sty"
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-))))
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/fvextra\fvextra.sty
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)) (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/fvextra\fvextra.sty
 Package: fvextra 2019/02/04 v1.4 fvextra - extensions and patches for fancyvrb
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty"
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+(C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count150
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count319
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/fancyvrb\fancyvrb.sty
-Package: fancyvrb 2020/05/03 v3.6 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count151
-\FV@InFile=\read2
-\FV@TabBox=\box34
-\c@FancyVerbLine=\count152
-\FV@StepNumber=\count153
+Package: fancyvrb 2021/10/15 v3.9 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count320
+\FV@InFile=\read3
+\FV@TabBox=\box57
+\c@FancyVerbLine=\count321
+\FV@StepNumber=\count322
 \FV@OutFile=\write4
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/upquote\upquote.sty
@@ -485,108 +480,114 @@ tim
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/lineno\lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count154
-\output=\toks31
-\linenoprevgraf=\count155
-\linenumbersep=\dimen156
-\linenumberwidth=\dimen157
-\c@linenumber=\count156
-\c@pagewiselinenumber=\count157
-\c@LN@truepage=\count158
-\c@internallinenumber=\count159
-\c@internallinenumbers=\count160
-\quotelinenumbersep=\dimen158
-\bframerule=\dimen159
-\bframesep=\dimen160
-\bframebox=\box35
+\linenopenalty=\count323
+\output=\toks33
+\linenoprevgraf=\count324
+\linenumbersep=\dimen192
+\linenumberwidth=\dimen193
+\c@linenumber=\count325
+\c@pagewiselinenumber=\count326
+\c@LN@truepage=\count327
+\c@internallinenumber=\count328
+\c@internallinenumbers=\count329
+\quotelinenumbersep=\dimen194
+\bframerule=\dimen195
+\bframesep=\dimen196
+\bframebox=\box58
 LaTeX Info: Redefining \\ on input line 3056.
 )
-\c@FV@TrueTabGroupLevel=\count161
-\c@FV@TrueTabCounter=\count162
-\FV@TabBox@Group=\box36
-\FV@TmpLength=\skip189
-\c@FV@HighlightLinesStart=\count163
-\c@FV@HighlightLinesStop=\count164
-\FV@LoopCount=\count165
-\FV@NCharsBox=\box37
-\FV@BreakIndent=\dimen161
-\FV@BreakIndentNChars=\count166
-\FV@BreakSymbolSepLeft=\dimen162
-\FV@BreakSymbolSepLeftNChars=\count167
-\FV@BreakSymbolSepRight=\dimen163
-\FV@BreakSymbolSepRightNChars=\count168
-\FV@BreakSymbolIndentLeft=\dimen164
-\FV@BreakSymbolIndentLeftNChars=\count169
-\FV@BreakSymbolIndentRight=\dimen165
-\FV@BreakSymbolIndentRightNChars=\count170
-\c@FancyVerbLineBreakLast=\count171
-\FV@LineBox=\box38
-\FV@LineIndentBox=\box39
-\FV@LineWidth=\dimen166
+\c@FV@TrueTabGroupLevel=\count330
+\c@FV@TrueTabCounter=\count331
+\FV@TabBox@Group=\box59
+\FV@TmpLength=\skip195
+\c@FV@HighlightLinesStart=\count332
+\c@FV@HighlightLinesStop=\count333
+\FV@LoopCount=\count334
+\FV@NCharsBox=\box60
+\FV@BreakIndent=\dimen197
+\FV@BreakIndentNChars=\count335
+\FV@BreakSymbolSepLeft=\dimen198
+\FV@BreakSymbolSepLeftNChars=\count336
+\FV@BreakSymbolSepRight=\dimen199
+\FV@BreakSymbolSepRightNChars=\count337
+\FV@BreakSymbolIndentLeft=\dimen256
+\FV@BreakSymbolIndentLeftNChars=\count338
+\FV@BreakSymbolIndentRight=\dimen257
+\FV@BreakSymbolIndentRightNChars=\count339
+\c@FancyVerbLineBreakLast=\count340
+\FV@LineBox=\box61
+\FV@LineIndentBox=\box62
+\FV@LineWidth=\dimen258
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\calc.sty"
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count172
-\calc@Bcount=\count173
-\calc@Adimen=\dimen167
-\calc@Bdimen=\dimen168
-\calc@Askip=\skip190
-\calc@Bskip=\skip191
+\calc@Acount=\count341
+\calc@Bcount=\count342
+\calc@Adimen=\dimen259
+\calc@Bdimen=\dimen260
+\calc@Askip=\skip196
+\calc@Bskip=\skip197
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count174
-\calc@Cskip=\skip192
+\calc@Ccount=\count343
+\calc@Cskip=\skip198
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/tools\shellesc.sty"
-Package: shellesc 2016/06/07 v0.02a unified shell escape interface for LaTeX
-Package shellesc Info: Unrestricted shell escape enabled on input line 67.
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\shellesc.sty
+Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 75.
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/ifplatform\ifplatform.sty
 Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\pdftexcmds.sty"
-Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/pdftexcmds\pdftexcmds.st
+y
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifpdf.sty
-Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
-Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\catchfile.sty"
-Package: catchfile 2016/05/16 v1.7 Catch the contents of a file (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/catchfile\catchfile.sty
+Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+))
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 ))
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/xstring\xstring.sty
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/xstring\xstring.tex
-\integerpart=\count175
-\decimalpart=\count176
+\integerpart=\count344
+\decimalpart=\count345
 )
-Package: xstring 2019/02/06 v1.83 String manipulations (CT)
+Package: xstring 2021/07/21 v1.84 String manipulations (CT)
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip193
-\fb@frw=\dimen169
-\fb@frh=\dimen170
+\OuterFrameSep=\skip199
+\fb@frw=\dimen261
+\fb@frh=\dimen262
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/float\float.sty"
+(C:\Program Files\MiKTeX 2.9\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count177
-\float@exts=\toks32
-\float@box=\box40
-\@float@everytoks=\toks33
-\@floatcapt=\box41
+\c@float@type=\count346
+\float@exts=\toks34
+\float@box=\box63
+\@float@everytoks=\toks35
+\@floatcapt=\box64
 )
-\minted@appexistsfile=\read3
-\minted@bgbox=\box42
+\minted@appexistsfile=\read4
+\minted@bgbox=\box65
 \minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count178
-\c@minted@pygmentizecounter=\count179
-\@float@every@listing=\toks34
-\c@listing=\count180
+\c@minted@FancyVerbLineTemp=\count347
+\c@minted@pygmentizecounter=\count348
+\@float@every@listing=\toks36
+\c@listing=\count349
 )
 runsystem(if not exist _minted-users_guide mkdir _minted-users_guide)...execute
 d.
@@ -600,437 +601,288 @@ Package: mdframed 2013/07/01 1.9b: mdframed
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3packages/xparse\xparse.s
 ty (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\expl3.sty
-Package: expl3 2019-11-07 L3 programming layer (loader) 
+Package: expl3 2021-11-12 L3 programming layer (loader) 
 
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\expl3-code.tex
-Package: expl3 2019-11-07 L3 programming layer (code)
-\c_max_int=\count181
-\l_tmpa_int=\count182
-\l_tmpb_int=\count183
-\g_tmpa_int=\count184
-\g_tmpb_int=\count185
-\l__seq_internal_a_int=\count186
-\l__seq_internal_b_int=\count187
-\g__kernel_prg_map_int=\count188
-\c__ior_term_noprompt_ior=\count189
-\c_log_iow=\count190
-\l_iow_line_count_int=\count191
-\l__iow_line_target_int=\count192
-\l__iow_one_indent_int=\count193
-\l__iow_indent_int=\count194
-\c_zero_dim=\dimen171
-\c_max_dim=\dimen172
-\l_tmpa_dim=\dimen173
-\l_tmpb_dim=\dimen174
-\g_tmpa_dim=\dimen175
-\g_tmpb_dim=\dimen176
-\c_zero_skip=\skip194
-\c_max_skip=\skip256
-\l_tmpa_skip=\skip257
-\l_tmpb_skip=\skip258
-\g_tmpa_skip=\skip259
-\g_tmpb_skip=\skip260
-\c_zero_muskip=\muskip11
-\c_max_muskip=\muskip12
-\l_tmpa_muskip=\muskip13
-\l_tmpb_muskip=\muskip14
-\g_tmpa_muskip=\muskip15
-\g_tmpb_muskip=\muskip16
-\l_keys_choice_int=\count266
-\l__intarray_loop_int=\count267
-\c__intarray_sp_dim=\dimen177
-\g__intarray_font_int=\count268
-\c__fp_leading_shift_int=\count269
-\c__fp_middle_shift_int=\count270
-\c__fp_trailing_shift_int=\count271
-\c__fp_big_leading_shift_int=\count272
-\c__fp_big_middle_shift_int=\count273
-\c__fp_big_trailing_shift_int=\count274
-\c__fp_Bigg_leading_shift_int=\count275
-\c__fp_Bigg_middle_shift_int=\count276
-\c__fp_Bigg_trailing_shift_int=\count277
-\c__kernel_randint_max_int=\count278
-\g__fp_array_int=\count279
-\l__fp_array_loop_int=\count280
-\l__sort_length_int=\count281
-\l__sort_min_int=\count282
-\l__sort_top_int=\count283
-\l__sort_max_int=\count284
-\l__sort_true_max_int=\count285
-\l__sort_block_int=\count286
-\l__sort_begin_int=\count287
-\l__sort_end_int=\count288
-\l__sort_A_int=\count289
-\l__sort_B_int=\count290
-\l__sort_C_int=\count291
-\l__str_internal_int=\count292
-\c__str_replacement_char_int=\count293
-\l__tl_analysis_normal_int=\count294
-\l__tl_analysis_index_int=\count295
-\l__tl_analysis_nesting_int=\count296
-\l__tl_analysis_type_int=\count297
-\l__regex_internal_a_int=\count298
-\l__regex_internal_b_int=\count299
-\l__regex_internal_c_int=\count300
-\l__regex_balance_int=\count301
-\l__regex_group_level_int=\count302
-\l__regex_mode_int=\count303
-\c__regex_cs_in_class_mode_int=\count304
-\c__regex_cs_mode_int=\count305
-\l__regex_catcodes_int=\count306
-\l__regex_default_catcodes_int=\count307
-\c__regex_catcode_D_int=\count308
-\c__regex_catcode_S_int=\count309
-\c__regex_catcode_L_int=\count310
-\c__regex_catcode_O_int=\count311
-\c__regex_catcode_A_int=\count312
-\c__regex_all_catcodes_int=\count313
-\l__regex_show_lines_int=\count314
-\l__regex_min_state_int=\count315
-\l__regex_max_state_int=\count316
-\l__regex_left_state_int=\count317
-\l__regex_right_state_int=\count318
-\l__regex_capturing_group_int=\count319
-\l__regex_min_pos_int=\count320
-\l__regex_max_pos_int=\count321
-\l__regex_curr_pos_int=\count322
-\l__regex_start_pos_int=\count323
-\l__regex_success_pos_int=\count324
-\l__regex_curr_char_int=\count325
-\l__regex_curr_catcode_int=\count326
-\l__regex_last_char_int=\count327
-\l__regex_case_changed_char_int=\count328
-\l__regex_curr_state_int=\count329
-\l__regex_step_int=\count330
-\l__regex_min_active_int=\count331
-\l__regex_max_active_int=\count332
-\l__regex_replacement_csnames_int=\count333
-\l__regex_match_count_int=\count334
-\l__regex_min_submatch_int=\count335
-\l__regex_submatch_int=\count336
-\l__regex_zeroth_submatch_int=\count337
-\g__regex_trace_regex_int=\count338
-\c_empty_box=\box43
-\l_tmpa_box=\box44
-\l_tmpb_box=\box45
-\g_tmpa_box=\box46
-\g_tmpb_box=\box47
-\l__box_top_dim=\dimen178
-\l__box_bottom_dim=\dimen179
-\l__box_left_dim=\dimen180
-\l__box_right_dim=\dimen181
-\l__box_top_new_dim=\dimen182
-\l__box_bottom_new_dim=\dimen183
-\l__box_left_new_dim=\dimen184
-\l__box_right_new_dim=\dimen185
-\l__box_internal_box=\box48
-\l__coffin_internal_box=\box49
-\l__coffin_internal_dim=\dimen186
-\l__coffin_offset_x_dim=\dimen187
-\l__coffin_offset_y_dim=\dimen188
-\l__coffin_x_dim=\dimen189
-\l__coffin_y_dim=\dimen190
-\l__coffin_x_prime_dim=\dimen191
-\l__coffin_y_prime_dim=\dimen192
-\c_empty_coffin=\box50
-\l__coffin_aligned_coffin=\box51
-\l__coffin_aligned_internal_coffin=\box52
-\l_tmpa_coffin=\box53
-\l_tmpb_coffin=\box54
-\g_tmpa_coffin=\box55
-\g_tmpb_coffin=\box56
-\l__coffin_bounding_shift_dim=\dimen193
-\l__coffin_left_corner_dim=\dimen194
-\l__coffin_right_corner_dim=\dimen256
-\l__coffin_bottom_corner_dim=\dimen257
-\l__coffin_top_corner_dim=\dimen258
-\l__coffin_scaled_total_height_dim=\dimen259
-\l__coffin_scaled_width_dim=\dimen260
-\c__coffin_empty_coffin=\box57
-\l__coffin_display_coffin=\box58
-\l__coffin_display_coord_coffin=\box59
-\l__coffin_display_pole_coffin=\box60
-\l__coffin_display_offset_dim=\dimen261
-\l__coffin_display_x_dim=\dimen262
-\l__coffin_display_y_dim=\dimen263
-\g__char_data_ior=\read4
-
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3kernel\l3deprecation.def
-File: l3deprecation.def 2019-04-06 v L3 Deprecated functions
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3backend\l3backend-pdftex
+.def
+File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count350
+\l__pdf_internal_box=\box66
 ))
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/l3backend\l3backend-pdfmod
-e.def
-File: l3backend-pdfmode.def 2019-04-06 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count339
-\l__pdf_internal_box=\box61
-))
-Package: xparse 2019-10-11 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count340
-\g__xparse_grabber_int=\count341
-\l__xparse_m_args_int=\count342
-\l__xparse_v_nesting_int=\count343
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\zref-abspage.sty"
-Package: zref-abspage 2018/11/21 v2.27 Module abspage for zref (HO)
+Package: xparse 2021-11-12 L3 Experimental document command parser
+)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/zref\zref-abspage.sty
+Package: zref-abspage 2020-07-03 v2.32 Module abspage for zref (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\zref-base.sty"
-Package: zref-base 2018/11/21 v2.27 Module base for zref (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/zref\zref-base.sty
+Package: zref-base 2020-07-03 v2.32 Module base for zref (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\kvdefinekeys.sty"
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/kvdefinekeys\kvdefinekey
+s.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/auxhook\auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\auxhook.sty"
-Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+Package zref Info: New property list: main on input line 764.
+Package zref Info: New property: default on input line 765.
+Package zref Info: New property: page on input line 766.
+) (C:\Program Files\MiKTeX 2.9\tex/latex/base\atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
 )
-Package zref Info: New property list: main on input line 759.
-Package zref Info: New property: default on input line 760.
-Package zref Info: New property: page on input line 761.
+\c@abspage=\count351
+Package zref Info: New property: abspage on input line 66.
 )
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\atbegshi.sty"
-Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
-)
-\c@abspage=\count344
-Package zref Info: New property: abspage on input line 62.
-)
-\mdf@templength=\skip261
-\c@mdf@globalstyle@cnt=\count345
-\mdf@skipabove@length=\skip262
-\mdf@skipbelow@length=\skip263
-\mdf@leftmargin@length=\skip264
-\mdf@rightmargin@length=\skip265
-\mdf@innerleftmargin@length=\skip266
-\mdf@innerrightmargin@length=\skip267
-\mdf@innertopmargin@length=\skip268
-\mdf@innerbottommargin@length=\skip269
-\mdf@splittopskip@length=\skip270
-\mdf@splitbottomskip@length=\skip271
-\mdf@outermargin@length=\skip272
-\mdf@innermargin@length=\skip273
-\mdf@linewidth@length=\skip274
-\mdf@innerlinewidth@length=\skip275
-\mdf@middlelinewidth@length=\skip276
-\mdf@outerlinewidth@length=\skip277
-\mdf@roundcorner@length=\skip278
-\mdf@footenotedistance@length=\skip279
-\mdf@userdefinedwidth@length=\skip280
-\mdf@needspace@length=\skip281
-\mdf@frametitleaboveskip@length=\skip282
-\mdf@frametitlebelowskip@length=\skip283
-\mdf@frametitlerulewidth@length=\skip284
-\mdf@frametitleleftmargin@length=\skip285
-\mdf@frametitlerightmargin@length=\skip286
-\mdf@shadowsize@length=\skip287
-\mdf@extratopheight@length=\skip288
-\mdf@subtitleabovelinewidth@length=\skip289
-\mdf@subtitlebelowlinewidth@length=\skip290
-\mdf@subtitleaboveskip@length=\skip291
-\mdf@subtitlebelowskip@length=\skip292
-\mdf@subtitleinneraboveskip@length=\skip293
-\mdf@subtitleinnerbelowskip@length=\skip294
-\mdf@subsubtitleabovelinewidth@length=\skip295
-\mdf@subsubtitlebelowlinewidth@length=\skip296
-\mdf@subsubtitleaboveskip@length=\skip297
-\mdf@subsubtitlebelowskip@length=\skip298
-\mdf@subsubtitleinneraboveskip@length=\skip299
-\mdf@subsubtitleinnerbelowskip@length=\skip300
+\mdf@templength=\skip256
+\c@mdf@globalstyle@cnt=\count352
+\mdf@skipabove@length=\skip257
+\mdf@skipbelow@length=\skip258
+\mdf@leftmargin@length=\skip259
+\mdf@rightmargin@length=\skip260
+\mdf@innerleftmargin@length=\skip261
+\mdf@innerrightmargin@length=\skip262
+\mdf@innertopmargin@length=\skip263
+\mdf@innerbottommargin@length=\skip264
+\mdf@splittopskip@length=\skip265
+\mdf@splitbottomskip@length=\skip266
+\mdf@outermargin@length=\skip267
+\mdf@innermargin@length=\skip268
+\mdf@linewidth@length=\skip269
+\mdf@innerlinewidth@length=\skip270
+\mdf@middlelinewidth@length=\skip271
+\mdf@outerlinewidth@length=\skip272
+\mdf@roundcorner@length=\skip273
+\mdf@footenotedistance@length=\skip274
+\mdf@userdefinedwidth@length=\skip275
+\mdf@needspace@length=\skip276
+\mdf@frametitleaboveskip@length=\skip277
+\mdf@frametitlebelowskip@length=\skip278
+\mdf@frametitlerulewidth@length=\skip279
+\mdf@frametitleleftmargin@length=\skip280
+\mdf@frametitlerightmargin@length=\skip281
+\mdf@shadowsize@length=\skip282
+\mdf@extratopheight@length=\skip283
+\mdf@subtitleabovelinewidth@length=\skip284
+\mdf@subtitlebelowlinewidth@length=\skip285
+\mdf@subtitleaboveskip@length=\skip286
+\mdf@subtitlebelowskip@length=\skip287
+\mdf@subtitleinneraboveskip@length=\skip288
+\mdf@subtitleinnerbelowskip@length=\skip289
+\mdf@subsubtitleabovelinewidth@length=\skip290
+\mdf@subsubtitlebelowlinewidth@length=\skip291
+\mdf@subsubtitleaboveskip@length=\skip292
+\mdf@subsubtitlebelowskip@length=\skip293
+\mdf@subsubtitleinneraboveskip@length=\skip294
+\mdf@subsubtitleinnerbelowskip@length=\skip295
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/mdframed\md-frame-0.mdf
 File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 )
-\mdf@frametitlebox=\box62
-\mdf@footnotebox=\box63
-\mdf@splitbox@one=\box64
-\mdf@splitbox@two=\box65
-\mdf@splitbox@save=\box66
-\mdfsplitboxwidth=\skip301
-\mdfsplitboxtotalwidth=\skip302
-\mdfsplitboxheight=\skip303
-\mdfsplitboxdepth=\skip304
-\mdfsplitboxtotalheight=\skip305
-\mdfframetitleboxwidth=\skip306
-\mdfframetitleboxtotalwidth=\skip307
-\mdfframetitleboxheight=\skip308
-\mdfframetitleboxdepth=\skip309
-\mdfframetitleboxtotalheight=\skip310
-\mdffootnoteboxwidth=\skip311
-\mdffootnoteboxtotalwidth=\skip312
-\mdffootnoteboxheight=\skip313
-\mdffootnoteboxdepth=\skip314
-\mdffootnoteboxtotalheight=\skip315
-\mdftotallinewidth=\skip316
-\mdfboundingboxwidth=\skip317
-\mdfboundingboxtotalwidth=\skip318
-\mdfboundingboxheight=\skip319
-\mdfboundingboxdepth=\skip320
-\mdfboundingboxtotalheight=\skip321
-\mdf@freevspace@length=\skip322
-\mdf@horizontalwidthofbox@length=\skip323
-\mdf@verticalmarginwhole@length=\skip324
-\mdf@horizontalspaceofbox=\skip325
-\mdfsubtitleheight=\skip326
-\mdfsubsubtitleheight=\skip327
-\c@mdfcountframes=\count346
+\mdf@frametitlebox=\box67
+\mdf@footnotebox=\box68
+\mdf@splitbox@one=\box69
+\mdf@splitbox@two=\box70
+\mdf@splitbox@save=\box71
+\mdfsplitboxwidth=\skip296
+\mdfsplitboxtotalwidth=\skip297
+\mdfsplitboxheight=\skip298
+\mdfsplitboxdepth=\skip299
+\mdfsplitboxtotalheight=\skip300
+\mdfframetitleboxwidth=\skip301
+\mdfframetitleboxtotalwidth=\skip302
+\mdfframetitleboxheight=\skip303
+\mdfframetitleboxdepth=\skip304
+\mdfframetitleboxtotalheight=\skip305
+\mdffootnoteboxwidth=\skip306
+\mdffootnoteboxtotalwidth=\skip307
+\mdffootnoteboxheight=\skip308
+\mdffootnoteboxdepth=\skip309
+\mdffootnoteboxtotalheight=\skip310
+\mdftotallinewidth=\skip311
+\mdfboundingboxwidth=\skip312
+\mdfboundingboxtotalwidth=\skip313
+\mdfboundingboxheight=\skip314
+\mdfboundingboxdepth=\skip315
+\mdfboundingboxtotalheight=\skip316
+\mdf@freevspace@length=\skip317
+\mdf@horizontalwidthofbox@length=\skip318
+\mdf@verticalmarginwhole@length=\skip319
+\mdf@horizontalspaceofbox=\skip320
+\mdfsubtitleheight=\skip321
+\mdfsubsubtitleheight=\skip322
+\c@mdfcountframes=\count353
 
 ****** mdframed patching \endmdf@trivlist
 
 ****** -- success******
 
-\mdf@envdepth=\count347
-\c@mdf@env@i=\count348
-\c@mdf@env@ii=\count349
-\c@mdf@zref@counter=\count350
+\mdf@envdepth=\count354
+\c@mdf@env@i=\count355
+\c@mdf@env@ii=\count356
+\c@mdf@zref@counter=\count357
 Package zref Info: New property: mdf@pagevalue on input line 895.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.sty"
-Package: geometry 2018/04/16 v5.8 Page Geometry
+(C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/iftex\ifxetex.sty
-Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
-)
-\Gm@cnth=\count351
-\Gm@cntv=\count352
-\c@Gm@tempcnt=\count353
-\Gm@bindingoffset=\dimen264
-\Gm@wd@mp=\dimen265
-\Gm@odd@mp=\dimen266
-\Gm@even@mp=\dimen267
-\Gm@layoutwidth=\dimen268
-\Gm@layoutheight=\dimen269
-\Gm@layouthoffset=\dimen270
-\Gm@layoutvoffset=\dimen271
-\Gm@dimlist=\toks35
+\Gm@cnth=\count358
+\Gm@cntv=\count359
+\c@Gm@tempcnt=\count360
+\Gm@bindingoffset=\dimen263
+\Gm@wd@mp=\dimen264
+\Gm@odd@mp=\dimen265
+\Gm@even@mp=\dimen266
+\Gm@layoutwidth=\dimen267
+\Gm@layoutheight=\dimen268
+\Gm@layouthoffset=\dimen269
+\Gm@layoutvoffset=\dimen270
+\Gm@dimlist=\toks37
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg"))
+(C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg))
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/marginnote\marginnote.sty
 Package: marginnote 2018/08/09 v1.4b non floating margin notes for LaTeX
-\c@mn@abspage=\count354
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/tools\bm.sty"
-Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\c@mn@abspage=\count361
+) (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/tools\bm.sty
+Package: bm 2021/04/25 v1.2e Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup4
 \symboldletters=\mathgroup5
 \symboldsymbols=\mathgroup6
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
-LaTeX Info: Redefining \bm on input line 207.
+Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphicx.sty"
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphics.sty"
-Package: graphics 2019/10/08 v1.3c Standard LaTeX Graphics (DPC,SPQR)
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics\trig.sty"
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\graphics.cfg"
+(C:\Program Files\MiKTeX 2.9\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 105.
+Package graphics Info: Driver file: pdftex.def on input line 107.
 )
-\Gin@req@height=\dimen272
-\Gin@req@width=\dimen273
+\Gin@req@height=\dimen271
+\Gin@req@width=\dimen272
 )
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty"
-Package: hyperref 2019/09/28 v7.00a Hypertext links for LaTeX
+(C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\hobsub-hyperref.sty"
-Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
-
-
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\hobsub-generic.sty"
-Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package hobsub Info: Skipping package `infwarerr' (already loaded).
-Package hobsub Info: Skipping package `ltxcmds' (already loaded).
-Package hobsub Info: Skipping package `ifluatex' (already loaded).
-Package hobsub Info: Skipping package `ifvtex' (already loaded).
-Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package hobsub Info: Skipping package `ifpdf' (already loaded).
-Package hobsub Info: Skipping package `etexcmds' (already loaded).
-Package hobsub Info: Skipping package `kvsetkeys' (already loaded).
-Package hobsub Info: Skipping package `kvdefinekeys' (already loaded).
-Package hobsub Info: Skipping package `pdftexcmds' (already loaded).
-Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
-Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/letltxmacro\letltxmacro.st
+y
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 )
-Package hobsub Info: Skipping package `hobsub' (already loaded).
-Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
-Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
-Package: xcolor-patch 2016/05/16 xcolor patch
-Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package hobsub Info: Skipping package `atbegshi' (already loaded).
-Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
-Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-)
-\@linkdim=\dimen274
-\Hy@linkcounter=\count355
-\Hy@pagecounter=\count356
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def"
-File: pd1enc.def 2019/09/28 v7.00a Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen273
+\Hy@linkcounter=\count362
+\Hy@pagecounter=\count363
+ (C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count357
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/00miktex\hyperref.cfg"
-File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+(C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
 )
-Package hyperref Info: Hyper figures OFF on input line 4540.
-Package hyperref Info: Link nesting OFF on input line 4545.
-Package hyperref Info: Hyper index ON on input line 4548.
-Package hyperref Info: Plain pages OFF on input line 4555.
-Package hyperref Info: Backreferencing OFF on input line 4560.
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count364
+
+(C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4793.
-\c@Hy@tempcnt=\count358
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count365
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/url\url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5152.
-\XeTeXLinkMargin=\dimen275
-\Fld@menulength=\count359
-\Field@Width=\dimen276
-\Fld@charsize=\dimen277
-Package hyperref Info: Hyper figures OFF on input line 6423.
-Package hyperref Info: Link nesting OFF on input line 6428.
-Package hyperref Info: Hyper index ON on input line 6431.
-Package hyperref Info: backreferencing OFF on input line 6438.
-Package hyperref Info: Link coloring OFF on input line 6443.
-Package hyperref Info: Link coloring with OCG OFF on input line 6448.
-Package hyperref Info: PDF/A mode OFF on input line 6453.
-LaTeX Info: Redefining \ref on input line 6493.
-LaTeX Info: Redefining \pageref on input line 6497.
-\Hy@abspage=\count360
-\c@Item=\count361
-\c@Hfootnote=\count362
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen274
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/bigintcalc\bigintcalc.st
+y
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
-(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/memoir\memhfixc.sty
-Package: memhfixc 2019/10/24 v1.18 nameref/hyperref package fixes for memoir cl
+))
+\Fld@menulength=\count366
+\Field@Width=\dimen275
+\Fld@charsize=\dimen276
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+\Hy@abspage=\count367
+\c@Item=\count368
+\c@Hfootnote=\count369
+) (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/memoir\memhfixc.sty
+Package: memhfixc 2021/06/16 v1.19 nameref/hyperref package fixes for memoir cl
 ass
-\c@memhycontfloat=\count363
-\c@Hpagenote=\count364
+
+
+LaTeX hooks Warning: Generic hook 'package/after/nameref' is deprecated.
+(hooks)              Use hook 'package/nameref/after' instead.
+
+\c@memhycontfloat=\count370
+\c@Hpagenote=\count371
+
+LaTeX hooks Warning: Generic hook 'package/after/hypcap' is deprecated.
+(hooks)              Use hook 'package/hypcap/after' instead.
+
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
+ (C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def"
-File: hpdftex.def 2019/09/28 v7.00a Hyperref driver for pdfTeX
-\HyAnn@Count=\count365
-\Fld@listcount=\count366
-\c@bookmark@seq@number=\count367
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\rerunfilecheck.sty"
-Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
+(C:\Program Files\MiKTeX 2.9\tex/latex/base\atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
 )
-\Hy@SectionHShift=\skip328
+\HyAnn@Count=\count372
+\Fld@listcount=\count373
+\c@bookmark@seq@number=\count374
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/rerunfilecheck\rerunfilech
+eck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/uniquecounter\uniquecoun
+ter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip323
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 75.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > us
@@ -1038,17 +890,18 @@ ers_guide.aex <nul: /p x=^%~$PATH:i>> users_guide.aex)...executed.
 
 runsystem(del users_guide.aex)...executed.
 
-
-(users_guide.aux)
+ (users_guide.aux)
 \openout1 = `users_guide.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
 LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
@@ -1056,35 +909,31 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
 LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count368
-\scratchdimen=\dimen278
-\scratchbox=\box67
-\nofMPsegments=\count369
-\nofMParguments=\count370
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count371
-\MPscratchDim=\dimen279
-\MPnumerator=\count372
-\makeMPintoPDFobject=\count373
-\everyMPtoPDFconversion=\toks37
-) ("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-base.sty"
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-("C:\Program Files\MiKTeX 2.9\tex/latex/oberdiek\grfext.sty"
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+\scratchcounter=\count375
+\scratchdimen=\dimen277
+\scratchbox=\box72
+\nofMPsegments=\count376
+\nofMParguments=\count377
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count378
+\MPscratchDim=\dimen278
+\MPnumerator=\count379
+\makeMPintoPDFobject=\count380
+\everyMPtoPDFconversion=\toks39
 )
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/epstopdf-pkg\epstopdf-base
+.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-38.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
-)
-\AtBeginShipoutBox=\box68
-
+85.
+ (C:\Program Files\MiKTeX 2.9\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1120,13 +969,17 @@ G,.JBIG2,.JB2,.eps]
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 94.
-("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
-Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+(C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
-("C:\Program Files\MiKTeX 2.9\tex/generic/oberdiek\gettitlestring.sty"
-Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-\c@section@level=\count374
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/generic/gettitlestring\gettitles
+tring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count381
 )
 Redoing nameref's sectioning
 Redoing nameref's label
@@ -1146,7 +999,7 @@ LaTeX Info: Redefining \nameref on input line 94.
 
 (_minted-users_guide/default-pyg-prefix.pygstyle)
 (_minted-users_guide/default.pygstyle)
-(_minted-users_guide/DAAD212F4FCCC398DB20828695A3651543660024D5B6C4BBB467262C8B
+(_minted-users_guide/4B3CCF6B181E18E8FBC2048D0D82058A43660024D5B6C4BBB467262C8B
 2D64CB.pygtex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
@@ -1154,7 +1007,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/2AA22C90CF4DB4A47949482AF7883E0C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/B49D9A5ADF3E7C3D95CA2B9DF008E4A643660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [2] [3]) [4] [5
 
 ] [6] [7
@@ -1163,203 +1016,270 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/6D002DD67ACC95ABB1CF492413B9D34243660024D5B6C4BBB467262C8B
+(_minted-users_guide/639F7A57FB43A436AB6425E399F9FDA843660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [9
 
 ]
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/00DD84FB5091A77D280472A296161B5143660024D5B6C4BBB467262C8B
+(_minted-users_guide/AEC75286E43C553A1838AE24E0E79CA143660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/12028446143A32FEEC182504DFD5651C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/0EF239A0118317DCF473AF7A5E32E28E43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/86FA89EB47697FA9A6B9C2C07568762A43660024D5B6C4BBB467262C8B
+(_minted-users_guide/383971A90652C4C938543B60A0BBAC3043660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [10] [11] [12
 
 ]
-Overfull \hbox (16.59741pt too wide) in paragraph at lines 219--228
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/813CC40FFECA30ECAD095DFA7E4F0E3C43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/C46D07EBE6AEEAD99189754C458178EC43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/6696B857AC73BE613E3F1124913576E143660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/EED17DD60C9FC3FB2D6C720FC94262ED43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/255F0A19EAB19DE41E4D1E269E20EEAB43660024D5B6C4BBB467262C8B
+2D64CB.pygtex) [13]
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/4ECF8BF32DB6AC7E614573F33F745D0743660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+Overfull \hbox (16.59741pt too wide) in paragraph at lines 232--241
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--228
+Underfull \hbox (badness 10000) in paragraph at lines 232--241
 
  []
 
 
-Underfull \vbox (badness 1694) has occurred while \output is active []
+Underfull \vbox (badness 3333) has occurred while \output is active []
 
- [13]
-[14]
-Package epstopdf Info: Source file: <./Images/imu_calibration_flow.eps>
+ [14]
+[15]
+Package epstopdf Info: Source file: <./Images//imu_calibration_flow.eps>
 (epstopdf)                    date: 2021-03-08 11:57:10
 (epstopdf)                    size: 64465 bytes
-(epstopdf)             Output file: <./Images/imu_calibration_flow-eps-converte
-d-to.pdf>
+(epstopdf)             Output file: <./Images//imu_calibration_flow-eps-convert
+ed-to.pdf>
 (epstopdf)                    date: 2021-03-08 12:08:59
 (epstopdf)                    size: 23719 bytes
-(epstopdf)             Command: <epstopdf --outfile=./Images/imu_calibration_fl
-ow-eps-converted-to.pdf ./Images/imu_calibration_flow.eps>
-(epstopdf)             \includegraphics on input line 264.
+(epstopdf)             Command: <miktex-epstopdf-unrestricted --outfile=./Image
+s//imu_calibration_flow-eps-converted-to.pdf ./Images//imu_calibration_flow.eps
+>
+(epstopdf)             \includegraphics on input line 277.
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex.exe (file ./Images/imu_calibration_flow-eps-converted-
-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allo
-wed
-<./Images/imu_calibration_flow-eps-converted-to.pdf, id=763, 494.84875pt x 206.
-7725pt>
-File: ./Images/imu_calibration_flow-eps-converted-to.pdf Graphic file (type pdf
-)
-<use ./Images/imu_calibration_flow-eps-converted-to.pdf>
-Package pdftex.def Info: ./Images/imu_calibration_flow-eps-converted-to.pdf  us
-ed on input line 264.
+pdfTeX warning: miktex-pdftex.exe (file ./Images//imu_calibration_flow-eps-conv
+erted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5
+> allowed
+<./Images//imu_calibration_flow-eps-converted-to.pdf, id=794, 494.84875pt x 206
+.7725pt>
+File: ./Images//imu_calibration_flow-eps-converted-to.pdf Graphic file (type pd
+f)
+<use ./Images//imu_calibration_flow-eps-converted-to.pdf>
+Package pdftex.def Info: ./Images//imu_calibration_flow-eps-converted-to.pdf  u
+sed on input line 277.
 (pdftex.def)             Requested size: 494.84755pt x 206.77199pt.
 
-Overfull \hbox (76.22754pt too wide) in paragraph at lines 264--265
+Overfull \hbox (76.22754pt too wide) in paragraph at lines 277--278
 [][] 
  []
 
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/E8370A5AF55FD55273F14B46ACE2AC9943660024D5B6C4BBB467262C8B
-2D64CB.pygtex [15 <./Images/imu_calibration_flow-eps-converted-to.pdf>])
+(_minted-users_guide/560FFBBCCDE8CD568BFC3A9ACDA0A76A43660024D5B6C4BBB467262C8B
+2D64CB.pygtex [16 <./Images//imu_calibration_flow-eps-converted-to.pdf>])
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/4F421BF9A0472115CC312409A7922CC343660024D5B6C4BBB467262C8B
+(_minted-users_guide/006808076D8535F93CC624B58E68AA2D43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/B6713463CBC4D6DFD48CFB549854D40C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/AE62288CD8ABCEE288C292649C24B91343660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/B6713463CBC4D6DFD48CFB549854D40C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/AE62288CD8ABCEE288C292649C24B91343660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/B6713463CBC4D6DFD48CFB549854D40C43660024D5B6C4BBB467262C8B
-2D64CB.pygtex) [16] [17] [18
+(_minted-users_guide/AE62288CD8ABCEE288C292649C24B91343660024D5B6C4BBB467262C8B
+2D64CB.pygtex) [17] [18
 
 ] [19] [20]
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/C70A3A9FBC9E39DFA6C9548ED5381D0E43660024D5B6C4BBB467262C8B
+(_minted-users_guide/045D52A2F3C98263964E83E4B8648E8943660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/9C175B1717E678409D716E494F5819D543660024D5B6C4BBB467262C8B
+(_minted-users_guide/921688BA0A92368C8C410F5D92597C5F43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/BDC64E278BD3C55E11C0C201B247FD3C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/6161D21628A15D49519A822710FA80F743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/168D862EBCE23D1146FCB036572DA71C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/3C17E377C7531CD6FFF211050AD010F743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
-Underfull \hbox (badness 1092) in paragraph at lines 329--329
+Underfull \hbox (badness 1092) in paragraph at lines 343--343
 \OT1/cmr/m/n/7 tor is de-faulted as is the
  []
 
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/61D8365DFBA6B9E2D784D83EAE4DF6BE43660024D5B6C4BBB467262C8B
+(_minted-users_guide/95C6F1A0F5BCF793967C57ACC959EEA943660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/4B0C7EE592313EB3BAF798F7E593C4C843660024D5B6C4BBB467262C8B
+(_minted-users_guide/69B64623F86DEF16CE17D454B8BE41AE43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/490D381457A29BFFFCE2F04841C9996143660024D5B6C4BBB467262C8B
+(_minted-users_guide/A9318EEA55B0ED996790F9A7505E7C6D43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/061EC85A4059A377891E94130E839BB543660024D5B6C4BBB467262C8B
+(_minted-users_guide/0ED98FA8870ABA0691B9776B22E5A7BB43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/80764BE08D1FE7A90B6E97138293579543660024D5B6C4BBB467262C8B
+(_minted-users_guide/59D3D2375BEC860A064802D53AA4E20F43660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [21
 
 ]
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/C110600CB6FDDB526E960785708CD88C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/017ECE12DE5CC720A38CEF18FC74095F43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/9C175B1717E678409D716E494F5819D543660024D5B6C4BBB467262C8B
+(_minted-users_guide/921688BA0A92368C8C410F5D92597C5F43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/BDC64E278BD3C55E11C0C201B247FD3C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/6161D21628A15D49519A822710FA80F743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/E9E6F2917C3A8EF018BF36D62F5C3B1343660024D5B6C4BBB467262C8B
+(_minted-users_guide/425A3E9D228952D6BF6AE19E67D8ADE443660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/207943C09076312CCA3471F4C72A52DE43660024D5B6C4BBB467262C8B
+(_minted-users_guide/00546BD609FD7CB62F997E7BC1608E6143660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/8CE61AE4E73445110E9C7FD03312ED4E43660024D5B6C4BBB467262C8B
+(_minted-users_guide/A8DC0F042EFC55F6A60DC0D0995F6ADA43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/44F20AAEC5062BF4BC1825BC24CF708F43660024D5B6C4BBB467262C8B
+(_minted-users_guide/A23C2DEA255CA360B758CBC06B7B888243660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/8BAD49E99FC7323633E7E992BC57224743660024D5B6C4BBB467262C8B
+(_minted-users_guide/7A50C287812900F6FE8EE7F2404BB50243660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/CBE9449046C9518868EB403FEA98A94A43660024D5B6C4BBB467262C8B
+(_minted-users_guide/3258A5D7EDAEC451DA9952F61DB744F443660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/8BAC22FEC709559AEDFF84D95F111D1F43660024D5B6C4BBB467262C8B
+(_minted-users_guide/DCCD30A634B01DC8CB4074225EAADC1443660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/0107A9528232385DD8A62726522FF5C843660024D5B6C4BBB467262C8B
-2D64CB.pygtex) [22] [23] [24
+(_minted-users_guide/80782FCD9713A5DFAD10FB0EECB8999C43660024D5B6C4BBB467262C8B
+2D64CB.pygtex) [22]
+\openout4 = `users_guide.pyg'.
+
+
+(_minted-users_guide/E1110949C35769E4980CFE43066E380B43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/FC3740D4CE0C64DCCE526147CAEC61C743660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/654FC294615890678F102FAB82782DB443660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/7AD89DD39B0B7E9773EF5EA82908861A43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/72A222E2CF5B099654F35FC123EBF35A43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/482C8421450FBBB74CCBE58D2F6E519243660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+Overfull \hbox (498.2095pt too wide) in paragraph at lines 433--441
+\OT1/cmr/m/n/10 The NRV has sev-eral type def-i-ni-tions avail-able which in-cl
+ude the fol-low-ing: [] 
+ []
+
+[23] [24
 
 ] [25] [26
 
@@ -1371,16 +1291,16 @@ Underfull \hbox (badness 1092) in paragraph at lines 329--329
 
 ]
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 410.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 455.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 410.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 455.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 410.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 455.
 
 [33] [34
 
@@ -1392,68 +1312,68 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/DAAD212F4FCCC398DB20828695A3651543660024D5B6C4BBB467262C8B
+(_minted-users_guide/4B3CCF6B181E18E8FBC2048D0D82058A43660024D5B6C4BBB467262C8B
 2D64CB.pygtex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 1.
 )
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\mintinline' on input line 428.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mintinline' on input line 473.
 
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/2AA22C90CF4DB4A47949482AF7883E0C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/B49D9A5ADF3E7C3D95CA2B9DF008E4A643660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\mintinline' on input line 436.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mintinline' on input line 481.
 
 \openout4 = `users_guide.pyg'.
 
 
-(_minted-users_guide/8D591C780ECA00D823A9F6198BD11B5F43660024D5B6C4BBB467262C8B
+(_minted-users_guide/A3D9A033D83A1D72D7F0ACC0C042CA4A43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/739B3DF9AE90777D2E1F50E83664CBD043660024D5B6C4BBB467262C8B
+(_minted-users_guide/3AEB223D7C502F5B3636A800390A4B9443660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/A59F7757927C08C5348DAD2C8C695CC643660024D5B6C4BBB467262C8B
+(_minted-users_guide/40BC979FC51C312C66F13621C9C53E8443660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/A780B825B7DE102A381D241EE1E53FD943660024D5B6C4BBB467262C8B
+(_minted-users_guide/15EB7391E9AC02A8CFC6F432C7EE030143660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/2CA17D44690A4A8B26938513189A3EC143660024D5B6C4BBB467262C8B
+(_minted-users_guide/EDCB5B280A371D1FE22BF3489485E14743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/6CD22E4C5D85B9802F18F22A483A321E43660024D5B6C4BBB467262C8B
+(_minted-users_guide/13E5E0B6EC3BA0BE439FBC1354E9285943660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/E4D70287EE17919CD6CD55AA5EE8069943660024D5B6C4BBB467262C8B
+(_minted-users_guide/55ED7C8889CE911482E767E865620BFA43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/1FB3B980D9165D0D793941F525C81F7E43660024D5B6C4BBB467262C8B
+(_minted-users_guide/0B657BA710F8094E0D1CA980A09763ED43660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/D206E902E48EE36E20AB0B1AC375152C43660024D5B6C4BBB467262C8B
+(_minted-users_guide/AB984B0D840C11EAB8978443CA539A5343660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [39] [40] [41
 
 ] [42] [43
@@ -1477,16 +1397,16 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 ]
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 530.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 575.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 530.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 575.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 530.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 575.
 
 [59] [60
 
@@ -1496,24 +1416,29 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 \tf@toc=\write7
 \openout7 = `users_guide.toc'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 676.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 676.
  (users_guide.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 676.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 676.
-Package rerunfilecheck Info: File `users_guide.out' has not changed.
-(rerunfilecheck)             Checksum: 32D73362D1CD1210C6963767E60F7B45;8794.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `users_guide.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `users_guide.out':
+(rerunfilecheck)             Before: 35A93E3D3B3EF3521B965E8D2173B601;20534
+(rerunfilecheck)             After:  5A98A6A4F615A7E97F2E57AB6E014CDD;20642.
 runsystem(del users_guide.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 25026 strings out of 492453
- 458428 string characters out of 3129819
- 613582 words of memory out of 3000000
- 28778 multiletter control sequences out of 15000+200000
- 547461 words of font info for 76 fonts, out of 3000000 for 9000
+ 18565 strings out of 478665
+ 333074 string characters out of 2853484
+ 712778 words of memory out of 3000000
+ 35984 multiletter control sequences out of 15000+600000
+ 418721 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 52i,14n,71p,1872b,549s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 74i,14n,79p,1873b,601s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTe
@@ -1534,10 +1459,11 @@ msy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on users_guide.pdf (65 pages, 469760 bytes).
+ 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on users_guide.pdf (65 pages, 519034 bytes).
 PDF statistics:
- 1150 PDF objects out of 1200 (max. 8388607)
- 248 named destinations out of 1000 (max. 500000)
- 1062 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1210 PDF objects out of 1440 (max. 8388607)
+ 259 named destinations out of 1000 (max. 500000)
+ 1094 words of extra memory for PDF output out of 10000 (max. 10000000)
 

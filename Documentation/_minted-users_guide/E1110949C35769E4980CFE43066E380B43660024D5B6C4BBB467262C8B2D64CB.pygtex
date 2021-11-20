@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{class} \PYG{n+nc}{Value}\PYG{o}{\PYGZgt{}}
+	\PYG{k}{class} \PYG{n+nc}{NRV}\PYG{p}{;}
+\end{Verbatim}

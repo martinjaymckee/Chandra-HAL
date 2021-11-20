@@ -212,6 +212,19 @@ IT MAY MAKE SENSE TO USE EXPRESSION TEMPLATES TO SELECT THE IMPLEMENTATION OF OP
 NEED TO MAKE SURE THAT THE MATRIX VIEWS ARE WORKING AS I WANT THEM TO AND THAT THEY ARE USED THROUGH THE DRIVERS WHERE APPROPRIATE.
 
 \subsection{Units}
+The units system supports dimensional analysis with the full SI system of base units extended with planar angles.  In addition, conversion between values are done on an as needed basis, only when operating on values with different units, or assigning to a value with different units.  Quantities may be created by either directly calling a constructor or using the UDL suffixes defined in the library.  Currently the suffixes are in the form \mintinline{cpp}{__yy__} where \emph{yy} is the standard SI unit name (or an ASCII encoding that approximates it).  For instance, meters use the suffix \mintinline{cpp}{__m__}, while mega-electronvolts use the suffix \mintinline{cpp}{__Mev__} and feet \mintinline{cpp}{__ft__}.
+
+\subsection{Statistics}
+The built-in statistics packages are minimal in Chandra and are focused, primarily, on supporting exploratory data analysis to allow for characterization of systems.  The statistics functionality can be found in \mintinline{cpp}{namespace chandra::math::statistics}.  There are currently two major statistical components, classes to capture rolling statistics, and a NRV (Normal Random Variable) value type.
+
+\subsubsection{Rolling Statistics}
+Capturing rolling statistics is supported in two primary forms: continuous and windowed.  Continuously captured rolling statistics will return statistics of the values received since the object was reset.  On the other hand, windowed capture will return statistics of the last $\textbf{N}$ values.  The statistics available include, count, mean, variance, standard deviation, and standard error\footnote{It should be noted that this list is currently fairly limited and should be expanded.  Things like \emph{median}, \emph{mode}, \emph{skew}, \emph{kurtosis}, and \emph{min/max}, would be useful.  Additionally, adding the ability to do rolling regression (continuous and windowed) and two-sample statistics like covariance and correlation, would be handy.  Those are for a later date, however.} 
+
+\subsubsection{Hypothesis Testing}
+TODO: THIS NEEDS SOME VERY BASIC HYPOTHESIS TESTING. STUDENT'S-T(ONE AND TWO SAMPLE), Z, ANOVA, ETC.
+ 
+\subsubsection{Normal Random Variables}
+The NRV (Normal Random Variable) object is a value type that represents a normal distribution and provides some specific functionality.  First, it allows for generating samples from said distribution.  This functionality, however, is little more than a nice wrapper around the C++ random library.  Secondly, and more importantly, NRV values can be combined using basic arithmetic (+, -, *, $\div$)\footnote{Any additional functions which can be reasonably approximated with a normal distribution should be added.  Ideally, all the functions in \mintinline{cpp}{cmath} would be available.  However, that is not a reasonable expectation, for a number of reasons.  A more reasonable target would be to support the basic trigonometric functions and simple functions such as raising to an integer or rational power}.  These operations follow the rules for normal distributions and correctly calculate the resultant mean and variance of the combination.  This allows the NRV value to be used in a computation to determine not only the result value (the mean), but an estimate of the uncertaintity.  This functionality is particularly useful for noise analysis and similar. 
 
 \section{HAL}
 \subsection{Chandra::Chrono}
@@ -306,6 +319,7 @@ The gravity calculations are cross-checked and also compared to the values gener
 
 \part{Library API}
 \chapter{Math}
+
 \section{Linear Algebra}
 \subsection{Matricies}
 \label{sec:math:matricies}
@@ -393,6 +407,37 @@ The vector constructors are a subset of the matrix constructors as a result of v
 \section{Quaternions}
 \section{Rotations}
 \section{Math Utilities}
+
+\section{Statistics}
+\label{sec:math:statistics}
+\apiheader{statistics.h}{chandra::math::statistics}
+
+\subsection{Rolling Statistics}
+\apiheader{rolling\_statistics.h}{chandra::math::statistics}
+
+\subsection{Hypothesis Testing}
+\apiheader{hypothesis\_testing.h}{chandra::math::statistics}
+TODO: ADD THIS FUNCTIONALITY
+ 
+\subsection{Normal Random Variables}
+\apiheader{nrv.h}{chandra::math::statistics}
+
+NRVs are a value type which wraps the definition of a normal distribution (mean, $\mu$, and varianace $\sigma^2$) and allows for operations between such distributions to create new distributions.  The class is a template of the form,
+\begin{minted}{cpp}
+	template<class Value>
+	class NRV;
+\end{minted}
+where the value type defines a value in the distribution.  Any value type is compatible so long as it supports the operations being applied to the NRV value and multiplication (which is required for calculation of variance).
+
+\subsubsection{Types and Constant Members}
+The NRV has several type definitions available which include the following:
+\begin{tabular}{cg}
+	\rowcolor[gray]{0.8}\textbf{Type} & \textbf{Description}\\ 
+	\mintinline{cpp}{value_t} & The passed in value type\\
+	\mintinline{cpp}{mean_t} & The type used for the mean, typically the same as the base value type\\
+	\mintinline{cpp}{standard_deviation_t} & The type used for standard deviation, typically the same as the base value type\\
+	\mintinline{cpp}{variance_t} & The type used for variance, generated as \mintinline{cpp}{decltype(standard_deviation_t() * standard_deviation_t())}\\
+\end{tabular} 
 
 \chapter{Units}
 

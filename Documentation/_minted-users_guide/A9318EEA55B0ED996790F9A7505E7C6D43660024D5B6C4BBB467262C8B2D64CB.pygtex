@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{Matrix}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{initializer\PYGZus{}list}\PYG{o}{\PYGZlt{}}\PYG{n}{value\PYGZus{}t}\PYG{o}{\PYGZgt{}} \PYG{n}{\PYGZus{}values}\PYG{p}{,} \PYG{k}{const} \PYG{k+kt}{bool}\PYG{o}{\PYGZam{}} \PYG{n}{\PYGZus{}row\PYGZus{}major} \PYG{o}{=} \PYG{n+nb}{true}\PYG{p}{);}	
+\end{Verbatim}
