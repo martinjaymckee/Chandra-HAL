@@ -3,6 +3,7 @@
 
 #include <ratio>
 #include <type_traits>
+#include <utility>
 
 #include "dimensions.h"
 #include "meta_types.h"
@@ -236,6 +237,22 @@ struct PowUnits
             _stream << Exp;
         }
 };
+
+template<typename Units>
+struct SqrtUnits
+{
+    static_assert(!Units::absolute, "Unable to take square root of absolute units");
+    using dims_a = typename Units::dimensions_t;
+    using dimensions_t = decltype(std::declval<dims_a>().sqrt());
+    using factor_t = typename Units::factor_t;
+    using offset_t = std::ratio<0,1>;
+    static constexpr bool absolute = false;
+    template<typename Stream>
+    static void streamname(Stream& _stream) {
+        Units::streamname(_stream);
+        _stream << "^1/2";
+    }
+};
 } /*namespace internal*/
 
 // TODO: THERE SHOULD BE A WAY TO CONSTRAIN THE UNITS TYPE TO SOMETHING THAT
@@ -268,6 +285,8 @@ using accelerationFrom = internal::DivUnits<L, internal::PowUnits<T, 2>>;
 template<typename F, typename L>
 using pressureFrom = internal::DivUnits<F, areaFrom<L>>;
 
+template<typename U>
+using sqrtOf = internal::SqrtUnits<U>;
 } /*namespace units*/
 } /*namespace chandra*/
 #endif /*CHANDRA_DIMENSION_CONVERT_H*/

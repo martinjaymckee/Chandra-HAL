@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.10) (preloaded format=pdflatex 2021.11.18)  20 NOV 2021 13:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.10) (preloaded format=pdflatex 2021.11.18)  20 NOV 2021 22:30
 entering extended mode
 **./users_guide.tex
 (users_guide.tex
@@ -885,46 +885,60 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip323
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 75.
+
+(C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/titlesec\titlesec.sty
+Package: titlesec 2021/07/05 v2.14 Sectioning titles
+\ttl@box=\box72
+\beforetitleunit=\skip324
+\aftertitleunit=\skip325
+\ttl@plus=\dimen277
+\ttl@minus=\dimen278
+\ttl@toksa=\toks38
+\titlewidth=\dimen279
+\titlewidthlast=\dimen280
+\titlewidthfirst=\dimen281
+)
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > us
 ers_guide.aex <nul: /p x=^%~$PATH:i>> users_guide.aex)...executed.
 
 runsystem(del users_guide.aex)...executed.
 
- (users_guide.aux)
+
+(users_guide.aux)
 \openout1 = `users_guide.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
 
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count375
-\scratchdimen=\dimen277
-\scratchbox=\box72
+\scratchdimen=\dimen282
+\scratchbox=\box73
 \nofMPsegments=\count376
 \nofMParguments=\count377
-\everyMPshowfont=\toks38
+\everyMPshowfont=\toks39
 \MPscratchCnt=\count378
-\MPscratchDim=\dimen278
+\MPscratchDim=\dimen283
 \MPnumerator=\count379
 \makeMPintoPDFobject=\count380
-\everyMPtoPDFconversion=\toks39
+\everyMPtoPDFconversion=\toks40
 )
 (C:\Users\marti\AppData\Roaming\MiKTeX\2.9\tex/latex/epstopdf-pkg\epstopdf-base
 .sty
@@ -968,7 +982,7 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 94.
+Package hyperref Info: Link coloring ON on input line 102.
 (C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -983,10 +997,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 94.
-LaTeX Info: Redefining \ref on input line 94.
-LaTeX Info: Redefining \pageref on input line 94.
-LaTeX Info: Redefining \nameref on input line 94.
+LaTeX Info: Redefining \nameref on input line 102.
+LaTeX Info: Redefining \ref on input line 102.
+LaTeX Info: Redefining \pageref on input line 102.
+LaTeX Info: Redefining \nameref on input line 102.
 (users_guide.out) (users_guide.out)
 \@outlinefile=\write6
 \openout6 = `users_guide.out'.
@@ -1040,26 +1054,6 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 \openout5 = `users_guide.pyg'.
 
 
-(_minted-users_guide/813CC40FFECA30ECAD095DFA7E4F0E3C43660024D5B6C4BBB467262C8B
-2D64CB.pygtex)
-\openout5 = `users_guide.pyg'.
-
-
-(_minted-users_guide/C46D07EBE6AEEAD99189754C458178EC43660024D5B6C4BBB467262C8B
-2D64CB.pygtex)
-\openout5 = `users_guide.pyg'.
-
-
-(_minted-users_guide/6696B857AC73BE613E3F1124913576E143660024D5B6C4BBB467262C8B
-2D64CB.pygtex)
-\openout5 = `users_guide.pyg'.
-
-
-(_minted-users_guide/EED17DD60C9FC3FB2D6C720FC94262ED43660024D5B6C4BBB467262C8B
-2D64CB.pygtex)
-\openout5 = `users_guide.pyg'.
-
-
 (_minted-users_guide/255F0A19EAB19DE41E4D1E269E20EEAB43660024D5B6C4BBB467262C8B
 2D64CB.pygtex) [13]
 \openout5 = `users_guide.pyg'.
@@ -1067,17 +1061,37 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 
 (_minted-users_guide/4ECF8BF32DB6AC7E614573F33F745D0743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
-Overfull \hbox (16.59741pt too wide) in paragraph at lines 232--241
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/80D6A088FA0C91DCECE0563CFFC97CF943660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/5867A2A35A12934C5B8B5C87A2301A6D43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/76B1656962B06B32347662EC2D2EDF8543660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+\openout5 = `users_guide.pyg'.
+
+
+(_minted-users_guide/973ADFBD1F9FF649E67827CA5B0700AE43660024D5B6C4BBB467262C8B
+2D64CB.pygtex)
+Overfull \hbox (16.59741pt too wide) in paragraph at lines 240--249
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--241
+Underfull \hbox (badness 10000) in paragraph at lines 240--249
 
  []
 
 
-Underfull \vbox (badness 3333) has occurred while \output is active []
+Underfull \vbox (badness 1436) has occurred while \output is active []
 
  [14]
 [15]
@@ -1091,23 +1105,23 @@ ed-to.pdf>
 (epstopdf)             Command: <miktex-epstopdf-unrestricted --outfile=./Image
 s//imu_calibration_flow-eps-converted-to.pdf ./Images//imu_calibration_flow.eps
 >
-(epstopdf)             \includegraphics on input line 277.
+(epstopdf)             \includegraphics on input line 285.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: miktex-pdftex.exe (file ./Images//imu_calibration_flow-eps-conv
 erted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5
 > allowed
-<./Images//imu_calibration_flow-eps-converted-to.pdf, id=794, 494.84875pt x 206
+<./Images//imu_calibration_flow-eps-converted-to.pdf, id=781, 494.84875pt x 206
 .7725pt>
 File: ./Images//imu_calibration_flow-eps-converted-to.pdf Graphic file (type pd
 f)
 <use ./Images//imu_calibration_flow-eps-converted-to.pdf>
 Package pdftex.def Info: ./Images//imu_calibration_flow-eps-converted-to.pdf  u
-sed on input line 277.
+sed on input line 285.
 (pdftex.def)             Requested size: 494.84755pt x 206.77199pt.
 
-Overfull \hbox (76.22754pt too wide) in paragraph at lines 277--278
+Overfull \hbox (76.22754pt too wide) in paragraph at lines 285--286
 [][] 
  []
 
@@ -1158,7 +1172,7 @@ Overfull \hbox (76.22754pt too wide) in paragraph at lines 277--278
 
 (_minted-users_guide/3C17E377C7531CD6FFF211050AD010F743660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
-Underfull \hbox (badness 1092) in paragraph at lines 343--343
+Underfull \hbox (badness 1092) in paragraph at lines 351--351
 \OT1/cmr/m/n/7 tor is de-faulted as is the
  []
 
@@ -1274,7 +1288,7 @@ Underfull \hbox (badness 1092) in paragraph at lines 343--343
 
 (_minted-users_guide/482C8421450FBBB74CCBE58D2F6E519243660024D5B6C4BBB467262C8B
 2D64CB.pygtex)
-Overfull \hbox (498.2095pt too wide) in paragraph at lines 433--441
+Overfull \hbox (498.2095pt too wide) in paragraph at lines 441--449
 \OT1/cmr/m/n/10 The NRV has sev-eral type def-i-ni-tions avail-able which in-cl
 ude the fol-low-ing: [] 
  []
@@ -1292,15 +1306,15 @@ ude the fol-low-ing: []
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 455.
+(hyperref)                removing `math shift' on input line 463.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 455.
+(hyperref)                removing `superscript' on input line 463.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 455.
+(hyperref)                removing `math shift' on input line 463.
 
 [33] [34
 
@@ -1319,7 +1333,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mintinline' on input line 473.
+(hyperref)                removing `\mintinline' on input line 481.
 
 \openout5 = `users_guide.pyg'.
 
@@ -1328,7 +1342,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 2D64CB.pygtex)
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mintinline' on input line 481.
+(hyperref)                removing `\mintinline' on input line 489.
 
 \openout4 = `users_guide.pyg'.
 
@@ -1398,15 +1412,15 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 575.
+(hyperref)                removing `math shift' on input line 583.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 575.
+(hyperref)                removing `superscript' on input line 583.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 575.
+(hyperref)                removing `math shift' on input line 583.
 
 [59] [60
 
@@ -1426,44 +1440,77 @@ Package rerunfilecheck Warning: File `users_guide.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `users_guide.out':
-(rerunfilecheck)             Before: 35A93E3D3B3EF3521B965E8D2173B601;20534
-(rerunfilecheck)             After:  5A98A6A4F615A7E97F2E57AB6E014CDD;20642.
+(rerunfilecheck)             Before: 9B3F15365B1F2F9EE7FF00EDF70AE000;20533
+(rerunfilecheck)             After:  4B506BF6207AB43306FB794E79AE5B0E;20748.
 runsystem(del users_guide.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 18565 strings out of 478665
- 333074 string characters out of 2853484
- 712778 words of memory out of 3000000
- 35984 multiletter control sequences out of 15000+600000
+ 18845 strings out of 478665
+ 337408 string characters out of 2853484
+ 720082 words of memory out of 3000000
+ 36252 multiletter control sequences out of 15000+600000
  418721 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  74i,14n,79p,1873b,601s stack positions out of 5000i,500n,10000p,200000b,80000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmitt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-msy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
-><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on users_guide.pdf (65 pages, 519034 bytes).
+pdfTeX warning (dest): name{section*.19} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.18} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.16} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.15} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.14} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.12} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.11} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.10} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.9} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.7} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{section*.6} has been referenced but does not exist,
+ replaced by a fixed one
+
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmitt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
+y10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on users_guide.pdf (65 pages, 521843 bytes).
 PDF statistics:
- 1210 PDF objects out of 1440 (max. 8388607)
- 259 named destinations out of 1000 (max. 500000)
+ 1219 PDF objects out of 1440 (max. 8388607)
+ 267 named destinations out of 1000 (max. 500000)
  1094 words of extra memory for PDF output out of 10000 (max. 10000000)
 

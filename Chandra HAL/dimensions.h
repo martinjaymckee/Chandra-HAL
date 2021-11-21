@@ -29,8 +29,16 @@ namespace dimensions
 //
 
 template<int l=0, int m=0, int t=0, int I=0, int T=0, int mol=0, int J=0, int A=0>
-struct Dimensions
+class Dimensions
 {
+  protected:
+    template<int D>
+    struct isPowerofTwo
+    {
+        static constexpr const bool value = D == 2 * int(D/2);
+    };
+
+  public:
     template<int l2, int m2, int t2, int I2, int T2, int mol2, int J2, int A2>
     constexpr auto operator * (Dimensions<l2, m2, t2, I2, T2, mol2, J2, A2>) {
         return Dimensions<l+l2, m+m2, t+t2, I+I2, T+T2, mol+mol2, J+J2, A+A2>();
@@ -43,6 +51,18 @@ struct Dimensions
 
     constexpr auto inv() {
         return Dimensions<-l, -m, -t, -I, -T, -mol, -J, -A>();
+    }
+
+    constexpr auto sqrt() {
+      static_assert(isPowerofTwo<l>::value, "Invalid length dimension for dimension square root");
+      static_assert(isPowerofTwo<m>::value, "Invalid mass dimension for dimension square root");
+      static_assert(isPowerofTwo<t>::value, "Invalid time dimension for dimension square root");
+      static_assert(isPowerofTwo<I>::value, "Invalid electric current dimension for dimension square root");
+      static_assert(isPowerofTwo<T>::value, "Invalid temperature dimension for dimension square root");
+      static_assert(isPowerofTwo<mol>::value, "Invalid amount of substance dimension for dimension square root");
+      static_assert(isPowerofTwo<J>::value, "Invalid luminous intensity dimension for dimension square root");
+      static_assert(isPowerofTwo<A>::value, "Invalid plane angle dimension for dimension square root");            
+      return Dimensions<l/2, m/2, t/2, I/2, T/2, mol/2, J/2, A/2>();
     }
 };
 

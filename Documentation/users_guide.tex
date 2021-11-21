@@ -75,10 +75,18 @@
 }
 \urlstyle{same}
 
+\usepackage{titlesec}
+\setcounter{secnumdepth}{3}
+
 \newcommand{\iic}[0]{$I^{2}C$}
 \newcommand{\apiheader}[2]{\noindent{}\textbf{\emph{\#include $<$#1$>$}}\\\noindent{}\textbf{Namespace: \emph{#2}}}
 
 \newcommand{\sidenote}[1]{\marginpar{\scriptsize{#1}}}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \title{Chandra Library User's Guide}
 \author{Martin Jay McKee}
@@ -211,20 +219,20 @@ IT MAY MAKE SENSE TO USE EXPRESSION TEMPLATES TO SELECT THE IMPLEMENTATION OF OP
 \subsubsection{Matrix Views}
 NEED TO MAKE SURE THAT THE MATRIX VIEWS ARE WORKING AS I WANT THEM TO AND THAT THEY ARE USED THROUGH THE DRIVERS WHERE APPROPRIATE.
 
-\subsection{Units}
-The units system supports dimensional analysis with the full SI system of base units extended with planar angles.  In addition, conversion between values are done on an as needed basis, only when operating on values with different units, or assigning to a value with different units.  Quantities may be created by either directly calling a constructor or using the UDL suffixes defined in the library.  Currently the suffixes are in the form \mintinline{cpp}{__yy__} where \emph{yy} is the standard SI unit name (or an ASCII encoding that approximates it).  For instance, meters use the suffix \mintinline{cpp}{__m__}, while mega-electronvolts use the suffix \mintinline{cpp}{__Mev__} and feet \mintinline{cpp}{__ft__}.
-
-\subsection{Statistics}
+\subsubsection{Statistics}
 The built-in statistics packages are minimal in Chandra and are focused, primarily, on supporting exploratory data analysis to allow for characterization of systems.  The statistics functionality can be found in \mintinline{cpp}{namespace chandra::math::statistics}.  There are currently two major statistical components, classes to capture rolling statistics, and a NRV (Normal Random Variable) value type.
 
-\subsubsection{Rolling Statistics}
+\paragraph{Rolling Statistics}
 Capturing rolling statistics is supported in two primary forms: continuous and windowed.  Continuously captured rolling statistics will return statistics of the values received since the object was reset.  On the other hand, windowed capture will return statistics of the last $\textbf{N}$ values.  The statistics available include, count, mean, variance, standard deviation, and standard error\footnote{It should be noted that this list is currently fairly limited and should be expanded.  Things like \emph{median}, \emph{mode}, \emph{skew}, \emph{kurtosis}, and \emph{min/max}, would be useful.  Additionally, adding the ability to do rolling regression (continuous and windowed) and two-sample statistics like covariance and correlation, would be handy.  Those are for a later date, however.} 
 
-\subsubsection{Hypothesis Testing}
+\paragraph{Hypothesis Testing}
 TODO: THIS NEEDS SOME VERY BASIC HYPOTHESIS TESTING. STUDENT'S-T(ONE AND TWO SAMPLE), Z, ANOVA, ETC.
  
-\subsubsection{Normal Random Variables}
+\paragraph{Normal Random Variables}
 The NRV (Normal Random Variable) object is a value type that represents a normal distribution and provides some specific functionality.  First, it allows for generating samples from said distribution.  This functionality, however, is little more than a nice wrapper around the C++ random library.  Secondly, and more importantly, NRV values can be combined using basic arithmetic (+, -, *, $\div$)\footnote{Any additional functions which can be reasonably approximated with a normal distribution should be added.  Ideally, all the functions in \mintinline{cpp}{cmath} would be available.  However, that is not a reasonable expectation, for a number of reasons.  A more reasonable target would be to support the basic trigonometric functions and simple functions such as raising to an integer or rational power}.  These operations follow the rules for normal distributions and correctly calculate the resultant mean and variance of the combination.  This allows the NRV value to be used in a computation to determine not only the result value (the mean), but an estimate of the uncertaintity.  This functionality is particularly useful for noise analysis and similar. 
+
+\subsection{Units}
+The units system supports dimensional analysis with the full SI system of base units extended with planar angles.  In addition, conversion between values are done on an as needed basis, only when operating on values with different units, or assigning to a value with different units.  Quantities may be created by either directly calling a constructor or using the UDL suffixes defined in the library.  Currently the suffixes are in the form \mintinline{cpp}{_yy_} where \emph{yy} is the standard SI unit name (or an ASCII encoding that approximates it).  For instance, meters use the suffix \mintinline{cpp}{_m_}, while mega-electronvolts use the suffix \mintinline{cpp}{_Mev_} and feet \mintinline{cpp}{_ft_}.
 
 \section{HAL}
 \subsection{Chandra::Chrono}
