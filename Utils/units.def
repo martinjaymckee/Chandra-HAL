@@ -1,5 +1,5 @@
 system mks # Define the Meters/Kilogram/Second system of units
-tolerance 1e-6 # Default Factor tolerence is 1ppm
+tolerance 1e-8 # Default Factor tolerence is 1ppm
 
 #
 # Conversion Factors
@@ -57,12 +57,12 @@ Area in2 = in_conv**2
 # Units of Volume
 #
 #   SI
-Area *m3 = 1**3
+Volume *m3 = 1**3
 #   Imperial
-Area mi3 = mi_conv**3
-Area yd3 = yd_conv**3
-Area ft3 = ft_conv**3
-Area in3 = in_conv**3
+Volume mi3 = mi_conv**3
+Volume yd3 = yd_conv**3
+Volume ft3 = ft_conv**3
+Volume in3 = in_conv**3
 
 #
 # Units of Amount

@@ -4,17 +4,17 @@
 #include <cmath>
 
 #include "quantity.h"
+#include "units_utils.h"
 
-namespace chandra
+namespace std
 {
-namespace units
-{
-template<class Value, class Units>
-auto sqrt(const units::Quantity<Value, Units>& _q) {
-  return units::Quantity<Value, units::sqrtOf<Units>>(std::sqrt(_q.value()));
+template<class Value, class SrcUnits>
+auto sqrt(const chandra::units::Quantity<Value, SrcUnits>& _q) {
+	using base_units = chandra::units::internal::BaseUnits<SrcUnits>;
+	using result_units = chandra::units::sqrtOf<SrcUnits>;
+	const auto value_in_base = chandra::units::convert<Value, base_units, SrcUnits>(_q.value());
+	return chandra::units::Quantity<Value, result_units>(std::sqrt(value_in_base));
 }
-
-} /* namespace units */
-} /* namespace chandra */
+} /* namespace std */
 
 #endif /*CHANDRA_QUANTITY_MATH_H */

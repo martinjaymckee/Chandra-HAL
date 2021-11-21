@@ -312,6 +312,33 @@ namespace mks
 
 
 //
+// Unit "mg"
+//
+    struct mg
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Mass;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mg;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mg";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mg = units::Quantity<Value, mg>;
+    namespace literals
+    {
+        static inline Q_mg<long double> operator "" _mg_ (long double _v) {
+            return Q_mg<long double>(_v); }
+        static inline Q_mg<long double> operator "" _mg_ (unsigned long long int _v) {
+            return Q_mg<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "slug"
 //
     struct slug
@@ -663,6 +690,33 @@ namespace mks
 
 
 //
+// Unit "uN"
+//
+    struct uN
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Mass;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uN;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uN";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uN = units::Quantity<Value, uN>;
+    namespace literals
+    {
+        static inline Q_uN<long double> operator "" _uN_ (long double _v) {
+            return Q_uN<long double>(_v); }
+        static inline Q_uN<long double> operator "" _uN_ (unsigned long long int _v) {
+            return Q_uN<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "Egf"
 //
     struct Egf
@@ -883,7 +937,7 @@ namespace mks
 //
     struct gf
     {
-        using factor_t = std::ratio<35, 3569>; // 0.00980665
+        using factor_t = std::ratio<740, 75459>; // 0.00980665
         using dimensions_t = dimensions::Mass;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gf;
@@ -991,7 +1045,7 @@ namespace mks
 //
     struct lb
     {
-        using factor_t = std::ratio<125, 556>; // 0.22482
+        using factor_t = std::ratio<11241, 50000>; // 0.22482
         using dimensions_t = dimensions::Mass;
         using offset_t = std::ratio<0, 1>;
         using relative_t = lb;
@@ -1018,7 +1072,7 @@ namespace mks
 //
     struct pdl
     {
-        using factor_t = std::ratio<5047, 698>; // 7.23066
+        using factor_t = std::ratio<361533, 50000>; // 7.23066
         using dimensions_t = dimensions::Mass;
         using offset_t = std::ratio<0, 1>;
         using relative_t = pdl;
@@ -1365,6 +1419,33 @@ namespace mks
 
 
 //
+// Unit "um"
+//
+    struct um
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Length;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = um;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "um";
+        }
+    };
+    template<typename Value = long double>
+    using Q_um = units::Quantity<Value, um>;
+    namespace literals
+    {
+        static inline Q_um<long double> operator "" _um_ (long double _v) {
+            return Q_um<long double>(_v); }
+        static inline Q_um<long double> operator "" _um_ (unsigned long long int _v) {
+            return Q_um<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "mi"
 //
     struct mi
@@ -1689,6 +1770,33 @@ namespace mks
 
 
 //
+// Unit "mm2"
+//
+    struct mm2
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Area;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mm2;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mm2";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mm2 = units::Quantity<Value, mm2>;
+    namespace literals
+    {
+        static inline Q_mm2<long double> operator "" _mm2_ (long double _v) {
+            return Q_mm2<long double>(_v); }
+        static inline Q_mm2<long double> operator "" _mm2_ (unsigned long long int _v) {
+            return Q_mm2<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "mi2"
 //
     struct mi2
@@ -1720,7 +1828,7 @@ namespace mks
 //
     struct yd2
     {
-        using factor_t = std::ratio<1393, 1677>; // 0.83065
+        using factor_t = std::ratio<48858, 58819>; // 0.83065
         using dimensions_t = dimensions::Area;
         using offset_t = std::ratio<0, 1>;
         using relative_t = yd2;
@@ -1747,7 +1855,7 @@ namespace mks
 //
     struct ft2
     {
-        using factor_t = std::ratio<72, 775>; // 0.092903
+        using factor_t = std::ratio<665, 7158>; // 0.092903
         using dimensions_t = dimensions::Area;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ft2;
@@ -1802,7 +1910,7 @@ namespace mks
     struct Mm3
     {
         using factor_t = std::ratio<1000000000000000000, 1>; // 1e+18
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = Mm3;
         static constexpr bool absolute = false;
@@ -1829,7 +1937,7 @@ namespace mks
     struct km3
     {
         using factor_t = std::ratio<1000000000, 1>; // 1e+09
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = km3;
         static constexpr bool absolute = false;
@@ -1856,7 +1964,7 @@ namespace mks
     struct hm3
     {
         using factor_t = std::ratio<1000000, 1>; // 1e+06
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = hm3;
         static constexpr bool absolute = false;
@@ -1883,7 +1991,7 @@ namespace mks
     struct dam3
     {
         using factor_t = std::ratio<1000, 1>; // 1000
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dam3;
         static constexpr bool absolute = false;
@@ -1910,7 +2018,7 @@ namespace mks
     struct m3
     {
         using factor_t = std::ratio<1, 1>; // 1
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = m3;
         static constexpr bool absolute = false;
@@ -1937,7 +2045,7 @@ namespace mks
     struct dm3
     {
         using factor_t = std::ratio<1, 1000>; // 0.001
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dm3;
         static constexpr bool absolute = false;
@@ -1964,7 +2072,7 @@ namespace mks
     struct cm3
     {
         using factor_t = std::ratio<1, 1000000>; // 1e-06
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cm3;
         static constexpr bool absolute = false;
@@ -1990,8 +2098,8 @@ namespace mks
 //
     struct mi3
     {
-        using factor_t = std::ratio<2480049693668, 595>; // 4.16815e+09
-        using dimensions_t = dimensions::Area;
+        using factor_t = std::ratio<34941607700872, 8383>; // 4.16815e+09
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mi3;
         static constexpr bool absolute = false;
@@ -2017,8 +2125,8 @@ namespace mks
 //
     struct yd3
     {
-        using factor_t = std::ratio<617, 815>; // 0.757054
-        using dimensions_t = dimensions::Area;
+        using factor_t = std::ratio<1100, 1453>; // 0.757054
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = yd3;
         static constexpr bool absolute = false;
@@ -2044,8 +2152,8 @@ namespace mks
 //
     struct ft3
     {
-        using factor_t = std::ratio<19, 671>; // 0.0283168
-        using dimensions_t = dimensions::Area;
+        using factor_t = std::ratio<232, 8193>; // 0.0283168
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ft3;
         static constexpr bool absolute = false;
@@ -2072,7 +2180,7 @@ namespace mks
     struct in3
     {
         using factor_t = std::ratio<1, 61024>; // 1.63871e-05
-        using dimensions_t = dimensions::Area;
+        using dimensions_t = dimensions::Volume;
         using offset_t = std::ratio<0, 1>;
         using relative_t = in3;
         static constexpr bool absolute = false;
@@ -2413,6 +2521,33 @@ namespace mks
             return Q_cg_per_m3<long double>(_v); }
         static inline Q_cg_per_m3<long double> operator "" _cg_per_m3_ (unsigned long long int _v) {
             return Q_cg_per_m3<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "mg_per_m3"
+//
+    struct mg_per_m3
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Density;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mg_per_m3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mg_per_m3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mg_per_m3 = units::Quantity<Value, mg_per_m3>;
+    namespace literals
+    {
+        static inline Q_mg_per_m3<long double> operator "" _mg_per_m3_ (long double _v) {
+            return Q_mg_per_m3<long double>(_v); }
+        static inline Q_mg_per_m3<long double> operator "" _mg_per_m3_ (unsigned long long int _v) {
+            return Q_mg_per_m3<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -3093,6 +3228,33 @@ namespace mks
 
 
 //
+// Unit "uJ"
+//
+    struct uJ
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Energy;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uJ;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uJ";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uJ = units::Quantity<Value, uJ>;
+    namespace literals
+    {
+        static inline Q_uJ<long double> operator "" _uJ_ (long double _v) {
+            return Q_uJ<long double>(_v); }
+        static inline Q_uJ<long double> operator "" _uJ_ (unsigned long long int _v) {
+            return Q_uJ<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "eV"
 //
     struct eV
@@ -3579,6 +3741,33 @@ namespace mks
 
 
 //
+// Unit "us"
+//
+    struct us
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Time;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = us;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "us";
+        }
+    };
+    template<typename Value = long double>
+    using Q_us = units::Quantity<Value, us>;
+    namespace literals
+    {
+        static inline Q_us<long double> operator "" _us_ (long double _v) {
+            return Q_us<long double>(_v); }
+        static inline Q_us<long double> operator "" _us_ (unsigned long long int _v) {
+            return Q_us<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "min"
 //
     struct min
@@ -3984,6 +4173,33 @@ namespace mks
 
 
 //
+// Unit "uHz"
+//
+    struct uHz
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Frequency;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uHz;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uHz";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uHz = units::Quantity<Value, uHz>;
+    namespace literals
+    {
+        static inline Q_uHz<long double> operator "" _uHz_ (long double _v) {
+            return Q_uHz<long double>(_v); }
+        static inline Q_uHz<long double> operator "" _uHz_ (unsigned long long int _v) {
+            return Q_uHz<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "Em_per_s"
 //
     struct Em_per_s
@@ -4308,6 +4524,33 @@ namespace mks
 
 
 //
+// Unit "um_per_s"
+//
+    struct um_per_s
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Velocity;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = um_per_s;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "um_per_s";
+        }
+    };
+    template<typename Value = long double>
+    using Q_um_per_s = units::Quantity<Value, um_per_s>;
+    namespace literals
+    {
+        static inline Q_um_per_s<long double> operator "" _um_per_s_ (long double _v) {
+            return Q_um_per_s<long double>(_v); }
+        static inline Q_um_per_s<long double> operator "" _um_per_s_ (unsigned long long int _v) {
+            return Q_um_per_s<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "kmph"
 //
     struct kmph
@@ -4339,7 +4582,7 @@ namespace mks
 //
     struct mph
     {
-        using factor_t = std::ratio<1321, 2955>; // 0.447039
+        using factor_t = std::ratio<8711, 19486>; // 0.447039
         using dimensions_t = dimensions::Velocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mph;
@@ -4821,6 +5064,33 @@ namespace mks
 
 
 //
+// Unit "um_per_s2"
+//
+    struct um_per_s2
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Acceleration;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = um_per_s2;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "um_per_s2";
+        }
+    };
+    template<typename Value = long double>
+    using Q_um_per_s2 = units::Quantity<Value, um_per_s2>;
+    namespace literals
+    {
+        static inline Q_um_per_s2<long double> operator "" _um_per_s2_ (long double _v) {
+            return Q_um_per_s2<long double>(_v); }
+        static inline Q_um_per_s2<long double> operator "" _um_per_s2_ (unsigned long long int _v) {
+            return Q_um_per_s2<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "mi_per_s2"
 //
     struct mi_per_s2
@@ -5095,7 +5365,7 @@ namespace mks
 //
     struct dagees
     {
-        using factor_t = std::ratio<78159, 797>; // 98.0665
+        using factor_t = std::ratio<196133, 2000>; // 98.0665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dagees;
@@ -5122,7 +5392,7 @@ namespace mks
 //
     struct gees
     {
-        using factor_t = std::ratio<7963, 812>; // 9.80665
+        using factor_t = std::ratio<51024, 5203>; // 9.80665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gees;
@@ -5149,7 +5419,7 @@ namespace mks
 //
     struct dgees
     {
-        using factor_t = std::ratio<913, 931>; // 0.980665
+        using factor_t = std::ratio<6695, 6827>; // 0.980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dgees;
@@ -5176,7 +5446,7 @@ namespace mks
 //
     struct cgees
     {
-        using factor_t = std::ratio<71, 724>; // 0.0980665
+        using factor_t = std::ratio<705, 7189>; // 0.0980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cgees;
@@ -5203,7 +5473,7 @@ namespace mks
 //
     struct mgees
     {
-        using factor_t = std::ratio<35, 3569>; // 0.00980665
+        using factor_t = std::ratio<740, 75459>; // 0.00980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mgees;
@@ -5230,7 +5500,7 @@ namespace mks
 //
     struct ugees
     {
-        using factor_t = std::ratio<1, 100000>; // 9.80665e-06
+        using factor_t = std::ratio<8, 815773>; // 9.80665e-06
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ugees;
@@ -5577,6 +5847,33 @@ namespace mks
 
 
 //
+// Unit "um_per_s3"
+//
+    struct um_per_s3
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Jerk;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = um_per_s3;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "um_per_s3";
+        }
+    };
+    template<typename Value = long double>
+    using Q_um_per_s3 = units::Quantity<Value, um_per_s3>;
+    namespace literals
+    {
+        static inline Q_um_per_s3<long double> operator "" _um_per_s3_ (long double _v) {
+            return Q_um_per_s3<long double>(_v); }
+        static inline Q_um_per_s3<long double> operator "" _um_per_s3_ (unsigned long long int _v) {
+            return Q_um_per_s3<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "mi_per_s3"
 //
     struct mi_per_s3
@@ -5851,7 +6148,7 @@ namespace mks
 //
     struct dagees_per_s
     {
-        using factor_t = std::ratio<78159, 797>; // 98.0665
+        using factor_t = std::ratio<196133, 2000>; // 98.0665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dagees_per_s;
@@ -5878,7 +6175,7 @@ namespace mks
 //
     struct gees_per_s
     {
-        using factor_t = std::ratio<7963, 812>; // 9.80665
+        using factor_t = std::ratio<51024, 5203>; // 9.80665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gees_per_s;
@@ -5905,7 +6202,7 @@ namespace mks
 //
     struct dgees_per_s
     {
-        using factor_t = std::ratio<913, 931>; // 0.980665
+        using factor_t = std::ratio<6695, 6827>; // 0.980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dgees_per_s;
@@ -5932,7 +6229,7 @@ namespace mks
 //
     struct cgees_per_s
     {
-        using factor_t = std::ratio<71, 724>; // 0.0980665
+        using factor_t = std::ratio<705, 7189>; // 0.0980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cgees_per_s;
@@ -5959,7 +6256,7 @@ namespace mks
 //
     struct mgees_per_s
     {
-        using factor_t = std::ratio<35, 3569>; // 0.00980665
+        using factor_t = std::ratio<740, 75459>; // 0.00980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mgees_per_s;
@@ -5986,7 +6283,7 @@ namespace mks
 //
     struct ugees_per_s
     {
-        using factor_t = std::ratio<1, 100000>; // 9.80665e-06
+        using factor_t = std::ratio<8, 815773>; // 9.80665e-06
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ugees_per_s;
@@ -6040,7 +6337,7 @@ namespace mks
 //
     struct rev
     {
-        using factor_t = std::ratio<113, 355>; // 0.31831
+        using factor_t = std::ratio<31831, 100000>; // 0.31831
         using dimensions_t = dimensions::PlaneAngle;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev;
@@ -6148,7 +6445,7 @@ namespace mks
 //
     struct rev_per_s
     {
-        using factor_t = std::ratio<113, 355>; // 0.31831
+        using factor_t = std::ratio<31831, 100000>; // 0.31831
         using dimensions_t = dimensions::AngularVelocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev_per_s;
@@ -6283,7 +6580,7 @@ namespace mks
 //
     struct rev_per_s2
     {
-        using factor_t = std::ratio<113, 355>; // 0.31831
+        using factor_t = std::ratio<31831, 100000>; // 0.31831
         using dimensions_t = dimensions::AngularAcceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev_per_s2;
@@ -7008,6 +7305,60 @@ namespace mks
 
 
 //
+// Unit "udegC"
+//
+    struct udegC
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Temperature;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = udegC;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "udegC";
+        }
+    };
+    template<typename Value = long double>
+    using Q_udegC = units::Quantity<Value, udegC>;
+    namespace literals
+    {
+        static inline Q_udegC<long double> operator "" _udegC_ (long double _v) {
+            return Q_udegC<long double>(_v); }
+        static inline Q_udegC<long double> operator "" _udegC_ (unsigned long long int _v) {
+            return Q_udegC<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "udegC_abs"
+//
+    struct udegC_abs
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Temperature;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = udegC;
+        static constexpr bool absolute = true;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "udegC_abs";
+        }
+    };
+    template<typename Value = long double>
+    using Q_udegC_abs = units::Quantity<Value, udegC_abs>;
+    namespace literals
+    {
+        static inline Q_udegC_abs<long double> operator "" _udegC_abs_ (long double _v) {
+            return Q_udegC_abs<long double>(_v); }
+        static inline Q_udegC_abs<long double> operator "" _udegC_abs_ (unsigned long long int _v) {
+            return Q_udegC_abs<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "EK"
 //
     struct EK
@@ -7656,6 +8007,60 @@ namespace mks
 
 
 //
+// Unit "uK"
+//
+    struct uK
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Temperature;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uK;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uK";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uK = units::Quantity<Value, uK>;
+    namespace literals
+    {
+        static inline Q_uK<long double> operator "" _uK_ (long double _v) {
+            return Q_uK<long double>(_v); }
+        static inline Q_uK<long double> operator "" _uK_ (unsigned long long int _v) {
+            return Q_uK<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "uK_abs"
+//
+    struct uK_abs
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Temperature;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uK;
+        static constexpr bool absolute = true;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uK_abs";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uK_abs = units::Quantity<Value, uK_abs>;
+    namespace literals
+    {
+        static inline Q_uK_abs<long double> operator "" _uK_abs_ (long double _v) {
+            return Q_uK_abs<long double>(_v); }
+        static inline Q_uK_abs<long double> operator "" _uK_abs_ (unsigned long long int _v) {
+            return Q_uK_abs<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "EdegF"
 //
     struct EdegF
@@ -8092,7 +8497,7 @@ namespace mks
 //
     struct degF
     {
-        using factor_t = std::ratio<5, 9>; // 0.555555
+        using factor_t = std::ratio<1111111, 2000000>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
         using relative_t = degF;
@@ -8119,7 +8524,7 @@ namespace mks
 //
     struct degF_abs
     {
-        using factor_t = std::ratio<5, 9>; // 0.555555
+        using factor_t = std::ratio<1111111, 2000000>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
         using relative_t = degF;
@@ -8794,7 +9199,7 @@ namespace mks
 //
     struct degRa
     {
-        using factor_t = std::ratio<5, 9>; // 0.555555
+        using factor_t = std::ratio<1111111, 2000000>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
         using relative_t = degRa;
@@ -8821,7 +9226,7 @@ namespace mks
 //
     struct degRa_abs
     {
-        using factor_t = std::ratio<5, 9>; // 0.555555
+        using factor_t = std::ratio<1111111, 2000000>; // 0.555555
         using dimensions_t = dimensions::Temperature;
         using offset_t = std::ratio<0, 1>;
         using relative_t = degRa;
@@ -9384,6 +9789,33 @@ namespace mks
 
 
 //
+// Unit "uT"
+//
+    struct uT
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::MagneticFlux;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uT;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uT";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uT = units::Quantity<Value, uT>;
+    namespace literals
+    {
+        static inline Q_uT<long double> operator "" _uT_ (long double _v) {
+            return Q_uT<long double>(_v); }
+        static inline Q_uT<long double> operator "" _uT_ (unsigned long long int _v) {
+            return Q_uT<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "EG"
 //
     struct EG
@@ -9676,6 +10108,33 @@ namespace mks
             return Q_cG<long double>(_v); }
         static inline Q_cG<long double> operator "" _cG_ (unsigned long long int _v) {
             return Q_cG<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "mG"
+//
+    struct mG
+    {
+        using factor_t = std::ratio<1, 10000000>; // 1e-07
+        using dimensions_t = dimensions::MagneticFlux;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = mG;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "mG";
+        }
+    };
+    template<typename Value = long double>
+    using Q_mG = units::Quantity<Value, mG>;
+    namespace literals
+    {
+        static inline Q_mG<long double> operator "" _mG_ (long double _v) {
+            return Q_mG<long double>(_v); }
+        static inline Q_mG<long double> operator "" _mG_ (unsigned long long int _v) {
+            return Q_mG<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10005,6 +10464,33 @@ namespace mks
 
 
 //
+// Unit "uPa"
+//
+    struct uPa
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Pressure;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uPa;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uPa";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uPa = units::Quantity<Value, uPa>;
+    namespace literals
+    {
+        static inline Q_uPa<long double> operator "" _uPa_ (long double _v) {
+            return Q_uPa<long double>(_v); }
+        static inline Q_uPa<long double> operator "" _uPa_ (unsigned long long int _v) {
+            return Q_uPa<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "Tbar"
 //
     struct Tbar
@@ -10324,6 +10810,33 @@ namespace mks
             return Q_nbar<long double>(_v); }
         static inline Q_nbar<long double> operator "" _nbar_ (unsigned long long int _v) {
             return Q_nbar<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "pbar"
+//
+    struct pbar
+    {
+        using factor_t = std::ratio<1, 10000000>; // 1e-07
+        using dimensions_t = dimensions::Pressure;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = pbar;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "pbar";
+        }
+    };
+    template<typename Value = long double>
+    using Q_pbar = units::Quantity<Value, pbar>;
+    namespace literals
+    {
+        static inline Q_pbar<long double> operator "" _pbar_ (long double _v) {
+            return Q_pbar<long double>(_v); }
+        static inline Q_pbar<long double> operator "" _pbar_ (unsigned long long int _v) {
+            return Q_pbar<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -10734,6 +11247,33 @@ namespace mks
 
 
 //
+// Unit "uV"
+//
+    struct uV
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::ElectricPotential;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uV;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uV";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uV = units::Quantity<Value, uV>;
+    namespace literals
+    {
+        static inline Q_uV<long double> operator "" _uV_ (long double _v) {
+            return Q_uV<long double>(_v); }
+        static inline Q_uV<long double> operator "" _uV_ (unsigned long long int _v) {
+            return Q_uV<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "EA"
 //
     struct EA
@@ -11053,6 +11593,33 @@ namespace mks
             return Q_mA<long double>(_v); }
         static inline Q_mA<long double> operator "" _mA_ (unsigned long long int _v) {
             return Q_mA<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "uA"
+//
+    struct uA
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::ElectricCurrent;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uA;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uA";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uA = units::Quantity<Value, uA>;
+    namespace literals
+    {
+        static inline Q_uA<long double> operator "" _uA_ (long double _v) {
+            return Q_uA<long double>(_v); }
+        static inline Q_uA<long double> operator "" _uA_ (unsigned long long int _v) {
+            return Q_uA<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -11382,6 +11949,33 @@ namespace mks
 
 
 //
+// Unit "uohm"
+//
+    struct uohm
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::ElectricalResistance;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uohm;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uohm";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uohm = units::Quantity<Value, uohm>;
+    namespace literals
+    {
+        static inline Q_uohm<long double> operator "" _uohm_ (long double _v) {
+            return Q_uohm<long double>(_v); }
+        static inline Q_uohm<long double> operator "" _uohm_ (unsigned long long int _v) {
+            return Q_uohm<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "ES"
 //
     struct ES
@@ -11701,6 +12295,33 @@ namespace mks
             return Q_mS<long double>(_v); }
         static inline Q_mS<long double> operator "" _mS_ (unsigned long long int _v) {
             return Q_mS<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "uS"
+//
+    struct uS
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::ElectricalConductance;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uS;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uS";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uS = units::Quantity<Value, uS>;
+    namespace literals
+    {
+        static inline Q_uS<long double> operator "" _uS_ (long double _v) {
+            return Q_uS<long double>(_v); }
+        static inline Q_uS<long double> operator "" _uS_ (unsigned long long int _v) {
+            return Q_uS<long double>(static_cast<long double>(_v)); }
     }
 
 
@@ -12030,6 +12651,33 @@ namespace mks
 
 
 //
+// Unit "uF"
+//
+    struct uF
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Capacitance;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uF;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uF";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uF = units::Quantity<Value, uF>;
+    namespace literals
+    {
+        static inline Q_uF<long double> operator "" _uF_ (long double _v) {
+            return Q_uF<long double>(_v); }
+        static inline Q_uF<long double> operator "" _uF_ (unsigned long long int _v) {
+            return Q_uF<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
 // Unit "EH"
 //
     struct EH
@@ -12349,6 +12997,33 @@ namespace mks
             return Q_mH<long double>(_v); }
         static inline Q_mH<long double> operator "" _mH_ (unsigned long long int _v) {
             return Q_mH<long double>(static_cast<long double>(_v)); }
+    }
+
+
+
+//
+// Unit "uH"
+//
+    struct uH
+    {
+        using factor_t = std::ratio<1, 1000000>; // 1e-06
+        using dimensions_t = dimensions::Inductance;
+        using offset_t = std::ratio<0, 1>;
+        using relative_t = uH;
+        static constexpr bool absolute = false;
+        template<typename Stream>
+        static void streamname(Stream& _stream) {
+            _stream << "uH";
+        }
+    };
+    template<typename Value = long double>
+    using Q_uH = units::Quantity<Value, uH>;
+    namespace literals
+    {
+        static inline Q_uH<long double> operator "" _uH_ (long double _v) {
+            return Q_uH<long double>(_v); }
+        static inline Q_uH<long double> operator "" _uH_ (unsigned long long int _v) {
+            return Q_uH<long double>(static_cast<long double>(_v)); }
     }
 
 } /*namespace mks*/

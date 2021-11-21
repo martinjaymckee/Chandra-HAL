@@ -65,36 +65,6 @@ class UnitsContext:
         self.param_limit = int(1e18)
 
 
-def PrefixedUnits(symbol, dimensions, factor, offset=None, power=1, param_limit=1e18, tol=1e-6):
-    return_units = []
-    prefixes = [
-        ('E', fractions.Fraction(1000000000000000000)),
-        ('P', fractions.Fraction(1000000000000000)),
-        ('T', fractions.Fraction(1000000000000)),
-        ('G', fractions.Fraction(1000000000)),
-        ('M', fractions.Fraction(1000000)),
-        ('k', fractions.Fraction(1000)),
-        ('h', fractions.Fraction(100)),
-        ('da', fractions.Fraction(10)),
-        ('', fractions.Fraction(1)),
-        ('d', fractions.Fraction(1,10)),
-        ('c', fractions.Fraction(1,100)),
-        ('m', fractions.Fraction(1,1000)),
-        ('u', fractions.Fraction(1,1000000)),
-        ('n', fractions.Fraction(1,1000000000)),
-        ('p', fractions.Fraction(1,1000000000000)),
-        ('f', fractions.Fraction(1,1000000000000000)),
-        ('a', fractions.Fraction(1,1000000000000000000))
-    ]
-
-    for prefix, mult in prefixes:
-        prefixed_symbol = prefix + symbol
-        factor = fractions.Fraction(factor)
-        scaled_factor = mult*factor
-        return_units += Unit(prefixed_symbol, dimensions, scaled_factor, offset, power)
-    return return_units
-
-
 class FactorValue:
     def __init__(self, value, sig_digits=None, min_sig_digits=4):
         self.__value = None
@@ -238,7 +208,9 @@ class UnitCommand:
         if not symbol in ctx.names[ctx.system]:
             factor = factor**power
             factor_txt = "{:g}".format(float(factor))
+            print(f'{symbol} -> {factor}')
             factor, factor_tol = self.__fractionize(factor, ctx)
+            print(f'\t\t-> {factor} (+/- {factor_tol})')
             offset, offset_tol = self.__fractionize(offset, ctx)
             if (not factor is None) and (not offset is None):
                 max_param = max(factor.numerator, factor.denominator)
@@ -314,6 +286,7 @@ class UnitCommand:
                 pass
         return None
 
+
 def parseSystemLine(line): # TODO: THIS SHOULD RETURN NONE IF THE STRIPPED LINE IS NOT A VALID IDENTIFIER
     line = line.strip()
     return ContextCommand('system', line), line
@@ -333,6 +306,7 @@ def parseLetLine(line, system):
     value = value.strip()
     return LetDeclaration(system, name, FactorValue(value))
 
+
 def parseUnitLine(dimensions, line, message): # TODO: VALIDATE THE DIMENSIONS
     symbol, _, line = line.partition('=')
     symbol = symbol.strip()
@@ -342,6 +316,7 @@ def parseUnitLine(dimensions, line, message): # TODO: VALIDATE THE DIMENSIONS
     power = None if len(power) == 0 else int(power)
     offset = None if len(line) <= 1 else line.rstrip(')').strip()
     return UnitCommand(dimensions, symbol, factor, power, offset, message)
+
 
 def parseUnitDefinitionFile(filename):
     commands = []
@@ -373,6 +348,7 @@ def parseUnitDefinitionFile(filename):
                     commands.append(new_definition)
     return commands, declarations
 
+
 def processUnitDefinitions(commands, declarations, ctx):
     ctx.let = {}
     for declaration in declarations:
@@ -386,6 +362,7 @@ def processUnitDefinitions(commands, declarations, ctx):
     print('{} units generated'.format(len(units)))
     return ctx.system, file_template.render(units=units_text, system=ctx.system)
 
+
 if __name__ == '__main__':
     ctx = UnitsContext()
     commands, declarations = parseUnitDefinitionFile("units.def")
@@ -394,4 +371,3 @@ if __name__ == '__main__':
 
     with open(filename, 'w') as file:
         file.write(file_text)
-

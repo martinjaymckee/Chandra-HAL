@@ -7,6 +7,7 @@
 
 #include "dimensions.h"
 #include "meta_types.h"
+#include "ratio_utils.h"
 
 namespace chandra
 {
@@ -161,6 +162,20 @@ constexpr Value convert(const V2& _val) {
 
 namespace internal
 {
+template<typename Units>
+struct BaseUnits
+{
+	using dimensions_t = typename Units::dimensions_t;
+	using factor_t = std::ratio<1, 1>;
+	using offset_t = typename Units::offset_t;
+	static constexpr bool absolute = Units::absolute;
+	template<typename Stream>
+	static void streamname(Stream& _stream) {
+		_stream << "base-";
+		_stream << dimensions_t();
+	}
+};
+
 template<typename UnitsA, typename UnitsB>
 struct MultUnits
 {
@@ -244,7 +259,8 @@ struct SqrtUnits
     static_assert(!Units::absolute, "Unable to take square root of absolute units");
     using dims_a = typename Units::dimensions_t;
     using dimensions_t = decltype(std::declval<dims_a>().sqrt());
-    using factor_t = typename Units::factor_t;
+    using eps = std::ratio<1, 1000000000000>;
+    using factor_t = chandra::ratio_sqrt<typename Units::factor_t, eps>;
     using offset_t = std::ratio<0,1>;
     static constexpr bool absolute = false;
     template<typename Stream>
