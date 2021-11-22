@@ -197,7 +197,7 @@ Pressure torr = 133.322 # Torr
 #
 # Units of Voltage
 #
-ElectricPotential *V = 1 # Volt
+ElectricPotential *V = offset_decade(-3) # Volt
 
 #
 # Units of Current

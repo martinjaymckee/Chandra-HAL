@@ -3,6 +3,8 @@
 
 #include <type_traits>
 
+#include <meta_core.h>
+
 namespace chandra
 {
 namespace units
@@ -32,11 +34,11 @@ template<int l=0, int m=0, int t=0, int I=0, int T=0, int mol=0, int J=0, int A=
 class Dimensions
 {
   protected:
-    template<int D>
-    struct isPowerofTwo
-    {
-        static constexpr const bool value = D == 2 * int(D/2);
-    };
+     template<int D>
+     struct isPowerofTwo
+     {
+         static constexpr const bool value = D == 2 * int(D/2);
+     };
 
   public:
     template<int l2, int m2, int t2, int I2, int T2, int mol2, int J2, int A2>
@@ -61,7 +63,7 @@ class Dimensions
       static_assert(isPowerofTwo<T>::value, "Invalid temperature dimension for dimension square root");
       static_assert(isPowerofTwo<mol>::value, "Invalid amount of substance dimension for dimension square root");
       static_assert(isPowerofTwo<J>::value, "Invalid luminous intensity dimension for dimension square root");
-      static_assert(isPowerofTwo<A>::value, "Invalid plane angle dimension for dimension square root");            
+      static_assert(isPowerofTwo<A>::value, "Invalid plane angle dimension for dimension square root");
       return Dimensions<l/2, m/2, t/2, I/2, T/2, mol/2, J/2, A/2>();
     }
 };
@@ -147,7 +149,7 @@ using ElectricDisplacement = decltype(ElectricCharge() / Area());
 using ElectricFieldStrength = decltype(Mass() * Length() / internal::Time3() / ElectricCurrent());
 using ElectricalConductance = decltype(internal::ElectricCurrent2() * internal::Time3() / Area() / Mass());
 using ElectricalConductivity = decltype(ElectricalConductance() / Length());
-using ElectricPotential = decltype(Mass() * Area() / ElectricCharge() / internal::Time3());
+using ElectricPotential = decltype(Mass() * Area() / ElectricCurrent() / internal::Time3());
 using ElectricalResistance = decltype(ElectricalConductance().inv());
 using ElectricalResistivity = decltype(ElectricalConductivity().inv());
 using Energy = decltype(Mass() * Area() / internal::Time2());
