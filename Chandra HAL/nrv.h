@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <utility>
+#include <quantity_math.h>
 
 namespace chandra
 {
@@ -11,25 +12,24 @@ namespace math
 namespace statistics
 {
 
-template<class Value = float>
+template<class Value = float, class VarianceType = decltype(std::declval<Value>() * std::declval<Value>())>
 class NRV
 {
   public:
     using value_t = Value;
     using mean_t = value_t;
     using standard_deviation_t = value_t;
-    using variance_t = decltype(std::declval<standard_deviation_t>() * std::declval<standard_deviation_t>());
+    using variance_t = VarianceType;
 
     NRV() = default;
 
-    NRV(mean_t _mean, variance_t _variance)
-      : mean_{_mean}, variance_{_variance} {}
+    NRV(mean_t _mean, standard_deviation_t _sd)
+      : mean_{_mean}, variance_{_sd * _sd} {}
 
     NRV(mean_t _mean) : mean_{_mean}, variance_{0} {}
 
-
-    static NRV Noise(variance_t _variance) { return NRV{0, _variance}; }
-    static NRV NoiseSd(standard_deviation_t _variance) { return NRV{0, _variance}; }
+	static NRV Noise(standard_deviation_t _sd) { return NRV{ 0, _sd }; }
+    static NRV NoiseVar(variance_t _variance) { return NRV{0, sqrt(_variance)}; }
 
     mean_t mean() const { return mean_; }
     mean_t mean(mean_t _mean) {

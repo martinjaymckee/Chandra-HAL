@@ -1,0 +1,47 @@
+system mks # Define the Meters/Kilogram/Second system of units
+tolerance 1e-9 # Default Factor tolerence is 1ppm
+
+#
+# Conversion Factors
+#
+let yd_conv = exact('0.9144')
+let ft_conv = exact('0.3048')
+let A = exact('1.001e2')
+let B = exact('1.001e-2')
+let C = exact('0.001e2')
+
+#
+# Units of Mass
+#
+#   SI
+Mass *g = offset_decade(-3)
+#   Imperial
+Mass slug = 6854.0096
+
+#
+# Units of Length
+#
+#   SI
+Length *m = 1
+#   Imperial
+Length yd = yd_conv
+Length ft = ft_conv
+
+#
+# Units of Area
+#
+#   SI
+Area *m2 = 1**2
+#   Imperial
+Area yd2 = yd_conv**2
+Area ft2 = ft_conv**2
+
+#
+# Units of Temperature
+#
+#   SI
+Temperature *degC = 1 @ +0 # Degrees Celsius
+Temperature *K = 1 @ exact('-273.15') # Kelvin
+#   Imperial
+Temperature *degF = frac(5, 9) @ +32 # Degrees Farenheit
+Temperature *degRa = frac(5, 9) @ exact('-459.67') # Degrees Rankine

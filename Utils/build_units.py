@@ -20,6 +20,8 @@ namespace units
 {
 namespace ${system}
 {
+${units_overview}
+
 ${units}
 } /*namespace ${system}*/
 } /*namespace units*/
@@ -55,66 +57,85 @@ unit_template = Template(
     }
 """)
 
+
 class UnitsContext:
     def __init__(self):
         self.units = []
         self.names = {}
         self.system = None
         self.let = {}
-        self.default_tolerance = 1e-4
-        self.param_limit = int(1e18)
-
-
-class FactorValue:
-    def __init__(self, value, sig_digits=None, min_sig_digits=4):
-        self.__value = None
-        self.__value = float(value)
-        self.__sig_digits = 0
-        if sig_digits is None and isinstance(value, str):
-            self.__sig_digits = self.__get_sig_digits(value)
-        else:
-            self.__sig_digits = sig_digits
-        self.__sig_digits = max(self.__sig_digits, min_sig_digits)
-
-    def __str__(self):
-        return '{}(sig_digits = {}, tol = {:g})'.format(self.value, self.sig_digits, self.tolerance)
-
-    def __float__(self):
-        return self.value
-
-    def __mul__(self, arg):
-        return FactorValue(arg*self.__value, self.__sig_digits)
-
-    def __rmul__(self, arg):
-        return FactorValue(arg*self.__value, self.__sig_digits)
-
-    def __pow__(self, exp):
-        return FactorValue(self.__value**exp, self.__sig_digits)
+        self.default_tolerance = 1e-6
+        self.param_limit = int(1e12)
+        self.ops = {
+            'exact': self.op_exact,
+            'offset_decade': self.op_offset_decade,
+            'frac': self.op_frac
+        }
 
     @property
-    def value(self): return self.__value
+    def process_globals(self):
+        gl = {k: op for k, op in self.ops.items()}
+        gl.update({k: v for (_, k), v in self.let.items()})
+        return gl
 
-    @property
-    def sig_digits(self): return self.__sig_digits
+    def op_frac(self, num, den):
+        return fractions.Fraction(num, den)
 
-    @property
-    def tolerance(self): return 10**(-self.sig_digits)
+    def op_offset_decade(self, value):
+        try:
+            exp = int(value)
+            if exp > 0:
+                return fractions.Fraction(10**exp, 1)
+            elif exp < 0:
+                return fractions.Fraction(1, 10**-exp)
+            return fractions.Fraction(1, 1)
+        except:
+            assert False, 'Error: offset_decade() requires integral paramater, received {}'.format(value)
 
-    def __get_sig_digits(self, value):
-        value = value.lower()
-        sig_digits = 0
-        if value.find('e') == -1:
-            integer, _, fractional = value.partition('.') # TODO: THIS SHOULD BE LOCALIZED TO USE OTHER RADIX POINTS!
-            if not len(integer) == 0 and not int(integer) == 0:
-                sig_digits = len(integer) + len(fractional)
+    def op_exact(self, value):
+        if isinstance(value, float):
+            return fractions.Fraction(value)
+        elif isinstance(value, fractions.Fraction):
+            return value
+        elif isinstance(value, str) or isinstance(value, bytes):
+            text = value.strip()
+            integral = None
+            fractional = ''
+            rem = ''
+            exp = ''
+            if text.find('.') >= 0:
+                integral, _, rem = text.partition('.')
+                integral = integral.strip()
+                fractional, _, exp = rem.partition('e')
+                fractional = fractional.strip()
             else:
-                fractional = fractional.lstrip('0')
-                sig_digits = len(fractional)
+                integral, _, exp = text.partition('e')
+            integral = integral.strip()
+            fractional = fractional.strip()
+            exp = exp.strip()
+            integral_val = 0 if len(integral) == 0 else int(integral)
+            fractional_val = 0 if len(fractional) == 0 else int(fractional)
+            base_exp_val = 0 if len(exp) == 0 else int(exp)
+            exp_frac = len(fractional)
+            integral_val *= 10**exp_frac
+            fractional_val *= 1 if integral_val >= 0 else -1
+            base = fractions.Fraction((integral_val + fractional_val), 1)
+            mult = 1
+            exp_val = base_exp_val - exp_frac
+            if exp_val > 0:
+                mult = fractions.Fraction(10**exp_val, 1)
+            else:
+                mult = fractions.Fraction(1, 10**-exp_val)
+            return base * mult
         else:
-            mantissa, _, _ = value.partition('e')
-            mantissa = mantissa.strip()
-            sig_digits = len(mantissa)
-        return sig_digits
+            assert False, 'Error: function exact() undefined for values of type {}'.format(type(value))
+
+    def process_field(self, field):
+        if len(field) > 0:
+            gl = self.process_globals
+            exec('__result__ = {}'.format(field), gl)
+            return gl['__result__']
+        return None
 
 
 class ContextCommand:
@@ -128,10 +149,10 @@ class ContextCommand:
         if name == 'system':
             assert ctx.system is None, 'Error: Only a single units system supported now!'
             ctx.system = value
-            if not ctx.system in ctx.names:
+            if ctx.system not in ctx.names:
                 ctx.names[ctx.system] = set()
         if name == 'tolerance':
-            ctx.default_tolerance = float(value)
+            ctx.default_tolerance = float(ctx.process_field(value))
 
 
 class LetDeclaration:
@@ -154,29 +175,24 @@ class LetDeclaration:
 
 
 class UnitCommand:
-    def __init__(self, dimensions, symbol, factor, power, offset, message):
+    def __init__(self, dimensions, symbol, factor, offset, message, absolute=False):
         self.__dimensions = dimensions
         self.__symbol = symbol
         self.__factor = factor
-        self.__power = power
         self.__offset = offset
-        self.__absolute = not offset is None
+        self.__absolute = absolute
         self.__message = message
 
     def __call__(self, ctx):
-        units = []
-        factor = self.__get_value(self.__factor, ctx)
-        offset = self.__get_value(self.__offset, ctx)
-        power = 1 if self.__power is None else self.__power
+        factor = ctx.process_field(self.__factor)
+        offset = ctx.process_field(self.__offset)
         prefixed, symbol = self.__parse_symbol(self.__symbol, ctx)
         if prefixed:
-            units += self.__prefixed_units(symbol, self.__dimensions, factor, offset, power, ctx)
+            self.__prefixed_units(symbol, self.__dimensions, factor, offset, ctx)
         else:
-            units += self.__unit(symbol, self.__dimensions, factor, offset, power, ctx)
-        return units
+            self.__unit(symbol, self.__dimensions, factor, offset, ctx)
 
-    def __prefixed_units(self, symbol, dimensions, factor, offset, power, ctx):
-        return_units = []
+    def __prefixed_units(self, symbol, dimensions, factor, offset, ctx):
         prefixes = [
             ('E', fractions.Fraction(1000000000000000000)),
             ('P', fractions.Fraction(1000000000000000)),
@@ -187,68 +203,55 @@ class UnitCommand:
             ('h', fractions.Fraction(100)),
             ('da', fractions.Fraction(10)),
             ('', fractions.Fraction(1)),
-            ('d', fractions.Fraction(1,10)),
-            ('c', fractions.Fraction(1,100)),
-            ('m', fractions.Fraction(1,1000)),
-            ('u', fractions.Fraction(1,1000000)),
-            ('n', fractions.Fraction(1,1000000000)),
-            ('p', fractions.Fraction(1,1000000000000)),
-            ('f', fractions.Fraction(1,1000000000000000)),
-            ('a', fractions.Fraction(1,1000000000000000000))
+            ('d', fractions.Fraction(1, 10)),
+            ('c', fractions.Fraction(1, 100)),
+            ('m', fractions.Fraction(1, 1000)),
+            ('u', fractions.Fraction(1, 1000000)),
+            ('n', fractions.Fraction(1, 1000000000)),
+            ('p', fractions.Fraction(1, 1000000000000)),
+            ('f', fractions.Fraction(1, 1000000000000000)),
+            ('a', fractions.Fraction(1, 1000000000000000000))
         ]
 
         for prefix, mult in prefixes:
             prefixed_symbol = prefix + symbol
-            scaled_factor = mult*factor
-            return_units += self.__unit(prefixed_symbol, dimensions, scaled_factor, offset, power, ctx)
-        return return_units
+            self.__unit(prefixed_symbol, dimensions, factor, offset, ctx, mult=mult)
 
-    def __unit(self, symbol, dimensions, factor, offset, power, ctx):
-        units = []
-        if not symbol in ctx.names[ctx.system]:
-            factor = factor**power
-            factor_txt = "{:g}".format(float(factor))
-            print(f'{symbol} -> {factor}')
-            factor, factor_tol = self.__fractionize(factor, ctx)
-            print(f'\t\t-> {factor} (+/- {factor_tol})')
+    def __unit(self, symbol, dimensions, factor, offset, ctx, mult=None):
+        if symbol not in ctx.names[ctx.system]:
+            factor, factor_tol = self.__fractionize(factor, ctx, mult=mult)
             offset, offset_tol = self.__fractionize(offset, ctx)
-            if (not factor is None) and (not offset is None):
+
+            added = False
+            if (factor is not None):
+                offset = fractions.Fraction(0, 1) if offset is None else offset
                 max_param = max(factor.numerator, factor.denominator)
                 if max_param <= ctx.param_limit and factor != 0:
-                    unit_text = unit_template.render(
-                        symbol=symbol,
-                        rel_symbol=symbol,
-                        absolute=False,
-                        num=factor.numerator,
-                        den=factor.denominator,
-                        factor=factor_txt,
-                        dimensions="dimensions::{}".format(dimensions),
-                        offset_num=0,
-                        offset_den=1
-                    )
-                    ctx.units.append( (ctx.system, symbol, unit_text) ) # DO SOMETHING TO ARRANGE THESE....
-                    ctx.names[ctx.system].add(symbol)
-                    units.append(unit_text)
+                    added = True
+                    self.__add_unit(ctx, symbol, factor, offset, dimensions)
                     if self.__absolute:
-                        unit_text = unit_template.render(
-                            symbol=symbol+'_abs',
-                            rel_symbol=symbol,
-                            absolute=True,
-                            num=factor.numerator,
-                            den=factor.denominator,
-                            factor=factor_txt,
-                            dimensions="dimensions::{}".format(dimensions),
-                            offset_num=offset.numerator,
-                            offset_den=offset.denominator
-                        )
-                        ctx.units.append( (ctx.system, symbol, unit_text) ) # DO SOMETHING TO ARRANGE THESE....
-                        ctx.names[ctx.system].add(symbol)
-                        units.append(unit_text)
-            else:
+                        self.__add_unit(ctx, symbol, factor, offset, dimensions, absolute=True)
+            if not added:
                 print("Unable to create {} (factor = {})".format(symbol, factor))
         else:
-            assert False, "Attempting to readd unit {}".format(symbol)
-        return units
+            assert False, "Attempting to read unit {}".format(symbol)
+
+    def __add_unit(self, ctx, symbol, factor, offset, dimensions, absolute=False):
+        main_symbol = symbol + ('_abs' if absolute else '')
+        unit_text = unit_template.render(
+            symbol=main_symbol,
+            rel_symbol=symbol,
+            absolute=absolute,
+            num=factor.numerator,
+            den=factor.denominator,
+            factor='approx. {:g}'.format(float(factor)),
+            dimensions="dimensions::{}".format(dimensions),
+            offset_num=offset.numerator,
+            offset_den=offset.denominator
+        )
+        data = (dimensions, factor, offset)
+        ctx.units.append((ctx.system, main_symbol, unit_text, data)) # DO SOMETHING TO ARRANGE THESE....
+        ctx.names[ctx.system].add(symbol)
 
     def __parse_symbol(self, symbol, ctx): # TODO: VALIDATE THE REDUCED SYMBOL AS AN IDENTIFIER
         symbol = symbol.strip()
@@ -256,15 +259,31 @@ class UnitCommand:
             return True, symbol[1:]
         return False, symbol
 
-    def __fractionize(self, value, ctx):
-        if value is None: return fractions.Fraction(), ctx.default_tolerance
+    def __fractionize(self, value, ctx, mult=None):
+        mult = fractions.Fraction(1, 1) if mult is None else mult
+        if value is None:
+            return None, ctx.default_tolerance
+        elif isinstance(value, fractions.Fraction):
+            if value.denominator > ctx.param_limit:
+                return None, ctx.default_tolerance
+            return (mult * value).limit_denominator(ctx.param_limit), 0
+        elif isinstance(value, int):
+            value = fractions.Fraction(value, 1)
+        elif isinstance(value, float):
+            value = fractions.Fraction(value)
+        else:
+            assert False, 'Error: Fractionalize is not defined for values of type = {}'.type(value)
         denom_limit = 10
-        tolerance = min(value.tolerance, ctx.default_tolerance)
-        value = value.value
         done = False
+        base_value = fractions.Fraction(value)
+        if base_value.numerator == 0:
+            return fractions.Fraction(0, 1), 0
+        reference_value = mult * base_value
         while not done:
-            frac = fractions.Fraction(value).limit_denominator(denom_limit)
-            if abs(value - float(frac)) <= tolerance and (frac.numerator <= ctx.param_limit):
+            frac = reference_value.limit_denominator(denom_limit)
+            est_err = abs(float(reference_value - frac)) / reference_value
+            # print('frac = {}, err_est = {}, tol = {}'.format(frac, est_err, ctx.default_tolerance))
+            if est_err <= ctx.default_tolerance and (frac.numerator <= ctx.param_limit):
                 done = True
                 value = frac
             else:
@@ -272,19 +291,7 @@ class UnitCommand:
                 if denom_limit > ctx.param_limit:
                     done = True
                     value = None
-        return value, tolerance
-
-    def __get_value(self, value, ctx):
-        key = (ctx.system, value)
-        if key in ctx.let:
-            return ctx.let[key]
-        else:
-            try:
-                value = FactorValue(value)
-                return value
-            except:
-                pass
-        return None
+        return value, ctx.default_tolerance
 
 
 def parseSystemLine(line): # TODO: THIS SHOULD RETURN NONE IF THE STRIPPED LINE IS NOT A VALID IDENTIFIER
@@ -294,7 +301,7 @@ def parseSystemLine(line): # TODO: THIS SHOULD RETURN NONE IF THE STRIPPED LINE 
 
 def parseTolerenceLine(line):
     try:
-        return ContextCommand('tolerance', float(line))
+        return ContextCommand('tolerance', line)
     except:
         pass
     return None
@@ -304,18 +311,16 @@ def parseLetLine(line, system):
     name, _, value = line.partition("=")
     name = name.strip()
     value = value.strip()
-    return LetDeclaration(system, name, FactorValue(value))
+    return LetDeclaration(system, name, value)
 
 
 def parseUnitLine(dimensions, line, message): # TODO: VALIDATE THE DIMENSIONS
     symbol, _, line = line.partition('=')
     symbol = symbol.strip()
-    factor, _, line = line.partition('(')
-    factor, _, power = factor.partition('**')
+    factor, absolute, line = line.partition('@')
     factor = factor.strip()
-    power = None if len(power) == 0 else int(power)
-    offset = None if len(line) <= 1 else line.rstrip(')').strip()
-    return UnitCommand(dimensions, symbol, factor, power, offset, message)
+    offset = line
+    return UnitCommand(dimensions, symbol, factor, offset, message, absolute=absolute=='@')
 
 
 def parseUnitDefinitionFile(filename):
@@ -335,16 +340,16 @@ def parseUnitDefinitionFile(filename):
                     new_definition = parseTolerenceLine(line)
                 elif name == 'system':
                     new_definition, system = parseSystemLine(line)
-                    if not new_definition is None:
+                    if new_definition is not None:
                         current_system = system
                 elif name == 'let':
                     new_declaration = parseLetLine(line, current_system)
-                    if not new_declaration is None:
+                    if new_declaration is not None:
                         declarations.append(new_declaration)
                 else:
                     new_definition = parseUnitLine(name, line, comment)
 
-                if not new_definition is None:
+                if new_definition is not None:
                     commands.append(new_definition)
     return commands, declarations
 
@@ -352,21 +357,29 @@ def parseUnitDefinitionFile(filename):
 def processUnitDefinitions(commands, declarations, ctx):
     ctx.let = {}
     for declaration in declarations:
-        ctx.let[ (declaration.system, declaration.name) ] = declaration.value
+        ctx.let[(declaration.system, declaration.name)] = ctx.process_field(declaration.value)
     num_definitions = sum([1 if isinstance(command, UnitCommand) else 0 for command in commands])
     print('{} unit definitions'.format(num_definitions))
     for command in commands:
         command(ctx)
-    units = [unit[2] for unit in ctx.units]
-    units_text = '\n\n'.join(units)
-    print('{} units generated'.format(len(units)))
-    return ctx.system, file_template.render(units=units_text, system=ctx.system)
+    units_snippets = [text for system, symbol, text, _ in ctx.units]
+    units_data = [(symbol, data) for _, symbol, _, data in ctx.units]
+    units_text = '\n\n'.join(units_snippets)
+    print('{} units generated'.format(len(units_snippets)))
+    units_overview = '//\n// Overview of Units in {} System\n//\n'.format(ctx.system)
+    for symbol, (dimensions, factor, offset) in units_data:
+        offset_render = '' if offset.numerator == 0 else '@ {:0.2f}'.format(float(offset))
+        units_render = '//\t{} {} = {:0.4g} {}\n'.format(dimensions, symbol, float(factor), offset_render)
+        units_overview += units_render
+    return ctx.system, file_template.render(units=units_text, units_overview=units_overview, system=ctx.system)
 
 
 if __name__ == '__main__':
     ctx = UnitsContext()
     commands, declarations = parseUnitDefinitionFile("units.def")
     system, file_text = processUnitDefinitions(commands, declarations, ctx)
+    # for key, value in ctx.process_globals.items():
+    #     print(f'{key}: {value}')
     filename = '../Chandra HAL/units_{}.h'.format(system)
 
     with open(filename, 'w') as file:

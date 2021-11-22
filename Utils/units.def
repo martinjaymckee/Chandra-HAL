@@ -4,10 +4,11 @@ tolerance 1e-8 # Default Factor tolerence is 1ppm
 #
 # Conversion Factors
 #
-let mi_conv = 1609.34
-let yd_conv = 0.9114
-let ft_conv = 0.3048
-let in_conv = 0.0254
+let acc_gravity = exact('9.80665')
+let mi_conv = 1609.344
+let yd_conv = exact('0.9144')
+let ft_conv = exact('0.3048')
+let in_conv = exact('0.0254')
 
 let rev_conv = 0.31831
 let deg_conv = 0.01745329
@@ -17,7 +18,7 @@ let grad_conv = 0.01570796
 # Units of Mass
 #
 #   SI
-Mass *g = 1e-3
+Mass *g = offset_decade(-3)
 #   Imperial
 Mass slug = 6854.0096
 
@@ -26,7 +27,7 @@ Mass slug = 6854.0096
 #
 #   SI
 Mass *N = 1 # Newton
-Mass *gf = 9.80665e-3 # Grams-Force
+Mass *gf = acc_gravity * offset_decade(-3) # Grams-Force
 #   Imperial
 Mass lb = 0.22482 # Pound
 Mass pdl = 7.23066 # Poundal
@@ -168,11 +169,11 @@ AngularAcceleration grad_per_s2 = grad_conv
 # Units of Temperature
 #
 #   SI
-Temperature *degC = 1 (+0) # Degrees Celsius
-Temperature *K = 1 (-273.15) # Kelvin
+Temperature *degC = 1 @ +0 # Degrees Celsius
+Temperature *K = 1 @ exact('-273.15') # Kelvin
 #   Imperial
-Temperature *degF = .5555555 (+32) # Degrees Farenheit
-Temperature *degRa = .5555555 (+491.67) # Degrees Rankine
+Temperature *degF = frac(5, 9) @ +32 # Degrees Farenheit
+Temperature *degRa = frac(5, 9) @ exact('-459.67') # Degrees Rankine
 
 #
 # Units of Magnetic Flux (Density)
@@ -206,19 +207,19 @@ ElectricCurrent *A = 1 # Ampere
 #
 # Units of Resistance
 #
-ElectricalResistance *ohm = 1 # Ohms (This is the incorrect symbol....)
+ElectricalResistance *ohm = offset_decade(-3) # Ohms (This is the incorrect symbol....)
 
 #
 # Units of Conductance
 #
-ElectricalConductance *S = 1 # Siemens (mhos)
+ElectricalConductance *S = offset_decade(3) # Siemens (mhos)
 
 #
 # Units of Capacitance
 #
-Capacitance *F = 1 # Farads
+Capacitance *F = offset_decade(3) # Farads
 
 #
 # Units of Inductance
 #
-Inductance *H = 1 # Henrys
+Inductance *H = offset_decade(-3) # Henrys
