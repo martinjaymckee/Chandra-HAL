@@ -5,6 +5,8 @@
 #include <utility>
 #include <quantity_math.h>
 
+#include <comparable.h>
+
 namespace chandra
 {
 namespace math
@@ -13,9 +15,12 @@ namespace statistics
 {
 
 template<class Value = float, class VarianceType = decltype(std::declval<Value>() * std::declval<Value>())>
-class NRV
+class NRV : public chandra::math::Comparable
 {
   public:
+    template<class V, class VT>
+    friend class NRV;
+    
     using value_t = Value;
     using mean_t = value_t;
     using standard_deviation_t = value_t;
@@ -47,6 +52,16 @@ class NRV
     variance_t variance(variance_t _variance) {
       variance_ = _variance;
       return variance_;
+    }
+
+    template<class V>
+    bool operator == (const V& _other) const {
+      return mean_ == mean_t(_other.mean_);
+    }
+
+    template<class V>
+    bool operator > (const V& _other) const {
+      return mean_ > mean_t(_other.mean_);
     }
 
   private:
