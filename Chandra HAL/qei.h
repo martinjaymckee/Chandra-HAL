@@ -3,6 +3,7 @@
 
 #include <chrono>
 
+#include "circular_buffer.h"
 #include "debounce.h"
 #include "gpio.h"
 #include "quantity.h"
@@ -64,6 +65,96 @@ struct EncoderVelocity<Value, void>
 {
   using type = Value;
 };
+
+namespace estimators
+{
+//
+// Simple Estimator
+//
+template<class PositionValue, class VelocityValue>
+class SimpleQEIVelocityEstimator
+{
+	public:
+    using value_t = float;
+		void init(const value_t& /*t_overflow*/) {}
+
+		void reset() {}
+
+		void update(const value_t& _pos, const value_t& _dt) {
+			auto new_vel = (_pos - pos_) / _dt;
+			if(new_vel > vel_max_) new_vel = vel_max_;
+			if(new_vel < -vel_max_) new_vel = -vel_max_;
+			vel_ = (dt_last_*vel_ + _dt*new_vel) / (dt_last_ + _dt);
+			pos_ = _pos;
+			dt_last_ = _dt;
+			return;
+		}
+
+		constexpr value_t pos() const { return pos_; }
+		constexpr value_t vel() const { return vel_; }
+
+	protected:
+		value_t dt_last_ = 1;
+		value_t pos_ = 0;
+		value_t vel_ = 0;
+		value_t vel_max_ = 200;
+};
+
+//
+// Simple Windowed Estimator
+//
+template<class PositionValue, class VelocityValue>
+class WindowedQEIVelocityEstimator
+{
+  public:
+      using value_t = float;
+
+	protected:
+		constexpr static size_t N = 4;
+
+		struct Sample
+		{
+			value_t steps;
+			value_t dt;
+		};
+
+	public:
+		void init(const value_t& /*t_overflow*/) {}
+
+		void reset() {}
+
+		void update(const value_t& _pos, const value_t& _dt) {
+			const value_t dpos{_pos - pos_};
+			if(buffer_.full()) {
+				const auto sample = buffer_[-1];
+				current.steps -= sample.steps;
+				current.dt -= sample.dt;
+			}
+			buffer_ << Sample{dpos, _dt};
+			current.steps += dpos;
+			current.dt += _dt;
+			auto new_vel = current.steps / current.dt;
+			if(new_vel > vel_max_) new_vel = vel_max_;
+			if(new_vel < -vel_max_) new_vel = -vel_max_;
+			vel_ = e_*vel_ + (1-e_)*new_vel;
+//			vel_ = new_vel;
+			pos_ = _pos;
+			return;
+		}
+
+		constexpr value_t pos() const { return pos_; }
+		constexpr value_t vel() const { return vel_; }
+
+	protected:
+		value_t e_ = 0.75;
+		value_t pos_ = 0;
+		value_t vel_ = 0;
+
+		Sample current;
+		chandra::FixedCircularBuffer<Sample, N> buffer_;
+		value_t vel_max_ = 250;
+};
+} /* namespace estimators */
 
 // Base QEI Implementation
 template<

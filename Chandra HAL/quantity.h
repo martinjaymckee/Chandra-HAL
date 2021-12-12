@@ -2,6 +2,7 @@
 #define CHANDRA_QUANTITY_H
 
 #include <initializer_list>
+#include <type_traits>
 
 #include "dimensions.h"
 #include "units_utils.h"
@@ -221,7 +222,7 @@ constexpr auto operator * (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _
     return return_t(_a.value() * _b.value());
 }
 
-template<typename V1, typename U1, typename Scalar>
+template<typename V1, typename U1, typename Scalar, typename Valid = typename std::enable_if<std::is_fundamental<Scalar>::value, Scalar>::type>
 constexpr auto operator * (const Quantity<V1, U1>& _a, const Scalar& _s) {
     static_assert(
         !U1::absolute,
@@ -232,7 +233,7 @@ constexpr auto operator * (const Quantity<V1, U1>& _a, const Scalar& _s) {
     return return_t(_a.value() * _s);
 }
 
-template<typename Scalar, typename V1, typename U1>
+template<typename Scalar, typename V1, typename U1, typename Valid = typename std::enable_if<std::is_fundamental<Scalar>::value, Scalar>::type>
 constexpr auto operator * (const Scalar& _s, const Quantity<V1, U1>& _a) {
     static_assert(
         !U1::absolute,
@@ -255,7 +256,7 @@ constexpr auto operator / (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _
     return return_t(_a.value() / _b.value());
 }
 
-template<typename V1, typename U1, typename Scalar>
+template<typename V1, typename U1, typename Scalar, typename Valid = typename std::enable_if<std::is_fundamental<Scalar>::value, Scalar>::type>
 constexpr auto operator / (const Quantity<V1, U1>& _a, const Scalar& _s) {
     static_assert(
         !U1::absolute,
