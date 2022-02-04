@@ -22,9 +22,6 @@ class SST25VF0xx : public SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECI
     public:
         using base_t = SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID>, FlashConfiguration, JEDECID>;
         using base_t::SPIFlash25Series;
-
-    protected:
-
 };
 
 using SST25VF080B = SST25VF0xx<SST25VF080BConfiguration, SST25VF080BJEDECID>;

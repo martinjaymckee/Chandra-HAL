@@ -36,7 +36,19 @@ class SPIFlash25Series
         //
         // Memory Constructor
         //
-        SPIFlash25Series(chandra::io::SPIMaster& _spi, chandra::io::SPI::cs_t _cs) : spi_(_spi), cs_(_cs) {}
+        SPIFlash25Series(chandra::io::SPIMaster& _spi, const chandra::io::SPI::cs_t& _cs = chandra::io::SPI::CS0) : spi_(_spi), cs_(_cs) {}
+
+        bool init() {
+            if(!spi_.enabled()) {
+              spi_.enable(true, 0);
+            }
+
+            return true;
+        }
+
+        bool valid() {
+          return bool(id());
+        }
 
         //
         // Status Accessors
@@ -285,7 +297,7 @@ class SPIFlash25Series
                       byte
                   };
                   static_cast<const derived_t *>(this)->wren();
-                  while(!static_cast<const derived_t *>(this)->wel()){}                  
+                  while(!static_cast<const derived_t *>(this)->wel()){}
                   spi_.tx(data, 5, cs_, chandra::io::SPI::WRAP);
                   static_cast<const derived_t *>(this)->block();
                   ++addr;

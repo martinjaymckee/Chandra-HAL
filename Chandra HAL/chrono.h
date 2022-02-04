@@ -164,7 +164,7 @@ class timestamp_clock
 	    // TODO: FIGURE OUT IF THERE IS A WAY TO DO THIS WITHOUT 64-BIT MATH
 	    top_ = (uint64_t(65536UL)* frequency::core().value()) / 1000000UL;
 	    mult_ = 0xFFFFFFFFUL / top_;
-			_func();			
+			_func();
 	    SysTick_Config(top_);
 	    NVIC_EnableIRQ(SysTick_IRQn);
 	    return;
@@ -381,6 +381,16 @@ void delay(const std::chrono::duration<uint32_t, std::micro>& _us, const std::ch
 	const auto end = start + us;
 	while(Clock::now() < end){ // TODO: CHECK IF THIS IS GOING TO WORK PROPERLY IN ALL CASES, INCLUDING OVERFLOW.... IF NOT, FIGURE OUT THE BEST WAY TO IMPLEMENT IT
 		// Is there anything to be done here... like yield?
+	}
+}
+
+template<class Func, class Clock = timestamp_clock>
+void call_while_delay(const std::chrono::duration<uint32_t, std::micro>& _us, Func _func, const std::chrono::time_point<Clock>& start = Clock::now()) {
+	const auto us = std::chrono::duration_cast<typename Clock::duration>(_us); // NOTE: Avoid conversions below. (it may be better to use the ceiling rounding mode
+	const auto end = start + us;
+	auto t = start;
+	while((t = Clock::now()) < end){ // TODO: CHECK IF THIS IS GOING TO WORK PROPERLY IN ALL CASES, INCLUDING OVERFLOW.... IF NOT, FIGURE OUT THE BEST WAY TO IMPLEMENT IT
+		_func(t);
 	}
 }
 

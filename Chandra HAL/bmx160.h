@@ -125,33 +125,6 @@ class BMX160ImplBase : public chandra::drivers::internal::BaseInertialProxyImpl<
 
       constexpr scalar_t scale() const { return scale_; }
 
-    protected:
-//      // TODO: AT LEAST THIS LOG 2 NEEDS TO MOVE TO A UTILITY CLASS....
-//      constexpr uint32_t log2(uint32_t x) const {
-//        //return __builtin_ctz (x);
-//        uint32_t count = 0;
-//        while(x){
-//            x >>= 1;
-//            ++count;
-//        }
-//        return count;
-//      }
-//
-//      constexpr uint8_t calcOdrBits(const Value& _freq) const {
-//        uint8_t bits(0);
-//        if(_freq == 0) {
-//            bits = 0x00;
-//        } else {
-//            const auto div = _freq / 13;
-//            bits = log2(div) + 1;
-//        }
-//        return bits;
-//      }
-//
-//      constexpr uint32_t calcOdrFreq(const uint8_t& bits) const {
-//        return (bits == 0) ? 0 : (13 * (1UL << (bits-1UL)));
-//      }
-
       register_access_t regs_;
       scalar_t scale_;
 };
@@ -183,9 +156,6 @@ class BMX160AccelImpl : public BMX160ImplBase<Value, BaseUnits, Comm>
     scalar_t get_odr() const {
     	return 0;
     }
-
-  protected:
-    scalar_t accel_scale_;
 };
 
 template<class Value, class BaseUnits, class Comm>
@@ -215,9 +185,6 @@ class BMX160GyroImpl : public BMX160ImplBase<Value, BaseUnits, Comm>
     scalar_t get_odr() const {
     	return 0;
     }
-
-  protected:
-    scalar_t gyro_scale_;
 };
 
 template<class Value, class BaseUnits, class Comm>
@@ -248,9 +215,6 @@ class BMX160MagImpl : public BMX160ImplBase<Value, BaseUnits, Comm>
     scalar_t get_odr() const {
     	return 0;
     }
-
-  protected:
-    scalar_t mag_scale_;
 };
 } /*namespace internal*/
 
@@ -292,7 +256,7 @@ class BMX160
 
         // RUN SELF TESTS FOR VALIDATATION....
 
-        uint8_t id() { return regs_.byte(registers_t::CHIP_ID); }
+        uint8_t id() const { return regs_.byte(registers_t::CHIP_ID); }
 
         bool valid() const { return id() == 0xD8; }
 

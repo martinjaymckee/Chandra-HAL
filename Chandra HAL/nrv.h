@@ -47,6 +47,10 @@ class NRV : public chandra::math::Comparable
     //
     // Constructors
     //
+  private:
+    NRV(variance_t _variance, bool) : mean_{0}, variance_{_variance} {}
+
+  public:
     NRV() = default;
 
     NRV(mean_t _mean, standard_deviation_t _sd)
@@ -59,8 +63,8 @@ class NRV : public chandra::math::Comparable
     NRV(const NRV<MT, VT> _other) : mean_{_other.mean_}, variance_{_other.variance_} {}
 
     //  Noise-Only Constructors
-	  static NRV Noise(standard_deviation_t _sd) { return NRV{ 0, _sd }; }
-    static NRV NoiseVar(variance_t _variance) { return NRV{0, sqrt(_variance)}; }
+	  static NRV NoiseSD(standard_deviation_t _sd) { return NRV{ 0, _sd }; }
+    static NRV NoiseVariance(variance_t _variance) { return NRV{_variance, true}; }
 
     mean_t mean() const { return mean_; }
     mean_t mean(mean_t _mean) {
@@ -89,6 +93,8 @@ class NRV : public chandra::math::Comparable
     bool operator > (const V& _other) const {
       return mean_ > mean_t(_other.mean_);
     }
+
+	// TODO: NEED TO ADD /= (scalar), *= (scalar), += (convertible), -= (convertible) functions
 
   private:
     mean_t mean_{0};
