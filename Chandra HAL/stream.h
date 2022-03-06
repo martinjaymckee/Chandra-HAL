@@ -151,10 +151,20 @@ Derived& operator << (Stream<Derived>& _stream, const char& _value) {
 //
 // Insertion operator to insert c-strings into the stream
 //
-template<class Derived>
-Derived& operator << (Stream<Derived>& _stream, const char* _value) {
+// template<class Derived>
+// Derived& operator << (Stream<Derived>& _stream, const char* _value) {
+// 	Derived& stream = static_cast<Derived&>(_stream);
+//     stream.puts(_value);
+//     return stream;
+// }
+
+//
+// Insertion operator to insert a (null-terminated) character buffer / c-string into the stream
+//
+template<class Derived, size_t N>
+Derived& operator << (Stream<Derived>& _stream, const char (&_buffer)[N]) {
 	Derived& stream = static_cast<Derived&>(_stream);
-    stream.puts(_value);
+    stream.puts(static_cast<const char*>(&_buffer[0]));
     return stream;
 }
 

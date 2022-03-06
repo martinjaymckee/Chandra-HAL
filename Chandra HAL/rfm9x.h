@@ -150,13 +150,16 @@ class RFM9xLoRa
 
 		uint8_t cfg() { return regs.byte(RegOpMode); }
 
+		uint8_t id() const {
+			return regs.byte(RegVersion);
+		}
+
 		bool valid() const {
-			return regs.byte(RegVersion) == 0x12;
+			return id() == 0x12;
 		}
 
 		bool power(float _db) {
 			bool success = false;
-			uint8_t data = 0;
 			// if(_db < 2) { // Transmit through RFO pin
 			//     const double dP = _db + 4.2;
 			//     const uint8_t OutputPower = uint8_t(std::min(15.0, dP));
@@ -198,6 +201,10 @@ class RFM9xLoRa
 			return true;
 		}
 
+		auto available() const {
+			return regs.byte(RegRxPayloadBytes);
+		}
+
 		template<uint8_t N>
 		bool rx(uint8_t (&_msg)[N]) {
 			// Set FIFO Base Address
@@ -228,7 +235,7 @@ class RFM9xLoRa
 		}
 
 		void set_mode(const modes_t& _mode) {
-			const uint8_t data = regs.byte(RegOpMode);
+			//const uint8_t data = regs.byte(RegOpMode); // TODO: CHECK IF THIS NEEDS TO BE READ FIRST
 			//regs.write(RegOpMode, static_cast<uint8_t>((0xF8&data)|uint8_t(_mode)));
 			 regs.update(RegOpMode, 0x07, static_cast<uint8_t>(_mode));
 			return;

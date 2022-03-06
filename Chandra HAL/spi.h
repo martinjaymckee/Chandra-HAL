@@ -141,10 +141,12 @@ class SPIMaster
     bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0,
       const pin_t& _cs1, const pin_t& _cs2, const pin_t& _cs3) {
       const uint8_t cfg = spi_->CFG;
+      const bool is_enabled = enabled();
       enable(false);
       setPins(_miso, _mosi, _sclk, _cs0, _cs1, _cs2, _cs3);
       spi_->CFG = cfg;
-      return cfg & (1<<0);
+      enable(is_enabled);
+      return enabled();
     }
 
     bool rebind(pin_t _miso, pin_t _mosi, pin_t _sclk, pin_t _cs0,

@@ -66,7 +66,7 @@ class I2CMaster
 		struct I2CStatus
 		{
 			I2CStatus(const I2CCompletionState& _state = I2C_OK, const size_t& _cnt = 0) : state(_state), cnt(_cnt) {}
-			I2CStatus(const I2CStatus& _other) : state(_other.state), cnt(_other.cnt) {}
+			// I2CStatus(const I2CStatus& _other) : state(_other.state), cnt(_other.cnt) {}
 
 			bool ok() const { return (state == I2C_OK); }
 

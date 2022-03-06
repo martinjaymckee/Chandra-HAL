@@ -31,7 +31,19 @@ class FT25H16
         //
         // Memory Constructor
         //
-        FT25H16(chandra::io::SPIMaster& _spi, chandra::io::SPI::cs_t _cs) : spi_(_spi), cs_(_cs) {}
+        FT25H16(chandra::io::SPIMaster& _spi, const chandra::io::SPI::cs_t& _cs = chandra::io::SPI::CS0) : spi_(_spi), cs_(_cs) {}
+
+        bool init() {
+          if(!spi_.enabled()) {
+            spi_.enable(true, 2);
+          }
+
+          return valid();
+        }
+
+        bool valid() const {
+          return id() == 0x4015;
+        }
 
         //
         // Status Accessors
