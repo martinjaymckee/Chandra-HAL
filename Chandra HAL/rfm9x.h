@@ -6,6 +6,8 @@
 //
 #include "register_device.h"
 #include "spi.h"
+#include "units.h"
+// using namespace chandra::units::mks::literals;
 
 namespace chandra
 {
@@ -159,19 +161,37 @@ class RFM9xLoRa
 		}
 
 		bool power(float _db) {
+			static const bool allow_rfo = false;
 			bool success = false;
-			// if(_db < 2) { // Transmit through RFO pin
-			//     const double dP = _db + 4.2;
-			//     const uint8_t OutputPower = uint8_t(std::min(15.0, dP));
-			//     const uint8_t MaxPower = uint8_t((dP - OutputPower + 0.3) / 0.6);
-			//     data = (MaxPower << 4) | OutputPower;
-			uint8_t output_power = 0;
-			if(_db > 2) {}{
-				if(_db > 17) _db = 17;
-				output_power = static_cast<uint8_t>(_db - 2);
+			if(_db < 2 and allow_rfo) { // Transmit through RFO pin
+				const double dP = _db + 4.2;
+				const uint8_t OutputPower = uint8_t(std::min(15.0, dP));
+				const uint8_t MaxPower = uint8_t((dP - OutputPower + 0.3) / 0.6);
+				regs.write(RegPaConfig, static_cast<uint8_t>((MaxPower << 4) | OutputPower));  // Transmit through the RFO
+			} else {
+				uint8_t output_power = 0;
+				if(_db > 2) {
+					if(_db > 17) _db = 17;
+					output_power = static_cast<uint8_t>(_db - 2);
+				}
+				regs.write(RegPaConfig, static_cast<uint8_t>((1<<7) | output_power));  // Transmit through the PA_BOOST pin
 			}
-			regs.write(RegPaConfig, static_cast<uint8_t>((1<<7) | output_power));  // Transmit through the PA_BOOST pin
 			return success;
+		}
+
+		template<class Rep>
+		bool center_frequency(const chandra::units::mks::Q_Hz<Rep> _f_rf) {
+			const Rep f_osc{32e6};
+			const uint32_t frf{((1 << 19) * _f_rf.value()) / f_osc};
+			const auto last_mode = get_mode();
+			if((last_mode != Sleep) and (last_mode != Standby)) {
+				standby();
+			}
+			const uint8_t data[3] = {((frf >> 16) & 0xFF), ((frf >> 8) & 0xFF), (frf & 0xFF)};
+			regs.writebytes(RegFreqH, 3, data);
+			set_mode(last_mode);
+
+			return true;
 		}
 
 		template<uint8_t N>
