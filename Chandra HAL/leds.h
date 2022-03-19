@@ -124,7 +124,7 @@ class LED
           return pulse(_active_period, _active_period, _blocking);
         }
 
-        LED& breathe(const duration_t& _cycle_period, const bool _reset=true, const duration_t& _pwm_period = std::chrono::milliseconds{20}) {
+        LED& breathe(const duration_t& _cycle_period, const bool _reset=true, const duration_t& _pwm_period = std::chrono::milliseconds{10}) {
           const uint32_t steps = (_cycle_period.count() + (_pwm_period.count()/2)) / _pwm_period.count();
           duty_cycle_step_ = (20000 + (steps/2)) / steps;
           update_period_ = duration_t{(_cycle_period.count() + (steps/2)) / steps};
@@ -168,7 +168,7 @@ class LED
                   if(chandra::chrono::after(update_period_, update_timestamp_, current)){
                     update_timestamp_ += update_period_;
                     if(increasing_) {
-                      if(10000-duty_cycle_ < duty_cycle_step_) {
+                      if((10000-duty_cycle_) < duty_cycle_step_) {
                         duty_cycle_ = 10000;
                         increasing_ = false;
                       } else {
@@ -184,9 +184,9 @@ class LED
                       }
                     }
                   }
-                  const auto pwm_period = active_period_+inactive_period_;
+                  const auto pwm_period = active_period_ + inactive_period_;
                   active_period_ = calcActivePeriod(pwm_period, duty_cycle_);
-                  inactive_period_ = pwm_period-active_period_;
+                  inactive_period_ = pwm_period - active_period_;
                 }
 
                 if( state_ ) {

@@ -420,6 +420,25 @@ bool before(const std::chrono::time_point<Clock>& reference,
             const std::chrono::time_point<Clock>& check = Clock::now()) {
     return !after(reference, check);
 }
+
+
+template<class Func>
+bool block_until(Func _func) {
+	while(!_func()){}
+	return true;
+}
+
+template<class Func, class Clock = timestamp_clock>
+bool block_until(Func _func, const std::chrono::duration<uint32_t, std::micro>& _us, const std::chrono::time_point<Clock>& start = Clock::now()) {
+	const auto us = std::chrono::duration_cast<typename Clock::duration>(_us); // NOTE: Avoid conversions below. (it may be better to use the ceiling rounding mode
+	const auto end = start + us;
+	auto t = chandra::chrono::timestamp_clock::now();
+	while(!_func()) {
+		if(chandra::chrono::after(_us, t)) return false;
+	}
+	return true;
+}
+
 } /*namespace chrono*/
 } /*namespace chandra*/
 
