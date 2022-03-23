@@ -189,6 +189,11 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 		USARTClockStatus<calc_t> baud( unsigned int _baud, bool _recalc_uclk = false, unsigned int _osr = 16 ) {
 			// TODO: ALLOW THIS TO USE SEPERATE FRGs ON THE 84X
+			const bool was_enabled = enabled();
+			if(was_enabled) {
+				while(sending()) {}
+			}
+			enable(false);
       USARTClockStatus<calc_t> status;
       const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
       int32_t running_uclk = actual_uclk();
@@ -211,6 +216,18 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		#if defined(__LPC84X__)
       LPC_SYSCON->FCLKSEL[num_] = 0x02; // Use FRG0 as source clock
 		#endif
+			enable(was_enabled);
+			return status;
+		}
+
+		USARTClockStatus<calc_t> baud() const {
+			USARTClockStatus<calc_t> status;
+      const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
+      int32_t running_uclk = actual_uclk();
+      const calc_t brg = usart_->brg+1;
+			const auto osr = usart_->OSR+1;
+      status.clk = baudCalc(running_uclk, brg, osr);
+      status.ppm = ppmCalc(_baud, status.clk);
 			return status;
 		}
 

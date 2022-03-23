@@ -156,7 +156,7 @@ class FT25H16
 
         template<typename Value, size_t N>
         AddressRange writeUnprotected(size_t addr, const Value (&buffer)[N], size_t remaining) const {
-            const uint8_t status = statusL();
+            // const uint8_t status = statusL();
             const size_t length = remaining * sizeof(Value);
             const size_t start = addr;
             const size_t end = start + length - 1;
