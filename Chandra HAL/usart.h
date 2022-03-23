@@ -132,7 +132,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			return status;
 		}
 
-		calc_t actual_uclk() {
+		calc_t actual_uclk() const {
       const calc_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
       const calc_t div = getFractionalInputClockDiv();
       const calc_t mult = getFractionalInputClockMult();
@@ -220,15 +220,11 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			return status;
 		}
 
-		USARTClockStatus<calc_t> baud() const {
-			USARTClockStatus<calc_t> status;
-      const int32_t sys_clk = static_cast<calc_t>(chandra::chrono::frequency::usart(num_).value());
+		unsigned int baud() const {
       int32_t running_uclk = actual_uclk();
-      const calc_t brg = usart_->brg+1;
-			const auto osr = usart_->OSR+1;
-      status.clk = baudCalc(running_uclk, brg, osr);
-      status.ppm = ppmCalc(_baud, status.clk);
-			return status;
+      const calc_t brg = 1 + usart_->BRG;
+			const auto osr = 1 + usart_->OSR;
+      return baudCalc(running_uclk, brg, osr);
 		}
 
     size_t available() const {
