@@ -16,11 +16,11 @@ using SST25VF080BJEDECID = JEDECFlashID<0xBF, 0x25, 0xBE>;
 using SST25VF016BConfiguration = FlashConfiguration<256, 8192, 4096, 512, 1>; // THIS IS NOT CORRECT
 using SST25VF016BJEDECID = JEDECFlashID<0xBF, 0x25, 0x41>;
 
-template<class FlashConfiguration, class JEDECID>
-class SST25VF0xx : public SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID>, FlashConfiguration, JEDECID>
+template<class FlashConfiguration, class JEDECID, bool RangeChecked=true>
+class SST25VF0xx : public SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID, RangeChecked>, FlashConfiguration, JEDECID, RangeChecked>
 {
     public:
-        using base_t = SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID>, FlashConfiguration, JEDECID>;
+        using base_t = SPIFlash25Series<SST25VF0xx<FlashConfiguration, JEDECID, RangeChecked>, FlashConfiguration, JEDECID, RangeChecked>;
         using base_t::SPIFlash25Series;
 };
 

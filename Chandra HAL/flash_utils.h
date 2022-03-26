@@ -37,9 +37,6 @@ struct JEDECFlashID
     }
 };
 
-//
-// TODO: MAKE THE FLASH CONFIURATION LESS CORRELATED
-//
 template<size_t PageSize=256, size_t Pages=8192, size_t SectorSize=4096,
   size_t Sectors=512, size_t AccessBytes=1>
 struct FlashConfiguration
@@ -64,9 +61,6 @@ struct FlashConfiguration
     return {0, memoryBytes()-1};
   }
 };
-
-using FT25H16Configuration = FlashConfiguration<256, 8192, 4096, 512, 1>;
-using FT25H16JEDECID = JEDECFlashID<0xBF, 0x25, 0x41>; // THIS IS NOT CORRECT
 
 } /*namespace drivers*/
 } /*namespace chandra*/

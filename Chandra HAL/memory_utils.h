@@ -7,7 +7,7 @@ namespace utils
 {
 
 using ByteIterator = uint8_t *;
-using ConstByteIterator = const uint8_t*;
+using ConstByteIterator = const uint8_t *;
 
 template<class T>
 class ByteReadWriteWrapper
@@ -16,12 +16,12 @@ class ByteReadWriteWrapper
         ByteReadWriteWrapper(T& _ref) : ref_(static_cast<void*>(&_ref)) {}
 
         constexpr ByteIterator begin() const { return static_cast<ByteIterator>(ref_); }
-        constexpr ByteIterator end() const { return begin() + size() + 1; }
+        constexpr ByteIterator end() const { return begin() + size(); } // + 1; }
         constexpr size_t size() const { return sizeof(T); }
 
         template<class IterType>
         constexpr bool isLast(IterType _itr) const {
-          return (begin() + size()) == static_cast<ByteIterator>(_itr);
+          return (end() - 1) == static_cast<ByteIterator>(_itr);
         }
 
     private:
@@ -35,12 +35,12 @@ class ByteReadWrapper
         ByteReadWrapper(const T& _ref) : ref_(static_cast<const void*>(&_ref)) {}
 
         constexpr ConstByteIterator begin() const { return static_cast<ConstByteIterator>(ref_); }
-        constexpr ConstByteIterator end() const { return begin() + size() + 1; }
+        constexpr ConstByteIterator end() const { return begin() + size(); } // + 1; }
         constexpr size_t size() const { return sizeof(T); }
 
         template<class IterType>
         constexpr bool isLast(const IterType _itr) const {
-          return (begin() + size()) == static_cast<ConstByteIterator>(_itr);
+          return (end() - 1) == static_cast<ConstByteIterator>(_itr);
         }
 
     private:

@@ -182,12 +182,20 @@ class RFM9xLoRa
 		template<class Rep>
 		bool center_frequency(const chandra::units::mks::Q_Hz<Rep> _f_rf) {
 			const Rep f_osc{32e6};
-			const uint32_t frf{((1 << 19) * _f_rf.value()) / f_osc};
+			const uint32_t frf{
+				static_cast<uint32_t>(
+					static_cast<uint64_t>((1 << 19) * _f_rf.value()) / static_cast<uint64_t>(f_osc)
+				)
+			};
 			const auto last_mode = get_mode();
 			if((last_mode != Sleep) and (last_mode != Standby)) {
 				standby();
 			}
-			const uint8_t data[3] = {((frf >> 16) & 0xFF), ((frf >> 8) & 0xFF), (frf & 0xFF)};
+			const uint8_t data[3] = {
+				static_cast<uint8_t>((frf >> 16) & 0xFF),
+				static_cast<uint8_t>((frf >> 8) & 0xFF),
+				static_cast<uint8_t>(frf & 0xFF)
+			};
 			regs.writebytes(RegFreqH, 3, data);
 			set_mode(last_mode);
 

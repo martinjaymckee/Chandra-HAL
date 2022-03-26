@@ -1,12 +1,12 @@
 #ifndef CHANDRA_SPI_FLASH_25_SERIES_H
 #define CHANDRA_SPI_FLASH_25_SERIES_H
 
+#include <algorithm>
 #include <chrono>
 using namespace std::literals::chrono_literals;
 
 #include <chrono.h>
 #include <flash_utils.h>
-#include <memory_utils.h>
 #include <spi.h>
 
 namespace chandra
@@ -47,7 +47,7 @@ class SPIFlash25Series
         }
 
         bool valid() {
-          return bool(id());
+          return bool(static_cast<const derived_t *>(this)->id());
         }
 
         //
@@ -108,32 +108,31 @@ class SPIFlash25Series
         //
         //  Read
         //      --> Buffer With Explicit Length
-        template<typename Value, size_t N>
-        AddressRange read(const size_t& _addr, Value (&buffer)[N], const size_t& _values) const {
-            if(!(valid_addr_range(_addr, sizeof(Value), _values) and (N >= _values))) return {};
+        template<size_t N>
+        AddressRange read(const size_t& _addr, uint8_t (&buffer)[N], const size_t& _values) const {
+            if(!(valid_addr_range(_addr, 1, _values) and (N >= _values))) return {};
             static_cast<const derived_t *>(this)->block();
             return readUnprotected(_addr, &buffer[0], _values);
         }
 
         //      --> Direct Buffer
-        template<typename Value, size_t N>
-        AddressRange read(const size_t& _addr, Value (&buffer)[N]) const {
-            return read(_addr, &buffer[0], N);
+        template<size_t N>
+        AddressRange read(const size_t& _addr, uint8_t (&buffer)[N]) const {
+            return read(_addr, buffer, N);
         }
 
-        //      --> Single Value
-        template<typename Value>
-        AddressRange read(const size_t& _addr, Value& _val) const {
-            if(!valid_addr_range(_addr, sizeof(Value), 1)) return {};
+        //      --> Single Byte
+        AddressRange read(const size_t& _addr, uint8_t& _val) const {
+            if(!valid_addr_range(_addr, 1, 1)) return {};
             static_cast<const derived_t *>(this)->block();
             return readUnprotected(_addr, &_val, 1);
         }
 
         //  Write
         //      --> Buffer With Explicit Length
-        template<typename Value, size_t N>
-        AddressRange write(const size_t& _addr, const Value (&buffer)[N], const size_t& _values) const {
-            if(!(valid_addr_range(_addr, sizeof(Value), _values) and (N >= _values))) return {};
+        template<size_t N>
+        AddressRange write(const size_t& _addr, const uint8_t (&buffer)[N], const size_t& _values) const {
+            if(!(valid_addr_range(_addr, 1, _values) and (N >= _values))) return {};
             static_cast<const derived_t *>(this)->block();
             static_cast<const derived_t *>(this)->wren();
             while(!static_cast<const derived_t *>(this)->wel()){}
@@ -141,15 +140,14 @@ class SPIFlash25Series
         }
 
         //      --> Direct Buffer
-        template<typename Value, size_t N>
-        AddressRange write(const size_t& _addr, const Value (&buffer)[N]) const {
+        template<size_t N>
+        AddressRange write(const size_t& _addr, const uint8_t (&buffer)[N]) const {
             return write(_addr, buffer, N);
         }
 
-        //      --> Single Value
-        template<typename Value>
-        AddressRange write(const size_t& _addr, const Value& _val) {
-            if(!valid_addr_range(_addr, sizeof(Value), 1)) return {};
+        //      --> Single Byte
+        AddressRange write(const size_t& _addr, const uint8_t& _val) {
+            if(!valid_addr_range(_addr, 1, 1)) return {};
             static_cast<const derived_t *>(this)->block();
             static_cast<const derived_t *>(this)->wren();
             while(!static_cast<const derived_t *>(this)->wel()){}
@@ -226,33 +224,37 @@ class SPIFlash25Series
           return byte;
         }
 
-        bool init_write_byte(const size_t& _addr) const {
-            return false;
-        }
-
-        bool write_byte(const uint8_t _byte) const {
-          return false;
-        }
-
         bool init_write_stream(const size_t& _addr) const {
+            const uint8_t cmd[4] = {
+                0x02,
+                static_cast<uint8_t>((_addr&0xFF0000)>>16),
+                static_cast<uint8_t>((_addr&0x00FF00)>>8),
+                static_cast<uint8_t>(_addr&0x0000FF)
+            };
+
+            wren();
+            spi_.tx(cmd, 4, cs_, chandra::io::SPI::START);
             return false;
         }
 
         bool write_stream_byte(const uint8_t _byte, const bool _close) const {
+          spi_.tx(&_byte, 1, cs_, _close ? chandra::io::SPI::STOP : chandra::io::SPI::PASS);
           return false;
         }
 
-        constexpr bool valid_addr_range(const size_t& _addr, const uint8_t _bytes, const size_t _N) const {
+        constexpr bool valid_addr_range(const size_t& _addr, const size_t _bytes, const size_t _N) const {
           if(!range_checked) {
             return true;
           } else {
             const auto end = flash_configuration_t::memoryExtents().end;
-            if( (_addr < end) and ((end-_addr) >= (_bytes*_N))) return true;
+            if( (_addr < end) and ((end-_addr) >= (_bytes*_N))) {
+              return true;
+            }
             return false;
           }
         }
 
-        constexpr bool valid_wrapped_addr_range(const size_t& _addr, const uint8_t _bytes, const size_t _N) const {
+        constexpr bool valid_wrapped_addr_range(const size_t& _addr, const size_t _bytes, const size_t _N) const {
           if(!range_checked) {
             return true;
           } else {
@@ -260,51 +262,33 @@ class SPIFlash25Series
           }
         }
 
-        //
-        // TODO: MODULARIZE READ ALGORITHM AND WRITE ALGORITHM
-        // TODO: GENERALIZE SO THAT IT IS POSSIBLE FOR VALUE TO BE NON-BYTE SIZED
-        //
-        template<typename Value>
-        AddressRange readUnprotected(const size_t& addr, Value* buffer, const size_t& remaining) const {
+        AddressRange readUnprotected(const size_t& addr, uint8_t* buffer, const size_t& remaining) const {
             static_cast<const derived_t *>(this)->init_read(addr);
+            uint8_t * p = buffer;
             for(size_t ele=0; ele < remaining; ++ele) {
-                chandra::utils::ByteReadWriteWrapper<Value> io_wrapper(buffer[ele]);
-                for(auto& byte : io_wrapper) {
-                    byte = static_cast<const derived_t *>(this)->read_byte(io_wrapper.isLast(&byte));
-                    (void) byte;
-                }
+              *p = static_cast<const derived_t *>(this)->read_byte(ele >= (remaining - 1));
+              ++p;
             }
 
-            return {addr, addr + (remaining * sizeof(Value))};
+            return {addr, (addr + remaining)};
         }
 
-        // HACK: THIS IS USING A BYTE-WISE WRITE METHOD THAT SHOULDN'T REALLY BE USED FOR EFFICIENCY....
-        // HACK: THIS IS NOT USING AN EXTENSIBLE API, THE SPI CODE IS DIRECTLY IN THE IMPLEMENTATION
-        template<typename Value>
-        AddressRange writeUnprotected(size_t addr, const Value* buffer, size_t remaining) const {
+        AddressRange writeUnprotected(size_t addr, const uint8_t* _buffer, const size_t num_bytes) const {
           const size_t start = addr;
-          //static_cast<const derived_t *>(this)->init_write_stream(addr);
-          for(size_t ele=0; ele < remaining; ++ele) {
-              chandra::utils::ByteReadWrapper<Value> out_wrapper(buffer[ele]);
-              for(const auto& byte : out_wrapper) {
-                  //const bool close = (ele == (remaining - 1)) and io_wrapper.isLast(&byte);
-                  //static_cast<const derived_t *>(this)->write_stream_byte(byte, close);
-                  const uint8_t data[5] = {
-                      0x02,
-                      static_cast<uint8_t>((addr&0xFF0000)>>16),
-                      static_cast<uint8_t>((addr&0x00FF00)>>8),
-                      static_cast<uint8_t>(addr&0x0000FF),
-                      byte
-                  };
-                  static_cast<const derived_t *>(this)->wren();
-                  while(!static_cast<const derived_t *>(this)->wel()){}
-                  spi_.tx(data, 5, cs_, chandra::io::SPI::WRAP);
-                  static_cast<const derived_t *>(this)->block();
-                  ++addr;
-              }
+          size_t total = 0;
+          size_t page_num = addr / flash_configuration_t::pageSize();
+          while(total < num_bytes) {
+            ++page_num;
+            const size_t next_page_addr = (page_num * flash_configuration_t::pageSize());
+            const size_t bytes_on_page = std::min((next_page_addr-addr), flash_configuration_t::pageSize());
+            static_cast<const derived_t *>(this)->init_write_stream(addr);
+            for(size_t num = 0; num < bytes_on_page; ++num) {
+              static_cast<const derived_t *>(this)->write_stream_byte(*(_buffer + total), (num >= (bytes_on_page - 1)));
+              ++total;
+            }
+            addr += bytes_on_page;
           }
-
-          return {start, start + (remaining * sizeof(Value))};
+          return {start, start + num_bytes};
         }
 
         chandra::io::SPIMaster& spi_;
