@@ -1,9 +1,13 @@
 #ifndef CHANDRA_BMX160_H
 #define CHANDRA_BMX160_H
 
+#include <chrono>
+#include <cstddef>
+using namespace std::literals::chrono_literals;
 
 #include "chrono.h"
 #include "inertial.h"
+#include "math_conversions.h"
 #include "register_device.h"
 #include "sensor_utils.h"
 #include "spi.h"
@@ -28,6 +32,25 @@ class BMX160ImplBase : public chandra::drivers::internal::BaseInertialProxyImpl<
 
     BMX160ImplBase(const register_access_t& _regs, const scalar_t& _scale)
       : regs_(_regs), scale_(_scale) {}
+
+    // Command Definitions
+    enum class cmds_t : uint8_t {
+      START_FOC = 0x03,
+      ACCEL_SET_PMU_STANDBY = (0x10 | 0b00),
+      ACCEL_SET_PMU_NORMAL = (0x10 | 0b01),
+      ACCEL_SET_PMU_LOW = (0x10 | 0b10),
+      GYRO_SET_PMU_STANDBY = (0x14 | 0b00),
+      GYRO_SET_PMU_NORMAL = (0x14 | 0b01),
+      GYRO_SET_PMU_FAST = (0x14 | 0b11),
+      MAG_SET_PMU_STANDBY = (0x18 | 0b00),
+      MAG_SET_PMU_NORMAL = (0x18 | 0b01),
+      MAG_SET_PMU_LOW = (0x18 | 0b10),
+      PROG_NVM = 0xA0,
+      FLUSH_FIFO = 0xB0,
+      RESET_INT = 0xB1,
+      CLEAR_STEP_CNT = 0xB2,
+      SOFT_RESET = 0xB6
+    };
 
     // Register Addresses
     enum registers_t {
@@ -233,6 +256,7 @@ class BMX160
     protected:
         using register_access_t = chandra::drivers::RegisterDevice<Comm>;
         using registers_t = typename internal::BMX160ImplBase<Value, AccelUnits, Comm>::registers_t;
+        using cmds_t = typename internal::BMX160ImplBase<Value, AccelUnits, Comm>::cmds_t;
 
     public:
         friend class AccelGyroMag<BMX160<Value, Comm, AccelUnits, GyroUnits, MagUnits, TempUnits>, Value, internal::BMX160AccelImpl<Value, AccelUnits, Comm>, internal::BMX160GyroImpl<Value, GyroUnits, Comm>, internal::BMX160MagImpl<Value, MagUnits, Comm>, 3, AccelUnits, GyroUnits, MagUnits>;
@@ -245,11 +269,90 @@ class BMX160
         BMX160(register_access_t _regs) : base_t(_regs), regs_(_regs) {}
 
         bool init() {
+          regs_.write(registers_t::CMD, uint8_t(cmds_t::SOFT_RESET));
+          chandra::chrono::delay(500us);
+          regs_.write(registers_t::CMD, uint8_t(cmds_t::RESET_INT));
+          chandra::chrono::delay(500us);
+
           enable(true);
+
+          // Configure Accelerometer
+          regs_.write(registers_t::ACCEL_RANGE, static_cast<uint8_t>(0b1100)); // +/- 16 g
+          accel_scale_ = 9.80665 * 16.0 / 32767.0;
+          regs_.write(registers_t::ACCEL_CONFIG, static_cast<uint8_t>(0b00101011)); // ODR = 800, OSR = 4, BW ~ 81 Hz (65Hz on Z)
+
+          // Configure Gyroscope
+          regs_.write(registers_t::GYRO_RANGE, static_cast<uint8_t>(0)); // +/- 2000 deg/s
+          gyro_scale_ = chandra::math::radians(2000.0) / 32767.0;
+          regs_.write(registers_t::GYRO_CONFIG, static_cast<uint8_t>(0b00101011)); // ODR = 800, OSR = 4, BW ~ 63 Hz
+
+          // Configure Magnetometer
+          mag_scale_ = 1;
+
+          // Configure Temperature
+          temp_scale_ = 0.002;
+          temp_offset_ = 23;
+
           return valid();
         }
 
-        bool enable(bool) {
+        bool enable(bool _enable) {
+            if(_enable) {
+              // Set Acclerometer to Normal Mode
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::ACCEL_SET_PMU_NORMAL));
+              chandra::chrono::delay(380ms);
+
+              // Set Gyro to Normal Mode
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::GYRO_SET_PMU_NORMAL));
+              chandra::chrono::delay(80ms);
+
+              // Set Mag to Normal Mode and Enable
+              //	Enable Mag Interface
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::MAG_SET_PMU_NORMAL));
+              chandra::chrono::delay(500us);
+              //	Enter Manual Control Mode
+              regs_.write(registers_t::MAG_IF_0, uint8_t(0x80));
+              chandra::chrono::delay(50ms);
+              //	Power Up Mag
+              regs_.write(registers_t::MAG_IF_3, uint8_t(0x01)); // Power On
+              regs_.write(registers_t::MAG_IF_2, uint8_t(0x4B)); // Write ADDR -> Power Control Register
+              //	Set Repetitions
+              regs_.write(registers_t::MAG_IF_3, uint8_t(0x04)); // Rep.  X/Y = 9 (1+2*REP)
+              regs_.write(registers_t::MAG_IF_2, uint8_t(0x51)); // Write ADDR -> REPXY Register
+              regs_.write(registers_t::MAG_IF_3, uint8_t(0x0E)); // Rep.  Z = 15 (1+REP)
+              regs_.write(registers_t::MAG_IF_2, uint8_t(0x52)); // Write ADDR -> REPZ Register
+              //	Sampling Mode
+//              regs_.write(registers_t::MAG_IF_3, uint8_t(0x02)); // ODR = Default (10Hz), Forced Mode
+              regs_.write(registers_t::MAG_IF_3, uint8_t(0b00111000)); // ODR = 30Hz, Normal Mode
+              regs_.write(registers_t::MAG_IF_2, uint8_t(0x4C)); // Configuration Register
+              regs_.write(registers_t::MAG_IF_1, uint8_t(0x42)); // Read ADDR -> mx (low) *** TODO: CHECK IF THIS IS NECESSARY ***
+              regs_.write(registers_t::MAG_CONFIG, uint8_t(0x08)); // MAG ODR = 100 Hz
+              //	Exit Manual Control Mode
+              regs_.write(registers_t::MAG_IF_0, uint8_t(0x03)); // Set Readout Burst -> 6 Bytes
+              chandra::chrono::delay(50ms);
+
+              // Configure Fast Offset Calibration
+              regs_.write(registers_t::FOC_CONFIG, uint8_t(0x40)); // Enable Calibration of Gyro only
+
+              // Run Fast Offset Calibration
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::START_FOC));
+              chandra::chrono::delay(250ms); // WAIT WHILE FOC_RDY BIT IN STATUS REGISTER IS "0" TO DO IT BETTER THAN JUST DELAYING
+
+              // Enable Offset Correction
+              regs_.update(registers_t::GYRO_OFFSET_ADDITIONAL, uint8_t(0xC0), uint8_t(0xC0));
+            } else {
+              // Set Acclerometer to Standby
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::ACCEL_SET_PMU_STANDBY));
+              chandra::chrono::delay(380us);
+
+              // Set Gyro to Standby
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::GYRO_SET_PMU_STANDBY));
+              chandra::chrono::delay(80ms);
+
+              // Set Mag to Standby
+              regs_.write(registers_t::CMD, uint8_t(cmds_t::MAG_SET_PMU_STANDBY));
+              chandra::chrono::delay(500us);
+            }
 
             return true;
         }
@@ -261,14 +364,68 @@ class BMX160
         bool valid() const { return id() == 0xD8; }
 
         status_t update() {
-            status_t status;
-            return status;
+          status_t status;
+          uint8_t buffer[20];
+
+          // Read Temperature Bytes
+          regs_.bytes(registers_t::TEMP_L, 2, buffer);
+          const auto T_raw = buffer_to_signed<scalar_t>(buffer, 1, 0);
+          this->temp_raw_ = (temp_scale_ * T_raw) + temp_offset_;
+
+          // Read IMU Data
+          regs_.bytes(registers_t::MAG_X_L, 20, buffer);
+
+          // Assemble Raw Values
+          const auto ax = buffer_to_signed<scalar_t>(buffer, 15, 14);
+          const auto ay = buffer_to_signed<scalar_t>(buffer, 17, 16);
+          const auto az = buffer_to_signed<scalar_t>(buffer, 19, 18);
+          this->accel_raw_ = accel_scale_ * value_t{ax, ay, az};
+
+          const auto gx = buffer_to_signed<scalar_t>(buffer, 9, 8);
+          const auto gy = buffer_to_signed<scalar_t>(buffer, 11, 10);
+          const auto gz = buffer_to_signed<scalar_t>(buffer, 13, 12);
+          this->gyro_raw_ = gyro_scale_ * value_t{gx, gy, gz};
+
+          const auto rhall = buffer_to_signed<scalar_t>(buffer, 7, 6);
+          const auto mx = buffer_to_signed<scalar_t>(buffer, 1, 0);
+          const auto my = buffer_to_signed<scalar_t>(buffer, 3, 2);
+          const auto mz = buffer_to_signed<scalar_t>(buffer, 5, 4);
+          this->mag_raw_ = mag_scale_ * value_t{mx, my, mz};
+
+          status.calculated = true;
+      	  status.processed = true;
+//      	  const auto s = regs_.byte(registers_t::PMU_STATUS);
+          return status;
         }
+
+    protected:
+      template<size_t N, class Index>
+      auto buffer_to_uint16(uint8_t (&_buffer)[N], Index _idx_h, Index _idx_l) {
+          return (static_cast<uint16_t>(_buffer[_idx_h]) << 8) | _buffer[_idx_l];
+      }
+
+      template<size_t N, class Index>
+      auto buffer_to_int16(uint8_t (&_buffer)[N], Index _idx_h, Index _idx_l) {
+          return static_cast<int16_t>(buffer_to_uint16<N, Index>(_buffer, _idx_h, _idx_l));
+      }
+
+      template<class Dest, size_t N, class Index>
+      auto buffer_to_unsigned(uint8_t (&_buffer)[N], Index _idx_h, Index _idx_l) {
+        return static_cast<Dest>(buffer_to_uint16<N, Index>(_buffer, _idx_h, _idx_l));
+      }
+
+      template<class Dest, size_t N, class Index>
+      auto buffer_to_signed(uint8_t (&_buffer)[N], Index _idx_h, Index _idx_l) {
+        return static_cast<Dest>(buffer_to_int16<N, Index>(_buffer, _idx_h, _idx_l));
+      }
 
     private:
         register_access_t regs_;
         scalar_t accel_scale_;
         scalar_t gyro_scale_;
+        scalar_t mag_scale_;
+        scalar_t temp_scale_;
+        scalar_t temp_offset_;
 };
 
 } /*namespace drivers*/

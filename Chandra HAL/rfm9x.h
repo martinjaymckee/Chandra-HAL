@@ -236,13 +236,16 @@ class RFM9xLoRa
 		template<uint8_t N>
 		bool rx(uint8_t (&_msg)[N]) {
 			// Set FIFO Base Address
-			const uint8_t addr = regs.byte(RegFIFORxBaseAddr);
+			const uint8_t addr = regs.byte(RegFIFORxCurrentAddr);
 			regs.write(RegFIFOAddrPtr, addr);
 
-			// Load FIFO
-			const auto message_size = regs.byte(RegRxPayloadBytes);
+			// Load From FIFO
+			const auto message_size = available();
 			if(message_size > N) return false;
 			regs.bytes(RegFIFO, N, _msg);
+
+			// Reposition Rx Pointer
+			regs.write(RegFIFORxCurrentAddr, static_cast<uint8_t>(addr - N));
 
 			return true;
 		}

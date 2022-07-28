@@ -37,6 +37,7 @@ struct JEDECFlashID
     }
 };
 
+// TODO: NEED TO REMOVE PAGES FROM THE CONFIGURATION AND CALCULATE NUMBER OF PAGES FROM THE CAPACITY AND PAGE SIZE, CAPACITY FROM THE SECTOR SIZE AND NUMBER OF SECTORS
 template<size_t PageSize=256, size_t Pages=8192, size_t SectorSize=4096,
   size_t Sectors=512, size_t AccessBytes=1>
 struct FlashConfiguration
@@ -50,15 +51,14 @@ struct FlashConfiguration
   static constexpr size_t sectors() { return Sectors; }
   static constexpr size_t accessBytes() { return AccessBytes; }
   static constexpr size_t capacity() { return sectors() * sectorSize(); }
+
   static constexpr AddressRange sectorExtents(const size_t& _sector) {
       const size_t start = _sector * sectorSize();
       return {start, start+sectorSize()-1};
   }
-  static constexpr size_t memoryBytes() {
-    return sectors()*sectorSize();
-  }
+
   static constexpr AddressRange memoryExtents() {
-    return {0, memoryBytes()-1};
+    return {0, capacity()-1};
   }
 };
 

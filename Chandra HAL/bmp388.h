@@ -367,7 +367,6 @@ class BMP388
     status_t update(const bool& _update, const bool& _forced) {
     	status_t status;
     	uint8_t buffer[7];
-      // Check if new data is available by reading INT_STATUS
 
       bool data_available = _update;
       if(!_forced) {

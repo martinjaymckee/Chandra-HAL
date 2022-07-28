@@ -88,6 +88,11 @@ class ADC
 												updated(_other.updated),
 												value(static_cast<V>(_other.value)) {}
 
+											operator bool() const { return updated; }
+
+											template<class T>
+											operator T() const { return static_cast<T>(value); }
+											
 											bool updated{false};
 											V value{0};
 								};

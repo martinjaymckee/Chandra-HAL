@@ -75,6 +75,16 @@ class SPIFlash25Series
         }
 
         //
+        // Properties Access
+        //
+        static constexpr size_t pageSize() { return flash_configuration_t::pageSize(); }
+        static constexpr size_t pages() { return flash_configuration_t::pages(); }
+        static constexpr size_t sectorSize() { return flash_configuration_t::sectorSize(); }
+        static constexpr size_t sectors() { return flash_configuration_t::sectors(); }
+        static constexpr size_t accessBytes() { return flash_configuration_t::accessBytes(); }
+        static constexpr size_t capacity() { return flash_configuration_t::capacity(); }
+
+        //
         // Control Methods
         //
         // Write Protect
@@ -277,6 +287,7 @@ class SPIFlash25Series
           const size_t start = addr;
           size_t total = 0;
           size_t page_num = addr / flash_configuration_t::pageSize();
+
           while(total < num_bytes) {
             ++page_num;
             const size_t next_page_addr = (page_num * flash_configuration_t::pageSize());

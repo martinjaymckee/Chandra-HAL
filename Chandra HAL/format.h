@@ -104,12 +104,18 @@ struct Decimal
 		char temp[24];
 		size_t bytes_written = 0;
 
+    if(_val == value_t{0}) {
+      _buffer[0] = '0';
+      _buffer[1] = '\0';
+      return 1;
+    }
+
 		char* _str = _buffer;
 		static constexpr value_t frac_mult = meta::pow10<_digits>::value;
 		const bool negative = _val < 0.0;
 		_val = fabs(_val);
 		const unsigned long whole = static_cast<unsigned long>(_val);
-		const unsigned long fractional = static_cast<unsigned long>((_val-whole)*frac_mult);
+		unsigned long fractional = static_cast<unsigned long>((_val-whole)*frac_mult);
 
 		if(negative) {
 			*_str = '-';
@@ -119,6 +125,12 @@ struct Decimal
 
 		bytes_written += Unsigned<unsigned long, 24>::encode(whole, _str, temp);
 		_str = _buffer+bytes_written;
+
+    if(fractional == 0){
+			*_str = '\0';
+			return bytes_written;
+		}
+
 		*_str = '.'; ++_str;
 		unsigned int place = static_cast<unsigned int>(frac_mult/10);
 		while(fractional < place) {
@@ -127,10 +139,14 @@ struct Decimal
 			++bytes_written;
 		}
 
-		if(fractional == 0){
-			*_str = '\0';
-			return bytes_written;
-		}
+    while(fractional > 1) {
+      if((fractional % 10) == 0) {
+        fractional /= 10;
+      } else {
+        break;
+      }
+    }
+
 		return (bytes_written + Unsigned<unsigned long, 24>::encode(fractional, _str, temp));
 	}
 };

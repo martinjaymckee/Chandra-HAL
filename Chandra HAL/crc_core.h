@@ -3,14 +3,14 @@
 
 #include <utility>
 
+
+#include "stream.h"
+
 namespace chandra
 {
 
 namespace internal
 {
-
-template<class T>
-struct TD;
 
 template <typename T>
 struct has_optimized_16
