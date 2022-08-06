@@ -15,7 +15,6 @@ class DebugStream : public Stream<DebugStream>
       return true;
     }
 };
-
 } /*namespace chandra*/
 
 #endif /*CHANDRA_DEBUG_STREAM_H*/
