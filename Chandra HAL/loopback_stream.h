@@ -59,8 +59,8 @@ class LoopbackStream : public chandra::Stream< LoopbackStream<Echo, Processor> >
     }
 
     bool put(char _ch, bool _raw=false) {
-      processor_(_ch, processor_buffer_, _raw);
-      //echo_.put(_ch, _raw);
+      processor_(_ch, loopback_buffer_, _raw);
+      echo_.put(_ch, _raw);
       return true;
     }
 
@@ -74,6 +74,8 @@ class LoopbackStream : public chandra::Stream< LoopbackStream<Echo, Processor> >
 			_ch = read();
 			return *this;
 		}
+
+    auto& buffer() { return loopback_buffer_; }
 
   private:
     Processor& processor_;
