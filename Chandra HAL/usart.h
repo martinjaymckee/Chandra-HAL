@@ -36,7 +36,7 @@ namespace chandra
 namespace io
 {
 
-template<uint32_t tx_buffer_length = 128, uint32_t rx_buffer_length = tx_buffer_length, bool _timestamped=false>
+template<size_t tx_buffer_length = 128, size_t rx_buffer_length = tx_buffer_length, bool _timestamped=false>
 class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 {
 	protected:
@@ -89,6 +89,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 			//	Configure USART Interrupts
 			usart_->INTENSET = (1<<0);
+			NVIC_SetPriority(irq_num_, 0);//high priority
 			NVIC_EnableIRQ(irq_num_);
 
 			//	Initialize the USART Clock to a reasonable rate if it has not, already, been.
@@ -232,30 +233,32 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 		}
 
     bool sending() const { // not buffer empty or transmit active
-      return !tx_buffer_.empty() or ((usart_->STAT & (1<<3)) == 0);
+      return tx_buffer_.available() or ((usart_->STAT & (1<<3)) == 0);
     }
 
 		//
 		// Stream Functionality
 		//
 		bool put(char _ch, bool /*_raw*/ = false ) {
-//            NVIC_DisableIRQ(irq_num_);
-			waitForBuffer();
-            tx_buffer_ << _ch;
-//            NVIC_EnableIRQ(irq_num_);
+      // NVIC_DisableIRQ(irq_num_);
+			// waitForBuffer();
+			while(!tx_buffer_.enqueue(_ch)) { /*Wait for space in buffer*/}
+      // tx_buffer_.enqueue(_ch);
+      // NVIC_EnableIRQ(irq_num_);
 			prime_tx();
 			return true;
 		}
 
 		bool puts( const char* _str ) {
-//            NVIC_DisableIRQ(irq_num_);
+      // NVIC_DisableIRQ(irq_num_);
 			while( *_str ) {
-				waitForBuffer();
-				tx_buffer_ << *_str;
+				// waitForBuffer();
+				// tx_buffer_.enqueue(*_str);
+				while(!tx_buffer_.enqueue(*_str)) { /*Wait for space in buffer*/}
 				++_str;
+				prime_tx();
 			}
-//            NVIC_EnableIRQ(irq_num_);
-			prime_tx();
+      // NVIC_EnableIRQ(irq_num_);
 			return true;
 		}
 
@@ -272,9 +275,9 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 			if(tx_buffer_.available()){
 				while( !(usart_->STAT & (1<<2)) ) {} // Wait for TX Ready Flag
     #if defined(__LPC82X__) || defined(__LPC15XX__)
-				usart_->TXDATA = char(tx_buffer_);
+				usart_->TXDATA = tx_value_t(tx_buffer_);
     #elif defined(__LPC84X__)
-				usart_->TXDAT = char(tx_buffer_);
+				usart_->TXDAT = tx_value_t(tx_buffer_);
 		#endif
 				usart_->INTENSET = (1<<3) | (1<<2); // Enable the TX Ready and TX Idle Interrupts
 			} else {
@@ -285,7 +288,7 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
 
 		// TODO: THE RX ISR NEEDS TO BE MODIFIED TO HANDLE THE TIMESTAMPED CASE ALSO
 		//	SO THAT IT BECOMES POSSIBLE TO CONSTRUCT TIMESTAMPED VALUES
-    void rxISR(char _ch) { rx_buffer_ << encoder_t::encode(_ch); }
+    void rxISR(char _ch) { rx_buffer_.enqueue(encoder_t::encode(_ch)); }
 
     auto& rx_buffer() { return rx_buffer_; }
     auto& tx_buffer() { return tx_buffer_; }
@@ -409,13 +412,13 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
        b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
        return b;
     }
-
-    void waitForBuffer() const {
-			while(tx_buffer_.full()) {
-				// NVIC_EnableIRQ(irq_num_);
-			}
-			// NVIC_DisableIRQ(irq_num_);
-		}
+		//
+    // void waitForBuffer() const {
+		// 	while(tx_buffer_.full()) {
+		// 		// NVIC_EnableIRQ(irq_num_);
+		// 	}
+		// 	// NVIC_DisableIRQ(irq_num_);
+		// }
 
 		void prime_tx() {
 			if(usart_->STAT & (1<<2)) txISR();
@@ -560,11 +563,11 @@ class USART : public Stream< USART<tx_buffer_length, rx_buffer_length> >
     const chandra::io::IO tx_;
     const chandra::io::IO rx_;
     bool msb_first_;
-    FixedCircularBuffer<tx_value_t, tx_buffer_length> tx_buffer_;
-    FixedCircularBuffer<rx_value_t, rx_buffer_length> rx_buffer_;
+    BlockingFixedCircularBuffer<tx_value_t, tx_buffer_length> tx_buffer_;
+    BlockingFixedCircularBuffer<rx_value_t, rx_buffer_length> rx_buffer_;
 };
 
-template<uint32_t tx_buffer_length = 128, uint32_t rx_buffer_length = tx_buffer_length>
+template<size_t tx_buffer_length = 128, size_t rx_buffer_length = tx_buffer_length>
 using TimestampedUSART = USART<tx_buffer_length, rx_buffer_length, true>;
 
 } /*namespace io*/
