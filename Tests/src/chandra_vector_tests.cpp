@@ -7,10 +7,7 @@
 // Include Chandra Features to Test
 //
 #include <matrix_vectors.h>
-//#include <matrix_ops.h>
 #include <matrix_vector_ops.h>
-
-template<class T> struct TD;
 
 //
 // Vector Construction

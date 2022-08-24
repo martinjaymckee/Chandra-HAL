@@ -33,16 +33,17 @@ class Quantity
         using value_t = Value;
         using units_t = Units;
 
-        explicit Quantity() : val_{0} {}
+        constexpr explicit Quantity() : val_{0} {}
+
         template<class V>
-        explicit Quantity(V _val) : val_(static_cast<value_t>(_val)) {}
+        constexpr explicit Quantity(V _val) : val_(static_cast<value_t>(_val)) {}
 
         template<
           typename V,
           typename U,
           typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
         >
-        Quantity(const Quantity<V, U>& _other){
+        constexpr Quantity(const Quantity<V, U>& _other){
             val_ = units::convert<Value, Units, U>(_other.value());
         }
 
@@ -51,7 +52,7 @@ class Quantity
           typename U,
           typename is_convertible = typename std::enable_if<std::is_same<typename U::dimensions_t, typename Units::dimensions_t>::value, U>::type
         >
-        Quantity(const Quantity<V, U>&& _other){
+        constexpr Quantity(const Quantity<V, U>&& _other){
             val_ = units::convert<Value, Units, U>(_other.value());
         }
 

@@ -93,7 +93,7 @@ class Matrix
         //
 
         //  Default constructor does not initialize memory
-    		Matrix() = default;
+    		Matrix() {};
 
         constexpr Matrix(value_t _val) {
           for (index_t row = 0; row < Rows; ++row) {

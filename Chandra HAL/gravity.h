@@ -40,17 +40,29 @@ struct GravityConfig
 
 namespace internal
 {
-template<class Value> // NOTE: THIS IS USING THE WSG84 VALUES...
+// TODO: IMPLEMENT SELECTION OF ELLIPSOID FROM GRAVITY CONFIG MODEL MASK
+template<uint32_t Model>
+struct SelectGeoid
+{
+    constexpr static Geoid geoid = chandra::aero::Geoid::WGS84;
+};
+
+template<class Value, uint32_t Model> // NOTE: THIS IS USING THE WSG84 VALUES...
 struct GravitationalConstants
 {
   using value_t = Value;
   using angle_t = chandra::units::mks::Q_rad<value_t>;
+  using ellipsoid_t = chandra::aero::Ellipsoid<value_t, SelectGeoid<Model & GravityConfig::ModelMask>::geoid>;
 
   constexpr static value_t G{6.67408e-11}; // Gravitational Constant
   constexpr static value_t Me{5.9722e24}; // Mass of the Earth
-  constexpr static value_t Req{6378137}; // Equatorial radius of the Earth
-  constexpr static value_t Rpol{6356752.3142}; // Polar radius of the Earth
-  constexpr static value_t Ravg{6371008.8}; // Average radius of the Earth
+  // TODO: NEED TO ACUTALLY USE THE UNITS LIBRARY FOR THESE CONSTANTS....
+  constexpr static value_t Req{ellipsoid_t::a().value()}; // Equatorial radius of the Earth
+  constexpr static value_t Rpol{ellipsoid_t::b().value()}; // Polar radius of the Earth
+
+  // constexpr static value_t Req{6378137}; // Equatorial radius of the Earth
+  // constexpr static value_t Rpol{6356752.3142}; // Polar radius of the Earth
+  // constexpr static value_t Ravg{6371008.8}; // Average radius of the Earth
   constexpr static value_t GMe{3.986004418e14}; // Product of Geocentric Gravitational Constant
 
   constexpr static value_t g_eq{9.7803253359}; // Gravity at the equator
@@ -128,7 +140,7 @@ struct GravityModelImpl<Value, GravityConfig::WGS84>
     using angle_t = chandra::units::mks::Q_rad<value_t>;
     using length_t = chandra::units::mks::Q_m<value_t>;
     using acceleration_t = chandra::units::mks::Q_m_per_s2<value_t>;
-    using C = GravitationalConstants<Value>;
+    using C = GravitationalConstants<Value, GravityConfig::WGS84>;
 
     explicit GravityModelImpl(angle_t _lat, angle_t _long, length_t _h_asl) {
       update(_lat, _long, _h_asl);
@@ -177,7 +189,7 @@ class FreeAirCorrectionImpl<Value, GravityConfig::ApproxFreeAirCorrect>
     using angle_t = chandra::units::mks::Q_rad<Value>;
     using length_t = chandra::units::mks::Q_m<Value>;
     using acceleration_t = chandra::units::mks::Q_m_per_s2<Value>;
-    using C = GravitationalConstants<Value>;
+    using C = GravitationalConstants<Value, GravityConfig::WGS84>; // TODO: THE GEOID NEEDS TO BE SOURCED SOMEHOW.
 
     FreeAirCorrectionImpl(angle_t _lat) { update(_lat); }
 
@@ -202,7 +214,7 @@ class FreeAirCorrectionImpl<Value, GravityConfig::FreeAirCorrect>
     using length_t = chandra::units::mks::Q_m<Value>;
     using acceleration_t = chandra::units::mks::Q_m_per_s2<Value>;
     using value_t = Value;
-    using C = GravitationalConstants<value_t>;
+    using C = GravitationalConstants<Value, GravityConfig::WGS84>; // TODO: THE GEOID NEEDS TO BE SOURCED SOMEHOW.
 
     FreeAirCorrectionImpl(angle_t _lat) { update(_lat); }
 
@@ -496,7 +508,7 @@ template<
 using StandardGravity = Gravity<
                           Value,
                           VectorCoordinates,
-                          AdditionalFlags | GravityConfig::FreeAirCorrect,
+                          AdditionalFlags, // | GravityConfig::FreeAirCorrect,
                           AngleUnits,
                           LengthUnits,AccelerationUnits
                         >;
