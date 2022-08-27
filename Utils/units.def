@@ -1,5 +1,5 @@
 system mks # Define the Meters/Kilogram/Second system of units
-tolerance 1e-8 # Default Factor tolerence is 1ppm
+tolerance 1e-12
 
 #
 # Conversion Factors
@@ -10,9 +10,10 @@ let yd_conv = exact('0.9144')
 let ft_conv = exact('0.3048')
 let in_conv = exact('0.0254')
 
-let rev_conv = 0.31831
-let deg_conv = 0.01745329
-let grad_conv = 0.01570796
+let pi = 3.14159265358979323846
+let rev_conv = 1 / pi     # 0.31831
+let deg_conv = pi / 180   # 0.01745329
+let grad_conv = pi / 200  # 0.01570796
 
 #
 # Units of Mass

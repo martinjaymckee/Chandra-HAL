@@ -1590,7 +1590,7 @@ namespace mks
 //
     struct pdl
     {
-        using factor_t = std::ratio<66175, 9152>; // approx. 7.23066
+        using factor_t = std::ratio<361533, 50000>; // approx. 7.23066
         using dimensions_t = dimensions::Mass;
         using offset_t = std::ratio<0, 1>;
         using relative_t = pdl;
@@ -2427,7 +2427,7 @@ namespace mks
 //
     struct mi2
     {
-        using factor_t = std::ratio<23309893, 9>; // approx. 2.58999e+06
+        using factor_t = std::ratio<1854431487, 716>; // approx. 2.58999e+06
         using dimensions_t = dimensions::Area;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mi2;
@@ -4101,7 +4101,7 @@ namespace mks
 //
     struct BTU
     {
-        using factor_t = std::ratio<50, 52753>; // approx. 0.000947813
+        using factor_t = std::ratio<55912, 58990515>; // approx. 0.000947813
         using dimensions_t = dimensions::Energy;
         using offset_t = std::ratio<0, 1>;
         using relative_t = BTU;
@@ -5316,7 +5316,7 @@ namespace mks
 //
     struct mph
     {
-        using factor_t = std::ratio<8711, 19486>; // approx. 0.447039
+        using factor_t = std::ratio<4470389, 10000000>; // approx. 0.447039
         using dimensions_t = dimensions::Velocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mph;
@@ -6045,7 +6045,7 @@ namespace mks
 //
     struct dagees
     {
-        using factor_t = std::ratio<78159, 797>; // approx. 98.0665
+        using factor_t = std::ratio<196133, 2000>; // approx. 98.0665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dagees;
@@ -6072,7 +6072,7 @@ namespace mks
 //
     struct gees
     {
-        using factor_t = std::ratio<51024, 5203>; // approx. 9.80665
+        using factor_t = std::ratio<196133, 20000>; // approx. 9.80665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gees;
@@ -6099,7 +6099,7 @@ namespace mks
 //
     struct dgees
     {
-        using factor_t = std::ratio<6695, 6827>; // approx. 0.980665
+        using factor_t = std::ratio<196133, 200000>; // approx. 0.980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dgees;
@@ -6126,7 +6126,7 @@ namespace mks
 //
     struct cgees
     {
-        using factor_t = std::ratio<8739, 89113>; // approx. 0.0980665
+        using factor_t = std::ratio<196133, 2000000>; // approx. 0.0980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cgees;
@@ -6153,7 +6153,7 @@ namespace mks
 //
     struct mgees
     {
-        using factor_t = std::ratio<740, 75459>; // approx. 0.00980665
+        using factor_t = std::ratio<196133, 20000000>; // approx. 0.00980665
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mgees;
@@ -6180,7 +6180,7 @@ namespace mks
 //
     struct ugees
     {
-        using factor_t = std::ratio<66, 6730127>; // approx. 9.80665e-06
+        using factor_t = std::ratio<7428, 757445203>; // approx. 9.80665e-06
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ugees;
@@ -6207,7 +6207,7 @@ namespace mks
 //
     struct ngees
     {
-        using factor_t = std::ratio<7, 713801349>; // approx. 9.80665e-09
+        using factor_t = std::ratio<47, 4792666201>; // approx. 9.80665e-09
         using dimensions_t = dimensions::Acceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ngees;
@@ -6828,7 +6828,7 @@ namespace mks
 //
     struct dagees_per_s
     {
-        using factor_t = std::ratio<78159, 797>; // approx. 98.0665
+        using factor_t = std::ratio<196133, 2000>; // approx. 98.0665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dagees_per_s;
@@ -6855,7 +6855,7 @@ namespace mks
 //
     struct gees_per_s
     {
-        using factor_t = std::ratio<51024, 5203>; // approx. 9.80665
+        using factor_t = std::ratio<196133, 20000>; // approx. 9.80665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gees_per_s;
@@ -6882,7 +6882,7 @@ namespace mks
 //
     struct dgees_per_s
     {
-        using factor_t = std::ratio<6695, 6827>; // approx. 0.980665
+        using factor_t = std::ratio<196133, 200000>; // approx. 0.980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dgees_per_s;
@@ -6909,7 +6909,7 @@ namespace mks
 //
     struct cgees_per_s
     {
-        using factor_t = std::ratio<8739, 89113>; // approx. 0.0980665
+        using factor_t = std::ratio<196133, 2000000>; // approx. 0.0980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cgees_per_s;
@@ -6936,7 +6936,7 @@ namespace mks
 //
     struct mgees_per_s
     {
-        using factor_t = std::ratio<740, 75459>; // approx. 0.00980665
+        using factor_t = std::ratio<196133, 20000000>; // approx. 0.00980665
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mgees_per_s;
@@ -6963,7 +6963,7 @@ namespace mks
 //
     struct ugees_per_s
     {
-        using factor_t = std::ratio<66, 6730127>; // approx. 9.80665e-06
+        using factor_t = std::ratio<7428, 757445203>; // approx. 9.80665e-06
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ugees_per_s;
@@ -6990,7 +6990,7 @@ namespace mks
 //
     struct ngees_per_s
     {
-        using factor_t = std::ratio<7, 713801349>; // approx. 9.80665e-09
+        using factor_t = std::ratio<47, 4792666201>; // approx. 9.80665e-09
         using dimensions_t = dimensions::Jerk;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ngees_per_s;
@@ -7071,7 +7071,7 @@ namespace mks
 //
     struct rev
     {
-        using factor_t = std::ratio<31831, 100000>; // approx. 0.31831
+        using factor_t = std::ratio<1725033, 5419351>; // approx. 0.31831
         using dimensions_t = dimensions::PlaneAngle;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev;
@@ -7098,7 +7098,7 @@ namespace mks
 //
     struct deg
     {
-        using factor_t = std::ratio<1092, 62567>; // approx. 0.0174533
+        using factor_t = std::ratio<95534, 5473695>; // approx. 0.0174533
         using dimensions_t = dimensions::PlaneAngle;
         using offset_t = std::ratio<0, 1>;
         using relative_t = deg;
@@ -7125,7 +7125,7 @@ namespace mks
 //
     struct grad
     {
-        using factor_t = std::ratio<1497, 95302>; // approx. 0.015708
+        using factor_t = std::ratio<143301, 9122825>; // approx. 0.015708
         using dimensions_t = dimensions::PlaneAngle;
         using offset_t = std::ratio<0, 1>;
         using relative_t = grad;
@@ -7179,7 +7179,7 @@ namespace mks
 //
     struct rev_per_s
     {
-        using factor_t = std::ratio<31831, 100000>; // approx. 0.31831
+        using factor_t = std::ratio<1725033, 5419351>; // approx. 0.31831
         using dimensions_t = dimensions::AngularVelocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev_per_s;
@@ -7206,7 +7206,7 @@ namespace mks
 //
     struct deg_per_s
     {
-        using factor_t = std::ratio<1092, 62567>; // approx. 0.0174533
+        using factor_t = std::ratio<95534, 5473695>; // approx. 0.0174533
         using dimensions_t = dimensions::AngularVelocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = deg_per_s;
@@ -7233,7 +7233,7 @@ namespace mks
 //
     struct grad_per_s
     {
-        using factor_t = std::ratio<1497, 95302>; // approx. 0.015708
+        using factor_t = std::ratio<143301, 9122825>; // approx. 0.015708
         using dimensions_t = dimensions::AngularVelocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = grad_per_s;
@@ -7260,7 +7260,7 @@ namespace mks
 //
     struct rpm
     {
-        using factor_t = std::ratio<2323, 437875>; // approx. 0.00530517
+        using factor_t = std::ratio<42367, 7985988>; // approx. 0.00530517
         using dimensions_t = dimensions::AngularVelocity;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rpm;
@@ -7314,7 +7314,7 @@ namespace mks
 //
     struct rev_per_s2
     {
-        using factor_t = std::ratio<31831, 100000>; // approx. 0.31831
+        using factor_t = std::ratio<1725033, 5419351>; // approx. 0.31831
         using dimensions_t = dimensions::AngularAcceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = rev_per_s2;
@@ -7341,7 +7341,7 @@ namespace mks
 //
     struct deg_per_s2
     {
-        using factor_t = std::ratio<1092, 62567>; // approx. 0.0174533
+        using factor_t = std::ratio<95534, 5473695>; // approx. 0.0174533
         using dimensions_t = dimensions::AngularAcceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = deg_per_s2;
@@ -7368,7 +7368,7 @@ namespace mks
 //
     struct grad_per_s2
     {
-        using factor_t = std::ratio<1497, 95302>; // approx. 0.015708
+        using factor_t = std::ratio<143301, 9122825>; // approx. 0.015708
         using dimensions_t = dimensions::AngularAcceleration;
         using offset_t = std::ratio<0, 1>;
         using relative_t = grad_per_s2;

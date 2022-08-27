@@ -11,7 +11,7 @@
 using namespace chandra::units::mks::literals;
 
 //
-// Matrix Construction
+// Quantity Construction
 //
 	TEST_CASE( "Quantities are constructed", "[quantity]" ) {
 	using value_t = double;
@@ -29,7 +29,7 @@ using namespace chandra::units::mks::literals;
 }
 
 //
-// Matrix Construction
+// Quantity Conversion
 //
 TEST_CASE( "Quantities are converted", "[quantity]" ) {
 	using value_t = double;
@@ -53,5 +53,31 @@ TEST_CASE( "Quantities are converted", "[quantity]" ) {
 		const seconds_t t{1};
 		const m_per_s_t v{ 0.3048 };
 		REQUIRE( (v == (1_ft_/t)) );
+	};
+}
+
+//
+// Scalar Quantity Handling
+//
+TEST_CASE("Scalar quantity handling", "[quantity]") {
+	using value_t = double;
+	using meters_t = chandra::units::mks::Q_m<value_t>;
+	using ft_t = chandra::units::mks::Q_ft<value_t>;
+
+	SECTION("Create Scalar from meters and meters") {
+		const meters_t a{ 1 };
+		const meters_t b{ 2 };
+		const auto c = a / b;
+		REQUIRE((c == Approx(0.5)));
+//		REQUIRE(chandra::units::is_scalar_quantity(c));
+	};
+
+	SECTION("Create Scalar from meters and feet") {
+		const meters_t a{ 1 };
+		const ft_t b{ 1 };
+		const auto c = a / b;
+		CAPTURE(c);
+		REQUIRE((c == Approx(3.28083989501)));
+//		REQUIRE(chandra::units::is_scalar_quantity(c));
 	};
 }

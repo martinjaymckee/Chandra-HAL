@@ -190,6 +190,39 @@ class Quantity
         value_t val_;
 };
 
+//
+// Utilities
+//
+template<class V, class U>
+constexpr bool is_scalar_quantity(const Quantity<V, U>&) {
+    using scalar_t = chandra::units::dimensions::Dimensions<>;
+    using dimensions_t = typename U::dimensions_t;
+    return chandra::units::dimensions::DimensionsMatch<scalar_t, dimensions_t>::value;
+}
+
+template<class V, class U>
+struct is_scalar_quantity_struct
+{
+    using scalar_t = chandra::units::dimensions::Dimensions<>;
+    using dimensions_t = typename U::dimensions_t;
+    constexpr static bool value = chandra::units::dimensions::DimensionsMatch<scalar_t, dimensions_t>::value;
+};
+
+
+template<class V, class U>
+constexpr auto reduce_scalar(const Quantity<V, U>& _q) 
+    -> typename std::enable_if<!is_scalar_quantity_struct<V, U>::value, Quantity<V, U>>::type
+{
+    return _q;
+}
+
+template<class V, class U>
+constexpr auto reduce_scalar(const Quantity<V, U>& _q)
+    -> typename std::enable_if<is_scalar_quantity_struct<V, U>::value, V>::type
+{
+    return chandra::units::convert<V, ScalarUnits, U>(_q.value());
+}
+
 template<typename V1, typename U1, typename V2, typename U2>
 constexpr auto operator + (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULDN'T WORK IF BOTH ARE ABSOLUTE UNITS
@@ -220,7 +253,8 @@ constexpr auto operator * (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _
     using value_t = std::common_type_t<V1, V2>;
     using return_units_t = internal::MultUnits<U1, U2>;
     using return_t = Quantity<value_t, return_units_t>;
-    return return_t(_a.value() * _b.value());
+    const return_t result = return_t(_a.value() * _b.value());
+    return reduce_scalar(result);
 }
 
 template<typename V1, typename U1, typename Scalar, typename Valid = typename std::enable_if<std::is_fundamental<Scalar>::value, Scalar>::type>
@@ -254,7 +288,8 @@ constexpr auto operator / (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _
     using value_t = std::common_type_t<V1, V2>;
     using return_units_t = internal::DivUnits<U1, U2>;
     using return_t = Quantity<value_t, return_units_t>;
-    return return_t(_a.value() / _b.value());
+    const return_t result = return_t(_a.value() / _b.value());
+    return reduce_scalar(result);
 }
 
 template<typename V1, typename U1, typename Scalar, typename Valid = typename std::enable_if<std::is_fundamental<Scalar>::value, Scalar>::type>

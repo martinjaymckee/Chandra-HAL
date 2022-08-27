@@ -132,6 +132,14 @@ Value convert_scale(const Value& _v) {
 }
 } /*namespace internal*/
 
+struct ScalarUnits
+{
+    using dimensions_t = dimensions::Dimensions<>;
+    using factor_t = std::ratio<1, 1>;
+    using offset_t = std::ratio<0, 1>;
+    constexpr static bool absolute = false; // TODO: DECIDE IF THIS IS CORRECT
+};
+
 template<typename Value, typename Dest, typename Src, typename V2>
 constexpr Value convert(const V2& _val) {
     static_assert(
