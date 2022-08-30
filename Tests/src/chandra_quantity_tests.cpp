@@ -63,21 +63,35 @@ TEST_CASE("Scalar quantity handling", "[quantity]") {
 	using value_t = double;
 	using meters_t = chandra::units::mks::Q_m<value_t>;
 	using ft_t = chandra::units::mks::Q_ft<value_t>;
+	using meters_per_second_t = chandra::units::mks::Q_m_per_s<value_t>;
+	using seconds_t = chandra::units::mks::Q_s<value_t>;
 
 	SECTION("Create Scalar from meters and meters") {
 		const meters_t a{ 1 };
 		const meters_t b{ 2 };
-		const auto c = a / b;
+		const value_t c = a / b;
 		REQUIRE((c == Approx(0.5)));
-//		REQUIRE(chandra::units::is_scalar_quantity(c));
 	};
 
 	SECTION("Create Scalar from meters and feet") {
 		const meters_t a{ 1 };
 		const ft_t b{ 1 };
-		const auto c = a / b;
-		CAPTURE(c);
+		const value_t c = a / b;
 		REQUIRE((c == Approx(3.28083989501)));
-//		REQUIRE(chandra::units::is_scalar_quantity(c));
 	};
+
+	SECTION("Use Reduced scalar in an expression") {
+		const meters_t a{ 1 };
+		const meters_t b{ 2 };
+		const value_t c = 1 - (a / b);
+		REQUIRE((c == Approx(0.5)));
+	}
+
+	SECTION("Use Reduced scalar in a complex expression") {
+		const meters_t a{ 1 };
+		const meters_per_second_t b{ 2 };
+		const seconds_t c{ 10 };
+		const value_t d = b / (a / c);
+		REQUIRE((d == Approx(20)));
+	}
 }

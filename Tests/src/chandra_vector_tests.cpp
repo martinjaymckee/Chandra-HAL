@@ -95,6 +95,9 @@ TEST_CASE("4D vectors are constructed", "[vector]") {
 	};
 }
 
+template<class T>
+struct TD;
+
 //
 // Vector Operations
 //
@@ -102,6 +105,7 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 	using value_t = double;
 	using matrix_t = chandra::math::Matrix<value_t, 4, 1>;
 	using vector_t = chandra::math::Vector<value_t, 4>;
+	using row_vector_t = chandra::math::Vector<value_t, 4, false>;
 
 	SECTION("Assign-Add Test") {
 		vector_t a = vector_t::Count();
@@ -149,4 +153,18 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 //		REQUIRE(std::is_same_v<const vector_t, decltype(c)>);
 //		REQUIRE(((c.w == 1) && (c.x == 2) && (c.y == 3) && (c.z == 4)));
 	};
+
+	SECTION("Vector Transpose") {
+		const vector_t a = vector_t::Count();
+		const row_vector_t b = row_vector_t::Count();
+
+		const auto c = a.T();
+		const auto d = b.T();
+
+//		TD<decltype(c)> a;
+		REQUIRE(std::is_same_v<const row_vector_t, decltype(c)>);
+		REQUIRE(std::is_same_v<const vector_t, decltype(d)>);
+		REQUIRE(c == b);
+		REQUIRE(d == a);
+	}
 }

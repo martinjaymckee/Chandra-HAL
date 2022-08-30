@@ -107,7 +107,7 @@ class SPIMaster
         auto frequency(const units::mks::Q_Hz<uint32_t> _freq) {
             // Setup Clock Divisor
             const auto fspi = chrono::frequency::spi(num_);
-            const auto ratio = (fspi / _freq).value();
+            const auto ratio = fspi / _freq;
             const auto div = ratio > 1? ratio - 1 : 1;
             spi_->DIV = div;
 #if defined(__LPC84X__)

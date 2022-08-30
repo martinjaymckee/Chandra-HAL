@@ -42,9 +42,9 @@ namespace internal
 {
 // TODO: IMPLEMENT SELECTION OF ELLIPSOID FROM GRAVITY CONFIG MODEL MASK
 template<uint32_t Model>
-struct SelectGeoid
+struct SelectDatum
 {
-    constexpr static Geoid geoid = chandra::aero::Geoid::WGS84;
+    constexpr static Datum datum = chandra::aero::Datum::WGS84;
 };
 
 template<class Value, uint32_t Model> // NOTE: THIS IS USING THE WSG84 VALUES...
@@ -52,7 +52,7 @@ struct GravitationalConstants
 {
   using value_t = Value;
   using angle_t = chandra::units::mks::Q_rad<value_t>;
-  using ellipsoid_t = chandra::aero::Ellipsoid<value_t, SelectGeoid<Model & GravityConfig::ModelMask>::geoid>;
+  using ellipsoid_t = chandra::aero::Ellipsoid<value_t, SelectDatum<Model & GravityConfig::ModelMask>::datum>;
 
   constexpr static value_t G{6.67408e-11}; // Gravitational Constant
   constexpr static value_t Me{5.9722e24}; // Mass of the Earth
@@ -408,7 +408,7 @@ class ScalarGravityImpl
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates = chandra::aero::GeoidCoordinates::None,
+  class Frame = chandra::aero::frames::None,
   uint32_t Flags = GravityConfig::ApproxFreeAirCorrect,
   class AngleUnits = chandra::units::mks::rad,
   class LengthUnits = chandra::units::mks::m,
@@ -453,7 +453,7 @@ class VectorGravityImpl : public ScalarGravityImpl<Value, Flags, AngleUnits, Len
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates,
+  class Frame,
   uint32_t Flags,
   class AngleUnits,
   class LengthUnits,
@@ -461,7 +461,7 @@ template<
 >
 struct SelectGravityImpl
 {
-  using type = VectorGravityImpl<Value, VectorCoordinates, Flags, AngleUnits, LengthUnits, AccelerationUnits>;
+  using type = VectorGravityImpl<Value, Frame, Flags, AngleUnits, LengthUnits, AccelerationUnits>;
 };
 
 template<
@@ -471,7 +471,7 @@ template<
   class LengthUnits,
   class AccelerationUnits
 >
-struct SelectGravityImpl<Value, chandra::aero::GeoidCoordinates::None, Flags, AngleUnits, LengthUnits, AccelerationUnits>
+struct SelectGravityImpl<Value, chandra::aero::frames::None, Flags, AngleUnits, LengthUnits, AccelerationUnits>
 {
   using type = ScalarGravityImpl<Value, Flags, AngleUnits, LengthUnits, AccelerationUnits>;
 };
@@ -480,26 +480,26 @@ struct SelectGravityImpl<Value, chandra::aero::GeoidCoordinates::None, Flags, An
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates = chandra::aero::GeoidCoordinates::None,
+  class Frame = chandra::aero::frames::None,
   uint32_t Flags = GravityConfig::ApproxFreeAirCorrect,
   class AngleUnits = chandra::units::mks::rad,
   class LengthUnits = chandra::units::mks::m,
   class AccelerationUnits = chandra::units::mks::m_per_s2
 >
 class Gravity :public internal::SelectGravityImpl<
-    Value, VectorCoordinates, Flags, AngleUnits, LengthUnits, AccelerationUnits
+    Value, Frame, Flags, AngleUnits, LengthUnits, AccelerationUnits
   >::type
 {
 public:
   using base_t = typename internal::SelectGravityImpl<
-      Value, VectorCoordinates, Flags, AngleUnits, LengthUnits, AccelerationUnits
+      Value, Frame, Flags, AngleUnits, LengthUnits, AccelerationUnits
     >::type;
   using base_t::base_t;
 };
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates = chandra::aero::GeoidCoordinates::None,
+  class Frame = chandra::aero::frames::None,
   uint32_t AdditionalFlags = 0,
   class AngleUnits = chandra::units::mks::rad,
   class LengthUnits = chandra::units::mks::m,
@@ -507,7 +507,7 @@ template<
 >
 using StandardGravity = Gravity<
                           Value,
-                          VectorCoordinates,
+                          Frame,
                           AdditionalFlags, // | GravityConfig::FreeAirCorrect,
                           AngleUnits,
                           LengthUnits,AccelerationUnits
@@ -515,7 +515,7 @@ using StandardGravity = Gravity<
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates = chandra::aero::GeoidCoordinates::None,
+  class Frame = chandra::aero::frames::None,
   uint32_t AdditionalFlags = 0,
   class AngleUnits = chandra::units::mks::rad,
   class LengthUnits = chandra::units::mks::m,
@@ -523,7 +523,7 @@ template<
 >
 using IGFGravity = Gravity<
                       Value,
-                      VectorCoordinates,
+                      Frame,
                       AdditionalFlags | GravityConfig::IGF | GravityConfig::SlabCorrect | GravityConfig::CentripetalCorrect | GravityConfig::FreeAirCorrect,
                       AngleUnits,
                       LengthUnits,
@@ -532,7 +532,7 @@ using IGFGravity = Gravity<
 
 template<
   class Value,
-  chandra::aero::GeoidCoordinates VectorCoordinates = chandra::aero::GeoidCoordinates::None,
+  class Frame = chandra::aero::frames::None,
   uint32_t AdditionalFlags = 0,
   class AngleUnits = chandra::units::mks::rad,
   class LengthUnits = chandra::units::mks::m,
@@ -540,7 +540,7 @@ template<
 >
 using WGS84Gravity = Gravity<
                       Value,
-                      VectorCoordinates,
+                      Frame,
                       AdditionalFlags | GravityConfig::WGS84 | GravityConfig::SlabCorrect | GravityConfig::CentripetalCorrect | GravityConfig::FreeAirCorrect,
                       AngleUnits,
                       LengthUnits,

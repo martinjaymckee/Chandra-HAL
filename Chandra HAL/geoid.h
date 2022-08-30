@@ -7,14 +7,25 @@ namespace chandra
 {
 namespace aero
 {
-enum class GeoidCoordinates
+namespace frames
 {
-  None,
-  NEU,
-  ECEF
-};
+using None = void;
+struct NEU;
+struct NED;
+struct ECEF;
+struct Geodetic;
+struct Geocentric;
+} /*namespace frames*/
 
-enum class Geoid
+// 
+// enum class GeoidCoordinates
+// {
+//   None,
+//   NEU,
+//   ECEF
+// };
+
+enum class Datum
 {
   WGS84,
   GRS80
@@ -39,8 +50,8 @@ public:
 };
 } /*namespace internal*/
 
-template<class Value, Geoid GeoidDef = Geoid::WGS84>
-class Ellipsoid : public internal::EllipsoidBase<Ellipsoid<Value, GeoidDef>, Value>
+template<class Value, Datum DatumDef = Datum::WGS84>
+class Ellipsoid : public internal::EllipsoidBase<Ellipsoid<Value, DatumDef>, Value>
 {
   public:
     using value_t = Value;
@@ -51,7 +62,7 @@ class Ellipsoid : public internal::EllipsoidBase<Ellipsoid<Value, GeoidDef>, Val
 };
 
 template<class Value>
-class Ellipsoid<Value, Geoid::GRS80>
+class Ellipsoid<Value, Datum::GRS80>
 {
 public:
     using value_t = Value;

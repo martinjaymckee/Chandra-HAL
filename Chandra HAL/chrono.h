@@ -429,14 +429,17 @@ bool block_until(Func _func) {
 }
 
 template<class Func, class Clock = timestamp_clock>
-bool block_until(Func _func, const std::chrono::duration<uint32_t, std::micro>& _us, const std::chrono::time_point<Clock>& start = Clock::now()) {
-	const auto us = std::chrono::duration_cast<typename Clock::duration>(_us); // NOTE: Avoid conversions below. (it may be better to use the ceiling rounding mode
-	const auto end = start + us;
-	auto t = chandra::chrono::timestamp_clock::now();
+bool block_until(Func _func, const std::chrono::duration<uint32_t, std::micro>& _us, const std::chrono::time_point<Clock>& _start) {
+	const auto us = std::chrono::duration_cast<typename Clock::duration>(_us); // NOTE: Avoid conversions below. (it may be better to use the ceiling rounding mode)
 	while(!_func()) {
-		if(chandra::chrono::after(_us, t)) return false;
+		if(chandra::chrono::after(_us, _start)) return false;
 	}
 	return true;
+}
+
+template<class Func, class Clock = timestamp_clock>
+bool block_until(Func _func, const std::chrono::duration<uint32_t, std::micro>& _us) {
+	return block_until(_func, _us, Clock::now());
 }
 
 } /*namespace chrono*/

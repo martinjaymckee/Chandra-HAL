@@ -9,13 +9,20 @@
 #include "units.h"
 using namespace chandra::units::mks::literals;
 
-template<class T>
-struct TD;
 
 namespace chandra
 {
 namespace aero
 {
+namespace frames
+{
+using None = void;
+struct Body {};
+struct Geodetic {};
+struct ECEF {};
+struct NEU {};
+struct NED {};
+};
 
 template<class Value, class AngleUnits = chandra::units::mks::rad, class LengthUnits = chandra::units::mks::m>
 struct LLH
@@ -30,19 +37,19 @@ struct LLH
 
 
 template<class Value, class LengthUnits = chandra::units::mks::m>
-struct ECEF
-{
-    using length_t = chandra::units::Quantity<Value, LengthUnits>;
+using ECEF = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::ECEF>;
 
-    length_t x;
-    length_t y;
-    length_t z;
-};
+template<class Value, class LengthUnits = chandra::units::mks::m>
+using NEU = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::NEU>;
 
-template<class Value, class AngleUnits, class LengthUnits, Geoid GeoidDef = Geoid::WGS84>
+template<class Value, class LengthUnits = chandra::units::mks::m>
+using NED = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::NED>;
+
+
+template<class Value, class AngleUnits, class LengthUnits, Datum DatumDef = Datum::WGS84>
 auto LLHToECEF( const LLH<Value, AngleUnits, LengthUnits>& _llh ) -> ECEF<Value>
 {
-  using ellipsoid_t = chandra::aero::Ellipsoid<Value, GeoidDef>;
+  using ellipsoid_t = chandra::aero::Ellipsoid<Value, DatumDef>;
   using angle_t = chandra::units::mks::Q_rad<Value>;
   ECEF<Value, LengthUnits> xyz;
   const auto r = chandra::math::sincos<Value>(angle_t{_llh.latitude}.value());
@@ -63,7 +70,7 @@ Length calcN(const chandra::units::Quantity<V, AngleUnits>& _lat) {
 }
 } /*namespace internal*/
 
-template<class Value, class LengthUnits, Geoid GeoidDef = Geoid::WGS84, size_t MaxIters = 5>
+template<class Value, class LengthUnits, Datum DatumDef = Datum::WGS84, size_t MaxIters = 5>
 auto ECEFToLLH(
         const ECEF<Value, LengthUnits>& _ecef, 
         const chandra::units::mks::Q_m<Value>& _h_thresh = 1e-4_m_
@@ -75,7 +82,7 @@ auto ECEFToLLH(
     //  however, I don't have a test version of any other algorithms running
     //  properly yet. So, there's no particular rush.
     //
-    using ellipsoid_t = chandra::aero::Ellipsoid<Value, GeoidDef>;
+    using ellipsoid_t = chandra::aero::Ellipsoid<Value, DatumDef>;
     using rads_t = chandra::units::mks::Q_rad<Value>;
     using meter_t = chandra::units::mks::Q_m<Value>;
     LLH<Value, chandra::units::mks::rad, LengthUnits> llh;
