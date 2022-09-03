@@ -1,6 +1,8 @@
 #ifndef CHANDRA_BINARY_SERIALIZE_H
 #define CHANDRA_BINARY_SERIALIZE_H
 
+#include <type_traits>
+
 namespace chandra
 {
 namespace serialize
@@ -62,6 +64,7 @@ constexpr auto extract_bits(const V& _value, size_t _begin, size_t _num) {
     return result;
 }
 
+
 template<size_t Bits, class V, size_t N>
 constexpr bool binary_buffer_write(const V& _val, BinarySerializeIndex& _idx, uint8_t(&_buffer)[N]) {
     size_t remaining_to_write = Bits;
@@ -78,6 +81,29 @@ constexpr bool binary_buffer_write(const V& _val, BinarySerializeIndex& _idx, ui
     return true;
 }
 
+
+template<bool do_sign_extend, size_t Bits>
+struct sign_extend_read
+{
+    template<class V>
+    static constexpr bool exec(V&) {
+        return true;
+    }
+};
+
+template<size_t Bits>
+struct sign_extend_read<true, Bits>
+{
+    template<class V>
+    static constexpr bool exec(V& _val) {
+        constexpr size_t bits_total = 8 * sizeof(_val);
+        constexpr size_t bits_extended = bits_total - Bits;
+        constexpr V sign_bits = static_cast<V>(((1 << bits_extended) - 1) << Bits);
+        _val |= sign_bits;
+        return true;
+    }
+};
+
 template<size_t Bits, class V, size_t N>
 constexpr bool binary_buffer_read(const uint8_t (&_buffer)[N], BinarySerializeIndex& _idx, V& _val) {
     size_t remaining_to_read = Bits;
@@ -90,6 +116,7 @@ constexpr bool binary_buffer_read(const uint8_t (&_buffer)[N], BinarySerializeIn
         _idx.advance(bits_to_read);
         remaining_to_read -= bits_to_read;
     }
+    sign_extend_read<std::is_signed<V>::value, Bits>::exec(_val);
     return true;
 }
 

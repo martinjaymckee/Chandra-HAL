@@ -19,7 +19,7 @@ bool buffers_match(const uint8_t(&_a)[N], const uint8_t(&_b)[N]) {
 	return true;
 }
 
-struct SerializeTest
+struct SerializeTestData
 {
 	static constexpr size_t buffer_size = 5; // Bytes
 
@@ -36,7 +36,7 @@ struct SerializeTest
 	static constexpr size_t d_bits = 6;
 };
 
-static const uint8_t serialize_test_buffer[SerializeTest::buffer_size] = {
+static const uint8_t serialize_test_buffer[SerializeTestData::buffer_size] = {
 	0b10110101,
 	0b00011101,
 	0b01011001,
@@ -75,7 +75,7 @@ TEST_CASE("Construct serialize and deserializer", "[serialize]") {
 // Binary Serialization
 //
 TEST_CASE("Run Serialization", "[serialize]") {
-	const SerializeTest data;
+	const SerializeTestData data;
 	uint8_t buffer[data.buffer_size] = { 0 };
 	auto serializer = chandra::serialize::make_binary_serializer(buffer);
 
@@ -106,7 +106,7 @@ TEST_CASE("Run Serialization", "[serialize]") {
 // Binary Serialization
 //
 TEST_CASE("Run Deserialization", "[serialize]") {
-	const SerializeTest data;
+	const SerializeTestData data;
 	auto deserializer = chandra::serialize::make_binary_deserializer(serialize_test_buffer);
 
 	size_t offset = 0;
@@ -156,4 +156,25 @@ TEST_CASE("Run Deserialization", "[serialize]") {
 	REQUIRE((deserializer.read_pos() == offset));
 	REQUIRE((d32 == data.d));
 
+}
+
+//
+// Signed Round-Trip Test
+//
+TEST_CASE("Roundtrip Signed Integer", "[serialize]") {
+	static constexpr int tgt = -7;
+	static constexpr size_t encode_bits = 4;
+
+	uint8_t buffer[8] = { 0 };
+	auto serializer = chandra::serialize::make_binary_serializer(buffer);
+	auto deserializer = chandra::serialize::make_binary_deserializer(buffer);
+
+	serializer.write<encode_bits>(tgt);
+	int a;
+	deserializer.read<encode_bits>(a);
+
+	CAPTURE(a, tgt);
+	REQUIRE((serializer.write_pos() == encode_bits));
+	REQUIRE((deserializer.read_pos() == encode_bits));
+	REQUIRE((a == tgt));
 }
