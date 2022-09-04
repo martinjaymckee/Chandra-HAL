@@ -98,7 +98,7 @@ struct sign_extend_read<true, Bits>
     static constexpr bool exec(V& _val) {
         constexpr size_t bits_total = 8 * sizeof(_val);
         constexpr size_t bits_extended = bits_total - Bits;
-        constexpr V sign_bits = static_cast<V>(((1 << bits_extended) - 1) << Bits);
+        constexpr V sign_bits = static_cast<V>(((1ul << bits_extended) - 1ul) << Bits);
         _val |= sign_bits;
         return true;
     }
@@ -129,20 +129,24 @@ class BinarySerializer
     constexpr BinarySerializer(uint8_t (&_buffer)[N]) : buffer_(_buffer) {}
 
     constexpr bool reset() {
-        idx.reset();
+        idx_.reset();
     }
 
     constexpr size_t write_pos() const {
-      return idx.bit_index();
+      return idx_.bit_index();
     }
 
     constexpr size_t buffer_size() const {
       return N;
     }
 
+    constexpr bool advance(size_t _bits) {
+        return idx_.advance(_bits);
+    }
+
     template<size_t Bits, class V>
     constexpr bool write(const V& _val) {
-      return internal::binary_buffer_write<Bits>(_val, idx, buffer_);
+      return internal::binary_buffer_write<Bits>(_val, idx_, buffer_);
     }
 
     template<size_t Bits, class V>
@@ -153,7 +157,7 @@ class BinarySerializer
 
   private:
     uint8_t (&buffer_)[N];
-    internal::BinarySerializeIndex idx;
+    internal::BinarySerializeIndex idx_;
 };
 
 template<size_t N>
@@ -169,20 +173,24 @@ class BinaryDeserializer
     constexpr BinaryDeserializer(const uint8_t (&_buffer)[N]) : buffer_(_buffer) {}
 
     constexpr bool reset() {
-        idx.reset();
+        idx_.reset();
     }
 
     constexpr size_t read_pos() const {
-      return idx.bit_index();
+      return idx_.bit_index();
     }
 
     constexpr size_t buffer_size() const {
       return N;
     }
     
+    constexpr bool advance(size_t _bits) {
+        return idx_.advance(_bits);
+    }
+
     template<size_t Bits, class V>
     constexpr bool read(V& _val) {
-        return internal::binary_buffer_read<Bits>(buffer_, idx, _val);
+        return internal::binary_buffer_read<Bits>(buffer_, idx_, _val);
     }
 
     template<size_t Bits, class V>
@@ -193,7 +201,7 @@ class BinaryDeserializer
 
   private:
     const uint8_t (&buffer_)[N];
-    internal::BinarySerializeIndex idx;
+    internal::BinarySerializeIndex idx_;
 };
 
 template<size_t N>

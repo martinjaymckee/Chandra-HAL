@@ -13,7 +13,7 @@ using namespace chandra::units::mks::literals;
 //
 // Quantity Construction
 //
-	TEST_CASE( "Quantities are constructed", "[quantity]" ) {
+TEST_CASE( "Quantities are constructed", "[quantity]" ) {
 	using value_t = double;
 	using meters_t = chandra::units::mks::Q_m<value_t>;
 

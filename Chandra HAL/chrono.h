@@ -44,6 +44,8 @@ class frequency
 
   #if defined(__LPC55XX__)
 	  static rep main() { return rep{SYSCON->AHBCLKDIV * core()}; }
+  #elif defined(__CHANDRA_MOCK__)
+		static rep main() { return rep{ 50000000 }; }
 	#else
   	static rep main() { return rep{LPC_SYSCON->SYSAHBCLKDIV * core()}; }
 	#endif
@@ -110,7 +112,7 @@ class timestamp_clock
       const duration time{upper|lower};
       return time_point{time};
 	#elif defined(__CHANDRA_MOCK__)
-			#warning "Chandra clock frequencies parsed as mock."
+//			#warning "Chandra clock frequencies parsed as mock."
       return time_point{duration{0}}; // TODO: IMPLEMENT MOCK FUNCTIONALITY FOR THE TIMESTAMP CLOCK
 	#else
 			#error "No Timestamp Clock Mode Defined!"
@@ -169,7 +171,7 @@ class timestamp_clock
 	    NVIC_EnableIRQ(SysTick_IRQn);
 	    return;
 #elif defined(__CHANDRA_MOCK__)
-		#warning "Chandra clock init parsed as mock."
+//		#warning "Chandra clock init parsed as mock."
 #else
 		#error "No Timestamp Clock Mode Defined!"
 #endif
@@ -218,7 +220,7 @@ class timestamp_clock
 				SysTick->VAL = top_- ((_counts & 0xFFFFFF) + 1);
 			  high_bits_ = (_counts>>24) & 0xFF;
 			#elif defined(__CHANDRA_MOCK__)
-				#warning "Chandra clock set parsed as mock."
+//				#warning "Chandra clock set parsed as mock."
 			#else
 				#error "No Timestamp Clock Mode Defined!"
 			#endif

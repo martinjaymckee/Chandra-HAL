@@ -306,6 +306,18 @@ class Matrix
           return true;
         }
 
+        template<typename OtherValue>
+        constexpr bool operator != (const Matrix<OtherValue, Rows, Columns>& _other) const {
+          for(index_t row = 0; row < Rows; ++row){
+              for(index_t column = 0; column < Columns; ++column){
+                  if(data_[row][column] == _other.data_[row][column]) {
+                    return false;
+                  }
+              }
+          }
+          return true;
+        }
+        
         //  Shape data accessors
         static constexpr index_t rows = Rows;
         static constexpr index_t columns = Columns;
