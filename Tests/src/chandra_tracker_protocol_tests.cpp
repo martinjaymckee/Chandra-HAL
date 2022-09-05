@@ -26,7 +26,7 @@ constexpr bool encoded_value_in_range(const Value& _val) {
 	static constexpr Value val_min = static_cast<Value>((((1ull << (upper_bits+1))-1ull) << (value_bits - upper_bits - 1ul)) + 1ull);
 	static constexpr Value val_max = static_cast<Value>((1ul << (Bits - 1)) - 1ul);
 	const auto value_mask = (1ul << (Bits)) - 1ul;
-
+	// TODO: COPY THIS TO CREATE THE Y_MIN AND Y_MAX THAT I NEED FOR THE OUTPUT SATURATION
 	if (_val >= 0) {
 		return _val <= val_max;
 	}
@@ -158,6 +158,7 @@ TEST_CASE("TrackerState Roundtrip Serialize/Deserialize Test", "[protocol]") {
 	const bool deserialize_success = chandra::aero::protocol::deserialize_tracking_state(buffer, result_tracker_state);
 	REQUIRE((deserialize_success == true));
 
-	REQUIRE((result_tracker_state == tgt_tracker_state));
+	CAPTURE(tgt_tracker_state.pos, result_tracker_state.pos, tgt_tracker_state.vel, result_tracker_state.vel);
+	REQUIRE((result_tracker_state == tgt_tracker_state)); // TODO: THIS NEEDS TO CHECK "NEAR ENOUGH" NOT EXACT AS THE ENCODING AND DECODING WILL LOSE ACCURACY
 }
 

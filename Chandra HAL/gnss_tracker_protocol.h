@@ -1,6 +1,8 @@
 #ifndef CHANDRA_TRACKER_PROTOCOL_H
 #define CHANDRA_TRACKER_PROTOCOL_H
 
+#include <iostream>
+
 #include "binary_serialize.h"
 #include "chrono.h"
 #include "circular_buffer.h"
@@ -213,8 +215,12 @@ constexpr Dest encode_range(const Src& _val, const V1& _min, const V2& _max, Enc
 	if((val != 0) && (abs(val) <= encode_resolution<Bits>(_min, _max)) ) {
 		_error = EncodingErrors::Underflow;
 	}
-
-	return static_cast<Dest>(inv_m * (val - b));
+	const Dest y_min = 0x80000000; // TODO: CALCULATE THESE VALUES SO THAT THE OUTPUT CLIPPING ON THE ROUNDING WORKS CORRECTLY
+	const Dest y_max = 0x7FFFFFFF;
+	const Dest y = static_cast<Dest>(inv_m * (val - b) + static_cast<calc_t>(0.5));
+	if (y < y_min) return y_min;
+	else if (y > y_max) return y_max;
+	return y;
 }
 
 template<class Dest, size_t Bits, class Src, class V1, class V2>
@@ -249,7 +255,7 @@ bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::
 	_serializer.write<TrackingHeaderEncoding::localization_status_bits>(uint8_t(_header.status));
 
 	// Calculate header parity and insert bit...
-	_serializer.write<TrackingHeaderEncoding::header_parity_bits>(0);
+	_serializer.write<TrackingHeaderEncoding::header_parity_bits>(0); // TODO: DECIDE WHAT TO DO ABOUT THE PARITY BIT...
 	return true;
 }
 
@@ -265,9 +271,9 @@ bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _dese
 	_deserializer.read<TrackingHeaderEncoding::localization_status_bits>(enum_intermediate);
 	_header.status = static_cast<chandra::aero::protocol::TrackerLocalizationStatus>(enum_intermediate);
 
-	// Calculate header parity and insert bit...
-	//_serializer.read<TrackingHeaderEncoding::header_parity_bits>(0);
-	return false;
+	// TODO: NEED TO DECIDE WHAT TO DO ABOUT THE PARITY BIT...
+	_deserializer.read<TrackingHeaderEncoding::header_parity_bits>(enum_intermediate);
+	return true;
 }
 } /*namespace internal*/
 
@@ -280,9 +286,20 @@ bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buff
 	// Serialize the header
 	internal::serialize_tracker_header(_state.header, serializer);
 
+	serializer.advance(1); // This bit is currently undefined
+
 	// Serialize the position
+	for (int idx = 0; idx < 3; ++idx) {
+		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::distance_bits>(_state.pos(idx).value(), -range_t::distance_max, range_t::distance_max);
+		std::cout << "Encode " << _state.pos(idx) << " -> 0x" << std::hex << enc_val << std::dec << "\n";
+		serializer.write<encoding_t::distance_bits>(enc_val);
+	}
 
 	// Serialize the velocity
+	for (int idx = 0; idx < 3; ++idx) {
+		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::velocity_bits>(_state.vel(idx).value(), -range_t::velocity_max, range_t::velocity_max);
+		serializer.write<encoding_t::velocity_bits>(enc_val);
+	}
 
 	return true;
 }
@@ -297,9 +314,28 @@ bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>
 	const bool header_success = internal::deserialize_tracker_header(deserializer, _state.header);
 	if (!header_success) return false;
 
+	deserializer.advance(1); // This bit is currently undefined
+
 	// Deserialize the position
+	Value decode_result = 0;
+	int32_t encoded_value = 0;
+
+	for (int idx = 0; idx < 3; ++idx) {
+		using pos_t = decltype(_state.pos(0));
+		deserializer.read<encoding_t::distance_bits>(encoded_value);
+		decode_result = internal::decode_range<Value, encoding_t::distance_bits>(encoded_value, -range_t::distance_max, range_t::distance_max);
+		std::cout << "Decode 0x" << std::hex << encoded_value << " -> " << std::dec << decode_result << "\n";
+		_state.pos(idx) = pos_t(decode_result);
+	}
 
 	// Deserialize the velocity
+	for (int idx = 0; idx < 3; ++idx) {
+		using vel_t = decltype(_state.vel(0));
+		deserializer.read<encoding_t::velocity_bits>(encoded_value);
+		decode_result = internal::decode_range<Value, encoding_t::velocity_bits>(encoded_value, -range_t::velocity_max, range_t::velocity_max);
+		_state.vel(idx) = vel_t(decode_result);
+	}
+
 	return true;
 }
 

@@ -96,10 +96,12 @@ struct sign_extend_read<true, Bits>
 {
     template<class V>
     static constexpr bool exec(V& _val) {
-        constexpr size_t bits_total = 8 * sizeof(_val);
-        constexpr size_t bits_extended = bits_total - Bits;
-        constexpr V sign_bits = static_cast<V>(((1ul << bits_extended) - 1ul) << Bits);
-        _val |= sign_bits;
+        if((_val & (1ul << (Bits-1))) != 0) {
+          constexpr size_t bits_total = 8 * sizeof(_val);
+          constexpr size_t bits_extended = bits_total - Bits;
+          constexpr V sign_bits = static_cast<V>(((1ul << bits_extended) - 1ul) << Bits);
+          _val |= sign_bits;
+        }
         return true;
     }
 };
@@ -183,7 +185,7 @@ class BinaryDeserializer
     constexpr size_t buffer_size() const {
       return N;
     }
-    
+
     constexpr bool advance(size_t _bits) {
         return idx_.advance(_bits);
     }
