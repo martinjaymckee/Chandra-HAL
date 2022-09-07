@@ -282,7 +282,7 @@ bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buff
 	using range_t = internal::TrackingStateRange<Value>;
 	using encoding_t = internal::TrackingStateEncoding;
 	auto serializer = chandra::serialize::make_binary_serializer(_buffer);
-	
+
 	// Serialize the header
 	internal::serialize_tracker_header(_state.header, serializer);
 
@@ -291,7 +291,6 @@ bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buff
 	// Serialize the position
 	for (int idx = 0; idx < 3; ++idx) {
 		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::distance_bits>(_state.pos(idx).value(), -range_t::distance_max, range_t::distance_max);
-		std::cout << "Encode " << _state.pos(idx) << " -> 0x" << std::hex << enc_val << std::dec << "\n";
 		serializer.write<encoding_t::distance_bits>(enc_val);
 	}
 
@@ -324,7 +323,6 @@ bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>
 		using pos_t = decltype(_state.pos(0));
 		deserializer.read<encoding_t::distance_bits>(encoded_value);
 		decode_result = internal::decode_range<Value, encoding_t::distance_bits>(encoded_value, -range_t::distance_max, range_t::distance_max);
-		std::cout << "Decode 0x" << std::hex << encoded_value << " -> " << std::dec << decode_result << "\n";
 		_state.pos(idx) = pos_t(decode_result);
 	}
 

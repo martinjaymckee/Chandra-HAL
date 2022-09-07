@@ -32,9 +32,9 @@ constexpr bool encoded_value_in_range(const Value& _val) {
 }
 
 template<class V1, class V2>
-bool tracker_states_approx_eq(const chandra::aero::protocol::TrackerState<V1>& _a, const chandra::aero::protocol::TrackerState<V2>& _b) {
-	const auto pos_thresh = 1_m_;
-	const auto vel_thresh = 1_m_per_s_;
+constexpr bool tracker_states_approx_eq(const chandra::aero::protocol::TrackerState<V1>& _a, const chandra::aero::protocol::TrackerState<V2>& _b) {
+	const auto pos_thresh = 0.025_m_;
+	const auto vel_thresh = 0.01_m_per_s_;
 
 	bool match = true;
 	match = match && (_a.header == _b.header);

@@ -9,43 +9,43 @@ namespace chandra
 {
 namespace math
 {
-namespace internal
+namespace size_ternal
 {
-template<int Rows, int Columns>
+template<size_t Rows, size_t Columns>
 struct IndexData
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[Rows][Columns], int i, int j) {
+        constexpr static const auto& value(const Value (&data)[Rows][Columns], size_t i, size_t j) {
             return data[i][j];
         }
         template<typename Value>
-        constexpr static auto& value(Value (&data)[Rows][Columns], int i, int j) {
+        constexpr static auto& value(Value (&data)[Rows][Columns], size_t i, size_t j) {
             return data[i][j];
         }
 };
 
-template<int Rows>
+template<size_t Rows>
 struct IndexData<Rows, 1>
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[Rows][1], int i, int) {
+        constexpr static const auto& value(const Value (&data)[Rows][1], size_t i, size_t) {
             return data[i][0];
         }
         template<typename Value>
-        constexpr static auto& value(Value (&data)[Rows][1], int i, int) {
+        constexpr static auto& value(Value (&data)[Rows][1], size_t i, size_t) {
             return data[i][0];
         }
 };
 
-template<int Columns>
+template<size_t Columns>
 struct IndexData<1, Columns>
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[1][Columns], int i, int) {
+        constexpr static const auto& value(const Value (&data)[1][Columns], size_t i, size_t) {
             return data[0][i];
         }
         template<typename Value>
-        constexpr static auto& value(Value (&data)[1][Columns], int i, int) {
+        constexpr static auto& value(Value (&data)[1][Columns], size_t i, size_t) {
             return data[0][i];
         }
 };
@@ -54,15 +54,15 @@ template<>
 struct IndexData<1, 1>
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[1][1], int, int) {
+        constexpr static const auto& value(const Value (&data)[1][1], size_t, size_t) {
             return data[0][0];
         }
         template<typename Value>
-        constexpr static auto& value(Value (&data)[1][1], int, int) {
+        constexpr static auto& value(Value (&data)[1][1], size_t, size_t) {
             return data[0][0];
         }
 };
-} /* namespace internal */
+} /* namespace size_ternal */
 
 // TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
 //        THE RANDOM NUMBERS (PASS IN A RANDOM GENERATOR)
@@ -226,7 +226,7 @@ class Matrix
         // TODO: THIS IS A HACK, AT THE MOMENT.  IT'S NOT GIVING GOOD RANDOM NUMBERS NOR IS IT
         //      AT ALL FLEXIBLE AS TO TYPE (I.E. NO FRACTIONAL NUMBERS)
         static constexpr matrix_t Random(const size_t& seed = 12345, const size_t& mod=100) {
-            uint64_t state = seed;
+            usize_t64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -238,7 +238,7 @@ class Matrix
         }
 
         static constexpr matrix_t RandomDiag(const size_t& seed = 12345, const size_t& mod=100) {
-            uint64_t state = seed;
+            usize_t64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -254,7 +254,7 @@ class Matrix
         }
 
         static constexpr matrix_t RandomL(const size_t& seed = 12345, const size_t& mod=100) {
-            uint64_t state = seed;
+            usize_t64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -317,7 +317,7 @@ class Matrix
           }
           return true;
         }
-        
+
         //  Shape data accessors
         static constexpr index_t rows = Rows;
         static constexpr index_t columns = Columns;
@@ -326,11 +326,11 @@ class Matrix
 
         // TODO: ONLY VECTORS SHOULD HAVE A SINGLE ARGUMENT.  TWO DIMENSIONAL MATRICIES SHOULD HAVE
         //  AN OVERLOAD WHICH TAKES TWO INDICIES
-        constexpr const value_t& operator () (int i, const int& j = -1) const {
-            return internal::IndexData<Rows, Columns>::value(data_, i, j);
+        constexpr const value_t& operator () (size_t i, const size_t& j = -1) const {
+            return size_ternal::IndexData<Rows, Columns>::value(data_, i, j);
         }
-        constexpr value_t& operator () (int i, const int& j = -1) {
-            return internal::IndexData<Rows, Columns>::value(data_, i, j);
+        constexpr value_t& operator () (size_t i, const size_t& j = -1) {
+            return size_ternal::IndexData<Rows, Columns>::value(data_, i, j);
         }
         //  TODO: ADD ROW[] AND COLUMN[] PROXIES
 
