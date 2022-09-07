@@ -195,6 +195,7 @@ constexpr auto encode_resolution(const V1& _min, const V2& _max) {
 template<class Dest, size_t Bits, class Src, class V1, class V2>
 constexpr Dest encode_range(const Src& _val, const V1& _min, const V2& _max, EncodingErrors& _error) {
 	using calc_t = typename std::common_type<Src, Dest>::type;
+	using range_t = chandra::serialize::internal::BitmaskRange<Dest, Bits>;
 	static constexpr const calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
 	const calc_t value_range{ static_cast<calc_t>(_max) - static_cast<calc_t>(_min) };
 	const calc_t inv_m{ value_max / value_range };
@@ -215,11 +216,10 @@ constexpr Dest encode_range(const Src& _val, const V1& _min, const V2& _max, Enc
 	if((val != 0) && (abs(val) <= encode_resolution<Bits>(_min, _max)) ) {
 		_error = EncodingErrors::Underflow;
 	}
-	const Dest y_min = 0x80000000; // TODO: CALCULATE THESE VALUES SO THAT THE OUTPUT CLIPPING ON THE ROUNDING WORKS CORRECTLY
-	const Dest y_max = 0x7FFFFFFF;
+
 	const Dest y = static_cast<Dest>(inv_m * (val - b) + static_cast<calc_t>(0.5));
-	if (y < y_min) return y_min;
-	else if (y > y_max) return y_max;
+	if (y < range_t::min) return range_t::min;
+	else if (y > range_t::max) return range_t::max;
 	return y;
 }
 

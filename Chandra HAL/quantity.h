@@ -223,6 +223,20 @@ constexpr auto reduce_scalar(const Quantity<V, U>& _q)
     return chandra::units::convert<V, ScalarUnits, U>(_q.value());
 }
 
+template<class V1, class U1, class V2, class U2, class V3, class U3>
+constexpr bool approx_eq(const Quantity<V1, U1>& _q1, const Quantity<V2, U2>& _q2, const Quantity<V3, U3>& _thresh) {
+    using ref_t = Quantity<typename std::common_type<V1, V2, V3>::type, U1>;
+    const ref_t q1{ _q2 };
+    const ref_t q2{ _q2 };
+    const ref_t thresh{ _thresh };
+    return std::abs(_q1.value() - _q2.value()) <= thresh.value();
+}
+
+template<class V1, class U1, class V2, class U2>
+constexpr bool approx_eq(const Quantity<V1, U1>& _q1, const Quantity<V2, U2>& _q2) {
+    using ref_t = Quantity<typename std::common_type<V1, V2>::type, U1>;
+    return approx_eq(_q1, _q2, ref_t{ 0 });
+}
 template<typename V1, typename U1, typename V2, typename U2>
 constexpr auto operator + (const Quantity<V1, U1>& _a, const Quantity<V2, U2>& _b) {
     // THIS SHOULDN'T WORK IF BOTH ARE ABSOLUTE UNITS

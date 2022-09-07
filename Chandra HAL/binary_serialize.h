@@ -9,6 +9,23 @@ namespace serialize
 {
 namespace internal
 {
+template<class Value, size_t Bits>
+class BitmaskRange
+{
+    public:
+        using value_t = Value;
+
+    protected:
+        static constexpr size_t value_bits = 8 * sizeof(value_t);
+        static constexpr size_t upper_bits = value_bits - Bits;
+    
+    public:
+        static constexpr value_t min = static_cast<value_t>((((1ull << (upper_bits + 1)) - 1ull) << (value_bits - upper_bits - 1ul)) + 1ull);
+        static constexpr value_t max = static_cast<value_t>((1ul << (Bits - 1)) - 1ul);
+        static constexpr value_t mask = (1ul << (Bits)) - 1ul;
+};
+
+
 class BinarySerializeIndex
 {
     public:

@@ -95,3 +95,24 @@ TEST_CASE("Scalar quantity handling", "[quantity]") {
 		REQUIRE((d == Approx(20)));
 	}
 }
+
+
+//
+// Test Approximate Equality Check
+//
+TEST_CASE("Approximate Quantity Equality", "[quantity]") {
+	using value_t = double;
+	using meters_t = chandra::units::mks::Q_m<value_t>;
+	using ft_t = chandra::units::mks::Q_ft<value_t>;
+
+	SECTION("Check with zero threshold") {
+		const meters_t a{ 1 };
+		const meters_t b{ 1 };
+		REQUIRE((chandra::units::approx_eq(a, b)));
+	}
+
+	SECTION("Check with basic threshold") {
+		const meters_t thresh{ 0.1 };
+		REQUIRE((chandra::units::approx_eq(0.1_m_, 0.1_m_, thresh) == true));
+	}
+}

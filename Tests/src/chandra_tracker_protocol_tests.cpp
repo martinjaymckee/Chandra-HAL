@@ -15,23 +15,39 @@
 #include <units.h>
 using namespace chandra::units::mks::literals;
 
+
 //
 // Value Encoding and Decoding
 // 
 
 template<size_t Bits, class Value>
 constexpr bool encoded_value_in_range(const Value& _val) {
-	static constexpr size_t value_bits = 8 * sizeof(Value);
-	static constexpr size_t upper_bits = value_bits - Bits;
-	static constexpr Value val_min = static_cast<Value>((((1ull << (upper_bits+1))-1ull) << (value_bits - upper_bits - 1ul)) + 1ull);
-	static constexpr Value val_max = static_cast<Value>((1ul << (Bits - 1)) - 1ul);
-	const auto value_mask = (1ul << (Bits)) - 1ul;
-	// TODO: COPY THIS TO CREATE THE Y_MIN AND Y_MAX THAT I NEED FOR THE OUTPUT SATURATION
+	using range_t = chandra::serialize::internal::BitmaskRange<Value, Bits>;
+
 	if (_val >= 0) {
-		return _val <= val_max;
+		return _val <= range_t::max;
 	}
 
-	return _val >= val_min;
+	return _val >= range_t::min;
+}
+
+template<class V1, class V2>
+bool tracker_states_approx_eq(const chandra::aero::protocol::TrackerState<V1>& _a, const chandra::aero::protocol::TrackerState<V2>& _b) {
+	const auto pos_thresh = 1_m_;
+	const auto vel_thresh = 1_m_per_s_;
+
+	bool match = true;
+	match = match && (_a.header == _b.header);
+
+	for (int idx = 0; idx < 3; ++idx) {
+		match = match && chandra::units::approx_eq(_a.pos(idx), _b.pos(idx), pos_thresh);
+	}
+
+	for (int idx = 0; idx < 3; ++idx) {
+		match = match && chandra::units::approx_eq(_a.vel(idx), _b.vel(idx), vel_thresh);
+	}
+
+	return match;
 }
 
 TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
@@ -94,7 +110,7 @@ TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
 		CAPTURE(y, y_min, x, x_min);
 
 		REQUIRE((encoded_value_in_range<encoding_bits>(y) == true));
-		REQUIRE((y == y_min));
+		REQUIRE(((y == y_min) || (y == (y_min + 1))));
 		REQUIRE((x == Approx(x_min)));
 	}
 
@@ -159,6 +175,6 @@ TEST_CASE("TrackerState Roundtrip Serialize/Deserialize Test", "[protocol]") {
 	REQUIRE((deserialize_success == true));
 
 	CAPTURE(tgt_tracker_state.pos, result_tracker_state.pos, tgt_tracker_state.vel, result_tracker_state.vel);
-	REQUIRE((result_tracker_state == tgt_tracker_state)); // TODO: THIS NEEDS TO CHECK "NEAR ENOUGH" NOT EXACT AS THE ENCODING AND DECODING WILL LOSE ACCURACY
+	REQUIRE((tracker_states_approx_eq(result_tracker_state, tgt_tracker_state)));
 }
 
