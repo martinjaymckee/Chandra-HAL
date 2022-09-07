@@ -246,7 +246,7 @@ constexpr Dest decode_range(const Src& _val, const V1& _min, const V2& _max) {
 
 
 template<size_t N>
-bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::BinarySerializer<N>& _serializer) {
+constexpr bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::BinarySerializer<N>& _serializer) {
 	_serializer.write<TrackingHeaderEncoding::format_bits>(_header.format);
 	_serializer.write<TrackingHeaderEncoding::reserved_bits>(0x00);
 	_serializer.write<TrackingHeaderEncoding::vehicle_id_bits>(_header.vehicle_id);
@@ -260,7 +260,7 @@ bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::
 }
 
 template<size_t N>
-bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerHeader& _header) {
+constexpr bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerHeader& _header) {
 	_deserializer.read<TrackingHeaderEncoding::format_bits>(_header.format);
 	_deserializer.advance(TrackingHeaderEncoding::reserved_bits);
 	_deserializer.read<TrackingHeaderEncoding::vehicle_id_bits>(_header.vehicle_id);
@@ -278,7 +278,7 @@ bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _dese
 } /*namespace internal*/
 
 template<class Value, size_t N>
-bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buffer)[N]) {
+constexpr bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buffer)[N]) {
 	using range_t = internal::TrackingStateRange<Value>;
 	using encoding_t = internal::TrackingStateEncoding;
 	auto serializer = chandra::serialize::make_binary_serializer(_buffer);
@@ -304,7 +304,7 @@ bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buff
 }
 
 template<class Value, size_t N>
-bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>& _state) {
+constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>& _state) {
 	using range_t = internal::TrackingStateRange<Value>;
 	using encoding_t = internal::TrackingStateEncoding;
 	auto deserializer = chandra::serialize::make_binary_deserializer(_buffer);
@@ -338,13 +338,13 @@ bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>
 }
 
 template<size_t N>
-bool serialize_gnss_fix(const TrackerGNSSFix& _fix, uint8_t (&_buffer)[N]) {
+constexpr bool serialize_gnss_fix(const TrackerGNSSFix& _fix, uint8_t (&_buffer)[N]) {
 	using range_t = TrackerGNSSFix;
 	return false;
 }
 
 template<size_t N>
-bool deserialize_gnss_fix(const uint8_t (&_buffer)[N], TrackerGNSSFix& _fix) {
+constexpr bool deserialize_gnss_fix(const uint8_t (&_buffer)[N], TrackerGNSSFix& _fix) {
 	using range_t = TrackerGNSSFix;
 	return false;
 }
@@ -383,7 +383,7 @@ class BasestationTrackingState
 		// Update functions
 		//
 		// bool tracker_update(TrackerState _tracker) {}
-		bool tracker_update(const pos_t& _tracker_pos, const vel_t& _tracker_vel) {
+		constexpr bool tracker_update(const pos_t& _tracker_pos, const vel_t& _tracker_vel) {
 			tracker_valid_ = true;
 			tracker_pos_history_.enqueue(_tracker_pos);
 			tracker_vel_history_.enqueue(_tracker_vel);
@@ -394,7 +394,7 @@ class BasestationTrackingState
 			return false;
 		}
 
-		bool base_update(const pos_t& _base_pos) {
+		constexpr bool base_update(const pos_t& _base_pos) {
 			base_pos_ = _base_pos;
 			base_valid_ = true; // TODO: MAKE THIS USE A TIMEOUT...
 			if(base_valid_ and !home_valid_) {
@@ -406,7 +406,7 @@ class BasestationTrackingState
 			return false;
 		}
 
-		bool home_update(const pos_t& _home_pos) {
+		constexpr bool home_update(const pos_t& _home_pos) {
 			home_pos_ = _home_pos;
 			home_valid_ = true;
 			tracker_home_offset_ = offset_between(projected_tracker_pos(), _home_pos);
@@ -468,12 +468,12 @@ class TrackerStateEstimator
 			return vel_;
 		}
 
-		bool update_pos(time_t _dt, pos_t _pos) {
+		constexpr bool update_pos(time_t _dt, pos_t _pos) {
 			// TODO: RUN A MEASUREMENT STEP IN THE KALMAN FILTER
 			return true;
 		}
 
-		bool update_accel(time_t _dt, accel_t _accel) {
+		constexpr bool update_accel(time_t _dt, accel_t _accel) {
 			// TODO: RUN A PREDICTION STEP IN THE KALMAN FILTER
 			return true;
 		}
