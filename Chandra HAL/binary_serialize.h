@@ -1,6 +1,7 @@
 #ifndef CHANDRA_BINARY_SERIALIZE_H
 #define CHANDRA_BINARY_SERIALIZE_H
 
+#include <algorithm>
 #include <type_traits>
 
 namespace chandra
@@ -18,7 +19,7 @@ class BitmaskRange
     protected:
         static constexpr size_t value_bits = 8 * sizeof(value_t);
         static constexpr size_t upper_bits = value_bits - Bits;
-    
+
     public:
         static constexpr value_t min = static_cast<value_t>((((1ull << (upper_bits + 1)) - 1ull) << (value_bits - upper_bits - 1ul)) + 1ull);
         static constexpr value_t max = static_cast<value_t>((1ul << (Bits - 1)) - 1ul);
@@ -148,7 +149,7 @@ class BinarySerializer
     constexpr BinarySerializer(uint8_t (&_buffer)[N]) : buffer_(_buffer) {}
 
     constexpr bool reset() {
-        idx_.reset();
+        return idx_.reset();
     }
 
     constexpr size_t write_pos() const {
@@ -192,7 +193,7 @@ class BinaryDeserializer
     constexpr BinaryDeserializer(const uint8_t (&_buffer)[N]) : buffer_(_buffer) {}
 
     constexpr bool reset() {
-        idx_.reset();
+        return idx_.reset();
     }
 
     constexpr size_t read_pos() const {

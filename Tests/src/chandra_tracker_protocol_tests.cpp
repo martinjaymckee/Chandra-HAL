@@ -53,10 +53,10 @@ constexpr bool tracker_states_approx_eq(const chandra::aero::protocol::TrackerSt
 TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
 	using value_t = double;
 	using encoding_error_t = chandra::aero::protocol::internal::EncodingErrors;
-	const uint32_t value_mask = static_cast<uint32_t>((1ul << (chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits)) - 1ul);
-	const size_t encoding_bits = chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits;
-	const auto x_max = chandra::aero::protocol::internal::TrackingStateRange<value_t>::distance_max;
-	const auto x_min = -chandra::aero::protocol::internal::TrackingStateRange<value_t>::distance_max;
+	const uint32_t value_mask = static_cast<uint32_t>((1ul << (chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits)) - 1ul);
+	const size_t encoding_bits = chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits;
+	const auto x_max = chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max;
+	const auto x_min = -chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max;
 	const int32_t y_min = static_cast<int32_t>(0xF0000001); // Note: This is for a 29-bit encoding
 	const int32_t y_zero{ 0 };
 	const int32_t y_max = static_cast<int32_t>((1ul << (encoding_bits - 1ul)) - 1ul);
@@ -105,8 +105,8 @@ TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
 
 	SECTION("Test Basic Roundtrip For Min Value") {
 		const auto x = x_min;
-		const auto y = chandra::aero::protocol::internal::encode_range<int32_t, chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits>(x, x_min, x_max);
-		const auto x_est = chandra::aero::protocol::internal::decode_range<value_t, chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits>(y, x_min, x_max);
+		const auto y = chandra::aero::protocol::internal::encode_range<int32_t, chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits>(x, x_min, x_max);
+		const auto x_est = chandra::aero::protocol::internal::decode_range<value_t, chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits>(y, x_min, x_max);
 		CAPTURE(y, y_min, x, x_min);
 
 		REQUIRE((encoded_value_in_range<encoding_bits>(y) == true));
@@ -117,8 +117,8 @@ TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
 	SECTION("Test Basic Roundtrip For Zero Value") {
 		const value_t zero{ 0 };
 		const auto x = zero;
-		const auto y = chandra::aero::protocol::internal::encode_range<int32_t, chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits>(x, x_min, x_max);
-		const auto x_est = chandra::aero::protocol::internal::decode_range<value_t, chandra::aero::protocol::internal::TrackingStateEncoding::distance_bits>(y, x_min, x_max);
+		const auto y = chandra::aero::protocol::internal::encode_range<int32_t, chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits>(x, x_min, x_max);
+		const auto x_est = chandra::aero::protocol::internal::decode_range<value_t, chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits>(y, x_min, x_max);
 		CAPTURE(y, y_zero, x, zero);
 
 		REQUIRE((encoded_value_in_range<encoding_bits>(y) == true));
@@ -178,3 +178,35 @@ TEST_CASE("TrackerState Roundtrip Serialize/Deserialize Test", "[protocol]") {
 	REQUIRE((tracker_states_approx_eq(result_tracker_state, tgt_tracker_state)));
 }
 
+TEST_CASE("TrackerGNSSFix Roundtrip Serialize/Deserialize Test", "[protocol]") {
+	using value_t = double;
+	chandra::aero::protocol::TrackerGNSSFix tgt_tracker_fix;
+	uint8_t buffer[21];
+
+	// Initialize Tracker State
+	tgt_tracker_fix.header.format = 0x04;
+	tgt_tracker_fix.header.vehicle_id = 0x00;
+	tgt_tracker_fix.header.tracker_id = 0x01;
+	tgt_tracker_fix.header.mode = chandra::aero::protocol::TrackerFlightMode::Preflight;
+	tgt_tracker_fix.header.status = chandra::aero::protocol::TrackerLocalizationStatus::Raw;
+	tgt_tracker_fix.satellites = 9;
+	tgt_tracker_fix.date_time.y = 1974;
+	tgt_tracker_fix.date_time.m = 5;
+	tgt_tracker_fix.date_time.d = 20;
+	tgt_tracker_fix.date_time.hh = 19;
+	tgt_tracker_fix.date_time.mm = 42;
+	tgt_tracker_fix.date_time.ss = 15;
+	tgt_tracker_fix.date_time.ms = 345;
+
+	// Serialize Tracker State
+	const bool serialize_success = chandra::aero::protocol::serialize_gnss_fix(tgt_tracker_fix, buffer);
+	REQUIRE((serialize_success == true));
+
+	// Deserialize Tracker State
+	chandra::aero::protocol::TrackerGNSSFix result_tracker_fix;
+	const bool deserialize_success = chandra::aero::protocol::deserialize_gnss_fix(buffer, result_tracker_fix);
+	REQUIRE((deserialize_success == true));
+
+	CAPTURE(tgt_tracker_fix.date_time, result_tracker_fix.date_time, tgt_tracker_fix.t_since_last_fix.count(), result_tracker_fix.t_since_last_fix.count());
+	REQUIRE((result_tracker_fix == tgt_tracker_fix));
+}

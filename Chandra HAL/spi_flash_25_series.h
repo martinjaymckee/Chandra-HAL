@@ -252,23 +252,23 @@ class SPIFlash25Series
           return false;
         }
 
-        constexpr bool valid_addr_range(const size_t& _addr, const size_t _bytes, const size_t _N) const {
+        constexpr bool valid_addr_range(const size_t& _addr, const size_t _bytes, const size_t& _size) const {
           if(!range_checked) {
             return true;
           } else {
             const auto end = flash_configuration_t::memoryExtents().end;
-            if( (_addr < end) and ((end-_addr) >= (_bytes*_N))) {
+            if( (_addr < end) and ((end-_addr) >= (_bytes*_size))) {
               return true;
             }
             return false;
           }
         }
 
-        constexpr bool valid_wrapped_addr_range(const size_t& _addr, const size_t _bytes, const size_t _N) const {
+        constexpr bool valid_wrapped_addr_range(const size_t& _addr, const size_t _bytes, const size_t& _size) const {
           if(!range_checked) {
             return true;
           } else {
-            return flash_configuration_t::memoryBytes() >= _bytes*_N;
+            return flash_configuration_t::memoryBytes() >= _bytes*_size;
           }
         }
 

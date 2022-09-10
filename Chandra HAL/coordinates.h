@@ -72,7 +72,7 @@ Length calcN(const chandra::units::Quantity<V, AngleUnits>& _lat) {
 
 template<class Value, class LengthUnits, Datum DatumDef = Datum::WGS84, size_t MaxIters = 5>
 auto ECEFToLLH(
-        const ECEF<Value, LengthUnits>& _ecef, 
+        const ECEF<Value, LengthUnits>& _ecef,
         const chandra::units::mks::Q_m<Value>& _h_thresh = 1e-4_m_
     ) -> LLH<Value>
 {

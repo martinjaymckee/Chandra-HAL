@@ -226,7 +226,7 @@ class Matrix
         // TODO: THIS IS A HACK, AT THE MOMENT.  IT'S NOT GIVING GOOD RANDOM NUMBERS NOR IS IT
         //      AT ALL FLEXIBLE AS TO TYPE (I.E. NO FRACTIONAL NUMBERS)
         static constexpr matrix_t Random(const size_t& seed = 12345, const size_t& mod=100) {
-            usize_t64_t state = seed;
+            uint64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -238,7 +238,7 @@ class Matrix
         }
 
         static constexpr matrix_t RandomDiag(const size_t& seed = 12345, const size_t& mod=100) {
-            usize_t64_t state = seed;
+            uint64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
@@ -254,7 +254,7 @@ class Matrix
         }
 
         static constexpr matrix_t RandomL(const size_t& seed = 12345, const size_t& mod=100) {
-            usize_t64_t state = seed;
+            uint64_t state = seed;
             matrix_t matrix;
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){

@@ -1,14 +1,14 @@
 #ifndef CHANDRA_TRACKER_PROTOCOL_H
 #define CHANDRA_TRACKER_PROTOCOL_H
 
-#include <iostream>
+// #include <iostream>
 
 #include "binary_serialize.h"
 #include "chrono.h"
 #include "circular_buffer.h"
 #include "coordinates.h"
 #include "units.h"
-using namespace chandra::units::mks::literals;
+//using namespace chandra::units::mks::literals;
 
 namespace chandra
 {
@@ -104,31 +104,71 @@ using TrackerVelocityCovariance = chandra::math::Matrix<chandra::units::Quantity
 
 class TrackerGNSSDatetime
 {
+	protected:
+		static constexpr uint16_t year_mod = 4096;
+		static constexpr uint8_t month_mod = 12;
+		static constexpr uint8_t day_mod = 32;
+		static constexpr uint8_t hour_mod = 24;
+		static constexpr uint8_t minute_mod = 60;
+		static constexpr uint8_t second_mod = 60;
+		static constexpr uint16_t millisecond_mod = 1000;
+
 	public:
-		uint16_t year; // Year -- 12-bit
-		uint8_t month; // Month -- 4-bit
-		uint8_t day; // Day -- 5-bit
-		uint8_t hour; // Hour -- 5-bit
-		uint8_t minute; // Minute -- 6-bit
-		uint8_t second; // Second -- 6-bit
-		uint8_t centiseconds; // Centiseconds -- 7-bit
+		uint16_t y = 0; // Year -- 12-bit
+		uint8_t m = 0; // Month -- 4-bit
+		uint8_t d = 0; // Day -- 5-bit
+		uint8_t hh = 0; // Hour -- 5-bit
+		uint8_t mm = 0; // Minute -- 6-bit
+		uint8_t ss = 0; // Second -- 6-bit
+		uint16_t ms = 0; // Milliseconds -- 10-bit
+
+		constexpr bool valid() const {
+			return (m < month_mod) && (d < day_mod) &&
+				(hh < hour_mod) && (mm < minute_mod) && (ss < second_mod) && (ms < millisecond_mod);
+		}
+
+		constexpr bool operator == (const TrackerGNSSDatetime& _other) const {
+			return ((y % year_mod) == (_other.y % year_mod)) &&
+			 	((m % month_mod) == (_other.m % month_mod)) &&
+				((d % day_mod) == (_other.d % day_mod)) &&
+				((hh % hour_mod) == (_other.hh % hour_mod)) &&
+				((mm % minute_mod) == (_other.mm % minute_mod)) &&
+				((ss % second_mod) == (_other.ss % second_mod)) &&
+				((ms % millisecond_mod) == (_other.ms % millisecond_mod));
+		}
 };
+
+template<class Stream>
+Stream& operator << (Stream& _stream, const TrackerGNSSDatetime& _date_time) {
+	_stream << uint32_t(_date_time.y) << "-" << uint32_t(_date_time.m) << "-" << uint32_t(_date_time.d) << " ";
+	_stream << uint32_t(_date_time.hh) << ":" << uint32_t(_date_time.mm) << ":" << uint32_t(_date_time.ss) << "." << uint32_t(_date_time.ms);
+
+	return _stream;
+}
 
 class TrackerGNSSFix
 {
 	public:
-		using duration_t = chandra::chrono::timestamp_clock::time_point::duration;
+		using duration_t = std::chrono::duration<uint32_t, std::milli>;
+
+		TrackerHeader header;
 
 		uint8_t satellites = 0;
 		duration_t t_since_last_fix;
 		TrackerGNSSAugmentation gnss_augmentation = TrackerGNSSAugmentation::None;
 		TrackerIMUAugmentation imu_augmentation = TrackerIMUAugmentation::None;
 		TrackerGNSSDatetime date_time;
+
+		constexpr bool operator == (const TrackerGNSSFix& _other) const {
+			return (satellites == _other.satellites) && (t_since_last_fix == _other.t_since_last_fix) &&
+				(gnss_augmentation == _other.gnss_augmentation) && (imu_augmentation == _other.imu_augmentation) &&
+				(date_time == _other.date_time);
+		}
 };
 
 namespace internal
 {
-struct TrackingHeaderEncoding
+struct TrackerHeaderEncoding
 {
 	static constexpr uint8_t format_bits = 3;
 	static constexpr uint8_t reserved_bits = 3;
@@ -140,15 +180,16 @@ struct TrackingHeaderEncoding
 };
 
 template<class Value>
-struct TrackingStateRange
+struct TrackerStateRange
 {
+	// TODO: CALCULATE THE DISTANCE AND VELOCITY MAXIMUM AND VARIANCE VALUES
 	static constexpr Value distance_max{6428140}; // m
 	static constexpr Value distance_variance{250}; // m^2
 	static constexpr Value velocity_max{1029}; // m/s
 	static constexpr Value velocity_variance{100}; // m^2/s^2
 };
 
-struct TrackingStateEncoding
+struct TrackerStateEncoding
 {
 	static constexpr uint8_t distance_bits = 29;
 	static constexpr uint8_t velocity_bits = 20;
@@ -156,7 +197,7 @@ struct TrackingStateEncoding
 	static constexpr uint8_t covariance_bits = 24;
 };
 
-struct TrackingGNSSDatetimeEncoding
+struct TrackerGNSSDatetimeEncoding
 {
 	static constexpr uint8_t year_bits = 12;
 	static constexpr uint8_t month_bits = 4;
@@ -164,18 +205,15 @@ struct TrackingGNSSDatetimeEncoding
 	static constexpr uint8_t hour_bits = 5;
 	static constexpr uint8_t minute_bits = 6;
 	static constexpr uint8_t second_bits = 6;
-	static constexpr uint8_t centiseconds_bits = 7;
+	static constexpr uint8_t millisecond_bits = 10;
 };
 
-struct TrackingGNSSFix
+struct TrackerGNSSFixEncoding
 {
-	static constexpr uint8_t year_bits = 12;
-	static constexpr uint8_t month_bits = 4;
-	static constexpr uint8_t day_bits = 5;
-	static constexpr uint8_t hour_bits = 5;
-	static constexpr uint8_t minute_bits = 6;
-	static constexpr uint8_t second_bits = 6;
-	static constexpr uint8_t centiseconds_bits = 7;
+	static constexpr uint8_t satellites_bits = 7;
+	static constexpr uint8_t t_since_last_fix_bits = 32;
+	static constexpr uint8_t gnss_augmentation_bits = 2;
+	static constexpr uint8_t imu_augmentation_bits = 2;
 };
 
 enum class EncodingErrors {
@@ -187,7 +225,7 @@ enum class EncodingErrors {
 template<size_t Bits, class V1, class V2>
 constexpr auto encode_resolution(const V1& _min, const V2& _max) {
 	using calc_t = typename std::common_type<V1, V2>::type;
-	static constexpr const calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
+	constexpr calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
 	const calc_t value_range{ static_cast<calc_t>(_max) - static_cast<calc_t>(_min) };
 	return value_range / value_max;
 }
@@ -196,7 +234,7 @@ template<class Dest, size_t Bits, class Src, class V1, class V2>
 constexpr Dest encode_range(const Src& _val, const V1& _min, const V2& _max, EncodingErrors& _error) {
 	using calc_t = typename std::common_type<Src, Dest>::type;
 	using range_t = chandra::serialize::internal::BitmaskRange<Dest, Bits>;
-	static constexpr const calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
+	constexpr calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
 	const calc_t value_range{ static_cast<calc_t>(_max) - static_cast<calc_t>(_min) };
 	const calc_t inv_m{ value_max / value_range };
 	const calc_t b{ (static_cast<calc_t>(_max) + static_cast<calc_t>(_min)) / 2 };
@@ -237,50 +275,87 @@ constexpr Dest encode_value_error() {
 template<class Dest, size_t Bits, class Src, class V1, class V2>
 constexpr Dest decode_range(const Src& _val, const V1& _min, const V2& _max) {
 	using calc_t = typename std::common_type<Dest, Src>::type;
-	static constexpr calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
+	constexpr calc_t value_max{ static_cast<calc_t>((1ul << Bits) - 2ul) };
 	const calc_t value_range{ static_cast<calc_t>(_max) - static_cast<calc_t>(_min) };
 	const calc_t m{ value_range / value_max };
 	const calc_t b{ (_max + _min) / 2 };
 	return static_cast<Dest>((m * _val) + b);
 }
 
-
 template<size_t N>
 constexpr bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::BinarySerializer<N>& _serializer) {
-	_serializer.write<TrackingHeaderEncoding::format_bits>(_header.format);
-	_serializer.write<TrackingHeaderEncoding::reserved_bits>(0x00);
-	_serializer.write<TrackingHeaderEncoding::vehicle_id_bits>(_header.vehicle_id);
-	_serializer.write<TrackingHeaderEncoding::tracker_id_bits>(_header.tracker_id);
-	_serializer.write<TrackingHeaderEncoding::mode_bits>(uint8_t(_header.mode));
-	_serializer.write<TrackingHeaderEncoding::localization_status_bits>(uint8_t(_header.status));
+	using encoding_t = TrackerHeaderEncoding;
+	_serializer.template write<encoding_t::format_bits>(_header.format);
+	_serializer.template write<encoding_t::reserved_bits>(0x00);
+	_serializer.template write<encoding_t::vehicle_id_bits>(_header.vehicle_id);
+	_serializer.template write<encoding_t::tracker_id_bits>(_header.tracker_id);
+	_serializer.template write<encoding_t::mode_bits>(uint8_t(_header.mode));
+	_serializer.template write<encoding_t::localization_status_bits>(uint8_t(_header.status));
 
 	// Calculate header parity and insert bit...
-	_serializer.write<TrackingHeaderEncoding::header_parity_bits>(0); // TODO: DECIDE WHAT TO DO ABOUT THE PARITY BIT...
+	_serializer.template write<encoding_t::header_parity_bits>(0); // TODO: DECIDE WHAT TO DO ABOUT THE PARITY BIT...
 	return true;
 }
 
 template<size_t N>
 constexpr bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerHeader& _header) {
-	_deserializer.read<TrackingHeaderEncoding::format_bits>(_header.format);
-	_deserializer.advance(TrackingHeaderEncoding::reserved_bits);
-	_deserializer.read<TrackingHeaderEncoding::vehicle_id_bits>(_header.vehicle_id);
-	_deserializer.read<TrackingHeaderEncoding::tracker_id_bits>(_header.tracker_id);
+	using encoding_t = TrackerHeaderEncoding;
+	_deserializer.template read<encoding_t::format_bits>(_header.format);
+	_deserializer.advance(encoding_t::reserved_bits);
+	_deserializer.template read<encoding_t::vehicle_id_bits>(_header.vehicle_id);
+	_deserializer.template read<encoding_t::tracker_id_bits>(_header.tracker_id);
 	uint8_t enum_intermediate;
-	_deserializer.read<TrackingHeaderEncoding::mode_bits>(enum_intermediate);
+	_deserializer.template read<encoding_t::mode_bits>(enum_intermediate);
 	_header.mode = static_cast<chandra::aero::protocol::TrackerFlightMode>(enum_intermediate);
-	_deserializer.read<TrackingHeaderEncoding::localization_status_bits>(enum_intermediate);
+	_deserializer.template read<encoding_t::localization_status_bits>(enum_intermediate);
 	_header.status = static_cast<chandra::aero::protocol::TrackerLocalizationStatus>(enum_intermediate);
 
 	// TODO: NEED TO DECIDE WHAT TO DO ABOUT THE PARITY BIT...
-	_deserializer.read<TrackingHeaderEncoding::header_parity_bits>(enum_intermediate);
+	_deserializer.template read<encoding_t::header_parity_bits>(enum_intermediate);
+	return true;
+}
+
+template<size_t N>
+constexpr bool serialize_gnss_datetime(const TrackerGNSSDatetime& _datetime, chandra::serialize::BinarySerializer<N>& _serializer) {
+	using encoding_t = TrackerGNSSDatetimeEncoding;
+
+	// Serialize Date
+	_serializer.template write<encoding_t::year_bits>(_datetime.y);
+	_serializer.template write<encoding_t::month_bits>(_datetime.m);
+	_serializer.template write<encoding_t::day_bits>(_datetime.d);
+
+	// Serialize Time
+	_serializer.template write<encoding_t::hour_bits>(_datetime.hh);
+	_serializer.template write<encoding_t::minute_bits>(_datetime.mm);
+	_serializer.template write<encoding_t::second_bits>(_datetime.ss);
+	_serializer.template write<encoding_t::millisecond_bits>(_datetime.ms);
+
+	return true;
+}
+
+template<size_t N>
+constexpr bool deserialize_gnss_datetime(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerGNSSDatetime& _datetime) {
+	using encoding_t = TrackerGNSSDatetimeEncoding;
+
+	// Deserialize Date
+	_deserializer.template read<encoding_t::year_bits>(_datetime.y);
+	_deserializer.template read<encoding_t::month_bits>(_datetime.m);
+	_deserializer.template read<encoding_t::day_bits>(_datetime.d);
+
+	// Deserialize Time
+	_deserializer.template read<encoding_t::hour_bits>(_datetime.hh);
+	_deserializer.template read<encoding_t::minute_bits>(_datetime.mm);
+	_deserializer.template read<encoding_t::second_bits>(_datetime.ss);
+	_deserializer.template read<encoding_t::millisecond_bits>(_datetime.ms);
+
 	return true;
 }
 } /*namespace internal*/
 
 template<class Value, size_t N>
 constexpr bool serialize_tracking_state(const TrackerState<Value>& _state, uint8_t (&_buffer)[N]) {
-	using range_t = internal::TrackingStateRange<Value>;
-	using encoding_t = internal::TrackingStateEncoding;
+	using range_t = internal::TrackerStateRange<Value>;
+	using encoding_t = internal::TrackerStateEncoding;
 	auto serializer = chandra::serialize::make_binary_serializer(_buffer);
 
 	// Serialize the header
@@ -291,13 +366,13 @@ constexpr bool serialize_tracking_state(const TrackerState<Value>& _state, uint8
 	// Serialize the position
 	for (int idx = 0; idx < 3; ++idx) {
 		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::distance_bits>(_state.pos(idx).value(), -range_t::distance_max, range_t::distance_max);
-		serializer.write<encoding_t::distance_bits>(enc_val);
+		serializer.template write<encoding_t::distance_bits>(enc_val);
 	}
 
 	// Serialize the velocity
 	for (int idx = 0; idx < 3; ++idx) {
 		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::velocity_bits>(_state.vel(idx).value(), -range_t::velocity_max, range_t::velocity_max);
-		serializer.write<encoding_t::velocity_bits>(enc_val);
+		serializer.template write<encoding_t::velocity_bits>(enc_val);
 	}
 
 	return true;
@@ -305,8 +380,8 @@ constexpr bool serialize_tracking_state(const TrackerState<Value>& _state, uint8
 
 template<class Value, size_t N>
 constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerState<Value>& _state) {
-	using range_t = internal::TrackingStateRange<Value>;
-	using encoding_t = internal::TrackingStateEncoding;
+	using range_t = internal::TrackerStateRange<Value>;
+	using encoding_t = internal::TrackerStateEncoding;
 	auto deserializer = chandra::serialize::make_binary_deserializer(_buffer);
 
 	// Deserialize the header
@@ -321,7 +396,7 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 
 	for (int idx = 0; idx < 3; ++idx) {
 		using pos_t = decltype(_state.pos(0));
-		deserializer.read<encoding_t::distance_bits>(encoded_value);
+		deserializer.template read<encoding_t::distance_bits>(encoded_value);
 		decode_result = internal::decode_range<Value, encoding_t::distance_bits>(encoded_value, -range_t::distance_max, range_t::distance_max);
 		_state.pos(idx) = pos_t(decode_result);
 	}
@@ -329,7 +404,7 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 	// Deserialize the velocity
 	for (int idx = 0; idx < 3; ++idx) {
 		using vel_t = decltype(_state.vel(0));
-		deserializer.read<encoding_t::velocity_bits>(encoded_value);
+		deserializer.template read<encoding_t::velocity_bits>(encoded_value);
 		decode_result = internal::decode_range<Value, encoding_t::velocity_bits>(encoded_value, -range_t::velocity_max, range_t::velocity_max);
 		_state.vel(idx) = vel_t(decode_result);
 	}
@@ -337,16 +412,53 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 	return true;
 }
 
+
 template<size_t N>
 constexpr bool serialize_gnss_fix(const TrackerGNSSFix& _fix, uint8_t (&_buffer)[N]) {
-	using range_t = TrackerGNSSFix;
-	return false;
+	using encoding_t = internal::TrackerGNSSFixEncoding;
+	auto serializer = chandra::serialize::make_binary_serializer(_buffer);
+
+	// Serialize the header
+	internal::serialize_tracker_header(_fix.header, serializer);
+
+	// Serialize data
+	serializer.template write<encoding_t::satellites_bits>(_fix.satellites);
+	serializer.template write<encoding_t::t_since_last_fix_bits>(_fix.t_since_last_fix.count());
+	serializer.template write<encoding_t::gnss_augmentation_bits>(uint8_t(_fix.gnss_augmentation));
+	serializer.template write<encoding_t::imu_augmentation_bits>(uint8_t(_fix.imu_augmentation));
+
+	// Serialize the date/time
+	internal::serialize_gnss_datetime(_fix.date_time, serializer);
+
+	return true;
 }
 
 template<size_t N>
 constexpr bool deserialize_gnss_fix(const uint8_t (&_buffer)[N], TrackerGNSSFix& _fix) {
-	using range_t = TrackerGNSSFix;
-	return false;
+	using encoding_t = internal::TrackerGNSSFixEncoding;
+	auto deserializer = chandra::serialize::make_binary_deserializer(_buffer);
+
+	// Deserialize the header
+	const bool header_success = internal::deserialize_tracker_header(deserializer, _fix.header);
+	if (!header_success) return false;
+
+	// Deserialize data
+	deserializer.template read<encoding_t::satellites_bits>(_fix.satellites);
+	uint32_t t_since_last_fix_ms;
+	deserializer.template read<encoding_t::t_since_last_fix_bits>(t_since_last_fix_ms);
+	_fix.t_since_last_fix = decltype(_fix.t_since_last_fix)(t_since_last_fix_ms);
+
+	uint8_t enum_intermediate;
+	deserializer.template read<encoding_t::gnss_augmentation_bits>(enum_intermediate);
+	_fix.gnss_augmentation = static_cast<chandra::aero::protocol::TrackerGNSSAugmentation>(enum_intermediate);
+	deserializer.template read<encoding_t::imu_augmentation_bits>(enum_intermediate);
+	_fix.imu_augmentation = static_cast<chandra::aero::protocol::TrackerIMUAugmentation>(enum_intermediate);
+
+	// Deserialize the header
+	const bool date_time_success = internal::deserialize_gnss_datetime(deserializer, _fix.date_time);
+	if (!date_time_success) return false;
+
+	return true;
 }
 
 template<class Value>
