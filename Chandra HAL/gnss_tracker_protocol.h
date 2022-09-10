@@ -7,6 +7,8 @@
 #include "chrono.h"
 #include "circular_buffer.h"
 #include "coordinates.h"
+#include "matrix_vectors.h"
+#include "matrix_vector_ops.h"
 #include "units.h"
 //using namespace chandra::units::mks::literals;
 
@@ -551,6 +553,24 @@ class BasestationTrackingState
 		offset_t base_home_offset_;
 };
 
+template<class Value>
+class TrackerGNSSSample
+{
+	public:
+		using value_t = Value;
+
+		using time_t = chandra::units::mks::Q_s<value_t>;
+		using pos_t = chandra::aero::ECEF<value_t>;
+
+		pos_t pos;
+		uint8_t satellites = 0;
+		time_t t_since_last;
+		bool valid = false;
+};
+
+template<class T>
+class TD;
+
 template<class Value, size_t N=2>
 class TrackerStateEstimator
 {
@@ -563,12 +583,18 @@ class TrackerStateEstimator
 		using pos_t = chandra::aero::ECEF<value_t>;
 		using vel_t = chandra::math::Vector3D<meters_per_second_t>;
 		using accel_t = chandra::math::Vector3D<meters_per_second2_t>;
+		using gnss_t = TrackerGNSSSample<value_t>;
 		using state_t = TrackerState<value_t>;
 
 		//
 		// Accessors
 		//
-		constexpr state_t state() const {
+		constexpr bool updated() const {
+			return updated_;
+		}
+
+		constexpr state_t state() {
+			updated_ = false;
 			return {};
 		}
 
@@ -580,19 +606,33 @@ class TrackerStateEstimator
 			return vel_;
 		}
 
-		constexpr bool update_pos(time_t _dt, pos_t _pos) {
-			// TODO: RUN A MEASUREMENT STEP IN THE KALMAN FILTER
+		constexpr bool update_gnss(const gnss_t& _gnss) { // TODO: THIS SHOULD EITHER ONLY HANDLE A SINGLE GPS, OR IT NEEDS TO DO SOMETHING TO MAKE SURE THE SAMPLES ARE CORRECTED....
+			if(initialized_) {
+				const auto offset = pos_ - _gnss.pos;
+				vel_ = offset / _gnss.t_since_last; // TODO: GET THIS TO WORK PROPERLY... THIS IS NOT ACTUALLY CALCULATING THE CORRECT THING....
+			} else {
+				initialized_ = true;
+			}
+
+			pos_ = _gnss.pos;
+			updated_ = true;
 			return true;
 		}
 
-		constexpr bool update_accel(time_t _dt, accel_t _accel) {
-			// TODO: RUN A PREDICTION STEP IN THE KALMAN FILTER
+		constexpr bool update_accel(accel_t /*_accel*/) {
+			if(initialized_) {
+				// TODO: RUN A PREDICTION STEP IN THE KALMAN FILTER
+
+				updated_ = true;
+			}
 			return true;
 		}
 
 	protected:
 
 	private:
+		bool initialized_ = false;
+		bool updated_ = false;
 		chandra::NonblockingFixedCircularBuffer<pos_t, N> pos_history_;
 		pos_t pos_;
 		chandra::math::Vector3D<meters_per_second_t> vel_;

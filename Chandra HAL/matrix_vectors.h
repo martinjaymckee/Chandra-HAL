@@ -2,6 +2,8 @@
 #define CHANDRA_MATRIX_VIEW_H
 
 #include <initializer_list>
+#include <utility>
+
 #include "matrix_core.h"
 
 namespace chandra
@@ -54,7 +56,7 @@ class Vector<Value, 2, IsColumn, Frame> : public internal::VectorMatrixStorage<V
     using frame_t = Frame;
     using value_t = Value;
     using matrix_t = internal::VectorMatrixStorage<Value, 2, IsColumn>;
-    using ref_t = Vector<Value, 2, IsColumn>;
+    using ref_t = Vector<Value, 2, IsColumn, Frame>;
 
     constexpr Vector()
       : matrix_t{},
@@ -78,8 +80,8 @@ class Vector<Value, 2, IsColumn, Frame> : public internal::VectorMatrixStorage<V
         y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
 
     constexpr ref_t& operator = (const ref_t& _other) {
-      x = _other.x;
-      y = _other.y;
+      x = _other(0);
+      y = _other(1);
       return *this;
     }
 
@@ -87,6 +89,21 @@ class Vector<Value, 2, IsColumn, Frame> : public internal::VectorMatrixStorage<V
     constexpr ref_t& operator = (const Matrix<V, matrix_t::rows, matrix_t::columns>& _other) {
       x = _other(0);
       y = _other(1);
+      return *this;
+    }
+
+    //  Arithmetic
+    template<class V>
+    constexpr ref_t& operator += (const Vector<V, 2, IsColumn, Frame>& _other) {
+      x += static_cast<value_t>(_other(0));
+      y += static_cast<value_t>(_other(1));
+      return *this;
+    }
+
+    template<class V>
+    constexpr ref_t& operator -= (const Vector<V, 2, IsColumn, Frame>& _other) {
+      x -= static_cast<value_t>(_other(0));
+      y -= static_cast<value_t>(_other(1));
       return *this;
     }
 
@@ -107,7 +124,7 @@ class Vector<Value, 3, IsColumn, Frame> : public internal::VectorMatrixStorage<V
     using value_t = Value;
     using base_t = internal::VectorMatrixStorage<Value, 3, IsColumn>;
     using matrix_t = internal::VectorMatrixStorage<Value, 3, IsColumn>;
-    using ref_t = Vector<Value, 3, IsColumn>;
+    using ref_t = Vector<Value, 3, IsColumn, Frame>;
 
     constexpr Vector()
       : base_t{},
@@ -136,9 +153,9 @@ class Vector<Value, 3, IsColumn, Frame> : public internal::VectorMatrixStorage<V
         }
 
     constexpr ref_t& operator = (const ref_t& _other) {
-      x = _other.x;
-      y = _other.y;
-      z = _other.z;
+      x = _other(0);
+      y = _other(1);
+      z = _other(2);
       return *this;
     }
 
@@ -147,6 +164,23 @@ class Vector<Value, 3, IsColumn, Frame> : public internal::VectorMatrixStorage<V
       x = _other(0);
       y = _other(1);
       z = _other(2);
+      return *this;
+    }
+
+    //  Arithmetic
+    template<class V>
+    constexpr ref_t& operator += (const Vector<V, 3, IsColumn, Frame>& _other) {
+      x += static_cast<value_t>(_other(0));
+      y += static_cast<value_t>(_other(1));
+      z += static_cast<value_t>(_other(2));
+      return *this;
+    }
+
+    template<class V>
+    constexpr ref_t& operator -= (const Vector<V, 3, IsColumn, Frame>& _other) {
+      x -= static_cast<value_t>(_other(0));
+      y -= static_cast<value_t>(_other(1));
+      z -= static_cast<value_t>(_other(2));
       return *this;
     }
 
@@ -167,7 +201,7 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
     using frame_t = Frame;
     using value_t = Value;
     using matrix_t = internal::VectorMatrixStorage<Value, 4, IsColumn>;
-    using ref_t = Vector<Value, 4, IsColumn>;
+    using ref_t = Vector<Value, 4, IsColumn, Frame>;
 
     constexpr Vector()
       : matrix_t{},
@@ -199,9 +233,10 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
         z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
 
     constexpr ref_t& operator = (const ref_t& _other) {
-      x = _other.x;
-      y = _other.y;
-      z = _other.z;
+      w = _other(0);
+      x = _other(1);
+      y = _other(2);
+      z = _other(3);
       return *this;
     }
 
@@ -211,6 +246,25 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
       x = _other(1);
       y = _other(2);
       z = _other(3);
+      return *this;
+    }
+
+    //  Arithmetic
+    template<class V>
+    constexpr ref_t& operator += (const Vector<V, 4, IsColumn, Frame>& _other) {
+      w += static_cast<value_t>(_other(0));
+      x += static_cast<value_t>(_other(1));
+      y += static_cast<value_t>(_other(2));
+      z += static_cast<value_t>(_other(3));
+      return *this;
+    }
+
+    template<class V>
+    constexpr ref_t& operator -= (const Vector<V, 4, IsColumn, Frame>& _other) {
+      w -= static_cast<value_t>(_other(0));
+      x -= static_cast<value_t>(_other(1));
+      y -= static_cast<value_t>(_other(2));
+      z -= static_cast<value_t>(_other(3));
       return *this;
     }
 
@@ -224,7 +278,6 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
     value_t& y;
     value_t& z;
 };
-
 
 //
 // Vector Aliases

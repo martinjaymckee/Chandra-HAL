@@ -70,19 +70,30 @@ constexpr auto emul(const Vector<V1, M>& a, const Vector<V2, M>& b) {
 }
 
 // Scalar Multiplication
-template<typename Scalar, typename V, size_t M>
-constexpr auto operator * (const Scalar& s, const Vector<V, M>& A) {
-    using return_t = Vector<typename std::common_type<Scalar, V>::type, M>;
+template<typename Scalar, typename V, size_t M, bool IC, class Frame>
+constexpr auto operator * (const Scalar& s, const Vector<V, M, IC, Frame>& A) {
+    using return_t = Vector<typename std::common_type<Scalar, V>::type, M, IC, Frame>;
     return_t r(A);
     r *= s;
     return r;
 }
 
-template<typename Scalar, typename V, size_t M>
-constexpr auto operator * (const Vector<V, M>& A, const Scalar& s) {
-    using return_t = Vector<typename std::common_type<Scalar, V>::type, M>;
+template<typename Scalar, typename V, size_t M, bool IC, class Frame>
+constexpr auto operator * (const Vector<V, M, IC, Frame>& A, const Scalar& s) {
+    using return_t = Vector<typename std::common_type<Scalar, V>::type, M, IC, Frame>;
     return_t r(A);
     r *= s;
+    return r;
+}
+
+// Scalar Division
+template<typename Scalar, typename V, size_t M, bool IC, class Frame>
+constexpr auto operator / (const Vector<V, M, IC, Frame>& A, const Scalar& s) {
+    using return_t = Vector<decltype(std::declval<V>() / std::declval<Scalar>()), M, IC, Frame>;
+    return_t r;
+    for(size_t idx = 0; idx < M; ++idx) {
+      r(idx) = A(idx) / s;
+    }
     return r;
 }
 
@@ -106,7 +117,6 @@ constexpr auto operator + (const Vector<V, M, IsColumn>& A, const Scalar& s) {
 // Matrix/Vector Addition
 template<typename V1, typename V2, size_t M>
 constexpr auto operator + (const Matrix<V1, M, 1>& a, const Vector<V2, M, true>& b) {
-	using base_t = typename Vector<V2, M, true>::base_t;
     using return_t = Vector<decltype(V1() + V2()), M, true>;
     return_t result(a);
     result += b;
@@ -162,16 +172,14 @@ constexpr auto operator - (const Matrix<V1, M, 1>& a, const Vector<V2, M>& b) {
 template<typename V1, typename V2, size_t M>
 constexpr auto operator - (const Vector<V1, M>& a, const Matrix<V2, M, 1>& b) {
     using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
-
     return_t result(a);
     result -= b;
     return result;
 }
 
-template<typename V1, typename V2, size_t M>
-constexpr auto operator - (const Vector<V1, M>& a, const Vector<V2, M>& b) {
-    using return_t = Vector<typename std::common_type<V1, V2>::type, M>;
-
+template<typename V1, typename V2, size_t M, bool IC, class Frame>
+constexpr auto operator - (const Vector<V1, M, IC, Frame>& a, const Vector<V2, M, IC, Frame>& b) {
+    using return_t = Vector<typename std::common_type<V1, V2>::type, M, IC, Frame>;
     return_t result(a);
     result -= b;
     return result;

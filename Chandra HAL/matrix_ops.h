@@ -492,8 +492,8 @@ constexpr auto operator - (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
 // Scalar Subtraction
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b) {
-    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
-
+    //using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+		using return_t = Matrix<decltype(std::declval<V1>() - std::declval<V2>()), M, N>;
     return_t result(a);
     result -= b;
     return result;
