@@ -30,33 +30,33 @@ namespace mks
 //	Mass ug = 1e-09 
 //	Mass ng = 1e-12 
 //	Mass slug = 6854 
-//	Mass TN = 1e+12 
-//	Mass GN = 1e+09 
-//	Mass MN = 1e+06 
-//	Mass kN = 1000 
-//	Mass hN = 100 
-//	Mass daN = 10 
-//	Mass N = 1 
-//	Mass dN = 0.1 
-//	Mass cN = 0.01 
-//	Mass mN = 0.001 
-//	Mass uN = 1e-06 
-//	Mass nN = 1e-09 
-//	Mass pN = 1e-12 
-//	Mass Tgf = 9.807e+09 
-//	Mass Ggf = 9.807e+06 
-//	Mass Mgf = 9807 
-//	Mass kgf = 9.807 
-//	Mass hgf = 0.9807 
-//	Mass dagf = 0.09807 
-//	Mass gf = 0.009807 
-//	Mass dgf = 0.0009807 
-//	Mass cgf = 9.807e-05 
-//	Mass mgf = 9.807e-06 
-//	Mass ugf = 9.807e-09 
-//	Mass ngf = 9.807e-12 
-//	Mass lb = 0.2248 
-//	Mass pdl = 7.231 
+//	Force TN = 1e+12 
+//	Force GN = 1e+09 
+//	Force MN = 1e+06 
+//	Force kN = 1000 
+//	Force hN = 100 
+//	Force daN = 10 
+//	Force N = 1 
+//	Force dN = 0.1 
+//	Force cN = 0.01 
+//	Force mN = 0.001 
+//	Force uN = 1e-06 
+//	Force nN = 1e-09 
+//	Force pN = 1e-12 
+//	Force Tgf = 9.807e+09 
+//	Force Ggf = 9.807e+06 
+//	Force Mgf = 9807 
+//	Force kgf = 9.807 
+//	Force hgf = 0.9807 
+//	Force dagf = 0.09807 
+//	Force gf = 0.009807 
+//	Force dgf = 0.0009807 
+//	Force cgf = 9.807e-05 
+//	Force mgf = 9.807e-06 
+//	Force ugf = 9.807e-09 
+//	Force ngf = 9.807e-12 
+//	Force lb = 0.2248 
+//	Force pdl = 7.231 
 //	Length Tm = 1e+12 
 //	Length Gm = 1e+09 
 //	Length Mm = 1e+06 
@@ -889,7 +889,7 @@ namespace mks
     struct TN
     {
         using factor_t = std::ratio<1000000000000, 1>; // approx. 1e+12
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = TN;
         static constexpr bool absolute = false;
@@ -916,7 +916,7 @@ namespace mks
     struct GN
     {
         using factor_t = std::ratio<1000000000, 1>; // approx. 1e+09
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = GN;
         static constexpr bool absolute = false;
@@ -943,7 +943,7 @@ namespace mks
     struct MN
     {
         using factor_t = std::ratio<1000000, 1>; // approx. 1e+06
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = MN;
         static constexpr bool absolute = false;
@@ -970,7 +970,7 @@ namespace mks
     struct kN
     {
         using factor_t = std::ratio<1000, 1>; // approx. 1000
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = kN;
         static constexpr bool absolute = false;
@@ -997,7 +997,7 @@ namespace mks
     struct hN
     {
         using factor_t = std::ratio<100, 1>; // approx. 100
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = hN;
         static constexpr bool absolute = false;
@@ -1024,7 +1024,7 @@ namespace mks
     struct daN
     {
         using factor_t = std::ratio<10, 1>; // approx. 10
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = daN;
         static constexpr bool absolute = false;
@@ -1051,7 +1051,7 @@ namespace mks
     struct N
     {
         using factor_t = std::ratio<1, 1>; // approx. 1
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = N;
         static constexpr bool absolute = false;
@@ -1078,7 +1078,7 @@ namespace mks
     struct dN
     {
         using factor_t = std::ratio<1, 10>; // approx. 0.1
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dN;
         static constexpr bool absolute = false;
@@ -1105,7 +1105,7 @@ namespace mks
     struct cN
     {
         using factor_t = std::ratio<1, 100>; // approx. 0.01
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cN;
         static constexpr bool absolute = false;
@@ -1132,7 +1132,7 @@ namespace mks
     struct mN
     {
         using factor_t = std::ratio<1, 1000>; // approx. 0.001
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mN;
         static constexpr bool absolute = false;
@@ -1159,7 +1159,7 @@ namespace mks
     struct uN
     {
         using factor_t = std::ratio<1, 1000000>; // approx. 1e-06
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = uN;
         static constexpr bool absolute = false;
@@ -1186,7 +1186,7 @@ namespace mks
     struct nN
     {
         using factor_t = std::ratio<1, 1000000000>; // approx. 1e-09
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = nN;
         static constexpr bool absolute = false;
@@ -1213,7 +1213,7 @@ namespace mks
     struct pN
     {
         using factor_t = std::ratio<1, 1000000000000>; // approx. 1e-12
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = pN;
         static constexpr bool absolute = false;
@@ -1240,7 +1240,7 @@ namespace mks
     struct Tgf
     {
         using factor_t = std::ratio<9806650000, 1>; // approx. 9.80665e+09
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = Tgf;
         static constexpr bool absolute = false;
@@ -1267,7 +1267,7 @@ namespace mks
     struct Ggf
     {
         using factor_t = std::ratio<9806650, 1>; // approx. 9.80665e+06
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = Ggf;
         static constexpr bool absolute = false;
@@ -1294,7 +1294,7 @@ namespace mks
     struct Mgf
     {
         using factor_t = std::ratio<196133, 20>; // approx. 9806.65
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = Mgf;
         static constexpr bool absolute = false;
@@ -1321,7 +1321,7 @@ namespace mks
     struct kgf
     {
         using factor_t = std::ratio<196133, 20000>; // approx. 9.80665
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = kgf;
         static constexpr bool absolute = false;
@@ -1348,7 +1348,7 @@ namespace mks
     struct hgf
     {
         using factor_t = std::ratio<196133, 200000>; // approx. 0.980665
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = hgf;
         static constexpr bool absolute = false;
@@ -1375,7 +1375,7 @@ namespace mks
     struct dagf
     {
         using factor_t = std::ratio<196133, 2000000>; // approx. 0.0980665
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dagf;
         static constexpr bool absolute = false;
@@ -1402,7 +1402,7 @@ namespace mks
     struct gf
     {
         using factor_t = std::ratio<196133, 20000000>; // approx. 0.00980665
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = gf;
         static constexpr bool absolute = false;
@@ -1429,7 +1429,7 @@ namespace mks
     struct dgf
     {
         using factor_t = std::ratio<196133, 200000000>; // approx. 0.000980665
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = dgf;
         static constexpr bool absolute = false;
@@ -1456,7 +1456,7 @@ namespace mks
     struct cgf
     {
         using factor_t = std::ratio<196133, 2000000000>; // approx. 9.80665e-05
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = cgf;
         static constexpr bool absolute = false;
@@ -1483,7 +1483,7 @@ namespace mks
     struct mgf
     {
         using factor_t = std::ratio<196133, 20000000000>; // approx. 9.80665e-06
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = mgf;
         static constexpr bool absolute = false;
@@ -1510,7 +1510,7 @@ namespace mks
     struct ugf
     {
         using factor_t = std::ratio<8563, 873182993173>; // approx. 9.80665e-09
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ugf;
         static constexpr bool absolute = false;
@@ -1537,7 +1537,7 @@ namespace mks
     struct ngf
     {
         using factor_t = std::ratio<5, 509858106489>; // approx. 9.80665e-12
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = ngf;
         static constexpr bool absolute = false;
@@ -1564,7 +1564,7 @@ namespace mks
     struct lb
     {
         using factor_t = std::ratio<11241, 50000>; // approx. 0.22482
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = lb;
         static constexpr bool absolute = false;
@@ -1591,7 +1591,7 @@ namespace mks
     struct pdl
     {
         using factor_t = std::ratio<361533, 50000>; // approx. 7.23066
-        using dimensions_t = dimensions::Mass;
+        using dimensions_t = dimensions::Force;
         using offset_t = std::ratio<0, 1>;
         using relative_t = pdl;
         static constexpr bool absolute = false;

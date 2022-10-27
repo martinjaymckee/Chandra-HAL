@@ -9,6 +9,30 @@
 #include <matrix.h>
 
 //
+// Matrix Traits
+// 
+TEST_CASE("Check Matrix Traits") {
+	using value_t = double;
+	using matrix_t = chandra::math::Matrix<value_t, 2, 2>;
+	value_t a(0);
+	matrix_t M(0);
+	
+	SECTION("is_matrix") {
+		REQUIRE((chandra::math::is_matrix(a) == false));
+		REQUIRE((chandra::math::is_matrix(M) == true));
+	}
+
+	SECTION("is_derived_matrix") {
+		REQUIRE((chandra::math::is_derived_matrix(M) == true));
+	}
+
+	SECTION("is_matrix_assignable") {
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(M), decltype(a)>() == false));
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(M), decltype(M)>() == true));
+	}
+}
+
+//
 // Matrix Construction
 //
 TEST_CASE( "Matricies are constructed", "[matrix]" ) {
@@ -87,4 +111,28 @@ TEST_CASE("Matricies are accessed", "[matrix]") {
 		const matrix_t c = a;
 		REQUIRE((a == c));
 	};
+};
+
+//
+// Matrix Access
+//
+TEST_CASE("Basic operations between Matricies are attempted", "[matrix]") {
+	using value_t = double;
+	using matrix_t = chandra::math::Matrix<value_t, 2, 2>;
+	const value_t a = 1.5;
+	const matrix_t Ma = matrix_t::Count();
+	const matrix_t Mb = matrix_t::Eye();
+
+	SECTION("Addition") {
+		const auto Mc = Ma + Mb;
+		const auto Md = Ma + a;
+		//REQUIRE((a == c));
+	};
+	
+	SECTION("Subtraction") {
+		const auto Mc = Ma - Mb;
+		const auto Md = Ma - a;
+		//REQUIRE((a == c));
+	};
+
 };

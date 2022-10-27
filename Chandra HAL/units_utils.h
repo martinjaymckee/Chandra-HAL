@@ -168,8 +168,6 @@ constexpr Value convert(const V2& _val) {
     );
 }
 
-namespace internal
-{
 template<typename Units>
 struct BaseUnits
 {
@@ -180,6 +178,24 @@ struct BaseUnits
 	template<typename Stream>
 	static void streamname(Stream& _stream) {
 		_stream << "base-";
+		_stream << dimensions_t();
+	}
+};
+
+
+namespace internal
+{
+template<typename Dimensions, typename Factor, typename Offset = std::ratio<0, 1>, bool Absolute = false>
+struct ExplicitUnits
+{
+	using dimensions_t = Dimensions;
+	using factor_t = Factor;
+	using offset_t = Offset;
+	static constexpr bool absolute = Absolute;
+	template<typename Stream>
+	static void streamname(Stream& _stream) {
+		_stream << "explicit-";
+//    _stream << Factor();
 		_stream << dimensions_t();
 	}
 };

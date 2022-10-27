@@ -35,7 +35,12 @@ Quantity chronoToQuantity(const ChronoDuration& _t) {
 
 template<class ChronoDuration, class Quantity>
 ChronoDuration quantityToChrono(const Quantity& _t) {
-  return ChronoDuration{_t.value()}; // TODO: THIS IS A HACK....
+	using rep_t = typename ChronoDuration::rep;
+	using input_units_t = typename Quantity::units_t;
+	using period_t = typename ChronoDuration::period;
+	using chrono_units_t = chandra::units::internal::ExplicitUnits<typename input_units_t::dimensions_t, period_t, typename input_units_t::offset_t, input_units_t::absolute>;
+
+  return ChronoDuration(chandra::units::convert<rep_t, chrono_units_t, input_units_t>(_t.value()));
 }
 
 } /*namespace conversions*/

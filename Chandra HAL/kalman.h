@@ -39,6 +39,7 @@ class KalmanFilterMeasurementBase
 
 		observation_model_t H;
 		measurement_covariance_t R = measurement_covariance_t::Eye();
+		measurement_covariance_t S;
 		measurement_gain_t K;
 		measurement_t y;
 };
@@ -80,8 +81,8 @@ class KalmanFilterBase
 		}
 
 		void gain_update() {
-			const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
-			this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
+			this->S = (this->H * this->P_prior * this->H.T()) + this->R;
+			this->K = this->P_prior * this->H.T() * chandra::math::inverse(this->S);
 			return;
 		}
 
@@ -110,6 +111,7 @@ public:
 	using measurement_t = typename KalmanFilterMeasurementBase<Value, StateSize, MeasurementSize>::measurement_t;
 	using state_t = typename KalmanFilterStateBase<Value, StateSize>::state_t;
 	using state_covariance_t = typename KalmanFilterStateBase<Value, StateSize>::state_covariance_t;
+	using measurement_gain_t = typename KalmanFilterMeasurementBase<Value, StateSize, MeasurementSize>::measurement_gain_t;
 
 	void predict() {
 		this->X_prior = (this->F * this->X_post);
@@ -122,12 +124,15 @@ public:
 		return;
 	}
 
-	void gain_update() {
-		const auto S = (this->H * this->P_prior * this->H.T()) + this->R;
-		this->K = this->P_prior * this->H.T() * chandra::math::inverse(S);
-		// const auto b = (this->H * this->P_prior);
-		// const auto S = (b * this->H.T() + this->R);
-		// this->K = (chandra::math::solve<chandra::math::method::LDL>(S, b)).T();
+	void gain_update(const bool& use_inverse = true) {
+		if (use_inverse) {
+			this->S = (this->H * this->P_prior * this->H.T()) + this->R;
+			this->K = this->P_prior * this->H.T() * chandra::math::inverse(this->S);
+		} else {
+			const auto b = (this->H * this->P_prior);
+			this->S = (b * this->H.T() + this->R);
+			this->K = (chandra::math::solve<chandra::math::method::LDL>(this->S, b)).T();
+		}
 		return;
 	}
 
@@ -141,7 +146,7 @@ public:
 	state_t update(const measurement_t& z, const bool& do_gain = true) {
 		predict();
 		measure(z);
-		if (do_gain) gain_update();
+		if (do_gain) gain_update(false);
 		return correct();
 	}
 };

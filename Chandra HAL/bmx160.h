@@ -387,6 +387,7 @@ class BMX160
           this->gyro_raw_ = gyro_scale_ * value_t{gx, gy, gz};
 
           const auto rhall = buffer_to_signed<scalar_t>(buffer, 7, 6);
+          (void) rhall; // NOTE: THIS NEEDS TO BE USED TO ADJUST THE VALUES....
           const auto mx = buffer_to_signed<scalar_t>(buffer, 1, 0);
           const auto my = buffer_to_signed<scalar_t>(buffer, 3, 2);
           const auto mz = buffer_to_signed<scalar_t>(buffer, 5, 4);

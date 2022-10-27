@@ -9,6 +9,7 @@
 #define CHANDRA_TIMING_H
 
 #include "chrono.h"
+#include "units.h"
 
 namespace chandra
 {
@@ -48,18 +49,31 @@ class Timer
 			operator bool() const { return expired; }
 		};
 
-    Timer(const time_point_t _base = clock_t::now())
+    constexpr Timer(const time_point_t _base = clock_t::now())
       : duration_{0}, base_{_base}, expiration_{_base}, running_(false) {}
 
-    Timer( const duration_t _duration )
+    constexpr Timer( const duration_t _duration )
       : duration_(_duration), base_(clock_t::now()), running_(_duration.count() != 0)
 		{
         expiration_ = base_ + duration_;
     }
 
-    Timer( const duration_t _duration, const time_point_t _base )
+
+    constexpr Timer( const duration_t _duration, const time_point_t _base )
       : duration_(_duration), base_(_base),
 				expiration_(_base+_duration), running_(_duration.count() != 0) {}
+
+		template<class V, class U>
+		constexpr Timer( const chandra::units::Quantity<V, U>& _t)
+			: duration_(
+					chandra::units::conversions::quantityToChrono<std::chrono::microseconds>(
+						chandra::units::mks::Q_us<V>(_t)
+					)
+				), base_(clock_t::now())
+		{
+				expiration_ = base_ + duration_;
+                running_ = duration_.count() != 0;
+		}
 
 		bool run(bool _running = true) {
 			running_ = _running;
@@ -71,7 +85,6 @@ class Timer
 			return running_;
 		}
 
-		template<class D>
     duration_t duration(duration_t _duration, const timer_control_t& _control = Reset) {
       duration_ = _duration;
       if(_control & Reset) reset();
@@ -79,12 +92,13 @@ class Timer
       return duration_;
 		}
 
+
     duration_t duration() const { return duration_; }
 
     time_point_t base(time_point_t _base) {
 			base_ = _base;
 			return base_;
-		}
+	}
 
     time_point_t base() const { return base_; }
 

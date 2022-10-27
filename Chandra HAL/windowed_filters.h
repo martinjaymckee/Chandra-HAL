@@ -64,10 +64,10 @@ class RecursiveMeanVarianceFilter
         }
 
         RecursiveMeanVarianceFilter(
-          const scalar_t& _A = scalar_t(0.9),
-          const scalar_t& _B = scalar_t(0.9)
+          const scalar_t& _a = scalar_t(0.9),
+          const scalar_t& _b = scalar_t(0.9)
         )
-          : A_(_A), B_(B), v_(0)
+          : a_(_a), b_(_b), v_(0)
         {
           updateCoefficients();
         }
@@ -87,27 +87,27 @@ class RecursiveMeanVarianceFilter
         constexpr value_t var() const { return v_; }
         constexpr value_t std() const { return sqrt(var()); }
 
-        template<class V>
-        bool initalize_timeconstants( const auto& _tau_mean, auto& _tau_var, const frequency_t<V>& _fs ) {
+        template<class MeanType, class VarType, class V>
+        bool initalize_timeconstants( const MeanType& _tau_mean, const VarType& _tau_var, const frequency_t<V>& _fs ) {
           const auto tau_mean = std::chrono::duration_cast<std::chrono::microseconds>(_tau_mean);
           const auto tau_var = std::chrono::duration_cast<std::chrono::microseconds>(_tau_var);
           const auto ts = calcSampleTime(_fs.value());
-          A_ = calcCoef(tau_mean.count(), ts);
-          B_ = calcCoef(tau_var.count(), ts);
+          a_ = calcCoef(tau_mean.count(), ts);
+          b_ = calcCoef(tau_var.count(), ts);
           updateCoefficients();
           return true;
         }
 
-        template<class V>
-        bool initalize_timeconstants( const auto& _tau, const frequency_t<V>& _fs ) {
+        template<class TauType, class V>
+        bool initalize_timeconstants( const TauType& _tau, const frequency_t<V>& _fs ) {
           return timeconstants( _tau, _tau, _fs );
         }
 
         // ADD AN ALTERNITIVE INITIALIZAION METHOD THAT TAKES THE RATIO OF BANDWIDTH TO SAMPLING RATE
         // use: A = e^(-T/tau), ratio = T/tau, tau = -T/log(A)
         bool initialize_cutoffs(const scalar_t& _cutoff_mean, const scalar_t& _cutoff_var) {
-          A_ = calcCoef(scalar_t{1}, _cutoff_mean);
-          B_ = calcCoef(scalar_t{1}, _cutoff_var);
+          a_ = calcCoef(scalar_t{1}, _cutoff_mean);
+          b_ = calcCoef(scalar_t{1}, _cutoff_var);
           updateCoefficients();
           return true;
         }
@@ -119,39 +119,39 @@ class RecursiveMeanVarianceFilter
         template<class V>
         duration_t tau_mean(const frequency_t<V>& _fs) {
             const auto ts = calcSampleTime(_fs.value());
-            return {calcTau(A_, ts)};
+            return {calcTau(a_, ts)};
         }
 
         template<class V>
         duration_t tau_var(const frequency_t<V>& _fs) {
             const auto ts = calcSampleTime(_fs.value());
-            return {calcTau(B_, ts)};
+            return {calcTau(b_, ts)};
         }
 
-        scalar_t A(scalar_t _A) {
-          A_ = _A;
+        scalar_t a(scalar_t _a) {
+          a_ = _a;
           updateCoefficients();
-          return A_;
+          return a_;
         }
-        constexpr scalar_t A() const { return A_; }
+        constexpr scalar_t a() const { return a_; }
 
-        scalar_t B(scalar_t _B) {
-          B_ = _B;
+        scalar_t b(scalar_t _b) {
+          b_ = _b;
           updateCoefficients();
-          return B_;
+          return b_;
         }
-        constexpr scalar_t B() const { return B_; }
+        constexpr scalar_t b() const { return b_; }
 
         value_t operator() (const value_t& _x) {
-            x_ = (A_* (x_ - _x)) + _x; // Recursive Mean Estimator
+            x_ = (a_* (x_ - _x)) + _x; // Recursive Mean Estimator
             const auto e = x_-_x;
-            v_ = (B_*v_) + (D_*(e*e));
+            v_ = (b_*v_) + (d_*(e*e));
             return v_;
         }
 
     protected:
-        constexpr scalar_t calcD(scalar_t _A, scalar_t _B) const {
-          return ((scalar_t(1.0) - B_) + (scalar_t(1.0) + A_)) / scalar_t(2.0);
+        constexpr scalar_t calcD(scalar_t _a, scalar_t _b) const {
+          return ((scalar_t(1.0) - b_) + (scalar_t(1.0) + a_)) / scalar_t(2.0);
         }
 
         constexpr scalar_t calcCoef(scalar_t _tau, scalar_t _ts) const {
@@ -168,13 +168,13 @@ class RecursiveMeanVarianceFilter
         }
 
         void updateCoefficients() {
-          D_ = calcD(A_, B_);
+          d_ = calcD(a_, b_);
         }
 
     private:
-        scalar_t A_;
-        scalar_t B_;
-        scalar_t D_;
+        scalar_t a_;
+        scalar_t b_;
+        scalar_t d_;
         value_t x_;
         variance_t v_;
 };

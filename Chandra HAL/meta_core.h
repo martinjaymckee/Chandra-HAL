@@ -12,6 +12,8 @@ namespace chandra
 {
 namespace meta
 {
+template<class ...>
+using void_t = void;
 
 struct null_type{}; // This is a general purpose type to use as a non-type
 typedef null_type null_t;

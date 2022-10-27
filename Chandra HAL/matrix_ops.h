@@ -52,7 +52,7 @@ Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, N, M>& 
     return _stream;
 }
 
-template<typename Stream, typename Value, size_t N>
+template<typename Stream, typename Value, size_t N, typename = typename std::enable_if<N != 1, void>::type> // Enable-if disambiguates the 1x1 matrix case....
 Stream& operator << (Stream& _stream, const chandra::math::Matrix<Value, 1, N>& _val) {
     _stream << "[ ";
     for(int column = 0; column < N; ++column){
@@ -453,7 +453,8 @@ constexpr auto ediv(const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
 // Scalar Division
 template<typename Scalar, typename V, size_t M, size_t N>
 constexpr auto operator / (const Matrix<V, M, N>& A, const Scalar& s) {
-    using return_t = Matrix<typename std::common_type<Scalar, V>::type, M, N>;
+	using return_t = Matrix<decltype(V() - s), M, N>;
+
     return_t r(A);
     r /= s;
     return r;
@@ -462,7 +463,7 @@ constexpr auto operator / (const Matrix<V, M, N>& A, const Scalar& s) {
 // Matrix Addition
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto operator + (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
-    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+		using return_t = Matrix<decltype(V1() + V2()), M, N>;
 
     return_t result(a);
     result += b;
@@ -472,7 +473,7 @@ constexpr auto operator + (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
 // Scalar Addition
 template<typename V1, typename V2, size_t M, size_t N>
 constexpr auto operator + (const Matrix<V1, M, N>& a, const V2& b) {
-    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+	using return_t = Matrix<decltype(V1() + V2()), M, N>;
 
     return_t result(a);
     result += b;
@@ -480,20 +481,33 @@ constexpr auto operator + (const Matrix<V1, M, N>& a, const V2& b) {
 }
 
 // Matrix Subtraction
-template<typename V1, typename V2, size_t M, size_t N>
-constexpr auto operator - (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b) {
-    using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
+template<class V1, size_t M, size_t N, class V2>
+constexpr auto operator - (const Matrix<V1, M, N>& a, const Matrix<V2, M, N>& b)
+{
+    using return_t = Matrix<decltype(V1() - V2()), M, N>;
 
     return_t result(a);
     result -= b;
     return result;
 }
 
+//template<typename V1, size_t M, size_t N, class OtherMatrix>
+//constexpr auto operator - (const Matrix<V1, M, N>& a, const OtherMatrix& b)
+//	-> typename std::enable_if<is_matrix_assignable<Matrix<V1, M, N>, OtherMatrix>(), Matrix<decltype(V1() - OtherMatrix::value_t()), M, N> >::type
+//{
+//	using return_t = Matrix<decltype(V1() - OtherMatrix::value_t()), M, N>;
+//
+//    return_t result(a);
+//    result -= b;
+//    return result;
+//}
+
 // Scalar Subtraction
 template<typename V1, typename V2, size_t M, size_t N>
-constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b) {
-    //using return_t = Matrix<typename std::common_type<V1, V2>::type, M, N>;
-		using return_t = Matrix<decltype(std::declval<V1>() - std::declval<V2>()), M, N>;
+constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b)
+    -> typename std::enable_if<!is_matrix_assignable<Matrix<V1, M, N>, V2>(), Matrix<decltype(V1() - V2()), M, N> >::type
+{
+    using return_t = Matrix<decltype(V1() - V2()), M, N>;
     return_t result(a);
     result -= b;
     return result;
@@ -506,8 +520,9 @@ constexpr auto operator - (const Matrix<V1, M, N>& a, const V2& b) {
 
 //  Dot Product -- Any Length of Vector
 template<typename V1, typename V2, size_t N>
-constexpr V1 dot(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
-    V1 sum(0);
+constexpr auto dot(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
+		using result_t = decltype(std::declval<V1>() * std::declval<V2>());
+		result_t sum(0);
     for(size_t idx = 0; idx < N; ++idx) {
         sum += (_v1(idx) * _v2(idx));
     }
@@ -517,16 +532,30 @@ constexpr V1 dot(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>& _v2) {
 //  Cross Product -- Vectors of Length Three
 template<typename V1, typename V2>
 constexpr auto cross(const Matrix<V1, 3, 1>& _v1, const Matrix<V2, 3, 1>& _v2) {
-    Matrix<V1, 3, 1> v;
-    v(0) = ((_v1(1)*_v2(2)) - (_v1(2)*_v2(1)));
-    v(1) = ((_v1(2)*_v2(0)) - (_v1(0)*_v2(2)));
-    v(2) = ((_v1(0)*_v2(1)) - (_v1(1)*_v2(0)));
-    return v;
+	using result_t = decltype(std::declval<V1>() * std::declval<V2>());
+	Matrix<V1, 3, 1> v;
+	v(0) = result_t((_v1(1) * _v2(2)) - (_v1(2) * _v2(1)));
+	v(1) = result_t((_v1(2) * _v2(0)) - (_v1(0) * _v2(2)));
+	v(2) = result_t((_v1(0) * _v2(1)) - (_v1(1) * _v2(0)));
+	return v;
+}
+
+template<typename V1, typename V2>
+constexpr auto cross(const Matrix<V1, 1, 3>& _v1, const Matrix<V2, 1, 3>& _v2) {
+	using result_t = decltype(std::declval<V1>()* std::declval<V1>());
+	Matrix<V1, 1, 3> v;
+	v(0) = result_t((_v1(1) * _v2(2)) - (_v1(2) * _v2(1)));
+	v(1) = result_t((_v1(2) * _v2(0)) - (_v1(0) * _v2(2)));
+	v(2) = result_t((_v1(0) * _v2(1)) - (_v1(1) * _v2(0)));
+	return v;
 }
 
 //  Norm
 template<typename V, size_t N>
 constexpr V norm(const Matrix<V, N, 1>& _v) { return dot(_v, _v); }
+
+template<typename V, size_t N>
+constexpr V norm(const Matrix<V, 1, N>& _v) { return dot(_v, _v); }
 
 //  Magnitude
 template<typename V, size_t N>

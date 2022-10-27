@@ -27,11 +27,11 @@ Mass slug = 6854.0096
 # Units of Force
 #
 #   SI
-Mass *N = 1 # Newton
-Mass *gf = acc_gravity * offset_decade(-3) # Grams-Force
+Force *N = 1 # Newton
+Force *gf = acc_gravity * offset_decade(-3) # Grams-Force
 #   Imperial
-Mass lb = 0.22482 # Pound
-Mass pdl = 7.23066 # Poundal
+Force lb = 0.22482 # Pound
+Force pdl = 7.23066 # Poundal
 
 #
 # Units of Length

@@ -210,7 +210,7 @@ struct is_scalar_quantity_struct
 
 
 template<class V, class U>
-constexpr auto reduce_scalar(const Quantity<V, U>& _q) 
+constexpr auto reduce_scalar(const Quantity<V, U>& _q)
     -> typename std::enable_if<!is_scalar_quantity_struct<V, U>::value, Quantity<V, U>>::type
 {
     return _q;
@@ -334,6 +334,23 @@ constexpr auto as(const Value& _val) {
     return Quantity<Value, Units>{_val};
 }
 
+template<class T, class... Args>
+constexpr auto scalar_cast(const T& _v, Args...) {
+    return _v;
+}
+
+template<class Value, class Units>
+constexpr auto scalar_cast(const Quantity<Value, Units>& _v) {
+    using base_quantity_t = Quantity<Value, chandra::units::BaseUnits<Units>>;
+    return base_quantity_t(_v).value();
+}
+
 } /*namespace units*/
+
+template<typename Value, typename Units>
+struct scalar_of<units::Quantity<Value, Units>>
+{
+    using type = typename scalar_of<Value>::type;
+};
 } /*namespace chandra*/
 #endif /*CHANDRA_QUANTITY_H*/

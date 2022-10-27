@@ -273,6 +273,13 @@ class mock_clock
 			return now();
 		}
 
+		template<class Value, class TimeUnits>
+		static time_point advance(const chandra::units::Quantity<Value, TimeUnits>& _d) noexcept {
+			const auto d = chandra::units::conversions::template quantityToChrono<duration>(_d);
+			t_offset_ += d;
+			return now();
+		}
+
 	protected:
 		static duration t_offset_;
 };

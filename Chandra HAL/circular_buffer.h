@@ -154,7 +154,7 @@ class NonblockingFixedCircularBuffer
           return buffer_[idx];
         }
 
-        ref_t drop(uint8_t _num) {
+        ref_t drop(size_t _num) {
         	_num = (_num>cnt_) ? cnt_ : _num;
         	idx_ += _num;
         	cnt_ -= _num;

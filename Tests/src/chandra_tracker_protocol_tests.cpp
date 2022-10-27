@@ -55,8 +55,8 @@ TEST_CASE("Value Encode/Decode Tests", "[protocol]") {
 	using encoding_error_t = chandra::aero::protocol::internal::EncodingErrors;
 	const uint32_t value_mask = static_cast<uint32_t>((1ul << (chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits)) - 1ul);
 	const size_t encoding_bits = chandra::aero::protocol::internal::TrackerStateEncoding::distance_bits;
-	const auto x_max = chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max;
-	const auto x_min = -chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max;
+	const auto x_max = chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max();
+	const auto x_min = -chandra::aero::protocol::internal::TrackerStateRange<value_t>::distance_max();
 	const int32_t y_min = static_cast<int32_t>(0xF0000001); // Note: This is for a 29-bit encoding
 	const int32_t y_zero{ 0 };
 	const int32_t y_max = static_cast<int32_t>((1ul << (encoding_bits - 1ul)) - 1ul);
@@ -143,7 +143,6 @@ TEST_CASE("Construction of Tracker Protocol Objects", "[protocol]") {
 		chandra::aero::protocol::BasestationTrackingState<value_t> basestation_state;
 
 	};
-
 }
 
 TEST_CASE("TrackerState Roundtrip Serialize/Deserialize Test", "[protocol]") {
@@ -152,7 +151,6 @@ TEST_CASE("TrackerState Roundtrip Serialize/Deserialize Test", "[protocol]") {
 	uint8_t buffer[21];
 
 	// Initialize Tracker State
-	tgt_tracker_state.header.format = 0x00;
 	tgt_tracker_state.header.vehicle_id = 0x00;
 	tgt_tracker_state.header.tracker_id = 0x01;
 	tgt_tracker_state.header.mode = chandra::aero::protocol::TrackerFlightMode::Preflight;
@@ -184,7 +182,6 @@ TEST_CASE("TrackerGNSSFix Roundtrip Serialize/Deserialize Test", "[protocol]") {
 	uint8_t buffer[21];
 
 	// Initialize Tracker State
-	tgt_tracker_fix.header.format = 0x04;
 	tgt_tracker_fix.header.vehicle_id = 0x00;
 	tgt_tracker_fix.header.tracker_id = 0x01;
 	tgt_tracker_fix.header.mode = chandra::aero::protocol::TrackerFlightMode::Preflight;

@@ -108,7 +108,7 @@ class ActivityTimer
       return false;
     }
 
-    chandra::FixedCircularBuffer<duration_t, Samples> samples_;
+    chandra::NonblockingFixedCircularBuffer<duration_t, Samples> samples_;
     timer_t timer_;
     time_point_t start_time_;
     duration_t activity_time_;
@@ -182,7 +182,7 @@ class EventRate
       return false;
     }
 
-    chandra::FixedCircularBuffer<Counts, Samples> samples_;
+    chandra::NonblockingFixedCircularBuffer<Counts, Samples> samples_;
     timer_t timer_;
     duration_t duration_;
     Counts counts_;
@@ -263,7 +263,7 @@ class ProfilingTimer
     }
 
     bool measuring_ = false;
-    chandra::FixedCircularBuffer<duration_t, Samples> samples_;
+    chandra::NonblockingFixedCircularBuffer<duration_t, Samples> samples_;
     time_point_t start_time_;
     statistics_t stats_;
 };

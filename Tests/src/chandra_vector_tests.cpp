@@ -9,6 +9,41 @@
 #include <matrix_vectors.h>
 #include <matrix_vector_ops.h>
 
+
+//
+// Matrix Traits
+// 
+
+template<class T>
+class TD;
+
+TEST_CASE("Check Matrix Traits for Vectors") {
+	using value_t = double;
+	using matrix_t = chandra::math::Matrix<value_t, 3, 1>;
+	using vector_t = chandra::math::Vector3D<value_t>;
+
+	value_t a(0);
+	matrix_t M(0);
+	vector_t V;
+
+	SECTION("is_matrix") {
+		REQUIRE((chandra::math::is_matrix(a) == false));
+		REQUIRE((chandra::math::is_matrix(M) == true));
+	}
+
+	SECTION("is_derived_matrix") {
+		REQUIRE((chandra::math::is_derived_matrix(a) == false));
+		REQUIRE((chandra::math::is_derived_matrix(V) == true));
+	}
+
+	SECTION("is_matrix_assignable") {
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(M), decltype(a)>() == false));
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(M), decltype(M)>() == true));
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(M), decltype(V)>() == true));
+		REQUIRE((chandra::math::is_matrix_assignable<decltype(V), decltype(V)>() == true));
+	}
+}
+
 //
 // Vector Construction
 //
@@ -95,8 +130,6 @@ TEST_CASE("4D vectors are constructed", "[vector]") {
 	};
 }
 
-template<class T>
-struct TD;
 
 //
 // Vector Operations

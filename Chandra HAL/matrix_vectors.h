@@ -92,19 +92,11 @@ class Vector<Value, 2, IsColumn, Frame> : public internal::VectorMatrixStorage<V
       return *this;
     }
 
-    //  Arithmetic
     template<class V>
-    constexpr ref_t& operator += (const Vector<V, 2, IsColumn, Frame>& _other) {
-      x += static_cast<value_t>(_other(0));
-      y += static_cast<value_t>(_other(1));
-      return *this;
-    }
-
-    template<class V>
-    constexpr ref_t& operator -= (const Vector<V, 2, IsColumn, Frame>& _other) {
-      x -= static_cast<value_t>(_other(0));
-      y -= static_cast<value_t>(_other(1));
-      return *this;
+    constexpr ref_t& operator = (const Vector<V, 2, IsColumn, Frame>& _other) {
+        x = _other(0);
+        y = _other(1);
+        return *this;
     }
 
     //  Transpose
@@ -167,21 +159,12 @@ class Vector<Value, 3, IsColumn, Frame> : public internal::VectorMatrixStorage<V
       return *this;
     }
 
-    //  Arithmetic
     template<class V>
-    constexpr ref_t& operator += (const Vector<V, 3, IsColumn, Frame>& _other) {
-      x += static_cast<value_t>(_other(0));
-      y += static_cast<value_t>(_other(1));
-      z += static_cast<value_t>(_other(2));
-      return *this;
-    }
-
-    template<class V>
-    constexpr ref_t& operator -= (const Vector<V, 3, IsColumn, Frame>& _other) {
-      x -= static_cast<value_t>(_other(0));
-      y -= static_cast<value_t>(_other(1));
-      z -= static_cast<value_t>(_other(2));
-      return *this;
+    constexpr ref_t& operator = (const Vector<V, 3, IsColumn, Frame>& _other) {
+        x = _other(0);
+        y = _other(1);
+        z = _other(2);
+        return *this;
     }
 
     //  Transpose
@@ -249,23 +232,13 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
       return *this;
     }
 
-    //  Arithmetic
     template<class V>
-    constexpr ref_t& operator += (const Vector<V, 4, IsColumn, Frame>& _other) {
-      w += static_cast<value_t>(_other(0));
-      x += static_cast<value_t>(_other(1));
-      y += static_cast<value_t>(_other(2));
-      z += static_cast<value_t>(_other(3));
-      return *this;
-    }
-
-    template<class V>
-    constexpr ref_t& operator -= (const Vector<V, 4, IsColumn, Frame>& _other) {
-      w -= static_cast<value_t>(_other(0));
-      x -= static_cast<value_t>(_other(1));
-      y -= static_cast<value_t>(_other(2));
-      z -= static_cast<value_t>(_other(3));
-      return *this;
+    constexpr ref_t& operator = (const Vector<V, 4, IsColumn, Frame>& _other) {
+        w = _other(0);
+        x = _other(1);
+        y = _other(2);
+        z = _other(3);
+        return *this;
     }
 
     //  Transpose

@@ -20,7 +20,7 @@ using None = void;
 struct Body {};
 struct Geodetic {};
 struct ECEF {};
-struct NEU {};
+struct ENU {};
 struct NED {};
 };
 
@@ -35,12 +35,18 @@ struct LLH
     length_t altitude;
 };
 
+template<class Stream, class Value, class AngleUnits, class LengthUnits>
+Stream& operator << (Stream& _stream, const LLH<Value, AngleUnits, LengthUnits>& _llh) {
+  _stream << "LLH( " << _llh.latitude << ", " << _llh.longitude << ", ";
+  _stream << _llh.altitude << " )";
+  return _stream;
+}
 
 template<class Value, class LengthUnits = chandra::units::mks::m>
 using ECEF = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::ECEF>;
 
 template<class Value, class LengthUnits = chandra::units::mks::m>
-using NEU = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::NEU>;
+using ENU = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::ENU>;
 
 template<class Value, class LengthUnits = chandra::units::mks::m>
 using NED = chandra::math::Vector3D<chandra::units::Quantity<Value, LengthUnits>, true, frames::NED>;
@@ -70,7 +76,7 @@ Length calcN(const chandra::units::Quantity<V, AngleUnits>& _lat) {
 }
 } /*namespace internal*/
 
-template<class Value, class LengthUnits, Datum DatumDef = Datum::WGS84, size_t MaxIters = 5>
+template<class Value, class LengthUnits, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
 auto ECEFToLLH(
         const ECEF<Value, LengthUnits>& _ecef,
         const chandra::units::mks::Q_m<Value>& _h_thresh = 1e-4_m_
@@ -116,11 +122,135 @@ auto ECEFToLLH(
 }
 
 
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ECEFToENU( const ECEF<V1, LU1>& _p, const LLH<V2, LU2, AU>& _llh0 ) {
+  const auto lat = chandra::math::sincos(_llh0.latitude);
+  const auto lon = chandra::math::sincos(_llh0.longitude);
+  const auto ecef_ref = LLHToECEF(_llh0);
+  
+  const auto dx = _p.x - ecef_ref.x;
+  const auto dy = _p.y - ecef_ref.y;
+  const auto dz = _p.z - ecef_ref.z;
+
+  using length_t = typename ENU<V1, LU1>::value_t;
+  ENU<V1, LU1> enu;
+  enu.x = length_t((-lon.sin * dx) + (lon.cos * dy));
+  enu.y = length_t((-lat.sin * lon.cos * dx) + (-lat.sin * lon.sin * dy) + (lat.cos * dz));
+  enu.z = length_t((lat.cos * lon.cos * dx) + (lat.cos * lon.sin * dy) + (lat.sin * dz));
+  return enu;
+}
+
+template<class V1, class V2, class LU1, class LU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ECEFToENU( const ECEF<V1, LU1>& _p, const ECEF<V2, LU2>& _p0 ) {
+  const auto llh_ref = ECEFToLLH(_p0);
+  return ECEFToENU(_p, llh_ref);
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU1, class AU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto LLHToENU( const LLH<V1, LU1, AU1>& _llh, const LLH<V2, LU2, AU2>& _llh0 ) {
+  const auto ecef = LLHToECEF(_llh);
+  return ECEFToENU(ecef, _llh0);
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto LLHToENU( const LLH<V1, LU1, AU>& _llh, const ECEF<V2, LU2>& _p0 ) {
+  const auto llh_ref = ECEFToLLH(_p0);
+  const auto ecef = LLHToECEF(_llh);
+  return ECEFToENU(ecef, llh_ref);
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ENUToECEF( const ENU<V1, LU1>& _p, const LLH<V2, LU2, AU>& _llh0 ) {
+    const auto lat = chandra::math::sincos(_llh0.latitude);
+    const auto lon = chandra::math::sincos(_llh0.longitude);
+    const auto ecef_ref = LLHToECEF(_llh0);
+
+    using length_t = typename ECEF<V1, LU1>::value_t;
+    ECEF<V1, LU1> ecef;
+    ecef.x = length_t((-lon.sin * _p.x) + (-lat.sin * lon.cos * _p.y) + (lat.cos * lon.cos * _p.z) + ecef_ref.x);
+    ecef.y = length_t((lon.cos * _p.x) + (-lat.sin * lon.sin * _p.y) + (lat.cos * lon.sin * _p.z) + ecef_ref.y);
+    ecef.z = length_t((lat.cos * _p.y) + (lat.sin * _p.z) + ecef_ref.z);
+    return ecef;
+}
+
+template<class V1, class V2, class LU1, class LU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ENUToECEF( const ENU<V1, LU1>& _p, const ECEF<V2, LU2>& _p0 ) {
+  return ENUToECEF(_p, ECEFToLLH(_p0));
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ENUToLLH(const ENU<V1, LU1>& _p, const LLH<V2, LU2, AU>& _llh0 ) {
+  const auto ecef = ENUToECEF(_p, _llh0);
+  return ECEFToLLH(ecef);
+}
+
+template<class V1, class V2, class LU1, class LU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto ENUToLLH( const ENU<V1, LU1>& _p, const ECEF<V2, LU2>& _p0) {
+  const auto ecef = ENUToECEF(_p, _p0);
+  return ECEFToLLH(ecef);
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto RotateECEFToENU(const ECEF<V1, LU1>& _p, const LLH<V2, LU2, AU>& _llh0) {
+    const auto lat = chandra::math::sincos(_llh0.latitude);
+    const auto lon = chandra::math::sincos(_llh0.longitude);
+    const auto ecef_ref = LLHToECEF(_llh0);
+
+    const auto x = _p.x;
+    const auto y = _p.y;
+    const auto z = _p.z;
+
+    using value_t = typename ENU<V1, LU1>::value_t;
+    ENU<V1, LU1> enu;
+    enu.x = value_t((-lon.sin * x) + (lon.cos * y));
+    enu.y = value_t((-lat.sin * lon.cos * x) + (-lat.sin * lon.sin * y) + (lat.cos * z));
+    enu.z = value_t((lat.cos * lon.cos * x) + (lat.cos * lon.sin * y) + (lat.sin * z));
+
+    return enu;
+}
+
+template<class V1, class V2, class LU1, class LU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto RotateECEFToENU(const ECEF<V1, LU1>& _p, const ECEF<V2, LU2>& _p0) {
+    const auto llh_ref = ECEFToLLH(_p0);
+    return RotateECEFToENU(_p, llh_ref);
+}
+
+template<class V1, class V2, class LU1, class LU2, class AU, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto RotateENUToECEF(const ENU<V1, LU1>& _p, const LLH<V2, LU2, AU>& _llh0) {
+    const auto lat = chandra::math::sincos(_llh0.latitude);
+    const auto lon = chandra::math::sincos(_llh0.longitude);
+
+    const auto x = _p.x;
+    const auto y = _p.y;
+    const auto z = _p.z;
+
+    using value_t = typename ECEF<V1, LU1>::value_t;
+    ECEF<V1, LU1> ecef;
+    ecef.x = value_t((-lon.sin * x) + (-lat.sin * lon.cos * y) + (lat.cos * lon.cos * z));
+    ecef.y = value_t((lon.cos * x) + (-lat.sin * lon.sin * y) + (lat.cos * lon.sin * z));
+    ecef.z = value_t((lat.cos * y) + (lat.sin * z));
+    return ecef;
+}
+
+template<class V1, class V2, class LU1, class LU2, Datum DatumDef = Datum::WGS84, size_t MaxIters = 7>
+auto RotateENUToECEF(const ENU<V1, LU1>& _p, const ECEF<V2, LU2>& _p0) {
+    return RotateENUToECEF(_p, ECEFToLLH(_p0));
+}
+
 
 namespace utils
 {
 template<class P1, class P2, class L>
 bool ECEFWithinError(const P1& _p1, const P2& _p2, const L& _l) {
+    const auto dx = (_p1.x > _p2.x) ? _p1.x - _p2.x : _p2.x - _p1.x;
+    const auto dy = (_p1.y > _p2.y) ? _p1.y - _p2.y : _p2.y - _p1.y;
+    const auto dz = (_p1.z > _p2.z) ? _p1.z - _p2.z : _p2.z - _p1.z;
+
+    return (dx <= _l) && (dy <= _l) && (dz <= _l);
+}
+
+template<class P1, class P2, class L>
+bool ENUWithinError(const P1& _p1, const P2& _p2, const L& _l) {
     const auto dx = (_p1.x > _p2.x) ? _p1.x - _p2.x : _p2.x - _p1.x;
     const auto dy = (_p1.y > _p2.y) ? _p1.y - _p2.y : _p2.y - _p1.y;
     const auto dz = (_p1.z > _p2.z) ? _p1.z - _p2.z : _p2.z - _p1.z;

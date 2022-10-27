@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include "quantity_math.h"
+
 namespace chandra
 {
 namespace math
@@ -18,8 +20,12 @@ struct SinCosReturn
 };
 
 template<class Value>
-SinCosReturn<Value> sincos(const Value& _theta) {
-  return {sin(_theta), cos(_theta)};
+auto sincos(const Value& _theta) {
+    using value_t = decltype(std::sin(_theta));
+    using return_t = SinCosReturn<value_t>;
+    const auto s = std::sin(_theta);
+    const auto c = std::cos(_theta);
+  return return_t(s, c);
 }
 
 } /*namespace math*/

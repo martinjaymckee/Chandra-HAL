@@ -1,12 +1,12 @@
 #ifndef CHANDRA_TRACKER_PROTOCOL_H
 #define CHANDRA_TRACKER_PROTOCOL_H
 
-// #include <iostream>
-
 #include "binary_serialize.h"
 #include "chrono.h"
 #include "circular_buffer.h"
 #include "coordinates.h"
+#include "geometry.h"
+#include "kalman.h"
 #include "matrix_vectors.h"
 #include "matrix_vector_ops.h"
 #include "units.h"
@@ -18,6 +18,17 @@ namespace aero
 {
 namespace protocol
 {
+
+enum class TrackerFrameFormats {
+		Localization = 0x00,
+		PositionCovariance = 0x01,
+		VelocityCovariance = 0x02,
+		EventError = 0x03,
+		GNSSFix = 0x04,
+		SystemStatus = 0x05,
+		Command = 0x07,
+		Invalid = 0xFF
+};
 
 enum class TrackerFlightMode {
 	Initializing = 0x00,
@@ -49,7 +60,17 @@ enum class TrackerIMUAugmentation {
 class TrackerHeader
 {
 	public:
-		uint8_t format;
+		static constexpr TrackerHeader Format(TrackerFrameFormats _format) {
+			return TrackerHeader(_format);
+		}
+
+		explicit constexpr TrackerHeader(const TrackerFrameFormats& _format = TrackerFrameFormats::Invalid) : format(_format) {}
+
+		constexpr TrackerHeader(const TrackerHeader& _other)
+			:	format{_other.format}, vehicle_id{_other.vehicle_id}, tracker_id{_other.tracker_id},
+			mode{ _other.mode }, status{ _other.status } {}
+
+		TrackerFrameFormats format;
 		uint8_t vehicle_id = 0xFF;
 		uint8_t tracker_id = 0xFF;
 		TrackerFlightMode mode = TrackerFlightMode::Invalid;
@@ -80,7 +101,7 @@ class TrackerState
 		using pos_t = chandra::aero::ECEF<value_t>;
 		using vel_t = chandra::math::Vector3D<meters_per_second_t>;
 
-		TrackerHeader header;
+		TrackerHeader header = TrackerHeader::Format(TrackerFrameFormats::Localization);
 		pos_t pos;
 		vel_t vel;
 };
@@ -153,7 +174,7 @@ class TrackerGNSSFix
 	public:
 		using duration_t = std::chrono::duration<uint32_t, std::milli>;
 
-		TrackerHeader header;
+		TrackerHeader header = TrackerHeader::Format(TrackerFrameFormats::GNSSFix);
 
 		uint8_t satellites = 0;
 		duration_t t_since_last_fix;
@@ -185,10 +206,10 @@ template<class Value>
 struct TrackerStateRange
 {
 	// TODO: CALCULATE THE DISTANCE AND VELOCITY MAXIMUM AND VARIANCE VALUES
-	static constexpr Value distance_max{6428140}; // m
-	static constexpr Value distance_variance{250}; // m^2
-	static constexpr Value velocity_max{1029}; // m/s
-	static constexpr Value velocity_variance{100}; // m^2/s^2
+	static constexpr auto distance_max() { return Value(6428140); } // m
+	static constexpr auto distance_variance() { return Value(250); } // m^2
+	static constexpr auto velocity_max() { return Value(1029); } // m/s
+	static constexpr auto velocity_variance() { return Value(100); } // m^2/s^2
 };
 
 struct TrackerStateEncoding
@@ -287,7 +308,7 @@ constexpr Dest decode_range(const Src& _val, const V1& _min, const V2& _max) {
 template<size_t N>
 constexpr bool serialize_tracker_header(const TrackerHeader& _header, chandra::serialize::BinarySerializer<N>& _serializer) {
 	using encoding_t = TrackerHeaderEncoding;
-	_serializer.template write<encoding_t::format_bits>(_header.format);
+	_serializer.template write<encoding_t::format_bits>(uint8_t(_header.format));
 	_serializer.template write<encoding_t::reserved_bits>(0x00);
 	_serializer.template write<encoding_t::vehicle_id_bits>(_header.vehicle_id);
 	_serializer.template write<encoding_t::tracker_id_bits>(_header.tracker_id);
@@ -300,19 +321,25 @@ constexpr bool serialize_tracker_header(const TrackerHeader& _header, chandra::s
 }
 
 template<size_t N>
-constexpr bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerHeader& _header) {
+constexpr bool deserialize_tracker_header(chandra::serialize::BinaryDeserializer<N>& _deserializer, TrackerHeader& _header, const TrackerFrameFormats& _tgt_format) {
 	using encoding_t = TrackerHeaderEncoding;
-	_deserializer.template read<encoding_t::format_bits>(_header.format);
+	uint8_t enum_intermediate;
+	_deserializer.template read<encoding_t::format_bits>(enum_intermediate);
+	const auto parsed_format( static_cast<TrackerFrameFormats>(enum_intermediate ));
+	if (parsed_format != _tgt_format) return false;
+	_header.format = parsed_format;
 	_deserializer.advance(encoding_t::reserved_bits);
 	_deserializer.template read<encoding_t::vehicle_id_bits>(_header.vehicle_id);
 	_deserializer.template read<encoding_t::tracker_id_bits>(_header.tracker_id);
-	uint8_t enum_intermediate;
 	_deserializer.template read<encoding_t::mode_bits>(enum_intermediate);
 	_header.mode = static_cast<chandra::aero::protocol::TrackerFlightMode>(enum_intermediate);
 	_deserializer.template read<encoding_t::localization_status_bits>(enum_intermediate);
 	_header.status = static_cast<chandra::aero::protocol::TrackerLocalizationStatus>(enum_intermediate);
 
 	// TODO: NEED TO DECIDE WHAT TO DO ABOUT THE PARITY BIT...
+	//	IF IT IS GOING TO BE USED, THE PARSED HEADER NEEDS TO BE BUFFERED UNTIL THIS POINT
+	//	SO THAT THERE WILL BE NO CHANGES TO THE PASSED IN HEADER OBJECT UNLESS THE DESERIALIZATION
+	//	SUCCEEDED.
 	_deserializer.template read<encoding_t::header_parity_bits>(enum_intermediate);
 	return true;
 }
@@ -367,13 +394,13 @@ constexpr bool serialize_tracking_state(const TrackerState<Value>& _state, uint8
 
 	// Serialize the position
 	for (int idx = 0; idx < 3; ++idx) {
-		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::distance_bits>(_state.pos(idx).value(), -range_t::distance_max, range_t::distance_max);
+		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::distance_bits>(_state.pos(idx).value(), -range_t::distance_max(), range_t::distance_max());
 		serializer.template write<encoding_t::distance_bits>(enc_val);
 	}
 
 	// Serialize the velocity
 	for (int idx = 0; idx < 3; ++idx) {
-		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::velocity_bits>(_state.vel(idx).value(), -range_t::velocity_max, range_t::velocity_max);
+		const int32_t enc_val = internal::encode_range<int32_t, encoding_t::velocity_bits>(_state.vel(idx).value(), -range_t::velocity_max(), range_t::velocity_max());
 		serializer.template write<encoding_t::velocity_bits>(enc_val);
 	}
 
@@ -387,7 +414,7 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 	auto deserializer = chandra::serialize::make_binary_deserializer(_buffer);
 
 	// Deserialize the header
-	const bool header_success = internal::deserialize_tracker_header(deserializer, _state.header);
+	const bool header_success = internal::deserialize_tracker_header(deserializer, _state.header, TrackerFrameFormats::Localization);
 	if (!header_success) return false;
 
 	deserializer.advance(1); // This bit is currently undefined
@@ -399,7 +426,7 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 	for (int idx = 0; idx < 3; ++idx) {
 		using pos_t = decltype(_state.pos(0));
 		deserializer.template read<encoding_t::distance_bits>(encoded_value);
-		decode_result = internal::decode_range<Value, encoding_t::distance_bits>(encoded_value, -range_t::distance_max, range_t::distance_max);
+		decode_result = internal::decode_range<Value, encoding_t::distance_bits>(encoded_value, -range_t::distance_max(), range_t::distance_max());
 		_state.pos(idx) = pos_t(decode_result);
 	}
 
@@ -407,7 +434,7 @@ constexpr bool deserialize_tracking_state(const uint8_t (&_buffer)[N], TrackerSt
 	for (int idx = 0; idx < 3; ++idx) {
 		using vel_t = decltype(_state.vel(0));
 		deserializer.template read<encoding_t::velocity_bits>(encoded_value);
-		decode_result = internal::decode_range<Value, encoding_t::velocity_bits>(encoded_value, -range_t::velocity_max, range_t::velocity_max);
+		decode_result = internal::decode_range<Value, encoding_t::velocity_bits>(encoded_value, -range_t::velocity_max(), range_t::velocity_max());
 		_state.vel(idx) = vel_t(decode_result);
 	}
 
@@ -441,7 +468,7 @@ constexpr bool deserialize_gnss_fix(const uint8_t (&_buffer)[N], TrackerGNSSFix&
 	auto deserializer = chandra::serialize::make_binary_deserializer(_buffer);
 
 	// Deserialize the header
-	const bool header_success = internal::deserialize_tracker_header(deserializer, _fix.header);
+	const bool header_success = internal::deserialize_tracker_header(deserializer, _fix.header, TrackerFrameFormats::GNSSFix);
 	if (!header_success) return false;
 
 	// Deserialize data
@@ -463,49 +490,131 @@ constexpr bool deserialize_gnss_fix(const uint8_t (&_buffer)[N], TrackerGNSSFix&
 	return true;
 }
 
+template<class T>
+struct TD;
+
 template<class Value>
 class BasestationTrackingState
 {
 	public:
 		using value_t = Value;
 		using meters_t = chandra::units::mks::Q_m<value_t>;
+		using seconds_t = chandra::units::mks::Q_s<value_t>;
 		using meters_per_second_t = chandra::units::mks::Q_m_per_s<value_t>;
 		using pos_t = chandra::aero::ECEF<value_t>;
 		using vel_t = chandra::math::Vector3D<meters_per_second_t>;
 		using offset_t = chandra::math::Vector3D<meters_t>;
 
+
+		constexpr bool init() {
+			projected_tracker_pos_ = pos_t{ 0_m_, 0_m_, 0_m_ };
+			base_pos_ = pos_t{ 0_m_, 0_m_, 0_m_ };
+			home_pos_ = pos_t{ 0_m_, 0_m_, 0_m_ };
+
+//			offset_t tracker_base_offset_;
+//			offset_t tracker_home_offset_;
+//			offset_t base_home_offset_;
+			return true;
+		}
+
 		//
 		// Access Functions
 		//
+		constexpr bool current_tracker_valid() const {
+			return tracker_valid_;
+		}
+
 		constexpr pos_t current_tracker_pos() const {
 			return tracker_pos_history_[0];
+		}
+
+		constexpr bool projected_tracker_valid() const {
+			return tracker_valid_ && base_valid_; // TODO: CHECK IF THIS ACTUALLY WORKS....
 		}
 
 		constexpr pos_t projected_tracker_pos() const {
 			return projected_tracker_pos_;
 		}
 
+		constexpr bool base_valid() const {
+			return base_valid_;
+		}
+
 		constexpr pos_t base_pos() const {
 			return base_pos_;
+		}
+
+		constexpr bool home_valid() const {
+			return home_valid_;
 		}
 
 		constexpr pos_t home_pos() const {
 			return home_pos_;
 		}
 
+		constexpr bool updated() {
+			if (updated_) {
+				updated_ = false;
+				return true;
+			}
+
+			return false;
+		}
+
 		//
 		// Update functions
 		//
-		// bool tracker_update(TrackerState _tracker) {}
 		constexpr bool tracker_update(const pos_t& _tracker_pos, const vel_t& _tracker_vel) {
-			tracker_valid_ = true;
 			tracker_pos_history_.enqueue(_tracker_pos);
 			tracker_vel_history_.enqueue(_tracker_vel);
 			// TODO: UPDATE ESTIMATED FINAL LANDING POSITION (USING POSITION/VELOCITY HISTORY)
-			projected_tracker_pos_ = _tracker_pos; // HACK: NOT ESTIMATING POSITION!
-			tracker_base_offset_ = offset_between(projected_tracker_pos_, base_pos());
-			tracker_home_offset_ = offset_between(projected_tracker_pos_, home_pos());
+			if(tracker_valid_) {
+				const auto v_mag = chandra::math::magnitude(_tracker_vel);
+				if (v_mag > 0.5_m_per_s_) {
+					const seconds_t dt(1); // TODO: THIS NEEDS TO BE CALCULATED USING THE TIME FROM LAST UPDATE AND THE CURRENT TIME
+					const auto dpos = dt * _tracker_vel;
+					const auto descent_line = chandra::geometry::Line3D<meters_t>::FromPointVector(_tracker_pos, dpos);
+					const auto llh_ref = chandra::aero::ECEFToLLH(base_pos_); // TODO: THIS SHOULD PROBABLY BE THE LAT/LON FROM THE PROJECTED TRACKER POSITION AND THE ALTITUDE OF THE BASE POSITION
+//					const auto llh_ref = chandra::aero::ECEFToLLH(projected_tracker_pos_); // TODO: THIS SHOULD PROBABLY BE THE LAT/LON FROM THE PROJECTED TRACKER POSITION AND THE ALTITUDE OF THE BASE POSITION
+					const auto ground_plane = calc_ground_plane(llh_ref);
+					const auto result = chandra::geometry::intersect(descent_line, ground_plane);
+					if (bool(result)) {
+						projected_tracker_pos_ = pos_t(result.intersection());
+
+						// TODO: CALCULATE THE LANDING TIME FROM THE DISTANCE TO INTERSECTION AND THE VELOCITY MAGNITUDE
+						const auto t_projected = chandra::geometry::distance(_tracker_pos, projected_tracker_pos_) / chandra::math::magnitude(_tracker_vel);
+						// TODO: NEED TO ADD THE PROJECTED LANDING TIME TO THE PACKET BEING SENT TO THE GUI PROCESSOR
+					}
+					else {
+						// std::cout << "Splashdown Projection Error!\n";
+						// std::cout << "\tbase = " << llh_ref << "\n";
+						// std::cout << "\tpos = " << _tracker_pos << "\n\tvel = " << _tracker_vel << "\n";
+						// std::cout << "\tline = " << descent_line << "\n\tplane = " << ground_plane << "\n";
+						// std::cout << "\tpredicted pos = " << result.intersection() << "\n";
+					}
+				}
+				else {
+					projected_tracker_pos_ = _tracker_pos;
+				}
+			} else {
+				projected_tracker_pos_ = _tracker_pos; // Initialize projection to current position
+			}
+
+			if (base_valid_) {
+				tracker_base_offset_ = offset_between(projected_tracker_pos_, base_pos());
+			}
+
+			if (home_valid_) {
+				tracker_home_offset_ = offset_between(projected_tracker_pos_, home_pos());
+			}
+
+			check_updated();
+			tracker_valid_ = true;
 			return false;
+		}
+
+		constexpr bool tracker_update(const pos_t& _tracker_pos) {
+			return tracker_update(_tracker_pos, vel_t{ 0_m_per_s_, 0_m_per_s_, 0_m_per_s_ });
 		}
 
 		constexpr bool base_update(const pos_t& _base_pos) {
@@ -515,20 +624,77 @@ class BasestationTrackingState
 				home_pos_ = _base_pos;
 				home_valid_ = true;
 			}
-			tracker_base_offset_ = offset_between(projected_tracker_pos(), _base_pos);
-			base_home_offset_ = offset_between(_base_pos, home_pos());
+
+			if (tracker_valid_) {
+				tracker_base_offset_ = offset_between(projected_tracker_pos(), _base_pos);
+			}
+
+			if (home_valid_) {
+				base_home_offset_ = offset_between(_base_pos, home_pos());
+			}
+
+			check_updated();
 			return false;
 		}
 
 		constexpr bool home_update(const pos_t& _home_pos) {
 			home_pos_ = _home_pos;
 			home_valid_ = true;
-			tracker_home_offset_ = offset_between(projected_tracker_pos(), _home_pos);
-			base_home_offset_ = offset_between(base_pos(), _home_pos);
+
+			if (tracker_valid_) {
+				tracker_home_offset_ = offset_between(projected_tracker_pos(), _home_pos);
+			}
+
+			if (base_valid_) {
+				base_home_offset_ = offset_between(base_pos(), _home_pos);
+			}
+
+			check_updated();
 			return false;
 		}
 
 	protected:
+		template<class V, class AngleUnits, class LengthUnits>
+		constexpr auto calc_ground_plane(const chandra::aero::LLH<V, AngleUnits, LengthUnits>& _llh) {
+			using length_t = chandra::units::mks::Q_m<V>;
+			using result_t = chandra::geometry::Plane3D<length_t>;
+			using normal_t = chandra::aero::ENU<Value, LengthUnits>;
+
+			const auto p0 = chandra::aero::LLHToECEF(_llh); // TODO: FIGURE OUT IF THERE'S A WAY TO OPTIMIZE THIS... IF SO, IT CAN BE ADDED TO THE LIBRARY
+			const auto N = chandra::aero::RotateENUToECEF(normal_t{0_m_, 0_m_, 1_m_}, _llh);
+
+			return result_t::FromOriginAndNormal(p0, N);
+		}
+
+		template<class V, class AngleUnits, class LengthUnits>
+		constexpr auto calc_ground_plane_2(const chandra::aero::LLH<V, AngleUnits, LengthUnits>& _llh) {
+			using meters_t = chandra::units::mks::Q_m<Value>;
+			using radians_t = chandra::units::mks::Q_rad<Value>;
+			using llh_t = chandra::aero::LLH<Value, AngleUnits, LengthUnits>;
+			using length_t = typename llh_t::length_t;
+			using result_t = chandra::geometry::Plane3D<length_t>;
+//			using point_t = chandra::geometry::Point3D<length_t>;
+
+			const auto distance = meters_t(100);
+			const auto m_to_rad_lat = radians_t(2*3.1415926535) / meters_t(40.075e6);
+			const auto m_to_rad_lon = m_to_rad_lat / cos(_llh.latitude);
+
+			const auto dlat = distance * m_to_rad_lat;
+			const auto dlon = distance * m_to_rad_lon;
+			const auto p0 = chandra::aero::LLHToECEF(_llh);
+			const llh_t llh_a{_llh.latitude, _llh.longitude + dlon, _llh.altitude};
+			const llh_t llh_b{_llh.latitude + dlat, _llh.longitude, _llh.altitude};
+			const auto p1 = chandra::aero::LLHToECEF(llh_a);
+			const auto p2 = chandra::aero::LLHToECEF(llh_b);
+
+			return result_t::FromPoints(p0, p1, p2);
+		}
+
+		constexpr void check_updated() {
+			updated_ = base_valid_ && home_valid_ && tracker_valid_;
+			return;
+		}
+
 		constexpr offset_t offset_between(const pos_t& _a, const pos_t& _b) {
 			offset_t o;
 			o.x = (_a.x - _b.x);
@@ -541,6 +707,7 @@ class BasestationTrackingState
 		bool tracker_valid_ = false;
 		bool base_valid_ = false;
 		bool home_valid_ = false;
+		bool updated_ = false;
 		chandra::NonblockingFixedCircularBuffer<pos_t, 8> tracker_pos_history_;
 		pos_t projected_tracker_pos_;
 		pos_t base_pos_;
@@ -568,23 +735,41 @@ class TrackerGNSSSample
 		bool valid = false;
 };
 
-template<class T>
-class TD;
 
-template<class Value, size_t N=2>
+template<class Value>
 class TrackerStateEstimator
 {
 	public:
 		using value_t = Value;
-//		using meters_t = chandra::units::mks::Q_m<value_t>;
+		using meters_t = chandra::units::mks::Q_m<value_t>;
+		using meters2_t = decltype(meters_t{} *meters_t{});
 		using meters_per_second_t = chandra::units::mks::Q_m_per_s<value_t>;
 		using meters_per_second2_t = chandra::units::mks::Q_m_per_s2<value_t>;
 		using time_t = chandra::units::mks::Q_s<value_t>;
 		using pos_t = chandra::aero::ECEF<value_t>;
+		using enu_t = chandra::aero::ENU<value_t>;
 		using vel_t = chandra::math::Vector3D<meters_per_second_t>;
 		using accel_t = chandra::math::Vector3D<meters_per_second2_t>;
 		using gnss_t = TrackerGNSSSample<value_t>;
 		using state_t = TrackerState<value_t>;
+		using kf_t = chandra::control::KalmanFilter<value_t, 3, 1>;
+
+		//
+		// Constructor
+		//
+		TrackerStateEstimator(uint8_t _vehicle_id, uint8_t _tracker_id)
+			: header_(TrackerFrameFormats::Localization), dt_ref_{0.2_s_}, en_sd_{1.5_m_}, u_sd_{3_m_}
+		{
+				header_.vehicle_id = _vehicle_id;
+				header_.tracker_id = _tracker_id;
+		}
+
+		constexpr bool init() {
+			pos_ = pos_t{ 0_m_, 0_m_, 0_m_ };
+			vel_ = vel_t{ 0_m_per_s_, 0_m_per_s_, 0_m_per_s_ };
+
+			return true;
+		}
 
 		//
 		// Accessors
@@ -593,13 +778,20 @@ class TrackerStateEstimator
 			return updated_;
 		}
 
+		constexpr bool valid() const {
+			return initialized_;
+		}
+
 		constexpr state_t state() {
 			updated_ = false;
-			return {};
+			state_t result;
+			result.pos = pos();
+			result.vel = vel();
+			return result;
 		}
 
 		constexpr pos_t pos() const {
-			return pos_history_[0];
+			return pos_;
 		}
 
 		constexpr vel_t vel() const {
@@ -608,13 +800,31 @@ class TrackerStateEstimator
 
 		constexpr bool update_gnss(const gnss_t& _gnss) { // TODO: THIS SHOULD EITHER ONLY HANDLE A SINGLE GPS, OR IT NEEDS TO DO SOMETHING TO MAKE SURE THE SAMPLES ARE CORRECTED....
 			if(initialized_) {
-				const auto offset = pos_ - _gnss.pos;
-				vel_ = offset / _gnss.t_since_last; // TODO: GET THIS TO WORK PROPERLY... THIS IS NOT ACTUALLY CALCULATING THE CORRECT THING....
+				using measurement = typename kf_t::measurement_t;
+				x_kf_.update(measurement{ chandra::units::scalar_cast(_gnss.pos.x) });
+				y_kf_.update(measurement{ chandra::units::scalar_cast(_gnss.pos.y) });
+				z_kf_.update(measurement{ chandra::units::scalar_cast(_gnss.pos.z) });
+
+				pos_ = pos_t{meters_t{x_kf_.X_post(0)}, meters_t{y_kf_.X_post(0)}, meters_t{z_kf_.X_post(0)} };
+				vel_ = vel_t{meters_per_second_t{x_kf_.X_post(1)}, meters_per_second_t{y_kf_.X_post(1)}, meters_per_second_t{z_kf_.X_post(1)} };
 			} else {
+				using x_t = typename kf_t::state_t;
+				using p_t = typename kf_t::state_covariance_t;
+
 				initialized_ = true;
+				const auto sd_vec = chandra::aero::RotateENUToECEF(enu_t{en_sd_, en_sd_, u_sd_}, _gnss.pos);
+				const auto P0 = p_t{u_sd_.value() * u_sd_.value(), 0, 0, 0, 0, 0, 0, 0, 0 };
+				initialize_filter(x_kf_, (sd_vec.x * sd_vec.x), dt_ref_);
+				const auto X0 = x_t{chandra::units::scalar_cast(meters_t{_gnss.pos.x}), 0, 0};
+				x_kf_.init(X0, P0);
+				initialize_filter(y_kf_, (sd_vec.y * sd_vec.y), dt_ref_);
+				const auto Y0 = x_t{chandra::units::scalar_cast(meters_t{_gnss.pos.y}), 0, 0};
+				y_kf_.init(Y0, P0);
+				initialize_filter(z_kf_, (sd_vec.z * sd_vec.z), dt_ref_);
+				const auto Z0 = x_t{chandra::units::scalar_cast(meters_t{_gnss.pos.z}), 0, 0};
+				z_kf_.init(Z0, P0);
 			}
 
-			pos_ = _gnss.pos;
 			updated_ = true;
 			return true;
 		}
@@ -629,13 +839,234 @@ class TrackerStateEstimator
 		}
 
 	protected:
+		void initialize_filter(kf_t& _kf, const meters2_t _pos_var, const time_t _dt) {
+			using state_transition_t = typename kf_t::state_transition_t;
+			using observation_model_t = typename kf_t::observation_model_t;
+//			using state_covariance_t = typename kf_t::state_covariance_t;
+			using measurement_covariance_t = typename kf_t::measurement_covariance_t;
+			using namespace chandra::units;
+
+			const auto dt = scalar_cast(_dt);
+			const auto pos_var = std::abs(scalar_cast(_pos_var)); // NOTE: THIS SHOULD NEVER BE NEGATIVE... PERHAPS SOME ERROR CHECKING WOULD BE BETTER HERE
+
+			_kf.F = state_transition_t{ 1, dt, (dt * dt) / 2, 0, 1, dt, 0, 0, 1};
+			_kf.Q = 1 * pos_var * _kf.F * _kf.F.T(); // TODO: THIS IS NOT A GOOD PROCESS COVARIANCE ESTIMATE....
+			_kf.H = observation_model_t{1, 0, 0};
+			_kf.R = measurement_covariance_t{pos_var};
+
+			return;
+		}
 
 	private:
 		bool initialized_ = false;
 		bool updated_ = false;
-		chandra::NonblockingFixedCircularBuffer<pos_t, N> pos_history_;
+		TrackerHeader header_;
+		time_t dt_ref_;
+		meters_t en_sd_;
+		meters_t u_sd_;
+		kf_t x_kf_;
+		kf_t y_kf_;
+		kf_t z_kf_;
 		pos_t pos_;
-		chandra::math::Vector3D<meters_per_second_t> vel_;
+		vel_t vel_;
+};
+
+template<class Value>
+class TrackerStateEstimator2
+{
+public:
+	using value_t = Value;
+	//		using meters_t = chandra::units::mks::Q_m<value_t>;
+	using meters_per_second_t = chandra::units::mks::Q_m_per_s<value_t>;
+	using meters_per_second2_t = chandra::units::mks::Q_m_per_s2<value_t>;
+	using time_t = chandra::units::mks::Q_s<value_t>;
+	using pos_t = chandra::aero::ECEF<value_t>;
+	using dir_t = chandra::math::Vector3D<value_t>; // TODO: DIR_T, VEL_T AND ACCEL_T SHOULD BE IN THE ECEF FRAME, BUT SOMETHING IS FAILING IF I DO THAT....
+	using vel_t = chandra::math::Vector3D<meters_per_second_t>;
+	using accel_t = chandra::math::Vector3D<meters_per_second2_t>;
+	using gnss_t = TrackerGNSSSample<value_t>;
+	using state_t = TrackerState<value_t>;
+
+	//
+	// Constructor
+	//
+	TrackerStateEstimator2(uint8_t _vehicle_id, uint8_t _tracker_id)
+		: header_(TrackerFrameFormats::Localization)
+	{
+		header_.vehicle_id = _vehicle_id;
+		header_.tracker_id = _tracker_id;
+	}
+
+	constexpr bool init() {
+		pos_ = pos_t{ 0_m_, 0_m_, 0_m_ };
+		vel_ = vel_t{ 0_m_per_s_, 0_m_per_s_, 0_m_per_s_ };
+		initialized_ = false;
+		return true;
+	}
+
+	//
+	// Accessors
+	//
+	constexpr bool updated() const {
+		return updated_;
+	}
+
+	constexpr bool valid() const {
+		return initialized_;
+	}
+
+	constexpr state_t state() {
+		updated_ = false;
+		state_t result;
+		result.pos = pos();
+		result.vel = vel();
+		return result;
+	}
+
+	constexpr pos_t pos() const {
+		return pos_;
+	}
+
+	constexpr vel_t vel() const {
+		return vel_;
+	}
+
+	constexpr bool update_gnss(const gnss_t& _gnss) { // TODO: THIS SHOULD EITHER ONLY HANDLE A SINGLE GPS, OR IT NEEDS TO DO SOMETHING TO MAKE SURE THE SAMPLES ARE CORRECTED....
+		if (initialized_) {
+			const auto offset = last_pos_ - _gnss.pos;
+			const auto new_vel = offset / _gnss.t_since_last;
+			vel_ = (e_vel_ * vel_) + vel_t((1 - e_vel_) * new_vel);
+			pos_ = (e_pos_ * pos_) + pos_t((1 - e_pos_) * _gnss.pos);
+		}
+		else {
+			initialized_ = true;
+			pos_ = _gnss.pos;
+		}
+		last_pos_ = _gnss.pos;
+		updated_ = true;
+		return true;
+	}
+
+	constexpr bool update_accel(accel_t _accel) { // NOTE: THIS NEEDS TO TAKE THE UPDATE TIME SOMEHOW....
+		if (dir_initialized_ && (chandra::math::magnitude(vel_) > 0.1_m_per_s_)) {
+			const accel_t a_proj(dir_ * -_accel.z);
+//			pos_ = pos_ + pos_t(pos_t(10_ms_ * vel_) + pos_t((10_ms_ * 10_ms_) * a_proj / 2)); // TODO: THE CASTING IS GETTING ANNOYING AND SEEMS TO BE A RESULT OF THE OPERATOR + OVERLOAD BEINING AMBIGUOUS....
+//			vel_ = vel_ + vel_t(10_ms_ * a_proj / 2);
+//			dir_ = chandra::math::direction(vel_);
+			updated_ = true;
+		}
+		else {
+			dir_ = chandra::math::direction(_accel);
+			dir_initialized_ = true;
+		}
+		return true;
+	}
+
+protected:
+
+private:
+	value_t e_pos_ = 0.6;
+	value_t e_vel_ = 0.85;
+	bool initialized_ = false;
+	bool dir_initialized_ = false;
+	bool updated_ = false;
+	TrackerHeader header_;
+	dir_t dir_;
+	pos_t pos_;
+	pos_t last_pos_;
+	vel_t vel_;
+};
+
+struct GNSSStatus // TODO: FIGURE OUT WHERE THIS SHOULD ACTUALLY GO AND BUILD A NEW FILE FOR IT....
+{
+	using timestamp_t = chandra::chrono::timestamp_clock::time_point;
+	bool loc_valid = false;
+	bool loc_updated = false;
+	bool fix_valid = false;
+	bool fix_updated = false;
+	timestamp_t timestamp = chandra::chrono::timestamp_clock::now();
+};
+
+template<class Value, class TrackerEstimatorType, class Clock = chandra::chrono::timestamp_clock>
+class TrackerFrameScheduler
+{
+	public:
+		using value_t = Value;
+		using tracker_estimator_t = TrackerEstimatorType;
+		using pos_t = chandra::aero::ECEF<value_t>;
+		using distance_t = typename pos_t::value_t;
+		using clock_t = Clock;
+		using timestamp_t = typename clock_t::time_point;
+		using duration_t = typename timestamp_t::duration;
+
+		TrackerFrameScheduler() {}
+
+		bool init() {
+			const auto t = clock_t::now();
+			t_last_fix_ = t;
+			t_last_frame_ = t;
+			t_last_loc_ = t;
+			pos_initialized_ = false;
+
+			return true;
+		}
+
+
+		chandra::aero::protocol::TrackerFrameFormats operator () (GNSSStatus& _status, tracker_estimator_t& _state_estimator) {
+			const auto t = clock_t::now();
+			const auto estimator_updated = _state_estimator.valid() && _state_estimator.updated();
+
+			if(chandra::chrono::after(t_frame_min_, t_last_frame_, t)) {
+				if (!pos_initialized_ && _state_estimator.valid()) {
+					last_pos_ = _state_estimator.pos();
+					pos_initialized_ = true;
+				}
+
+				if(estimator_updated && (
+						chandra::chrono::after(t_localize_max_, t_last_loc_, t) ||
+						( distance(last_pos_, _state_estimator.pos()) >= d_update_ )
+					)
+				) {
+					const auto state = _state_estimator.state();
+					last_pos_ = state.pos;
+					t_last_loc_ = t;
+					t_last_frame_ = t;
+					_status.loc_updated = false;
+					return chandra::aero::protocol::TrackerFrameFormats::Localization;
+				}
+
+				if(_status.fix_updated && (
+						chandra::chrono::after(t_fix_max_, t_last_fix_, t)
+					)
+				) {
+					t_last_fix_ = t;
+					t_last_frame_ = t;
+					_status.fix_updated = false;
+					return chandra::aero::protocol::TrackerFrameFormats::GNSSFix;
+				}
+			}
+
+			return chandra::aero::protocol::TrackerFrameFormats::Invalid;
+		}
+
+	protected:
+		constexpr auto distance(const pos_t& _pos_a, const pos_t& _pos_b) const{
+			return chandra::math::magnitude(_pos_a - _pos_b);
+		}
+
+	private:
+		distance_t d_update_{10_m_};
+		duration_t t_frame_min_{250ms};
+		duration_t t_localize_max_{5s};
+		duration_t t_fix_min_{1s};
+		duration_t t_fix_max_{5s};
+
+		timestamp_t t_last_loc_;
+		timestamp_t t_last_fix_;
+		timestamp_t t_last_frame_;
+
+		bool pos_initialized_ = false;
+		pos_t last_pos_;
 };
 
 } /*namespace protocol*/

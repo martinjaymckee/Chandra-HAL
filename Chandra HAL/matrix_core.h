@@ -4,12 +4,23 @@
 #include <cstddef>
 #include <initializer_list>
 #include <type_traits>
+#include <utility>
+
+
+#include "meta_core.h"
+
 
 namespace chandra
 {
 namespace math
 {
-namespace size_ternal
+//
+// Matrix Forward Declaration
+//
+template<typename Value, size_t Rows, size_t Columns>
+class Matrix;
+
+namespace internal
 {
 template<size_t Rows, size_t Columns>
 struct IndexData
@@ -22,17 +33,37 @@ struct IndexData
         constexpr static auto& value(Value (&data)[Rows][Columns], size_t i, size_t j) {
             return data[i][j];
         }
+
+        template<typename Value>
+        constexpr static const auto& value(const Value(&data)[Rows][Columns], size_t i) {
+            return data[i][0]; // TODO: THIS IS WRONG....
+        }
+
+        template<typename Value>
+        constexpr static auto& value(Value(&data)[Rows][Columns], size_t i) {
+            return data[i][0]; // TODO: THIS IS WRONG....
+        }
 };
 
 template<size_t Rows>
 struct IndexData<Rows, 1>
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[Rows][1], size_t i, size_t) {
+        constexpr static const auto& value(const Value(&data)[Rows][1], size_t i, size_t) {
             return data[i][0];
         }
         template<typename Value>
-        constexpr static auto& value(Value (&data)[Rows][1], size_t i, size_t) {
+        constexpr static auto& value(Value(&data)[Rows][1], size_t i, size_t) {
+            return data[i][0];
+        }
+
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[Rows][1], size_t i) {
+            return data[i][0];
+        }
+
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[Rows][1], size_t i) {
             return data[i][0];
         }
 };
@@ -41,11 +72,22 @@ template<size_t Columns>
 struct IndexData<1, Columns>
 {
         template<typename Value>
-        constexpr static const auto& value(const Value (&data)[1][Columns], size_t i, size_t) {
+        constexpr static const auto& value(const Value(&data)[1][Columns], size_t , size_t i) {
             return data[0][i];
         }
+        
         template<typename Value>
-        constexpr static auto& value(Value (&data)[1][Columns], size_t i, size_t) {
+        constexpr static auto& value(Value(&data)[1][Columns], size_t, size_t i) {
+            return data[0][i];
+        }
+
+        template<typename Value>
+        constexpr static const auto& value(const Value (&data)[1][Columns], size_t i) {
+            return data[0][i];
+        }
+        
+        template<typename Value>
+        constexpr static auto& value(Value (&data)[1][Columns], size_t i) {
             return data[0][i];
         }
 };
@@ -57,12 +99,74 @@ struct IndexData<1, 1>
         constexpr static const auto& value(const Value (&data)[1][1], size_t, size_t) {
             return data[0][0];
         }
+        
         template<typename Value>
         constexpr static auto& value(Value (&data)[1][1], size_t, size_t) {
             return data[0][0];
         }
+        
+        template<typename Value>
+        constexpr static const auto& value(const Value(&data)[1][1], size_t) {
+            return data[0][0];
+        }
+        
+        template<typename Value>
+        constexpr static auto& value(Value(&data)[1][1], size_t) {
+            return data[0][0];
+        }
 };
-} /* namespace size_ternal */
+
+} /* namespace internal */
+
+template<class V, size_t N, size_t M>
+constexpr bool is_matrix(const Matrix<V, N, M>&)
+{
+    return true;
+}
+
+template<class... Args>
+constexpr bool is_matrix(Args...)
+{
+    return false;
+}
+
+namespace internal
+{
+template<class T, class = void>
+struct matrix_type_impl
+{
+    using type = int;
+};
+
+template<class T>
+struct matrix_type_impl<T, meta::void_t<typename T::matrix_t>>
+{
+    using type = typename T::matrix_t;
+};
+
+} /*namespace internal*/
+
+template<class T>
+using matrix_type = typename internal::matrix_type_impl<T>::type;
+
+template<class T>
+constexpr bool is_derived_matrix(const T&) {
+    return is_matrix(matrix_type<T>());
+}
+
+template<class MatrixType, class V>
+constexpr auto is_matrix_assignable()
+  -> typename std::enable_if<!std::is_base_of<MatrixType, V>::value, bool>::type
+{
+  return false;
+}
+
+template<class MatrixType, class V>
+constexpr auto is_matrix_assignable()
+  -> typename std::enable_if<std::is_base_of<MatrixType, V>::value, bool>::type
+{
+  return true;
+}
 
 // TODO: IMPROVE THE "RANDOM" CONSTRUCTORS TO HAVE BETTER CONTROL OF
 //        THE RANDOM NUMBERS (PASS IN A RANDOM GENERATOR)
@@ -134,7 +238,7 @@ class Matrix
           // TODO: THIS NEEDS TO DO A STATIC_ASSERT TO CHECK THAT OTHERVALUE IS CONVERTIBLE TO VALUE_T
       		for (index_t row = 0; row < Rows; ++row) {
       			for (index_t column = 0; column < Columns; ++column) {
-      				data_[row][column] = static_cast<Value>(_other.data_[row][column]);
+      				data_[row][column] = Value(_other.data_[row][column]);
       			}
       		}
       	}
@@ -326,12 +430,22 @@ class Matrix
 
         // TODO: ONLY VECTORS SHOULD HAVE A SINGLE ARGUMENT.  TWO DIMENSIONAL MATRICIES SHOULD HAVE
         //  AN OVERLOAD WHICH TAKES TWO INDICIES
-        constexpr const value_t& operator () (size_t i, const size_t& j = -1) const {
-            return size_ternal::IndexData<Rows, Columns>::value(data_, i, j);
+        constexpr const value_t& operator () (const size_t i, const size_t j) const {
+            return internal::IndexData<Rows, Columns>::value(data_, i, j);
         }
-        constexpr value_t& operator () (size_t i, const size_t& j = -1) {
-            return size_ternal::IndexData<Rows, Columns>::value(data_, i, j);
+
+        constexpr value_t& operator () (const size_t i, const size_t j) {
+            return internal::IndexData<Rows, Columns>::value(data_, i, j);
         }
+
+        constexpr const value_t& operator () (const size_t i) const {
+            return internal::IndexData<Rows, Columns>::value(data_, i);
+        }
+
+        constexpr value_t& operator () (const size_t i) {
+            return internal::IndexData<Rows, Columns>::value(data_, i);
+        }
+
         //  TODO: ADD ROW[] AND COLUMN[] PROXIES
 
         //
@@ -377,10 +491,12 @@ class Matrix
 
         //  Matrix Subtraction
         template<typename OtherValue>
-        constexpr matrix_t& operator -= (const Matrix<OtherValue, Rows, Columns>& _other) {
+        constexpr auto operator -= (const Matrix<OtherValue, Rows, Columns>& _other)
+            //-> typename std::enable_if<is_matrix(_other), matrix_t&>::type
+        {
             for(index_t row = 0; row < Rows; ++row){
                 for(index_t column = 0; column < Columns; ++column){
-                    data_[row][column] -= _other.data_[row][column];
+                    data_[row][column] -= static_cast<value_t>(_other.data_[row][column]);
                 }
             }
             return *this;
@@ -388,7 +504,9 @@ class Matrix
 
         //  Scalar Subtraction
         template<typename ScalarValue>
-        constexpr matrix_t& operator -= (const ScalarValue& v) {
+        constexpr auto operator -= (const ScalarValue& v)
+            //-> typename std::enable_if<!is_matrix(v), matrix_t&>::type
+        {
             static_assert(std::is_convertible<ScalarValue, value_t>::value,
                           "Unable to convert type to matrix value type in scalar subtraction.");
             for(index_t row = 0; row < Rows; ++row){
