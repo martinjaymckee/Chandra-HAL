@@ -126,14 +126,14 @@ class EventRate
     using frequency_t = float;
     using statistics_t = detail::BasicPerformanceStatistics<uint8_t, frequency_t>;
 
-    EventRate(const duration_t& _duration) : duration_(_duration) {}
+    EventRate(const duration_t& _duration) : timer_(_duration), duration_(_duration) {}
 
     bool init() {
-      timer_.duration(duration_);
       return reset();
     }
 
     bool reset() {
+      timer_.reset();
       samples_.clear();
       counts_ = 0;
       stats_ = statistics_t{};
@@ -158,7 +158,7 @@ class EventRate
 
   private:
     bool insertSample(const frequency_t& _freq) {
-      samples_ << _freq;
+      samples_.enqueue(_freq);
 
       if(samples_.full()) {
         stats_.valid = true;

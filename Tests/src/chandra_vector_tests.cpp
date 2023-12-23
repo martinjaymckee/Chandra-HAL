@@ -201,3 +201,22 @@ TEST_CASE("4D Vectors Math Operations", "[vector]") {
 		REQUIRE(d == a);
 	}
 }
+
+
+//
+// Matrix/Vector Operations
+//
+TEST_CASE("3D Matrix/Vector Math Operations", "[vector]") {
+	using value_t = double;
+	using matrix_t = chandra::math::Matrix<value_t, 3, 3>;
+	using vector_t = chandra::math::Vector3D<value_t>;
+
+	matrix_t A = matrix_t::Eye();
+	vector_t o{ 0 };
+	vector_t v{ {1, 0, 0} };
+
+	SECTION("Linear Mapping") {
+		const auto y = A * (v - o);
+
+	}
+}

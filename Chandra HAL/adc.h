@@ -92,7 +92,7 @@ class ADC
 
 											template<class T>
 											operator T() const { return static_cast<T>(value); }
-											
+
 											bool updated{false};
 											V value{0};
 								};
@@ -168,7 +168,7 @@ class ADC
 
 								ADCChannelResults<value_t> operator () () {
 									const auto raw_results = this->raw();
-									const auto val_max = max();
+//									const auto val_max = max();
 									const value_t value = ((adc_.vref_*raw_results.value)/max());
 									return {raw_results.updated, value};
 								}

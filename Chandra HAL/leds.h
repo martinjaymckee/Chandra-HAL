@@ -270,9 +270,9 @@ class SequentialSequencer
       // TODO: FIGURE OUT HOW TO COMBINE THESE...
       // const uint32_t color_range = std::min(static_cast<uint32_t>(base_.color_max), (color.r + color.g + color.b));
       // const auto denom = base_.brightness_max * (color.r + color.g + color.b);
-      // const auto denom = base_.brightness_max * base_.color_max * (
-      //   ((color.r > 0) ? 1 : 0) + ((color.g > 0) ? 1 : 0) + ((color.b > 0) ? 1 : 0)
-      // );
+//      const auto denom = base_.brightness_max * base_.color_max * (
+//        ((color.r > 0) ? 1 : 0) + ((color.g > 0) ? 1 : 0) + ((color.b > 0) ? 1 : 0)
+//      );
       // const uint32_t denom = base_.brightness_max * color_range;
       const auto denom = 3 * base_.color_max * base_.brightness_max;
 
@@ -284,7 +284,7 @@ class SequentialSequencer
 
     bool reset(const time_point_t& _t) {
       base_.t_sequence_ = _t;
-      base_.red_ = (base_.red_period_.count() > 0);
+      base_.red_ = false; //(base_.red_period_.count() > 0);
       seq_point_ = RedLed;
       return true;
     }
@@ -300,26 +300,37 @@ class SequentialSequencer
           if(chandra::chrono::after(base_.red_period_, t_last_, _t)) {
             base_.red_ = false;
             base_.green_ = (base_.green_period_.count() > 0);
+            base_.blue_ = false;
             t_last_ = _t;
             seq_point_ = GreenLed;
+          } else {
+            base_.red_ = (base_.red_period_.count() > 0);
           }
           break;
 
         case GreenLed:
           if(chandra::chrono::after(base_.green_period_, t_last_, _t)) {
+            base_.red_ = false;
             base_.green_ = false;
             base_.blue_ = (base_.blue_period_.count() > 0);
             t_last_ = _t;
             seq_point_ = BlueLed;
+          } else {
+            base_.green_ = (base_.green_period_.count() > 0);
           }
           break;
 
         case BlueLed:
           if(chandra::chrono::after(base_.blue_period_, t_last_, _t)) {
+            base_.red_ = false;
+            base_.green_ = false;
             base_.blue_ = false;
             t_last_ = _t;
             seq_point_ = Inactive;
+          } else {
+            base_.blue_ = (base_.blue_period_.count() > 0);
           }
+
           break;
 
         case Inactive:
@@ -397,13 +408,14 @@ struct SequencerType<RGBBase, LEDConfig::sequencing_t::Sequential>
 } /*namespace internal*/
 
 template<
+  class Clock = chandra::chrono::timestamp_clock,
   internal::LEDConfig::sequencing_t Sequencing = internal::LEDConfig::sequencing_t::Sequential
   >
 class RGBLED
 {
   protected:
-    static constexpr uint8_t color_max = 255;
-    static constexpr uint16_t brightness_max = 10000;
+    static constexpr size_t color_max = 255;
+    static constexpr size_t brightness_max = 10000;
 
     enum phase_t {
       PhaseA,
@@ -412,11 +424,11 @@ class RGBLED
 
   public:
     using mode_t = LED::mode_t;
-    using clock_t = chandra::chrono::timestamp_clock; // TODO: SHOULD THIS BE PASSED IN?
-    using duration_t = clock_t::duration;
-    using time_point_t = clock_t::time_point;
+    using clock_t = Clock;
+    using duration_t = typename clock_t::duration;
+    using time_point_t = typename clock_t::time_point;
     using color_t = chandra::color::Color<uint8_t>;
-    using ref_t = RGBLED<Sequencing>;
+    using ref_t = RGBLED<Clock, Sequencing>;
     using sequencer_t = typename internal::SequencerType<ref_t, Sequencing>::sequencer_t;
     friend class internal::SequencerType<ref_t, Sequencing>::sequencer_t;
 
@@ -439,6 +451,11 @@ class RGBLED
       mode_ = LED::Fixed;
       is_active_ = _active;
       return *this;
+    }
+
+    ref_t& operator ~ () {
+    	*this = !is_active_;
+    	return *this;
     }
 
     template<class T>
@@ -519,7 +536,7 @@ class RGBLED
     bool is_active_ = false;
     color_t active_color_{255, 0, 0};
     color_t inactive_color_{0, 0, 0};
-    uint32_t brightness_ = 10000;
+    uint32_t brightness_ = brightness_max;
     duration_t total_period_ = std::chrono::milliseconds{10};
     duration_t active_period_;
     duration_t inactive_period_;

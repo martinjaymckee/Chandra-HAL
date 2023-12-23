@@ -18,23 +18,23 @@ class ExponentialWeightedAverage
         using value_t = Value;
         using scalar_t = scalar_of_t<value_t>;
 
-        ExponentialWeightedAverage(const scalar_t& _w = scalar_t(0.5)) : w_(_w), v_(0) {}
+        ExponentialWeightedAverage(const scalar_t& _w = scalar_t(0.5)) : w_(_w), x_(0) {}
 
-        value_t v(value_t _v) {
-            v_ = _v;
-            return v_;
+        value_t x(value_t _x) {
+            x_ = _x;
+            return x_;
         }
 
-        value_t v() const { return v_; }
+        value_t x() const { return x_; }
 
-        value_t operator() (const value_t& _v) {
-            v_ += w_* (_v - v_);
-            return v_;
+        value_t operator() (const value_t& _x) {
+            x_ += w_* (_x - x_);
+            return x_;
         }
 
     private:
         scalar_t w_;
-        value_t v_;
+        value_t x_;
 };
 
 // TODO: WHEN THIS IS WORKING, SIMPLIFY IT TO GET JUST THE MEAN FILTER.
@@ -59,9 +59,9 @@ class RecursiveMeanVarianceFilter
         template<class V>
         using frequency_t = chandra::units::Quantity<V, chandra::units::mks::Hz>;
 
-        RecursiveMeanVarianceFilter() {
-          initialize_cutoffs(1.0/5.0); // Initialize cutoff frequency to fs / 5
-        }
+        // RecursiveMeanVarianceFilter() {
+        //   initialize_cutoffs(1.0/5.0); // Initialize cutoff frequency to fs / 5
+        // }
 
         RecursiveMeanVarianceFilter(
           const scalar_t& _a = scalar_t(0.9),
@@ -142,16 +142,22 @@ class RecursiveMeanVarianceFilter
         }
         constexpr scalar_t b() const { return b_; }
 
-        value_t operator() (const value_t& _x) {
+        constexpr variance_t operator() (const value_t& _x) {
+          if(initialized_) {
             x_ = (a_* (x_ - _x)) + _x; // Recursive Mean Estimator
             const auto e = x_-_x;
             v_ = (b_*v_) + (d_*(e*e));
+          } else {
+            x_ = _x;
+            v_ = variance_t{0};
+            initialized_ = true;
+          }
             return v_;
         }
 
     protected:
         constexpr scalar_t calcD(scalar_t _a, scalar_t _b) const {
-          return ((scalar_t(1.0) - b_) + (scalar_t(1.0) + a_)) / scalar_t(2.0);
+          return ((scalar_t(1.0) - _b) + (scalar_t(1.0) + _a)) / scalar_t(2.0);
         }
 
         constexpr scalar_t calcCoef(scalar_t _tau, scalar_t _ts) const {
@@ -172,6 +178,7 @@ class RecursiveMeanVarianceFilter
         }
 
     private:
+        bool initialized_ = false;
         scalar_t a_;
         scalar_t b_;
         scalar_t d_;

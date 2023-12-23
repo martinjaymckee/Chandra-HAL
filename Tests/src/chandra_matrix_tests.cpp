@@ -111,10 +111,12 @@ TEST_CASE("Matricies are accessed", "[matrix]") {
 		const matrix_t c = a;
 		REQUIRE((a == c));
 	};
+
+	auto ax = a(0);
 };
 
 //
-// Matrix Access
+// Matrix Operations
 //
 TEST_CASE("Basic operations between Matricies are attempted", "[matrix]") {
 	using value_t = double;

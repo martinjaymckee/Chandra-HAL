@@ -2,6 +2,8 @@
 #define CHANDRA_INERTIAL_CRTP_H
 
 #include "matrix.h"
+#include "matrix_vectors.h"
+#include "matrix_vector_ops.h"
 #include "quantity.h"
 #include "rotation.h"
 #include "units.h"
@@ -55,12 +57,12 @@ struct BaseInertialProxyImpl
 };
 } /*namespace internal*/
 
-template<typename Derived, typename Value, size_t N>
+template<typename Derived, typename Value, size_t N, class Frame = void>
 class Inertial
 {
     public:
         using scalar_t = Value;
-        using value_t = chandra::math::Matrix<Value, N, 1>;
+//        using value_t = chandra::math::Vector<Value, N, true, Frame>;
         using transform_t = chandra::math::Matrix<Value, N, N>;
 
     protected:
@@ -68,11 +70,14 @@ class Inertial
         class Proxy : public Impl
         {
             public:
+                using quantity_t = chandra::units::Quantity<scalar_t, BaseUnits>;
+                using vector_t = chandra::math::Vector<quantity_t, N, true, Frame>; // TODO: FIGURE OUT IF THIS SHOULD HAVE A FRAME
+
                 template<class... Args>
-                Proxy(Owner& _owner, const transform_t& _R, const value_t& _v, Args... args)
+                Proxy(Owner& _owner, const transform_t& _R, const vector_t& _v, Args... args)
                     : Impl(args...), owner_(_owner),
                       G(transform_t::Eye()),
-                      R(_R), v(_v), o(0)
+                      R(_R), v(_v)//, o(0) // TODO: THE OFFSET HERE NEEDS TO BE ZEROED OUT....
                 {
                 }
 
@@ -87,7 +92,7 @@ class Inertial
                 }
 
                 auto offset() const {
-                    return units::Quantity<value_t, BaseUnits>{A_*o};
+                    return vector_t{A_*o};
                 }
 
                 // Access Gain
@@ -107,7 +112,8 @@ class Inertial
 
                 // Current reading of the axes
                 auto quantity() const {
-                    return units::Quantity<value_t, BaseUnits>{value()};
+                    return vector_t(A_ * (v - o));
+                    //return units::Quantity<value_t, BaseUnits>{value()};
                 }
 
                 auto operator () () const { return quantity(); }
@@ -155,16 +161,16 @@ class Inertial
                     return units::Quantity<scalar_t, units::mks::Hz>(this->get_hpf());
                 }
 
-            protected:
-                value_t value() const { // TODO: DECIDE IF THIS SHOULD BE PUBLIC
-                    return A_ * (v - o);
+                constexpr auto value() const {
+                    return vector_t(A_ * (v - o));
                 }
 
+            protected:
                 Owner& owner_;
                 transform_t G;
                 const transform_t& R;
-                const value_t& v;
-                value_t o;
+                const vector_t& v;
+                vector_t o;
                 transform_t A_;
         };
 
@@ -216,7 +222,7 @@ class Accelerometer : public Inertial<Accelerometer<Derived, Value, AccelImpl, N
         friend class Inertial<Accelerometer<Derived, Value, AccelImpl, N, AccelUnits>, Value, N>;
         using base_t = Inertial<Accelerometer<Derived, Value, AccelImpl, N, AccelUnits>, Value, N>;
         using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
-        typename base_t::value_t accel_raw_;
+        typename accelerometer_proxy_t::vector_t accel_raw_{0};
 
     public:
       template<class... Args>
@@ -248,7 +254,7 @@ class Gyroscope : public Inertial<Gyroscope<Derived, Value, GyroImpl, N, GyroUni
         friend class Inertial<Gyroscope<Derived, Value, GyroImpl, N, GyroUnits>, Value, N>;
         using base_t = Inertial<Gyroscope<Derived, Value, GyroImpl, N, GyroUnits>, Value, N>;
         using gyroscope_proxy_t = typename base_t::template Proxy<Derived, GyroUnits, GyroImpl>;
-        typename base_t::value_t gyro_raw_;
+        typename gyroscope_proxy_t::vector_t gyro_raw_{0};
 
     public:
         template<class... Args>
@@ -281,7 +287,7 @@ class Magnetometer : public Inertial<Magnetometer<Derived, Value, MagImpl, N, Ma
         friend class Inertial<Magnetometer<Derived, Value, MagImpl, N, MagUnits>, Value, N>;
         using base_t = Inertial<Magnetometer<Derived, Value, MagImpl, N, MagUnits>, Value, N>;
         using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
-        typename base_t::value_t mag_raw_;
+        typename magnetometer_proxy_t::value_t mag_raw_{0};
 
     public:
       template<class... Args>
@@ -317,14 +323,14 @@ class AccelGyro : public Inertial<AccelGyro<Derived, Value, AccelImpl, GyroImpl,
         using base_t = Inertial<AccelGyro<Derived, Value, AccelImpl, GyroImpl, N, AccelUnits, GyroUnits>, Value, N>;
         using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
         using gyroscope_proxy_t = typename base_t::template Proxy<Derived, GyroUnits, GyroImpl>;
-        typename base_t::value_t accel_raw_;
-        typename base_t::value_t gyro_raw_;
+        typename accelerometer_proxy_t::vector_t accel_raw_;
+        typename gyroscope_proxy_t::vector_t gyro_raw_;
 
     public:
         template<class... Args>
         AccelGyro(Args... args)
-            : accel_raw_{1, 0, 0}, gyro_raw_{6.283185, 0, -3.14159},
-              accelerometer(
+//            : accel_raw_{1, 0, 0}, gyro_raw_{6.283185, 0, -3.14159},
+            :  accelerometer(
                   static_cast<Derived&>(*this),
                   this->R, accel_raw_, args...
               ),
@@ -363,8 +369,8 @@ class AccelMag : public Inertial<AccelMag<Derived, Value, AccelImpl, MagImpl, N,
         using base_t = Inertial<AccelMag<Derived, Value, AccelImpl, MagImpl, N, AccelUnits, MagUnits>, Value, N>;
         using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
         using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
-        typename base_t::value_t accel_raw_;
-        typename base_t::value_t mag_raw_;
+        typename accelerometer_proxy_t::vector_t accel_raw_{0};
+        typename magnetometer_proxy_t::vector_t mag_raw_{0};
 
     public:
         template<class... Args>
@@ -412,9 +418,9 @@ class AccelGyroMag : public Inertial<AccelGyroMag<Derived, Value, AccelImpl, Gyr
         using accelerometer_proxy_t = typename base_t::template Proxy<Derived, AccelUnits, AccelImpl>;
         using gyroscope_proxy_t = typename base_t::template Proxy<Derived, GyroUnits, GyroImpl>;
         using magnetometer_proxy_t = typename base_t::template Proxy<Derived, MagUnits, MagImpl>;
-        typename base_t::value_t accel_raw_;
-        typename base_t::value_t gyro_raw_;
-        typename base_t::value_t mag_raw_;
+        typename accelerometer_proxy_t::vector_t accel_raw_{0};
+        typename gyroscope_proxy_t::vector_t gyro_raw_{0};
+        typename magnetometer_proxy_t::vector_t mag_raw_{0};
 
     public:
         template<class... Args>

@@ -63,6 +63,11 @@ class Vector<Value, 2, IsColumn, Frame> : public internal::VectorMatrixStorage<V
 		x(internal::vector_reference<IsColumn>(this->data_, 0)),
 		y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
 
+    constexpr Vector(value_t _fill)
+      : matrix_t{_fill},
+		x(internal::vector_reference<IsColumn>(this->data_, 0)),
+		y(internal::vector_reference<IsColumn>(this->data_, 1)) {}
+
     constexpr Vector(std::initializer_list<value_t> _values)
         : matrix_t{_values},
         x(internal::vector_reference<IsColumn>(this->data_, 0)),
@@ -120,6 +125,12 @@ class Vector<Value, 3, IsColumn, Frame> : public internal::VectorMatrixStorage<V
 
     constexpr Vector()
       : base_t{},
+        x(internal::vector_reference<IsColumn>(this->data_, 0)),
+        y(internal::vector_reference<IsColumn>(this->data_, 1)),
+        z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
+
+    constexpr Vector(value_t _fill)
+      : base_t{_fill},
         x(internal::vector_reference<IsColumn>(this->data_, 0)),
         y(internal::vector_reference<IsColumn>(this->data_, 1)),
         z(internal::vector_reference<IsColumn>(this->data_, 2)) {}
@@ -188,6 +199,13 @@ class Vector<Value, 4, IsColumn, Frame> : public internal::VectorMatrixStorage<V
 
     constexpr Vector()
       : matrix_t{},
+        w(internal::vector_reference<IsColumn>(this->data_, 0)),
+        x(internal::vector_reference<IsColumn>(this->data_, 1)),
+        y(internal::vector_reference<IsColumn>(this->data_, 2)),
+        z(internal::vector_reference<IsColumn>(this->data_, 3)) {}
+
+    constexpr Vector(value_t _fill)
+      : matrix_t{_fill},
         w(internal::vector_reference<IsColumn>(this->data_, 0)),
         x(internal::vector_reference<IsColumn>(this->data_, 1)),
         y(internal::vector_reference<IsColumn>(this->data_, 2)),

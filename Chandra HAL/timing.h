@@ -247,6 +247,42 @@ class RetriggerableTimer
     bool active_;
 };
 
+template<class Clock = chandra::chrono::timestamp_clock>
+class LoopTimer
+{
+	public:
+		using clock_t = Clock;
+		using time_point_t = typename Clock::time_point;
+		using duration_t = typename Clock::duration;
+		using ref_t = LoopTimer<Clock>&;
+
+		LoopTimer(){
+			reset();
+		}
+
+		bool reset() {
+			base_ = clock_t::now();
+			return true;
+		}
+
+		auto as_count() {
+			const auto t = clock_t::now();
+			const auto dt = t - base_;
+			base_ = t;
+			return dt.count();
+		}
+
+		template<class Value=float>
+		Value as_seconds() {
+			const auto dt_count = as_count();
+			using ratio_t = typename duration_t::period;
+			return (Value(ratio_t::num) * dt_count) / Value(ratio_t::den);
+		}
+
+	private:
+		time_point_t base_;
+};
+
 } /*namespace chrono*/
 } /*namespace chandra*/
 #endif /*CHANDRA_TIMING_H*/

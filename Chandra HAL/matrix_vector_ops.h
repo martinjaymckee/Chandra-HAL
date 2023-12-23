@@ -6,6 +6,7 @@ using namespace std;
 
 #include "matrix.h"
 #include "matrix_vectors.h"
+#include "quantity_math.h"
 #include "units.h"
 
 namespace chandra
@@ -70,6 +71,24 @@ constexpr auto operator * (const Vector<V, M, IsColumn>& A, const Scalar& s) {
     //    r(idx) = A(idx) + s;
     //}
     //return r;
+}
+
+// Matrix/ColumnVector Multiplication
+template<typename V1, size_t M, size_t N, typename V2, class Frame>
+constexpr auto operator * (const Matrix<V1, M, N>& _A, const Vector<V2, N, true, Frame>& _v) {
+    using value_t = decltype(V1() * V2());
+    using return_t = Vector<value_t, N, true, Frame>;
+    using index_t = typename return_t::index_t;
+
+    return_t r;
+    for(index_t row = 0; row < M; ++row) {
+        auto accumulate = value_t{0};
+        for(index_t idx = 0; idx < N; ++idx) {
+            accumulate += (_A(row, idx) * _v(idx));
+        }
+        r(row) = accumulate;
+    }
+    return r;
 }
 
 /*
@@ -240,7 +259,9 @@ constexpr auto norm(const Vector<V, N, IsColumn, Frame>& _v) {
 
 //  Magnitude
 template<class V, size_t N, bool IsColumn, class Frame>
-constexpr V magnitude(const Vector<V, N, IsColumn, Frame>& _v) { return sqrt(norm(_v)); }
+constexpr V magnitude(const Vector<V, N, IsColumn, Frame>& _v) {
+  return V{sqrt(norm(_v))};
+}
 
 // Direction Vector
 template<class V, size_t N, bool IsColumn, class Frame>

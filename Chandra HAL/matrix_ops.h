@@ -420,15 +420,17 @@ constexpr auto operator * (const Matrix<V1, M, N1>& a, const Matrix<V2, N2, O>& 
 // Scalar Multiplication
 template<typename Scalar, typename V, size_t M, size_t N>
 constexpr auto operator * (const Scalar& s, const Matrix<V, M, N>& A) {
-    using return_t = Matrix<typename std::common_type<Scalar, V>::type, M, N>;
+		using value_t = decltype(V() * Scalar());
+		using return_t = Matrix<value_t, M, N>;
     return_t r(A);
     r *= s;
     return r;
 }
 
-template<typename Scalar, typename V, size_t M, size_t N>
+template<typename V, size_t M, size_t N, typename Scalar>
 constexpr auto operator * (const Matrix<V, M, N>& A, const Scalar& s) {
-    using return_t = Matrix<typename std::common_type<Scalar, V>::type, M, N>;
+		using value_t = decltype(V() * Scalar());
+    using return_t = Matrix<value_t, M, N>;
     return_t r(A);
     r *= s;
     return r;
@@ -559,7 +561,9 @@ constexpr V norm(const Matrix<V, 1, N>& _v) { return dot(_v, _v); }
 
 //  Magnitude
 template<typename V, size_t N>
-constexpr V magnitude(const Matrix<V, N, 1>& _v) { return sqrt(norm(_v)); }
+constexpr V magnitude(const Matrix<V, N, 1>& _v) {
+	return V{sqrt(norm(_v))};
+}
 
 } /*namespace math*/
 } /*namespace chandra*/

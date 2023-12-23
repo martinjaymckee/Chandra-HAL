@@ -277,6 +277,12 @@ constexpr auto angleBetween(const Matrix<V1, N, 1>& _v1, const Matrix<V2, N, 1>&
     return chandra::units::mks::Q_rad<V1>(alpha);
 }
 
+template<typename V1, typename V2, size_t N, bool IC1, bool IC2, class Frame>
+constexpr auto angleBetween(const Vector<V1, N, IC1, Frame>& _v1, const Vector<V2, N, IC2, Frame>& _v2) {
+    const auto alpha = acos(dot(_v1, _v2)/(sqrt(norm(_v1)*norm(_v2))));
+    return chandra::units::mks::Q_rad<V1>(alpha);
+}
+
 //
 // Rotations
 //
@@ -289,10 +295,13 @@ constexpr auto rotate(const Matrix<V1, 3, 1>& _v, const Matrix<V2, 3, 3>& _M) {
 //  By Quaternion
 template<typename V1, typename V2>
 constexpr auto rotate(const Matrix<V1, 3, 1>& _v, const Quaternion<V2>& _q) {
-    Matrix<V1, 3, 1> v;
+    using value_t = decltype(std::declval<V1>() * std::declval<V2>());
+    using scalar_t = typename std::common_type<V2, typename chandra::scalar_of<V1>::type>::type;
 
-    constexpr V1 one(1);
-    constexpr V1 two(2);
+    Matrix<value_t, 3, 1> v;
+
+    constexpr scalar_t one(1);
+    constexpr scalar_t two(2);
 
     const auto D1 = two * (_q.x * _q.x);
     const auto D2 = two * (_q.y * _q.y);
@@ -332,4 +341,3 @@ constexpr auto angleBetween(const Quaternion<V1>& _q1, const Quaternion<V2>& _q2
 } /*namespace chandra*/
 
 #endif /*MATRIX_H*/
-

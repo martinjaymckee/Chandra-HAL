@@ -262,7 +262,7 @@ class BMX160
         friend class AccelGyroMag<BMX160<Value, Comm, AccelUnits, GyroUnits, MagUnits, TempUnits>, Value, internal::BMX160AccelImpl<Value, AccelUnits, Comm>, internal::BMX160GyroImpl<Value, GyroUnits, Comm>, internal::BMX160MagImpl<Value, MagUnits, Comm>, 3, AccelUnits, GyroUnits, MagUnits>;
         using base_t = AccelGyroMag<BMX160<Value, Comm, AccelUnits, GyroUnits, MagUnits, TempUnits>, Value, internal::BMX160AccelImpl<Value, AccelUnits, Comm>, internal::BMX160GyroImpl<Value, GyroUnits, Comm>, internal::BMX160MagImpl<Value, MagUnits, Comm>, 3, AccelUnits, GyroUnits, MagUnits>;
         using scalar_t = typename base_t::scalar_t;
-        using value_t = typename base_t::value_t;
+//        using value_t = typename base_t::value_t;
         using ref_t = BMX160<Value, Comm, AccelUnits, GyroUnits, TempUnits>;
         using status_t = SensorUpdateStatus<>;
 
@@ -376,22 +376,22 @@ class BMX160
           regs_.bytes(registers_t::MAG_X_L, 20, buffer);
 
           // Assemble Raw Values
-          const auto ax = buffer_to_signed<scalar_t>(buffer, 15, 14);
-          const auto ay = buffer_to_signed<scalar_t>(buffer, 17, 16);
-          const auto az = buffer_to_signed<scalar_t>(buffer, 19, 18);
-          this->accel_raw_ = accel_scale_ * value_t{ax, ay, az};
+          const auto ax = typename base_t::accelerometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 15, 14)};
+          const auto ay = typename base_t::accelerometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 17, 16)};
+          const auto az = typename base_t::accelerometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 19, 18)};
+          this->accel_raw_ = accel_scale_ * typename base_t::accelerometer_proxy_t::vector_t{ax, ay, az};
 
-          const auto gx = buffer_to_signed<scalar_t>(buffer, 9, 8);
-          const auto gy = buffer_to_signed<scalar_t>(buffer, 11, 10);
-          const auto gz = buffer_to_signed<scalar_t>(buffer, 13, 12);
-          this->gyro_raw_ = gyro_scale_ * value_t{gx, gy, gz};
+          const auto gx = typename base_t::gyroscope_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 9, 8)};
+          const auto gy = typename base_t::gyroscope_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 11, 10)};
+          const auto gz = typename base_t::gyroscope_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 13, 12)};
+          this->gyro_raw_ = gyro_scale_ * typename base_t::gyroscope_proxy_t::vector_t{gx, gy, gz};
 
           const auto rhall = buffer_to_signed<scalar_t>(buffer, 7, 6);
           (void) rhall; // NOTE: THIS NEEDS TO BE USED TO ADJUST THE VALUES....
-          const auto mx = buffer_to_signed<scalar_t>(buffer, 1, 0);
-          const auto my = buffer_to_signed<scalar_t>(buffer, 3, 2);
-          const auto mz = buffer_to_signed<scalar_t>(buffer, 5, 4);
-          this->mag_raw_ = mag_scale_ * value_t{mx, my, mz};
+          const auto mx = typename base_t::magnetometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 1, 0)};
+          const auto my = typename base_t::magnetometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 3, 2)};
+          const auto mz = typename base_t::magnetometer_proxy_t::quantity_t{buffer_to_signed<scalar_t>(buffer, 5, 4)};
+          this->mag_raw_ = mag_scale_ * typename base_t::magnetometer_proxy_t::vector_t{mx, my, mz};
 
           status.calculated = true;
       	  status.processed = true;

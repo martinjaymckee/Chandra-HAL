@@ -42,10 +42,10 @@ struct SPI
         };
 
         enum : cs_t {
-            CS0 = static_cast<cs_t>(~0x01),
-            CS1 = static_cast<cs_t>(~0x02),
-            CS2 = static_cast<cs_t>(~0x04),
-            CS3 = static_cast<cs_t>(~0x08)
+            CS0 = 0b11111110, //static_cast<cs_t>(~0x01),
+            CS1 = 0b11111101, //static_cast<cs_t>(~0x02),
+            CS2 = 0b11111011, //static_cast<cs_t>(~0x04),
+            CS3 = 0b11110111  //static_cast<cs_t>(~0x08)
         };
 };
 
@@ -125,8 +125,7 @@ class SPIMaster
 		bool enable(bool _enable, uint8_t _mode = 0 ) {
 			if(_enable) {
 				if(spi_->DIV == 0) frequency(units::mks::Q_MHz<uint32_t>(1)); // Set Default frequency if currently unset
-				spi_->CFG = (_mode<<3) | (1<<2); // Enable, In Master Mode
-				spi_->CFG |= (1<<0);
+				spi_->CFG = (static_cast<uint32_t>(_mode) << 4) | (1<<2) | (1<<0); // TODO: CHECK THE MODE OFFSET HERE....
 				spi_->DLY = 0;
 				ctrl_base_ = (((uint32_t(len_)-1) << 8) << 16);
 			} else {
@@ -204,26 +203,26 @@ class SPIMaster
 				ctrl |= ((_cs&0x0F)<<16);
 			}
 
-      const uint32_t ctrl_end = ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP)) ? (1<<4)<<16 : 0x00;
-      const size_t end_cnt = _cnt-1;
+			const uint32_t ctrl_end = ((_transfer_mode == transfer_mode_t::STOP) | (_transfer_mode == transfer_mode_t::WRAP)) ? (1<<4)<<16 : 0x00;
+			const size_t end_cnt = _cnt-1;
 
 			for(size_t index = 0; index < _cnt; ++index ) {
 				//	Prepare to Deassert the Slave Select Lines -- Send End of Transfer
-        if(index == end_cnt) ctrl |= ctrl_end;
+				if(index == end_cnt) ctrl |= ctrl_end;
 
-				//	Wait for TXRDY and Write Data
-				while( !(spi_->STAT & (1<<1)) ){}
-				spi_->TXDATCTL = ctrl;
+					//	Wait for TXRDY and Write Data
+					while( !(spi_->STAT & (1<<1)) ){}
+					spi_->TXDATCTL = ctrl;
 
-				//	Wait for RXRDY and Read Data
-				while( !(spi_->STAT & (1<<0)) ){}
-				const value_t new_data = (spi_->RXDAT&0xFFFF);
-				*out_buf = new_data;
-				++out_buf;
+					//	Wait for RXRDY and Read Data
+					while( !(spi_->STAT & (1<<0)) ){}
+					const value_t new_data = (spi_->RXDAT&0xFFFF);
+					*out_buf = new_data;
+					++out_buf;
+				}
+
+				return out_buf; // NOTE: THE OUTPUT BUFFER POINTS "PAST" WHAT WAS WRITTEN
 			}
-
-			return out_buf; // NOTE: THE OUTPUT BUFFER POINTS "PAST" WHAT WAS WRITTEN
-		}
 
 
     value_t* txrx(const value_t* _in_buf, value_t* const _out_buf, size_t _cnt, cs_t _cs = 255, const transfer_mode_t& _transfer_mode = transfer_mode_t::WRAP) const {

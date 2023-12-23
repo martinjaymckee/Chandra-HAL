@@ -2,7 +2,7 @@
 #define CHANDRA_META_TYPES_H
 
 #include "matrix.h"
-
+#include "matrix_vectors.h"
 namespace chandra
 {
 
@@ -18,8 +18,19 @@ struct scalar_of<math::Matrix<Value, N, M>>
         using type = typename scalar_of<Value>::type;
 };
 
+template<typename Value, size_t N, bool IsColumn, class Frame>
+struct scalar_of<math::Vector<Value, N, IsColumn, Frame>>
+{
+        using type = typename scalar_of<Value>::type;
+};
+
 template<typename Value>
 using scalar_of_t = typename scalar_of<Value>::type;
+
+template<class Value>
+constexpr bool is_scalar() {
+  return std::is_same<Value, scalar_of_t<Value>>::value;
+}
 
 template<typename Ratio, typename Value>
 Value ratio_cast(const Value& v) {

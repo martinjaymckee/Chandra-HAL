@@ -3,6 +3,7 @@
 
 #include "matrix.h"
 #include "matrix_ops.h"
+#include "matrix_vectors.h"
 
 namespace chandra
 {
@@ -24,11 +25,35 @@ class Quaternion
         //      --> From the LOL Engine Blog :
         //      --> "Beautiful maths simplification: quaternion from two vectors -- final version"
 
-        // TODO: MODIFY TO HANDLE EXACTLY OPPOSITE VECTORS....
         template<typename V1, typename V2>
         static constexpr auto Transform(
                 const Matrix<V1, 3, 1>& _src,
                 const Matrix<V2, 3, 1>& _dest
+        ) {
+            using calc_t = typename std::common_type<V1, V2>::type;
+            constexpr calc_t threshold(1e-6);
+            const auto norm_src_norm_dest = sqrt(dot(_src, _src) * dot(_dest, _dest));
+            auto w = norm_src_norm_dest + dot(_src, _dest);
+            ref_t q;
+
+            if(w < (threshold*norm_src_norm_dest)) { // Vectors point in opposite directions
+                q.w = 0;
+                if(abs(_src(0)) > abs(_src(2))) {
+                    q.x = -_src(1); q.y = _src(0); q.z = 0;
+                } else {
+                    q.x = 0; q.y = -_src(2); q.z = _src(1);
+                }
+            } else { // Normal Can Be Found
+                const auto vn = cross(_dest, _src);
+                q.w = w; q.x = vn(0); q.y = vn(1); q.z = vn(2);
+            }
+            return q.normalized();
+        }
+
+        template<typename V1, typename V2, bool IC1, bool IC2, class Frame>
+        static constexpr auto Transform(
+                const Vector3D<V1, IC1, Frame>& _src,
+                const Vector3D<V2, IC2, Frame>& _dest
         ) {
             using calc_t = typename std::common_type<V1, V2>::type;
             constexpr calc_t threshold(1e-6);
@@ -72,7 +97,7 @@ class Quaternion
                 const V1& _alpha,
                 const V2& _x, const V3& _y, const V4& _z
         ) {
-            constexpr auto half_alpha = _alpha / value_t(2);
+            const auto half_alpha = _alpha / value_t(2);
             const auto c = cos(half_alpha);
             const auto s = sin(half_alpha);
             ref_t q;
@@ -97,7 +122,7 @@ class Quaternion
         //  Construct a Pure Quaternion From a Vector
         template<typename V>
         static constexpr ref_t Pure(const Matrix<V, 3, 1>& _vec) {
-            return ref_t(0, _vec(0), _vec(1), _vec(2));
+            return ref_t(V{0}, _vec(0), _vec(1), _vec(2));
         }
 
         //  Default Constructor
@@ -232,4 +257,3 @@ class Quaternion
 } /*namespace chandra*/
 
 #endif /*CHANDRA_QUATERNION_H*/
-

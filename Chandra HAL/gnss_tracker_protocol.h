@@ -10,7 +10,7 @@
 #include "matrix_vectors.h"
 #include "matrix_vector_ops.h"
 #include "units.h"
-//using namespace chandra::units::mks::literals;
+using namespace chandra::units::mks::literals;
 
 namespace chandra
 {
@@ -570,7 +570,7 @@ class BasestationTrackingState
 			// TODO: UPDATE ESTIMATED FINAL LANDING POSITION (USING POSITION/VELOCITY HISTORY)
 			if(tracker_valid_) {
 				const auto v_mag = chandra::math::magnitude(_tracker_vel);
-				if (v_mag > 0.5_m_per_s_) {
+				if (v_mag > 1.5_m_per_s_) {
 					const seconds_t dt(1); // TODO: THIS NEEDS TO BE CALCULATED USING THE TIME FROM LAST UPDATE AND THE CURRENT TIME
 					const auto dpos = dt * _tracker_vel;
 					const auto descent_line = chandra::geometry::Line3D<meters_t>::FromPointVector(_tracker_pos, dpos);
@@ -799,6 +799,8 @@ class TrackerStateEstimator
 		}
 
 		constexpr bool update_gnss(const gnss_t& _gnss) { // TODO: THIS SHOULD EITHER ONLY HANDLE A SINGLE GPS, OR IT NEEDS TO DO SOMETHING TO MAKE SURE THE SAMPLES ARE CORRECTED....
+			if (_gnss.satellites < 5) return false;
+
 			if(initialized_) {
 				using measurement = typename kf_t::measurement_t;
 				x_kf_.update(measurement{ chandra::units::scalar_cast(_gnss.pos.x) });
@@ -1059,7 +1061,7 @@ class TrackerFrameScheduler
 		duration_t t_frame_min_{250ms};
 		duration_t t_localize_max_{5s};
 		duration_t t_fix_min_{1s};
-		duration_t t_fix_max_{5s};
+		duration_t t_fix_max_{3s};
 
 		timestamp_t t_last_loc_;
 		timestamp_t t_last_fix_;

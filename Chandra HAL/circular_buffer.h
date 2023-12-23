@@ -24,7 +24,7 @@ class BlockingFixedCircularBuffer
         bool enqueue(const value_t& _val ) {
           const auto new_head = (head_ == (N-1)) ? 0 : head_ + 1;
           if(new_head != tail_) {
-            buffer_[const_cast<const size_t&>(new_head)] = _val;
+            buffer_[const_cast<const size_t&>(head_)] = _val;
             head_ = new_head;
             return true;
           }

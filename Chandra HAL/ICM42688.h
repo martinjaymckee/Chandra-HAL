@@ -376,7 +376,7 @@ class ICM42688
         friend class AccelGyro<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM42688AccelImpl<Value, AccelUnits, Comm>, internal::ICM42688GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
         using base_t = AccelGyro<ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>, Value, internal::ICM42688AccelImpl<Value, AccelUnits, Comm>, internal::ICM42688GyroImpl<Value, GyroUnits, Comm>, 3, AccelUnits, GyroUnits>;
         using scalar_t = typename base_t::scalar_t;
-        using value_t = typename base_t::value_t;
+        //using value_t = typename base_t::value_t;
         using ref_t = ICM42688<Value, Comm, AccelUnits, GyroUnits, TempUnits>;
         using status_t = chandra::drivers::SensorUpdateStatus<>;
 
@@ -408,7 +408,10 @@ class ICM42688
           return id() == 0x47;
         }
 
-        uint8_t id() { return regs_.byte(bank0_t::WHO_AM_I); }
+        uint8_t id() {
+        	const auto val = regs_.byte(bank0_t::WHO_AM_I);
+        	return val;
+        }
 
         status_t update() {
             status_t status;
@@ -420,15 +423,26 @@ class ICM42688
             // NOTE: THIS IS JUST CHECKING THE DATA READ BIT IN THE STATUS REGISTER
             if(chandra::is_bit_set<3>(regs_.byte(bank0_t::INT_STATUS1))) {
               regs_.bytes(bank0_t::TEMP_H, read_num, buffer);
-              this->temp_raw_= convertTemp(val16(buffer[0], buffer[1]));
-              const auto ax = accel_scale * val16(buffer[2], buffer[3]);
-              const auto ay = accel_scale * val16(buffer[4], buffer[5]);
-              const auto az = accel_scale * val16(buffer[6], buffer[7]);
-              this->accel_raw_ = value_t({ax, ay, az});
-              const auto gx = gyro_scale * val16(buffer[8], buffer[9]);
-              const auto gy = gyro_scale * val16(buffer[10], buffer[11]);
-              const auto gz = gyro_scale * val16(buffer[12], buffer[13]);
-              this->gyro_raw_ = value_t({gx, gy, gz});
+
+              this->accel_raw_.x = chandra::units::mks::Q_m_per_s2<scalar_t>(accel_scale * val16(buffer[0], buffer[1]));
+              this->accel_raw_.y = chandra::units::mks::Q_m_per_s2<scalar_t>(accel_scale * val16(buffer[2], buffer[3]));
+              this->accel_raw_.z = chandra::units::mks::Q_m_per_s2<scalar_t>(accel_scale * val16(buffer[4], buffer[5]));
+
+              this->temp_raw_= convertTemp(val16(buffer[6], buffer[7]));
+
+              this->gyro_raw_.x = chandra::units::mks::Q_rad_per_s<scalar_t>(gyro_scale * val16(buffer[8], buffer[9]));
+              this->gyro_raw_.y = chandra::units::mks::Q_rad_per_s<scalar_t>(gyro_scale * val16(buffer[10], buffer[11]));
+              this->gyro_raw_.z = chandra::units::mks::Q_rad_per_s<scalar_t>(gyro_scale * val16(buffer[12], buffer[13]));
+
+//              this->temp_raw_= convertTemp(val16(buffer[0], buffer[1]));
+//              const auto ax = accel_scale * val16(buffer[2], buffer[3]);
+//              const auto ay = accel_scale * val16(buffer[4], buffer[5]);
+//              const auto az = accel_scale * val16(buffer[6], buffer[7]);
+//              this->accel_raw_ = value_t({ax, ay, az});
+//              const auto gx = gyro_scale * val16(buffer[8], buffer[9]);
+//              const auto gy = gyro_scale * val16(buffer[10], buffer[11]);
+//              const auto gz = gyro_scale * val16(buffer[12], buffer[13]);
+//              this->gyro_raw_ = value_t({gx, gy, gz});
               status.processed = true;
             }
             //update_status.errors = SensorUpdateStatus::TimeoutError;
