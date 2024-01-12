@@ -104,23 +104,25 @@ class Timer
 
     time_point_t expiration() const { return expiration_; }
 
-		template<class T>
-    duration_t remaining(const T& _base = clock_t::now()) const {
+	template<class T>
+    duration_t remaining(const T& _base) const {
       return expiration_ - _base;
-		}
+	}
 
-		template<class T>
+    duration_t remaining() const {
+      return expiration_ - clock_t::now();
+	}
+
+	template<class T>
     time_point_t reset(const T& _base) {
-			base_ = _base;
-      expiration_ = base_ + duration_;
-			return base_;
-		}
+		base_ = _base;
+		expiration_ = base_ + duration_;
+		return base_;
+	}
 
     time_point_t reset() { return reset(clock_t::now()); }
 
-    ExpirationStatus operator() (
-			time_point_t _check, const timer_control_t& _control = Reset)
-		{
+    ExpirationStatus operator() ( time_point_t _check, const timer_control_t& _control = Reset) {
       if(chandra::chrono::after(expiration_, _check)) {
         const auto expiration = expiration_;
         if((_control & Rebase) || (_control & All)) reset(expiration_);
