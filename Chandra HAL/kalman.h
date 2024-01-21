@@ -178,7 +178,6 @@ class KalmanFilter : public detail::KalmanFilterBase<Value, StateSize, Measureme
 		measurement_t residual(const measurement_t& z) {
 			return z - (this->H * this->X_post);
 		}
-
 };
 
 } /*namespace control*/
